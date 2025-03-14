@@ -5,6 +5,976 @@
  * @see https://github.com/php-stubs/wordpress-seo-stubs
  */
 
+namespace Yoast\WHIPv2 {
+    /**
+     * Class Configuration.
+     */
+    class Configuration
+    {
+        /**
+         * The configuration to use.
+         *
+         * @var array<string>
+         */
+        private $configuration;
+        /**
+         * Configuration constructor.
+         *
+         * @param array<string, string> $configuration The configuration to use.
+         *
+         * @throws InvalidType When the $configuration parameter is not of the expected type.
+         */
+        public function __construct($configuration = array())
+        {
+        }
+        /**
+         * Retrieves the configured version of a particular requirement.
+         *
+         * @param Requirement $requirement The requirement to check.
+         *
+         * @return string|int The version of the passed requirement that was detected as a string.
+         *                    If the requirement does not exist, this returns int -1.
+         */
+        public function configuredVersion(\Yoast\WHIPv2\Interfaces\Requirement $requirement)
+        {
+        }
+        /**
+         * Determines whether the passed requirement is present in the configuration.
+         *
+         * @param Requirement $requirement The requirement to check.
+         *
+         * @return bool Whether or not the requirement is present in the configuration.
+         */
+        public function hasRequirementConfigured(\Yoast\WHIPv2\Interfaces\Requirement $requirement)
+        {
+        }
+    }
+}
+namespace Yoast\WHIPv2\Exceptions {
+    /**
+     * Class EmptyProperty.
+     */
+    class EmptyProperty extends \Exception
+    {
+        /**
+         * EmptyProperty constructor.
+         *
+         * @param string $property Property name.
+         */
+        public function __construct($property)
+        {
+        }
+    }
+    /**
+     * Class InvalidOperatorType.
+     */
+    class InvalidOperatorType extends \Exception
+    {
+        /**
+         * InvalidOperatorType constructor.
+         *
+         * @param string   $value          Invalid operator.
+         * @param string[] $validOperators Valid operators.
+         */
+        public function __construct($value, $validOperators = array('=', '==', '===', '<', '>', '<=', '>='))
+        {
+        }
+    }
+    /**
+     * Class InvalidType.
+     */
+    class InvalidType extends \Exception
+    {
+        /**
+         * InvalidType constructor.
+         *
+         * @param string $property     Property name.
+         * @param string $value        Property value.
+         * @param string $expectedType Expected property type.
+         */
+        public function __construct($property, $value, $expectedType)
+        {
+        }
+    }
+    /**
+     * Exception for an invalid version comparison string.
+     *
+     * @phpcs:disable Yoast.NamingConventions.ObjectNameDepth.MaxExceeded -- Name should be descriptive and was historically (before namespacing) already set to this.
+     */
+    class InvalidVersionComparisonString extends \Exception
+    {
+        /**
+         * InvalidVersionComparisonString constructor.
+         *
+         * @param string $value The passed version comparison string.
+         */
+        public function __construct($value)
+        {
+        }
+    }
+}
+namespace Yoast\WHIPv2 {
+    /**
+     * Represents a host.
+     */
+    class Host
+    {
+        /**
+         * Key to an environment variable which should be set to the name of the host.
+         *
+         * @var string
+         */
+        const HOST_NAME_KEY = 'WHIP_NAME_OF_HOST';
+        /**
+         * Filter name for the filter which allows for pointing to the WP hosting page instead of the Yoast version.
+         *
+         * @var string
+         */
+        const HOSTING_PAGE_FILTER_KEY = 'whip_hosting_page_url_wordpress';
+        /**
+         * Retrieves the name of the host if set.
+         *
+         * @return string The name of the host.
+         */
+        public static function name()
+        {
+        }
+        /**
+         * Filters the name if we are in a WordPress context.
+         * In a non-WordPress content this function just returns the passed name.
+         *
+         * @param string $name The current name of the host.
+         *
+         * @return string The filtered name of the host.
+         */
+        private static function filterName($name)
+        {
+        }
+        /**
+         * Retrieves the message from the host if set.
+         *
+         * @param string $messageKey The key to use as the environment variable.
+         *
+         * @return string The message as set by the host.
+         */
+        public static function message($messageKey)
+        {
+        }
+        /**
+         * Filters the message if we are in a WordPress context.
+         * In a non-WordPress content this function just returns the passed message.
+         *
+         * @param string $messageKey The key used for the environment variable.
+         * @param string $message    The current message from the host.
+         *
+         * @return string
+         */
+        private static function filterMessage($messageKey, $message)
+        {
+        }
+        /**
+         * Returns the URL for the hosting page.
+         *
+         * @return string The URL to the hosting overview page.
+         */
+        public static function hostingPageUrl()
+        {
+        }
+        /**
+         * Filters the hosting page url if we are in a WordPress context.
+         * In a non-WordPress context this function just returns a link to the Yoast hosting page.
+         *
+         * @param string $url The previous URL.
+         *
+         * @return string The new URL to the hosting overview page.
+         */
+        private static function filterHostingPageUrl($url)
+        {
+        }
+    }
+}
+namespace Yoast\WHIPv2\Interfaces {
+    /**
+     * Interface DismissStorage.
+     */
+    interface DismissStorage
+    {
+        /**
+         * Saves the value.
+         *
+         * @param int $dismissedValue The value to save.
+         *
+         * @return bool True when successful.
+         */
+        public function set($dismissedValue);
+        /**
+         * Returns the value.
+         *
+         * @return int The stored value.
+         */
+        public function get();
+    }
+    /**
+     * Interface Listener.
+     */
+    interface Listener
+    {
+        /**
+         * Method that should implement the listen functionality.
+         *
+         * @return void
+         */
+        public function listen();
+    }
+    /**
+     * Interface Message.
+     */
+    interface Message
+    {
+        /**
+         * Retrieves the message body.
+         *
+         * @return string Message.
+         */
+        public function body();
+    }
+    /**
+     * Interface MessagePresenter.
+     */
+    interface MessagePresenter
+    {
+        /**
+         * Renders the message.
+         *
+         * @return void
+         */
+        public function renderMessage();
+    }
+    /**
+     * Interface Requirement.
+     */
+    interface Requirement
+    {
+        /**
+         * Retrieves the component name defined for the requirement.
+         *
+         * @return string The component name.
+         */
+        public function component();
+        /**
+         * Gets the components version defined for the requirement.
+         *
+         * @return string
+         */
+        public function version();
+        /**
+         * Gets the operator to use when comparing version numbers.
+         *
+         * @return string The comparison operator.
+         */
+        public function operator();
+    }
+    /**
+     * An interface that represents a version detector and message.
+     */
+    interface VersionDetector
+    {
+        /**
+         * Detects the version of the installed software.
+         *
+         * @return string
+         */
+        public function detect();
+        /**
+         * Returns the message that should be shown if a version is not deemed appropriate by the implementation.
+         *
+         * @return string
+         */
+        public function getMessage();
+    }
+}
+namespace Yoast\WHIPv2 {
+    /**
+     * A class to dismiss messages.
+     */
+    class MessageDismisser
+    {
+        /**
+         * Storage object to manage the dismissal state.
+         *
+         * @var DismissStorage
+         */
+        protected $storage;
+        /**
+         * The current time.
+         *
+         * @var int
+         */
+        protected $currentTime;
+        /**
+         * The number of seconds the message will be dismissed.
+         *
+         * @var int
+         */
+        protected $threshold;
+        /**
+         * MessageDismisser constructor.
+         *
+         * @param int            $currentTime The current time.
+         * @param int            $threshold   The number of seconds the message will be dismissed.
+         * @param DismissStorage $storage     Storage object to manage the dismissal state.
+         */
+        public function __construct($currentTime, $threshold, \Yoast\WHIPv2\Interfaces\DismissStorage $storage)
+        {
+        }
+        /**
+         * Saves the version number to the storage to indicate the message as being dismissed.
+         *
+         * @return void
+         */
+        public function dismiss()
+        {
+        }
+        /**
+         * Checks if the current time is lower than the stored time extended by the threshold.
+         *
+         * @return bool True when current time is lower than stored value + threshold.
+         */
+        public function isDismissed()
+        {
+        }
+        /**
+         * Checks the nonce.
+         *
+         * @param string $nonce  The nonce to check.
+         * @param string $action The action to check.
+         *
+         * @return bool True when the nonce is valid.
+         */
+        public function verifyNonce($nonce, $action)
+        {
+        }
+    }
+    /**
+     * A helper class to format messages.
+     */
+    final class MessageFormatter
+    {
+        /**
+         * Wraps a piece of text in HTML strong tags.
+         *
+         * @param string $toWrap The text to wrap.
+         *
+         * @return string The wrapped text.
+         */
+        public static function strong($toWrap)
+        {
+        }
+        /**
+         * Wraps a piece of text in HTML p tags.
+         *
+         * @param string $toWrap The text to wrap.
+         *
+         * @return string The wrapped text.
+         */
+        public static function paragraph($toWrap)
+        {
+        }
+        /**
+         * Wraps a piece of text in HTML p and strong tags.
+         *
+         * @param string $toWrap The text to wrap.
+         *
+         * @return string The wrapped text.
+         */
+        public static function strongParagraph($toWrap)
+        {
+        }
+    }
+}
+namespace Yoast\WHIPv2\Messages {
+    /**
+     * Class BasicMessage.
+     */
+    class BasicMessage implements \Yoast\WHIPv2\Interfaces\Message
+    {
+        /**
+         * Message body.
+         *
+         * @var string
+         */
+        private $body;
+        /**
+         * Message constructor.
+         *
+         * @param string $body Message body.
+         */
+        public function __construct($body)
+        {
+        }
+        /**
+         * Retrieves the message body.
+         *
+         * @return string Message.
+         */
+        public function body()
+        {
+        }
+        /**
+         * Validates the parameters passed to the constructor of this class.
+         *
+         * @param string $body Message body.
+         *
+         * @return void
+         *
+         * @throws EmptyProperty When the $body parameter is empty.
+         * @throws InvalidType   When the $body parameter is not of the expected type.
+         */
+        private function validateParameters($body)
+        {
+        }
+    }
+    /**
+     * Class HostMessage.
+     */
+    class HostMessage implements \Yoast\WHIPv2\Interfaces\Message
+    {
+        /**
+         * Text domain to use for translations.
+         *
+         * @var string
+         */
+        private $textdomain;
+        /**
+         * The environment key to use to retrieve the message from.
+         *
+         * @var string
+         */
+        private $messageKey;
+        /**
+         * Message constructor.
+         *
+         * @param string $messageKey The environment key to use to retrieve the message from.
+         * @param string $textdomain The text domain to use for translations.
+         */
+        public function __construct($messageKey, $textdomain)
+        {
+        }
+        /**
+         * Retrieves the message body.
+         *
+         * @return string The message body.
+         */
+        public function body()
+        {
+        }
+        /**
+         * Renders the message title.
+         *
+         * @return string The message title.
+         */
+        public function title()
+        {
+        }
+    }
+    /**
+     * Class Whip_InvalidVersionMessage.
+     *
+     * @phpcs:disable Yoast.NamingConventions.ObjectNameDepth.MaxExceeded -- Name should be descriptive and was historically (before namespacing) already set to this.
+     */
+    class InvalidVersionRequirementMessage implements \Yoast\WHIPv2\Interfaces\Message
+    {
+        /**
+         * Object containing the version requirement for a component.
+         *
+         * @var VersionRequirement
+         */
+        private $requirement;
+        /**
+         * Detected version requirement or -1 if not found.
+         *
+         * @var string|int
+         */
+        private $detected;
+        /**
+         * InvalidVersionRequirementMessage constructor.
+         *
+         * @param VersionRequirement $requirement Object containing the version requirement for a component.
+         * @param string|int         $detected    Detected version requirement or -1 if not found.
+         */
+        public function __construct(\Yoast\WHIPv2\VersionRequirement $requirement, $detected)
+        {
+        }
+        /**
+         * Retrieves the message body.
+         *
+         * @return string Message.
+         */
+        public function body()
+        {
+        }
+    }
+    /**
+     * Class NullMessage.
+     */
+    class NullMessage implements \Yoast\WHIPv2\Interfaces\Message
+    {
+        /**
+         * Retrieves the message body.
+         *
+         * @return string Message.
+         */
+        public function body()
+        {
+        }
+    }
+    /**
+     * Class UpgradePhpMessage
+     */
+    class UpgradePhpMessage implements \Yoast\WHIPv2\Interfaces\Message
+    {
+        /**
+         * The text domain to use for the translations.
+         *
+         * @var string
+         */
+        private $textdomain;
+        /**
+         * UpgradePhpMessage constructor.
+         *
+         * @param string $textdomain The text domain to use for the translations.
+         */
+        public function __construct($textdomain)
+        {
+        }
+        /**
+         * Retrieves the message body to display.
+         *
+         * @return string The message to display.
+         */
+        public function body()
+        {
+        }
+    }
+}
+namespace Yoast\WHIPv2 {
+    /**
+     * Manages messages using a global to prevent duplicate messages.
+     */
+    class MessagesManager
+    {
+        /**
+         * MessagesManager constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Adds a message to the Messages Manager.
+         *
+         * @param Message $message The message to add.
+         *
+         * @return void
+         */
+        public function addMessage(\Yoast\WHIPv2\Interfaces\Message $message)
+        {
+        }
+        /**
+         * Determines whether or not there are messages available.
+         *
+         * @return bool Whether or not there are messages available.
+         */
+        public function hasMessages()
+        {
+        }
+        /**
+         * Lists the messages that are currently available.
+         *
+         * @return array<Message> The messages that are currently set.
+         */
+        public function listMessages()
+        {
+        }
+        /**
+         * Deletes all messages.
+         *
+         * @return void
+         */
+        public function deleteMessages()
+        {
+        }
+        /**
+         * Gets the latest message.
+         *
+         * @return Message The message. Returns a NullMessage if none is found.
+         */
+        public function getLatestMessage()
+        {
+        }
+        /**
+         * Sorts the list of messages based on the version number.
+         *
+         * @param array<Message> $messages The list of messages to sort.
+         *
+         * @return array<Message> The sorted list of messages.
+         */
+        private function sortByVersion(array $messages)
+        {
+        }
+    }
+}
+namespace Yoast\WHIPv2\Presenters {
+    /**
+     * A message presenter to show a WordPress notice.
+     *
+     * @phpcs:disable Yoast.NamingConventions.ObjectNameDepth.MaxExceeded -- Sniff does not count acronyms correctly.
+     */
+    class WPMessagePresenter implements \Yoast\WHIPv2\Interfaces\MessagePresenter
+    {
+        /**
+         * The string to show to dismiss the message.
+         *
+         * @var string
+         */
+        private $dismissMessage;
+        /**
+         * The message to be displayed.
+         *
+         * @var Message
+         */
+        private $message;
+        /**
+         * Dismisser object.
+         *
+         * @var MessageDismisser
+         */
+        private $dismisser;
+        /**
+         * WPMessagePresenter constructor.
+         *
+         * @param Message          $message        The message to use in the presenter.
+         * @param MessageDismisser $dismisser      Dismisser object.
+         * @param string           $dismissMessage The copy to show to dismiss the message.
+         */
+        public function __construct(\Yoast\WHIPv2\Interfaces\Message $message, \Yoast\WHIPv2\MessageDismisser $dismisser, $dismissMessage)
+        {
+        }
+        /**
+         * Registers hooks to WordPress.
+         *
+         * This is a separate function so you can control when the hooks are registered.
+         *
+         * @return void
+         */
+        public function registerHooks()
+        {
+        }
+        /**
+         * Renders the messages present in the global to notices.
+         *
+         * @return void
+         */
+        public function renderMessage()
+        {
+        }
+        /**
+         * Removes content from the message that we don't want to show.
+         *
+         * @param string $message The message to clean.
+         *
+         * @return string The cleaned message.
+         */
+        public function kses($message)
+        {
+        }
+    }
+}
+namespace Yoast\WHIPv2 {
+    /**
+     * Main controller class to require a certain version of software.
+     */
+    class RequirementsChecker
+    {
+        /**
+         * Requirements the environment should comply with.
+         *
+         * @var array<Requirement>
+         */
+        private $requirements;
+        /**
+         * The configuration to check.
+         *
+         * @var Configuration
+         */
+        private $configuration;
+        /**
+         * Message Manager.
+         *
+         * @var MessagesManager
+         */
+        private $messageManager;
+        /**
+         * The text domain to use for translations.
+         *
+         * @var string
+         */
+        private $textdomain;
+        /**
+         * RequirementsChecker constructor.
+         *
+         * @param array<string, string> $configuration The configuration to check.
+         * @param string                $textdomain    The text domain to use for translations.
+         *
+         * @throws InvalidType When the $configuration parameter is not of the expected type.
+         */
+        public function __construct($configuration = array(), $textdomain = 'default')
+        {
+        }
+        /**
+         * Adds a requirement to the list of requirements if it doesn't already exist.
+         *
+         * @param Requirement $requirement The requirement to add.
+         *
+         * @return void
+         */
+        public function addRequirement(\Yoast\WHIPv2\Interfaces\Requirement $requirement)
+        {
+        }
+        /**
+         * Determines whether or not there are requirements available.
+         *
+         * @return bool Whether or not there are requirements.
+         */
+        public function hasRequirements()
+        {
+        }
+        /**
+         * Gets the total amount of requirements.
+         *
+         * @return int The total amount of requirements.
+         */
+        public function totalRequirements()
+        {
+        }
+        /**
+         * Determines whether or not a requirement exists for a particular component.
+         *
+         * @param string $component The component to check for.
+         *
+         * @return bool Whether or not the component has a requirement defined.
+         */
+        public function requirementExistsForComponent($component)
+        {
+        }
+        /**
+         * Determines whether a requirement has been fulfilled.
+         *
+         * @param Requirement $requirement The requirement to check.
+         *
+         * @return bool Whether or not the requirement is fulfilled.
+         */
+        private function requirementIsFulfilled(\Yoast\WHIPv2\Interfaces\Requirement $requirement)
+        {
+        }
+        /**
+         * Checks if all requirements are fulfilled and adds a message to the message manager if necessary.
+         *
+         * @return void
+         */
+        public function check()
+        {
+        }
+        /**
+         * Adds a message to the message manager for requirements that cannot be fulfilled.
+         *
+         * @param Requirement $requirement The requirement that cannot be fulfilled.
+         *
+         * @return void
+         */
+        private function addMissingRequirementMessage(\Yoast\WHIPv2\Interfaces\Requirement $requirement)
+        {
+        }
+        /**
+         * Determines whether or not there are messages available.
+         *
+         * @return bool Whether or not there are messages to display.
+         */
+        public function hasMessages()
+        {
+        }
+        /**
+         * Gets the most recent message from the message manager.
+         *
+         * @return Message The latest message.
+         */
+        public function getMostRecentMessage()
+        {
+        }
+    }
+    /**
+     * A value object containing a version requirement for a component version.
+     */
+    class VersionRequirement implements \Yoast\WHIPv2\Interfaces\Requirement
+    {
+        /**
+         * The component name.
+         *
+         * @var string
+         */
+        private $component;
+        /**
+         * The component version.
+         *
+         * @var string
+         */
+        private $version;
+        /**
+         * The operator to use when comparing version.
+         *
+         * @var string
+         */
+        private $operator;
+        /**
+         * Requirement constructor.
+         *
+         * @param string $component The component name.
+         * @param string $version   The component version.
+         * @param string $operator  The operator to use when comparing version.
+         */
+        public function __construct($component, $version, $operator = '=')
+        {
+        }
+        /**
+         * Retrieves the component name defined for the requirement.
+         *
+         * @return string The component name.
+         */
+        public function component()
+        {
+        }
+        /**
+         * Gets the components version defined for the requirement.
+         *
+         * @return string
+         */
+        public function version()
+        {
+        }
+        /**
+         * Gets the operator to use when comparing version numbers.
+         *
+         * @return string The comparison operator.
+         */
+        public function operator()
+        {
+        }
+        /**
+         * Creates a new version requirement from a comparison string.
+         *
+         * @param string $component        The component for this version requirement.
+         * @param string $comparisonString The comparison string for this version requirement.
+         *
+         * @return VersionRequirement The parsed version requirement.
+         *
+         * @throws InvalidVersionComparisonString When an invalid version comparison string is passed.
+         */
+        public static function fromCompareString($component, $comparisonString)
+        {
+        }
+        /**
+         * Validates the parameters passed to the requirement.
+         *
+         * @param string $component The component name.
+         * @param string $version   The component version.
+         * @param string $operator  The operator to use when comparing version.
+         *
+         * @return void
+         *
+         * @throws EmptyProperty       When any of the parameters is empty.
+         * @throws InvalidOperatorType When the $operator parameter is invalid.
+         * @throws InvalidType         When any of the parameters is not of the expected type.
+         */
+        private function validateParameters($component, $version, $operator)
+        {
+        }
+    }
+    /**
+     * Represents the WordPress option for saving the dismissed messages.
+     *
+     * @phpcs:disable Yoast.NamingConventions.ObjectNameDepth.MaxExceeded -- Sniff does not count acronyms correctly.
+     */
+    class WPDismissOption implements \Yoast\WHIPv2\Interfaces\DismissStorage
+    {
+        /**
+         * WordPress option name.
+         *
+         * @var string
+         */
+        protected $optionName = 'whip_dismiss_timestamp';
+        /**
+         * Saves the value to the options.
+         *
+         * @param int $dismissedValue The value to save.
+         *
+         * @return bool True when successful.
+         */
+        public function set($dismissedValue)
+        {
+        }
+        /**
+         * Returns the value of the whip_dismissed option.
+         *
+         * @return int Returns the value of the option or an empty string when not set.
+         */
+        public function get()
+        {
+        }
+    }
+    /**
+     * Listener for dismissing a message.
+     *
+     * @phpcs:disable Yoast.NamingConventions.ObjectNameDepth.MaxExceeded -- Sniff does not count acronyms correctly.
+     */
+    class WPMessageDismissListener implements \Yoast\WHIPv2\Interfaces\Listener
+    {
+        /**
+         * The name of the dismiss action expected to be passed via $_GET.
+         *
+         * @var string
+         */
+        const ACTION_NAME = 'whip_dismiss';
+        /**
+         * The object for dismissing a message.
+         *
+         * @var MessageDismisser
+         */
+        protected $dismisser;
+        /**
+         * Sets the dismisser attribute.
+         *
+         * @param MessageDismisser $dismisser The object for dismissing a message.
+         */
+        public function __construct(\Yoast\WHIPv2\MessageDismisser $dismisser)
+        {
+        }
+        /**
+         * Listens to a GET request to fetch the required attributes.
+         *
+         * @return void
+         */
+        public function listen()
+        {
+        }
+        /**
+         * Creates an url for dismissing the notice.
+         *
+         * @return string The url for dismissing the message.
+         */
+        public function getDismissURL()
+        {
+        }
+    }
+}
 namespace {
     /**
      * An interface for registering integrations with WordPress.
@@ -44,6 +1014,8 @@ namespace {
         }
         /**
          * Checks and overwrites the wp_settings_errors global to determine whether the Yoast SEO settings have been saved.
+         *
+         * @return void
          */
         public function intercept_save_update_notification()
         {
@@ -68,6 +1040,8 @@ namespace {
         }
         /**
          * Renders a success message if the Yoast SEO settings have been saved.
+         *
+         * @return void
          */
         public function show_success_message()
         {
@@ -93,6 +1067,8 @@ namespace {
         }
         /**
          * Parse the shortcodes.
+         *
+         * @return void
          */
         public function do_filter()
         {
@@ -114,19 +1090,19 @@ namespace {
          *
          * @var string
          */
-        const FOR_USER = 'user_meta';
+        public const FOR_USER = 'user_meta';
         /**
          * Notice type toggle value for network notices.
          *
          * @var string
          */
-        const FOR_NETWORK = 'site_option';
+        public const FOR_NETWORK = 'site_option';
         /**
          * Notice type toggle value for site notices.
          *
          * @var string
          */
-        const FOR_SITE = 'option';
+        public const FOR_SITE = 'option';
         /**
          * Name of the notice that will be dismissed.
          *
@@ -150,12 +1126,16 @@ namespace {
         }
         /**
          * Handles the dismiss notice request.
+         *
+         * @return void
          */
         public function dismiss_notice()
         {
         }
         /**
          * Storing the dismissed value in the database. The target location is based on the set notification type.
+         *
+         * @return void
          */
         private function save_dismissed()
         {
@@ -191,6 +1171,8 @@ namespace {
         }
         /**
          * Handles the dismiss notice request.
+         *
+         * @return void
          */
         public function dismiss_notice()
         {
@@ -217,6 +1199,8 @@ namespace {
          * Storing the conflicting plugins as an user option in the database.
          *
          * @param string $plugin_section Plugin conflict type (such as Open Graph or sitemap).
+         *
+         * @return void
          */
         private function save_dismissed_conflicts($plugin_section)
         {
@@ -225,6 +1209,8 @@ namespace {
          * Loop through the plugins to compare them with the already stored dismissed plugin conflicts.
          *
          * @param array $posted_plugins Plugin set to check.
+         *
+         * @return void
          */
         public function compare_plugins(array $posted_plugins)
         {
@@ -233,6 +1219,8 @@ namespace {
          * Check if plugin is already dismissed, if not store it in the array that will be saved later.
          *
          * @param string $posted_plugin Plugin to check against dismissed conflicts.
+         *
+         * @return void
          */
         private function compare_plugin($posted_plugin)
         {
@@ -293,6 +1281,8 @@ namespace {
          * @param string $capability Capability to register.
          * @param array  $roles      Roles to add the capability to.
          * @param bool   $overwrite  Optional. Use add or overwrite as registration method.
+         *
+         * @return void
          */
         public function register($capability, array $roles, $overwrite = \false)
         {
@@ -400,6 +1390,8 @@ namespace {
          * Add capabilities to its own group in the Members plugin.
          *
          * @see members_register_cap_group()
+         *
+         * @return void
          */
         public function action_members_register_cap_group()
         {
@@ -695,7 +1687,7 @@ namespace {
          *
          * @var string
          */
-        const DEFAULT_URL = 'http://localhost:8080';
+        public const DEFAULT_URL = 'http://localhost:8080';
         /**
          * Holds the url where the server is located.
          *
@@ -751,7 +1743,7 @@ namespace {
          *
          * @var string
          */
-        const PREFIX = 'yoast-seo-';
+        public const PREFIX = 'yoast-seo-';
         /**
          * Class that manages the assets' location.
          *
@@ -770,13 +1762,15 @@ namespace {
          * @param WPSEO_Admin_Asset_Location|null $asset_location The provider of the asset location.
          * @param string                          $prefix         The prefix for naming assets.
          */
-        public function __construct(\WPSEO_Admin_Asset_Location $asset_location = \null, $prefix = self::PREFIX)
+        public function __construct(?\WPSEO_Admin_Asset_Location $asset_location = \null, $prefix = self::PREFIX)
         {
         }
         /**
          * Enqueues scripts.
          *
          * @param string $script The name of the script to enqueue.
+         *
+         * @return void
          */
         public function enqueue_script($script)
         {
@@ -785,12 +1779,16 @@ namespace {
          * Enqueues styles.
          *
          * @param string $style The name of the style to enqueue.
+         *
+         * @return void
          */
         public function enqueue_style($style)
         {
         }
         /**
          * Enqueues the appropriate language for the user.
+         *
+         * @return void
          */
         public function enqueue_user_language_script()
         {
@@ -799,6 +1797,8 @@ namespace {
          * Registers scripts based on it's parameters.
          *
          * @param WPSEO_Admin_Asset $script The script to register.
+         *
+         * @return void
          */
         public function register_script(\WPSEO_Admin_Asset $script)
         {
@@ -807,12 +1807,16 @@ namespace {
          * Registers styles based on it's parameters.
          *
          * @param WPSEO_Admin_Asset $style The style to register.
+         *
+         * @return void
          */
         public function register_style(\WPSEO_Admin_Asset $style)
         {
         }
         /**
          * Calls the functions that register scripts and styles with the scripts and styles to be registered as arguments.
+         *
+         * @return void
          */
         public function register_assets()
         {
@@ -821,6 +1825,8 @@ namespace {
          * Registers all the scripts passed to it.
          *
          * @param array $scripts The scripts passed to it.
+         *
+         * @return void
          */
         public function register_scripts($scripts)
         {
@@ -829,6 +1835,8 @@ namespace {
          * Registers all the styles it receives.
          *
          * @param array $styles Styles that need to be registered.
+         *
+         * @return void
          */
         public function register_styles($styles)
         {
@@ -839,6 +1847,8 @@ namespace {
          * @param string $handle      The script handle.
          * @param string $object_name The object name.
          * @param array  $data        The l10n data.
+         *
+         * @return void
          */
         public function localize_script($handle, $object_name, $data)
         {
@@ -849,6 +1859,8 @@ namespace {
          * @param string $handle   The script handle.
          * @param string $data     The l10n data.
          * @param string $position Optional. Whether to add the inline script before the handle or after.
+         *
+         * @return void
          */
         public function add_inline_script($handle, $data, $position = 'after')
         {
@@ -1013,60 +2025,6 @@ namespace {
          * @return string The path to the asset file.
          */
         protected function get_path(\WPSEO_Admin_Asset $asset, $type)
-        {
-        }
-    }
-    /**
-     * WPSEO plugin file.
-     *
-     * @package WPSEO\Admin
-     */
-    /**
-     * Localizes JavaScript files.
-     *
-     * @codeCoverageIgnore
-     * @deprecated 18.0
-     */
-    final class WPSEO_Admin_Asset_Yoast_Components_L10n
-    {
-        /**
-         * Represents the asset manager.
-         *
-         * @var WPSEO_Admin_Asset_Manager
-         */
-        protected $asset_manager;
-        /**
-         * WPSEO_Admin_Asset_Yoast_Components_L10n constructor.
-         *
-         * @codeCoverageIgnore
-         * @deprecated 18.0
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Localizes the given script with the JavaScript translations.
-         *
-         * @codeCoverageIgnore
-         * @deprecated 18.0
-         *
-         * @param string $script_handle The script handle to localize for.
-         *
-         * @return void
-         */
-        public function localize_script($script_handle)
-        {
-        }
-        /**
-         * Returns translations necessary for JS files.
-         *
-         * @codeCoverageIgnore
-         * @deprecated 18.0
-         *
-         * @param string $component The component to retrieve the translations for.
-         * @return object|null The translations in a Jed format for JS files.
-         */
-        protected function get_translations($component)
         {
         }
     }
@@ -1364,6 +2322,8 @@ namespace {
         }
         /**
          * Enqueue our styling for dismissible yoast notifications.
+         *
+         * @return void
          */
         public function enqueue_dismissible()
         {
@@ -1410,12 +2370,16 @@ namespace {
         }
         /**
          * Determine whether we should load the meta box class and if so, load it.
+         *
+         * @return void
          */
         private function load_meta_boxes()
         {
         }
         /**
          * Determine if we should load our taxonomy edit class and if so, load it.
+         *
+         * @return void
          */
         private function load_taxonomy_class()
         {
@@ -1424,6 +2388,8 @@ namespace {
          * Determine if we should load our admin pages class and if so, load it.
          *
          * Loads admin page class for all admin pages starting with `wpseo_`.
+         *
+         * @return void
          */
         private function load_admin_user_class()
         {
@@ -1432,12 +2398,16 @@ namespace {
          * Determine if we should load our admin pages class and if so, load it.
          *
          * Loads admin page class for all admin pages starting with `wpseo_`.
+         *
+         * @return void
          */
         private function load_admin_page_class()
         {
         }
         /**
          * Loads the plugin suggestions.
+         *
+         * @return void
          */
         private function load_plugin_suggestions()
         {
@@ -1452,12 +2422,16 @@ namespace {
         }
         /**
          * See if we should start our XML Sitemaps Admin class.
+         *
+         * @return void
          */
         private function load_xml_sitemaps_admin()
         {
         }
         /**
          * Shows deprecation warnings to the user if a plugin has registered a filter we have deprecated.
+         *
+         * @return void
          */
         public function show_hook_deprecation_warnings()
         {
@@ -1472,6 +2446,8 @@ namespace {
         }
         /**
          * Shows a notice on the permalink settings page.
+         *
+         * @return void
          */
         public function permalink_settings_notice()
         {
@@ -1479,7 +2455,7 @@ namespace {
         /**
          * Adds a custom Yoast section within the Classic Editor publish box.
          *
-         * @param \WP_Post $post The current post object.
+         * @param WP_Post $post The current post object.
          *
          * @return void
          */
@@ -1632,6 +2608,8 @@ namespace {
          * @param int    $meta_id   The ID of the meta option changed.
          * @param int    $object_id The ID of the user.
          * @param string $meta_key  The key of the meta field changed.
+         *
+         * @return void
          */
         public function clear_author_sitemap_cache($meta_id, $object_id, $meta_key)
         {
@@ -1639,7 +2617,12 @@ namespace {
         /**
          * Updates the user metas that (might) have been set on the user profile page.
          *
+         * @deprecated 22.6
+         * @codeCoverageIgnore
+         *
          * @param int $user_id User ID of the updated user.
+         *
+         * @return void
          */
         public function process_user_option_update($user_id)
         {
@@ -1647,7 +2630,12 @@ namespace {
         /**
          * Add the inputs needed for SEO values to the User Profile page.
          *
+         * @deprecated 23.4
+         * @codeCoverageIgnore
+         *
          * @param WP_User $user User instance to output for.
+         *
+         * @return void
          */
         public function user_profile($user)
         {
@@ -1714,7 +2702,7 @@ namespace {
          *
          * @var string
          */
-        const PAGE_IDENTIFIER = 'wpseo_dashboard';
+        public const PAGE_IDENTIFIER = 'wpseo_dashboard';
         /**
          * Array of classes that add admin functionality.
          *
@@ -1729,6 +2717,8 @@ namespace {
         }
         /**
          * Schedules a rewrite flush to happen at shutdown.
+         *
+         * @return void
          */
         public function schedule_rewrite_flush()
         {
@@ -1743,6 +2733,8 @@ namespace {
         }
         /**
          * Register assets needed on admin pages.
+         *
+         * @return void
          */
         public function enqueue_assets()
         {
@@ -1757,6 +2749,8 @@ namespace {
         }
         /**
          * Maps the manage_options cap on saving an options page to wpseo_manage_options.
+         *
+         * @return void
          */
         public function map_manage_options_cap()
         {
@@ -1764,6 +2758,8 @@ namespace {
         /**
          * Adds the ability to choose how many posts are displayed per page
          * on the bulk edit pages.
+         *
+         * @return void
          */
         public function bulk_edit_options()
         {
@@ -1793,12 +2789,16 @@ namespace {
         }
         /**
          * Enqueues the (tiny) global JS needed for the plugin.
+         *
+         * @return void
          */
         public function config_page_scripts()
         {
         }
         /**
          * Enqueues the (tiny) global stylesheet needed for the plugin.
+         *
+         * @return void
          */
         public function enqueue_global_style()
         {
@@ -1808,15 +2808,20 @@ namespace {
          *
          * These are used with the Facebook author, rel="author" and Twitter cards implementation.
          *
-         * @param array $contactmethods Currently set contactmethods.
+         * @deprecated 22.6
+         * @codeCoverageIgnore
          *
-         * @return array Contactmethods with added contactmethods.
+         * @param array<string, string> $contactmethods Currently set contactmethods.
+         *
+         * @return array<string, string> Contactmethods with added contactmethods.
          */
         public function update_contactmethods($contactmethods)
         {
         }
         /**
          * Log the updated timestamp for user profiles when theme is changed.
+         *
+         * @return void
          */
         public function switch_theme()
         {
@@ -1827,12 +2832,6 @@ namespace {
          * @return array
          */
         private function localize_admin_global_script()
-        {
-        }
-        /**
-         * Sets the upsell notice.
-         */
-        protected function set_upsell_notice()
         {
         }
         /**
@@ -1867,57 +2866,57 @@ namespace {
          *
          * @var string
          */
-        const TYPE_JS = 'js';
+        public const TYPE_JS = 'js';
         /**
          * Constant used to identify file type as a CSS file.
          *
          * @var string
          */
-        const TYPE_CSS = 'css';
+        public const TYPE_CSS = 'css';
         /**
          * The name option identifier.
          *
          * @var string
          */
-        const NAME = 'name';
+        public const NAME = 'name';
         /**
          * The source option identifier.
          *
          * @var string
          */
-        const SRC = 'src';
+        public const SRC = 'src';
         /**
          * The dependencies option identifier.
          *
          * @var string
          */
-        const DEPS = 'deps';
+        public const DEPS = 'deps';
         /**
          * The version option identifier.
          *
          * @var string
          */
-        const VERSION = 'version';
+        public const VERSION = 'version';
         /* Style specific. */
         /**
          * The media option identifier.
          *
          * @var string
          */
-        const MEDIA = 'media';
+        public const MEDIA = 'media';
         /**
          * The rtl option identifier.
          *
          * @var string
          */
-        const RTL = 'rtl';
+        public const RTL = 'rtl';
         /* Script specific. */
         /**
          * The "in footer" option identifier.
          *
          * @var string
          */
-        const IN_FOOTER = 'in_footer';
+        public const IN_FOOTER = 'in_footer';
         /**
          * Asset identifier.
          *
@@ -1957,6 +2956,12 @@ namespace {
          */
         protected $in_footer;
         /**
+         * For JS Assets. The script's async/defer strategy.
+         *
+         * @var string
+         */
+        protected $strategy;
+        /**
          * For CSS Assets. Whether this stylesheet is a right-to-left stylesheet.
          *
          * @var bool
@@ -1973,7 +2978,7 @@ namespace {
          *
          * @var array
          */
-        private $defaults = ['deps' => [], 'in_footer' => \true, 'rtl' => \true, 'media' => 'all', 'version' => '', 'suffix' => ''];
+        private $defaults = ['deps' => [], 'in_footer' => \true, 'rtl' => \true, 'media' => 'all', 'version' => '', 'suffix' => '', 'strategy' => ''];
         /**
          * Constructs an instance of the WPSEO_Admin_Asset class.
          *
@@ -2030,6 +3035,14 @@ namespace {
          * @return bool
          */
         public function is_in_footer()
+        {
+        }
+        /**
+         * Returns the script asset's async/defer loading strategy.
+         *
+         * @return string
+         */
+        public function get_strategy()
         {
         }
         /**
@@ -2146,6 +3159,14 @@ namespace {
          */
         protected $input_fields = [];
         /**
+         * The field in the database where meta field is saved.
+         *
+         * Should be set in the child class.
+         *
+         * @var string
+         */
+        protected $target_db_field = '';
+        /**
          * Class constructor.
          *
          * @param array $args The arguments.
@@ -2155,12 +3176,16 @@ namespace {
         }
         /**
          * Prepares the data and renders the page.
+         *
+         * @return void
          */
         public function show_page()
         {
         }
         /**
          * Used in the constructor to build a reference list of post types the current user can edit.
+         *
+         * @return void
          */
         protected function populate_editable_post_types()
         {
@@ -2169,6 +3194,8 @@ namespace {
          * Will show the navigation for the table like page navigation and page filter.
          *
          * @param string $which Table nav location (such as top).
+         *
+         * @return void
          */
         public function display_tablenav($which)
         {
@@ -2197,6 +3224,8 @@ namespace {
          * Outputs extra table navigation.
          *
          * @param string $which Table nav location (such as top).
+         *
+         * @return void
          */
         public function extra_tablenav($which)
         {
@@ -2213,12 +3242,16 @@ namespace {
         }
         /**
          * Sets the correct pagenumber and pageurl for the navigation.
+         *
+         * @return void
          */
         public function prepare_page_navigation()
         {
         }
         /**
          * Preparing the requested pagerows and setting the needed variables.
+         *
+         * @return void
          */
         public function prepare_items()
         {
@@ -2233,6 +3266,8 @@ namespace {
         }
         /**
          * Setting the column headers.
+         *
+         * @return void
          */
         protected function set_column_headers()
         {
@@ -2263,6 +3298,8 @@ namespace {
          * Total items is the number of all visible items.
          *
          * @param int $total_items Total items counts.
+         *
+         * @return void
          */
         protected function set_pagination($total_items)
         {
@@ -2308,6 +3345,8 @@ namespace {
          * Getting all the items.
          *
          * @param string $query SQL query to use.
+         *
+         * @return void
          */
         protected function get_items($query)
         {
@@ -2322,6 +3361,8 @@ namespace {
         }
         /**
          * Based on $this->items and the defined columns, the table rows will be displayed.
+         *
+         * @return void
          */
         public function display_rows()
         {
@@ -2377,6 +3418,8 @@ namespace {
          *
          * This method will loop through the current items ($this->items) for getting the post_id. With this data
          * ($needed_ids) the method will query the meta-data table for getting the title.
+         *
+         * @return void
          */
         protected function get_meta_data()
         {
@@ -2403,6 +3446,8 @@ namespace {
          * Setting $this->meta_data.
          *
          * @param array $meta_data Meta data set.
+         *
+         * @return void
          */
         protected function parse_meta_data($meta_data)
         {
@@ -2538,6 +3583,8 @@ namespace {
          * Adds a collection object to the collections.
          *
          * @param WPSEO_Collection $collection The collection object to add.
+         *
+         * @return void
          */
         public function add_collection(\WPSEO_Collection $collection)
         {
@@ -2586,35 +3633,32 @@ namespace {
         }
         /**
          * Make sure the needed scripts are loaded for admin pages.
+         *
+         * @return void
          */
         public function init()
         {
         }
         /**
          * Loads the required styles for the config page.
+         *
+         * @return void
          */
         public function config_page_styles()
         {
         }
         /**
          * Loads the required scripts for the config page.
+         *
+         * @return void
          */
         public function config_page_scripts()
         {
         }
         /**
-         * Retrieves some variables that are needed for replacing variables in JS.
-         *
-         * @deprecated 20.3
-         * @codeCoverageIgnore
-         *
-         * @return array The replacement and recommended replacement variables.
-         */
-        public function get_replace_vars_script_data()
-        {
-        }
-        /**
          * Enqueues and handles all the tool dependencies.
+         *
+         * @return void
          */
         private function enqueue_tools_scripts()
         {
@@ -2625,133 +3669,6 @@ namespace {
          * @return string The shortlink for the Webinar.
          */
         private function get_webinar_shortlink()
-        {
-        }
-    }
-    /**
-     * WPSEO plugin file.
-     *
-     * @package WPSEO\Admin\Customizer
-     */
-    /**
-     * Class with functionality to support WP SEO settings in WordPress Customizer.
-     */
-    class WPSEO_Customizer
-    {
-        /**
-         * Holds the customize manager.
-         *
-         * @var WP_Customize_Manager
-         */
-        protected $wp_customize;
-        /**
-         * Template for the setting IDs used for the customizer.
-         *
-         * @var string
-         */
-        private $setting_template = 'wpseo_titles[%s]';
-        /**
-         * Default arguments for the breadcrumbs customizer settings object.
-         *
-         * @var array
-         */
-        private $default_setting_args = ['default' => '', 'type' => 'option', 'transport' => 'refresh'];
-        /**
-         * Default arguments for the breadcrumbs customizer control object.
-         *
-         * @var array
-         */
-        private $default_control_args = ['label' => '', 'type' => 'text', 'section' => 'wpseo_breadcrumbs_customizer_section', 'settings' => '', 'context' => ''];
-        /**
-         * Construct Method.
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Function to support WordPress Customizer.
-         *
-         * @param WP_Customize_Manager $wp_customize Manager class instance.
-         */
-        public function wpseo_customize_register($wp_customize)
-        {
-        }
-        /**
-         * Add the breadcrumbs section to the customizer.
-         */
-        private function breadcrumbs_section()
-        {
-        }
-        /**
-         * Returns whether or not the breadcrumbs are active.
-         *
-         * @return bool
-         */
-        public function breadcrumbs_active_callback()
-        {
-        }
-        /**
-         * Adds the breadcrumbs show blog checkbox.
-         */
-        private function breadcrumbs_blog_show_setting()
-        {
-        }
-        /**
-         * Returns whether or not to show the breadcrumbs blog show option.
-         *
-         * @return bool
-         */
-        public function breadcrumbs_blog_show_active_cb()
-        {
-        }
-        /**
-         * Adds the breadcrumbs separator text field.
-         */
-        private function breadcrumbs_separator_setting()
-        {
-        }
-        /**
-         * Adds the breadcrumbs home anchor text field.
-         */
-        private function breadcrumbs_home_setting()
-        {
-        }
-        /**
-         * Adds the breadcrumbs prefix text field.
-         */
-        private function breadcrumbs_prefix_setting()
-        {
-        }
-        /**
-         * Adds the breadcrumbs archive prefix text field.
-         */
-        private function breadcrumbs_archiveprefix_setting()
-        {
-        }
-        /**
-         * Adds the breadcrumbs search prefix text field.
-         */
-        private function breadcrumbs_searchprefix_setting()
-        {
-        }
-        /**
-         * Adds the breadcrumb 404 prefix text field.
-         */
-        private function breadcrumbs_404_setting()
-        {
-        }
-        /**
-         * Adds the customizer setting and control.
-         *
-         * @param string      $index           Array key index to use for the customizer setting.
-         * @param array       $control_args    Customizer control object arguments.
-         *                                     Only those different from the default need to be passed.
-         * @param string|null $id              Optional. Customizer control object ID.
-         *                                     Will default to 'wpseo-' . $index.
-         * @param array       $custom_settings Optional. Customizer setting arguments.
-         *                                     Only those different from the default need to be passed.
-         */
-        private function add_setting_and_control($index, $control_args, $id = \null, $custom_settings = [])
         {
         }
     }
@@ -2795,6 +3712,12 @@ namespace {
          * @var wpdb
          */
         protected $database;
+        /**
+         * Holds the table prefix.
+         *
+         * @var string
+         */
+        protected $table_prefix;
         /**
          * Sets the class attributes and registers the table.
          *
@@ -2842,7 +3765,7 @@ namespace {
          *
          * @return false|int False when the upsert request is invalid, int on number of rows changed.
          */
-        public function upsert(array $data, array $where = \null, $format = \null, $where_format = \null)
+        public function upsert(array $data, ?array $where = \null, $format = \null, $where_format = \null)
         {
         }
         /**
@@ -2887,12 +3810,16 @@ namespace {
         }
         /**
          * Executed before a query will be ran.
+         *
+         * @return void
          */
         protected function pre_execution()
         {
         }
         /**
          * Executed after a query has been ran.
+         *
+         * @return void
          */
         protected function post_execution()
         {
@@ -2947,7 +3874,7 @@ namespace {
          *
          * @var string
          */
-        const NONCE_ACTION = 'wpseo_export';
+        public const NONCE_ACTION = 'wpseo_export';
         /**
          * Holds the export data.
          *
@@ -2962,24 +3889,32 @@ namespace {
         public $success;
         /**
          * Handles the export request.
+         *
+         * @return void
          */
         public function export()
         {
         }
         /**
          * Outputs the export.
+         *
+         * @return void
          */
         public function output()
         {
         }
         /**
          * Exports the current site's WP SEO settings.
+         *
+         * @return void
          */
         private function export_settings()
         {
         }
         /**
          * Writes the header of the export.
+         *
+         * @return void
          */
         private function export_header()
         {
@@ -2989,6 +3924,8 @@ namespace {
          *
          * @param string $line          Line string.
          * @param bool   $newline_first Boolean flag whether to prepend with new line.
+         *
+         * @return void
          */
         private function write_line($line, $newline_first = \false)
         {
@@ -2997,6 +3934,8 @@ namespace {
          * Writes an entire option group to the export.
          *
          * @param string $opt_group Option group name.
+         *
+         * @return void
          */
         private function write_opt_group($opt_group)
         {
@@ -3006,6 +3945,8 @@ namespace {
          *
          * @param string $key Key string.
          * @param string $val Value string.
+         *
+         * @return void
          */
         private function write_setting($key, $val)
         {
@@ -3026,7 +3967,7 @@ namespace {
          *
          * @var array
          */
-        private $shortlinks = ['shortlinks.advanced.allow_search_engines' => 'https://yoa.st/allow-search-engines', 'shortlinks.advanced.follow_links' => 'https://yoa.st/follow-links', 'shortlinks.advanced.meta_robots' => 'https://yoa.st/meta-robots-advanced', 'shortlinks.advanced.breadcrumbs_title' => 'https://yoa.st/breadcrumbs-title', 'shortlinks.metabox.schema.explanation' => 'https://yoa.st/400', 'shortlinks.metabox.schema.page_type' => 'https://yoa.st/402', 'shortlinks.sidebar.schema.explanation' => 'https://yoa.st/401', 'shortlinks.sidebar.schema.page_type' => 'https://yoa.st/403', 'shortlinks.focus_keyword_info' => 'https://yoa.st/focus-keyword', 'shortlinks.nofollow_sponsored' => 'https://yoa.st/nofollow-sponsored', 'shortlinks.snippet_preview_info' => 'https://yoa.st/snippet-preview', 'shortlinks.cornerstone_content_info' => 'https://yoa.st/1i9', 'shortlinks.upsell.social_preview.facebook' => 'https://yoa.st/social-preview-facebook', 'shortlinks.upsell.social_preview.twitter' => 'https://yoa.st/social-preview-twitter', 'shortlinks.upsell.sidebar.news' => 'https://yoa.st/get-news-sidebar', 'shortlinks.upsell.sidebar.focus_keyword_synonyms_link' => 'https://yoa.st/textlink-synonyms-popup-sidebar', 'shortlinks.upsell.sidebar.focus_keyword_synonyms_button' => 'https://yoa.st/keyword-synonyms-popup-sidebar', 'shortlinks.upsell.sidebar.premium_seo_analysis_button' => 'https://yoa.st/premium-seo-analysis-sidebar', 'shortlinks.upsell.sidebar.focus_keyword_additional_link' => 'https://yoa.st/textlink-keywords-popup-sidebar', 'shortlinks.upsell.sidebar.focus_keyword_additional_button' => 'https://yoa.st/add-keywords-popup-sidebar', 'shortlinks.upsell.sidebar.additional_link' => 'https://yoa.st/textlink-keywords-sidebar', 'shortlinks.upsell.sidebar.additional_button' => 'https://yoa.st/add-keywords-sidebar', 'shortlinks.upsell.sidebar.keyphrase_distribution' => 'https://yoa.st/keyphrase-distribution-sidebar', 'shortlinks.upsell.sidebar.word_complexity' => 'https://yoa.st/word-complexity-sidebar', 'shortlinks.upsell.metabox.news' => 'https://yoa.st/get-news-metabox', 'shortlinks.upsell.metabox.go_premium' => 'https://yoa.st/pe-premium-page', 'shortlinks.upsell.metabox.focus_keyword_synonyms_link' => 'https://yoa.st/textlink-synonyms-popup-metabox', 'shortlinks.upsell.metabox.focus_keyword_synonyms_button' => 'https://yoa.st/keyword-synonyms-popup', 'shortlinks.upsell.metabox.premium_seo_analysis_button' => 'https://yoa.st/premium-seo-analysis-metabox', 'shortlinks.upsell.metabox.focus_keyword_additional_link' => 'https://yoa.st/textlink-keywords-popup-metabox', 'shortlinks.upsell.metabox.focus_keyword_additional_button' => 'https://yoa.st/add-keywords-popup', 'shortlinks.upsell.metabox.additional_link' => 'https://yoa.st/textlink-keywords-metabox', 'shortlinks.upsell.metabox.additional_button' => 'https://yoa.st/add-keywords-metabox', 'shortlinks.upsell.metabox.keyphrase_distribution' => 'https://yoa.st/keyphrase-distribution-metabox', 'shortlinks.upsell.metabox.word_complexity' => 'https://yoa.st/word-complexity-metabox', 'shortlinks.upsell.gsc.create_redirect_button' => 'https://yoa.st/redirects', 'shortlinks.readability_analysis_info' => 'https://yoa.st/readability-analysis', 'shortlinks.inclusive_language_analysis_info' => 'https://yoa.st/inclusive-language-analysis', 'shortlinks.activate_premium_info' => 'https://yoa.st/activate-subscription', 'shortlinks.upsell.sidebar.morphology_upsell_metabox' => 'https://yoa.st/morphology-upsell-metabox', 'shortlinks.upsell.sidebar.morphology_upsell_sidebar' => 'https://yoa.st/morphology-upsell-sidebar', 'shortlinks.semrush.volume_help' => 'https://yoa.st/3-v', 'shortlinks.semrush.trend_help' => 'https://yoa.st/3-v', 'shortlinks.semrush.prices' => 'https://yoa.st/semrush-prices', 'shortlinks.semrush.premium_landing_page' => 'https://yoa.st/413', 'shortlinks.wincher.seo_performance' => 'https://yoa.st/wincher-integration', 'shortlinks-insights-estimated_reading_time' => 'https://yoa.st/4fd', 'shortlinks-insights-flesch_reading_ease' => 'https://yoa.st/34r', 'shortlinks-insights-flesch_reading_ease_sidebar' => 'https://yoa.st/4mf', 'shortlinks-insights-flesch_reading_ease_metabox' => 'https://yoa.st/4mg', 'shortlinks-insights-flesch_reading_ease_article' => 'https://yoa.st/34s', 'shortlinks-insights-keyword_research_link' => 'https://yoa.st/keyword-research-metabox', 'shortlinks-insights-upsell-sidebar-prominent_words' => 'https://yoa.st/prominent-words-upsell-sidebar', 'shortlinks-insights-upsell-metabox-prominent_words' => 'https://yoa.st/prominent-words-upsell-metabox', 'shortlinks-insights-upsell-elementor-prominent_words' => 'https://yoa.st/prominent-words-upsell-elementor', 'shortlinks-insights-word_count' => 'https://yoa.st/word-count', 'shortlinks-insights-upsell-sidebar-text_formality' => 'https://yoa.st/formality-upsell-sidebar', 'shortlinks-insights-upsell-metabox-text_formality' => 'https://yoa.st/formality-upsell-metabox', 'shortlinks-insights-upsell-elementor-text_formality' => 'https://yoa.st/formality-upsell-elementor', 'shortlinks-insights-text_formality_info_free' => 'https://yoa.st/formality-free', 'shortlinks-insights-text_formality_info_premium' => 'https://yoa.st/formality'];
+        private $shortlinks = ['shortlinks.advanced.allow_search_engines' => 'https://yoa.st/allow-search-engines', 'shortlinks.advanced.follow_links' => 'https://yoa.st/follow-links', 'shortlinks.advanced.meta_robots' => 'https://yoa.st/meta-robots-advanced', 'shortlinks.advanced.breadcrumbs_title' => 'https://yoa.st/breadcrumbs-title', 'shortlinks.metabox.schema.explanation' => 'https://yoa.st/400', 'shortlinks.metabox.schema.page_type' => 'https://yoa.st/402', 'shortlinks.sidebar.schema.explanation' => 'https://yoa.st/401', 'shortlinks.sidebar.schema.page_type' => 'https://yoa.st/403', 'shortlinks.focus_keyword_info' => 'https://yoa.st/focus-keyword', 'shortlinks.nofollow_sponsored' => 'https://yoa.st/nofollow-sponsored', 'shortlinks.snippet_preview_info' => 'https://yoa.st/snippet-preview', 'shortlinks.cornerstone_content_info' => 'https://yoa.st/1i9', 'shortlinks.upsell.social_preview.social' => 'https://yoa.st/social-preview-facebook', 'shortlinks.upsell.social_preview.x' => 'https://yoa.st/social-preview-twitter', 'shortlinks.upsell.sidebar.news' => 'https://yoa.st/get-news-sidebar', 'shortlinks.upsell.sidebar.focus_keyword_synonyms_button' => 'https://yoa.st/keyword-synonyms-popup-sidebar', 'shortlinks.upsell.sidebar.premium_seo_analysis_button' => 'https://yoa.st/premium-seo-analysis-sidebar', 'shortlinks.upsell.sidebar.focus_keyword_additional_button' => 'https://yoa.st/add-keywords-popup-sidebar', 'shortlinks.upsell.sidebar.additional_link' => 'https://yoa.st/textlink-keywords-sidebar', 'shortlinks.upsell.sidebar.additional_button' => 'https://yoa.st/add-keywords-sidebar', 'shortlinks.upsell.sidebar.keyphrase_distribution' => 'https://yoa.st/keyphrase-distribution-sidebar', 'shortlinks.upsell.sidebar.word_complexity' => 'https://yoa.st/word-complexity-sidebar', 'shortlinks.upsell.sidebar.internal_linking_suggestions' => 'https://yoa.st/internal-linking-suggestions-sidebar', 'shortlinks.upsell.sidebar.highlighting_seo_analysis' => 'https://yoa.st/highlighting-seo-analysis', 'shortlinks.upsell.sidebar.highlighting_readability_analysis' => 'https://yoa.st/highlighting-readability-analysis', 'shortlinks.upsell.sidebar.highlighting_inclusive_analysis' => 'https://yoa.st/highlighting-inclusive-analysis', 'shortlinks.upsell.metabox.news' => 'https://yoa.st/get-news-metabox', 'shortlinks.upsell.metabox.go_premium' => 'https://yoa.st/pe-premium-page', 'shortlinks.upsell.metabox.focus_keyword_synonyms_button' => 'https://yoa.st/keyword-synonyms-popup', 'shortlinks.upsell.metabox.premium_seo_analysis_button' => 'https://yoa.st/premium-seo-analysis-metabox', 'shortlinks.upsell.metabox.focus_keyword_additional_button' => 'https://yoa.st/add-keywords-popup', 'shortlinks.upsell.metabox.additional_link' => 'https://yoa.st/textlink-keywords-metabox', 'shortlinks.upsell.metabox.additional_button' => 'https://yoa.st/add-keywords-metabox', 'shortlinks.upsell.metabox.keyphrase_distribution' => 'https://yoa.st/keyphrase-distribution-metabox', 'shortlinks.upsell.metabox.word_complexity' => 'https://yoa.st/word-complexity-metabox', 'shortlinks.upsell.metabox.internal_linking_suggestions' => 'https://yoa.st/internal-linking-suggestions-metabox', 'shortlinks.upsell.gsc.create_redirect_button' => 'https://yoa.st/redirects', 'shortlinks.readability_analysis_info' => 'https://yoa.st/readability-analysis', 'shortlinks.inclusive_language_analysis_info' => 'https://yoa.st/inclusive-language-analysis', 'shortlinks.activate_premium_info' => 'https://yoa.st/activate-subscription', 'shortlinks.upsell.sidebar.morphology_upsell_metabox' => 'https://yoa.st/morphology-upsell-metabox', 'shortlinks.upsell.sidebar.morphology_upsell_sidebar' => 'https://yoa.st/morphology-upsell-sidebar', 'shortlinks.wincher.seo_performance' => 'https://yoa.st/wincher-integration', 'shortlinks-insights-estimated_reading_time' => 'https://yoa.st/4fd', 'shortlinks-insights-flesch_reading_ease' => 'https://yoa.st/34r', 'shortlinks-insights-flesch_reading_ease_sidebar' => 'https://yoa.st/4mf', 'shortlinks-insights-flesch_reading_ease_metabox' => 'https://yoa.st/4mg', 'shortlinks-insights-flesch_reading_ease_article' => 'https://yoa.st/34s', 'shortlinks-insights-keyword_research_link' => 'https://yoa.st/keyword-research-metabox', 'shortlinks-insights-upsell-sidebar-prominent_words' => 'https://yoa.st/prominent-words-upsell-sidebar', 'shortlinks-insights-upsell-metabox-prominent_words' => 'https://yoa.st/prominent-words-upsell-metabox', 'shortlinks-insights-upsell-elementor-prominent_words' => 'https://yoa.st/prominent-words-upsell-elementor', 'shortlinks-insights-word_count' => 'https://yoa.st/word-count', 'shortlinks-insights-upsell-sidebar-text_formality' => 'https://yoa.st/formality-upsell-sidebar', 'shortlinks-insights-upsell-metabox-text_formality' => 'https://yoa.st/formality-upsell-metabox', 'shortlinks-insights-upsell-elementor-text_formality' => 'https://yoa.st/formality-upsell-elementor', 'shortlinks-insights-text_formality_info_free' => 'https://yoa.st/formality-free', 'shortlinks-insights-text_formality_info_premium' => 'https://yoa.st/formality'];
         /**
          * Registers all hooks to WordPress.
          *
@@ -3077,13 +4018,13 @@ namespace {
          *
          * @var string
          */
-        const CURRENT_RELEASE = '15.4.0';
+        public const CURRENT_RELEASE = '20.2.0';
         /**
          * The minimally supported version of Gutenberg by the plugin.
          *
          * @var string
          */
-        const MINIMUM_SUPPORTED = '15.4.0';
+        public const MINIMUM_SUPPORTED = '20.2.0';
         /**
          * Holds the current version.
          *
@@ -3189,6 +4130,12 @@ namespace {
          */
         private $score_icon_helper;
         /**
+         * Holds the WPSEO_Admin_Asset_Manager instance.
+         *
+         * @var WPSEO_Admin_Asset_Manager
+         */
+        private $admin_asset_manager;
+        /**
          * When page analysis is enabled, just initialize the hooks.
          */
         public function __construct()
@@ -3196,6 +4143,8 @@ namespace {
         }
         /**
          * Sets up up the hooks.
+         *
+         * @return void
          */
         public function setup_hooks()
         {
@@ -3215,6 +4164,8 @@ namespace {
          *
          * @param string $column_name Column to display the content for.
          * @param int    $post_id     Post to display the column content for.
+         *
+         * @return void
          */
         public function column_content($column_name, $post_id)
         {
@@ -3241,6 +4192,8 @@ namespace {
         }
         /**
          * Adds a dropdown that allows filtering on the posts SEO Quality.
+         *
+         * @return void
          */
         public function posts_filter_dropdown()
         {
@@ -3400,7 +4353,7 @@ namespace {
          * @param number $low  The lower boundary of the score.
          * @param number $high The higher boundary of the score.
          *
-         * @return array The Readability Score filter.
+         * @return array<array<string>> The Readability Score filter.
          */
         protected function create_readability_score_filter($low, $high)
         {
@@ -3411,7 +4364,7 @@ namespace {
          * @param number $low  The lower boundary of the score.
          * @param number $high The higher boundary of the score.
          *
-         * @return array The SEO score filter.
+         * @return array<array<string>> The SEO score filter.
          */
         protected function create_seo_score_filter($low, $high)
         {
@@ -3419,7 +4372,7 @@ namespace {
         /**
          * Creates a filter to retrieve posts that were set to no-index.
          *
-         * @return array Array containin the no-index filter.
+         * @return array<array<string>> Array containin the no-index filter.
          */
         protected function create_no_index_filter()
         {
@@ -3427,9 +4380,25 @@ namespace {
         /**
          * Creates a filter to retrieve posts that have no keyword set.
          *
-         * @return array Array containing the no focus keyword filter.
+         * @return array<array<string>> Array containing the no focus keyword filter.
          */
         protected function create_no_focus_keyword_filter()
+        {
+        }
+        /**
+         * Creates a filter to retrieve posts that have not been analyzed for readability yet.
+         *
+         * @return array<array<string>> Array containing the no readability filter.
+         */
+        protected function create_no_readability_scores_filter()
+        {
+        }
+        /**
+         * Creates a filter to retrieve posts that have bad readability scores, including those that have not enough content to have one.
+         *
+         * @return array<array<string>> Array containing the bad readability filter.
+         */
+        protected function create_bad_readability_scores_filter()
         {
         }
         /**
@@ -3457,7 +4426,7 @@ namespace {
          *
          * @param string $order_by The ID of the column by which to order the posts.
          *
-         * @return array Array containing the order filters.
+         * @return array<string> Array containing the order filters.
          */
         private function filter_order_by($order_by)
         {
@@ -3484,6 +4453,8 @@ namespace {
         }
         /**
          * Sets up the hooks for the post_types.
+         *
+         * @return void
          */
         private function set_post_type_hooks()
         {
@@ -3528,13 +4499,13 @@ namespace {
          *
          * @var string
          */
-        const PAGE_IDENTIFIER = 'wpseo_myyoast_proxy';
+        public const PAGE_IDENTIFIER = 'wpseo_myyoast_proxy';
         /**
          * The cache control's max age. Used in the header of a successful proxy response.
          *
          * @var int
          */
-        const CACHE_CONTROL_MAX_AGE = \DAY_IN_SECONDS;
+        public const CACHE_CONTROL_MAX_AGE = \DAY_IN_SECONDS;
         /**
          * Registers the hooks when the user is on the right page.
          *
@@ -3769,6 +4740,8 @@ namespace {
          * Outputs the option tabs.
          *
          * @param WPSEO_Option_Tabs $option_tabs Option Tabs to get tabs from.
+         *
+         * @return void
          */
         public function run(\WPSEO_Option_Tabs $option_tabs)
         {
@@ -3861,6 +4834,8 @@ namespace {
          * Display the tabs.
          *
          * @param Yoast_Form $yform Yoast Form needed in the views.
+         *
+         * @return void
          */
         public function display(\Yoast_Form $yform)
         {
@@ -3931,11 +4906,6 @@ namespace {
         }
     }
     /**
-     * WPSEO plugin file.
-     *
-     * @package WPSEO\Plugin_Availability
-     */
-    /**
      * Class WPSEO_Plugin_Availability
      */
     class WPSEO_Plugin_Availability
@@ -3948,58 +4918,26 @@ namespace {
         protected $plugins = [];
         /**
          * Registers the plugins so we can access them.
+         *
+         * @return void
          */
         public function register()
         {
         }
         /**
          * Registers all the available Yoast SEO plugins.
+         *
+         * @return void
          */
         protected function register_yoast_plugins()
         {
         }
         /**
          * Sets certain plugin properties based on WordPress' status.
+         *
+         * @return void
          */
         protected function register_yoast_plugins_status()
-        {
-        }
-        /**
-         * Checks whether or not a plugin is known within the Yoast SEO collection.
-         *
-         * @param string $plugin The plugin to search for.
-         *
-         * @return bool Whether or not the plugin is exists.
-         */
-        protected function plugin_exists($plugin)
-        {
-        }
-        /**
-         * Gets all the possibly available plugins.
-         *
-         * @return array Array containing the information about the plugins.
-         */
-        public function get_plugins()
-        {
-        }
-        /**
-         * Gets a specific plugin. Returns an empty array if it cannot be found.
-         *
-         * @param string $plugin The plugin to search for.
-         *
-         * @return array The plugin properties.
-         */
-        public function get_plugin($plugin)
-        {
-        }
-        /**
-         * Gets the version of the plugin.
-         *
-         * @param array $plugin The information available about the plugin.
-         *
-         * @return string The version associated with the plugin.
-         */
-        public function get_version($plugin)
         {
         }
         /**
@@ -4007,7 +4945,7 @@ namespace {
          *
          * @param array $plugin The information available about the plugin.
          *
-         * @return bool Whether or not there is a dependency present.
+         * @return bool Whether there is a dependency present.
          */
         public function has_dependencies($plugin)
         {
@@ -4043,14 +4981,6 @@ namespace {
         {
         }
         /**
-         * Gets all installed plugins.
-         *
-         * @return array The installed plugins.
-         */
-        public function get_installed_plugins()
-        {
-        }
-        /**
          * Checks for the availability of the plugin.
          *
          * @param array $plugin The information available about the plugin.
@@ -4061,23 +4991,13 @@ namespace {
         {
         }
         /**
-         * Checks whether a dependency is available.
+         * Checks whether a dependency is active.
          *
-         * @param array $dependency The information about the dependency to look for.
+         * @param array<string, Conditional> $dependency The information about the dependency to look for.
          *
-         * @return bool Whether or not the dependency is available.
+         * @return bool Whether or not the dependency is active.
          */
-        public function is_dependency_available($dependency)
-        {
-        }
-        /**
-         * Gets the names of the dependencies.
-         *
-         * @param array $plugin The plugin to get the dependency names from.
-         *
-         * @return array Array containing the names of the associated dependencies.
-         */
-        public function get_dependency_names($plugin)
+        public function is_dependency_active($dependency)
         {
         }
         /**
@@ -4094,8 +5014,72 @@ namespace {
          * @param string $plugin The plugin slug to check.
          *
          * @return bool Whether or not the plugin is active.
+         *
+         * @deprecated 23.4
+         * @codeCoverageIgnore
          */
         public function is_active($plugin)
+        {
+        }
+        /**
+         * Gets all the possibly available plugins.
+         *
+         * @return array Array containing the information about the plugins.
+         *
+         * @deprecated 23.4
+         * @codeCoverageIgnore
+         */
+        public function get_plugins()
+        {
+        }
+        /**
+         * Gets a specific plugin. Returns an empty array if it cannot be found.
+         *
+         * @param string $plugin The plugin to search for.
+         *
+         * @return array The plugin properties.
+         *
+         * @deprecated 23.4
+         * @codeCoverageIgnore
+         */
+        public function get_plugin($plugin)
+        {
+        }
+        /**
+         * Gets the version of the plugin.
+         *
+         * @param array $plugin The information available about the plugin.
+         *
+         * @return string The version associated with the plugin.
+         *
+         * @deprecated 23.4
+         * @codeCoverageIgnore
+         */
+        public function get_version($plugin)
+        {
+        }
+        /**
+         * Checks whether a dependency is available.
+         *
+         * @param array $dependency The information about the dependency to look for.
+         *
+         * @return bool Whether or not the dependency is available.
+         * @deprecated 22.4
+         * @codeCoverageIgnore
+         */
+        public function is_dependency_available($dependency)
+        {
+        }
+        /**
+         * Gets the names of the dependencies.
+         *
+         * @param array $plugin The plugin to get the dependency names from.
+         *
+         * @return array Array containing the names of the associated dependencies.
+         * @deprecated 23.4
+         * @codeCoverageIgnore
+         */
+        public function get_dependency_names($plugin)
         {
         }
         /**
@@ -4104,8 +5088,22 @@ namespace {
          * @param array $plugin The plugin to check.
          *
          * @return bool Whether or not the plugin is a Premium product.
+         *
+         * @deprecated 23.4
+         * @codeCoverageIgnore
          */
         public function is_premium($plugin)
+        {
+        }
+        /**
+         * Gets all installed plugins.
+         *
+         * @return array The installed plugins.
+         *
+         * @deprecated 23.4
+         * @codeCoverageIgnore
+         */
+        public function get_installed_plugins()
         {
         }
     }
@@ -4181,6 +5179,8 @@ namespace {
          * Checks for given $plugin_sections for conflicts.
          *
          * @param array $plugin_sections Set of sections.
+         *
+         * @return void
          */
         public function check_plugin_conflicts($plugin_sections)
         {
@@ -4190,6 +5190,8 @@ namespace {
          *
          * @param string $plugin_section          Type of conflict group (such as Open Graph or sitemap).
          * @param string $readable_plugin_section This is the value for the translation.
+         *
+         * @return void
          */
         protected function set_error($plugin_section, $readable_plugin_section)
         {
@@ -4198,6 +5200,8 @@ namespace {
          * Clear the notification for a plugin.
          *
          * @param string $plugin_file Clear the optional notification for this plugin.
+         *
+         * @return void
          */
         public function clear_error($plugin_file)
         {
@@ -4206,6 +5210,8 @@ namespace {
          * Loop through the $this->plugins to check if one of the plugins is active.
          *
          * This method will store the active plugins in $this->active_plugins.
+         *
+         * @return void
          */
         protected function search_active_plugins()
         {
@@ -4215,6 +5221,8 @@ namespace {
          *
          * @param array  $plugins        Set of plugins.
          * @param string $plugin_section Type of conflict group (such as Open Graph or sitemap).
+         *
+         * @return void
          */
         protected function check_plugins_active($plugins, $plugin_section)
         {
@@ -4237,6 +5245,8 @@ namespace {
          *
          * @param string $plugin_section Type of conflict group (such as Open Graph or sitemap).
          * @param string $plugin         Plugin basename string.
+         *
+         * @return void
          */
         protected function add_active_plugin($plugin_section, $plugin)
         {
@@ -4265,6 +5275,8 @@ namespace {
         }
         /**
          * When being in the deactivation process the currently deactivated plugin has to be removed.
+         *
+         * @return void
          */
         private function remove_deactivated_plugin()
         {
@@ -4292,7 +5304,7 @@ namespace {
          *
          * NOTE: when changing this array, be sure to update the array in Conflicting_Plugins_Service too.
          *
-         * @var array
+         * @var array<string, array<string>>
          */
         protected $plugins = [
             // The plugin which are writing OG metadata.
@@ -4308,7 +5320,7 @@ namespace {
          *
          * @return Yoast_Plugin_Conflict
          */
-        public static function get_instance($class_name = __CLASS__)
+        public static function get_instance($class_name = self::class)
         {
         }
         /**
@@ -4317,6 +5329,8 @@ namespace {
          * If the activated plugin is conflicting with ours a notice will be shown.
          *
          * @param string|bool $plugin Optional plugin basename to check.
+         *
+         * @return void
          */
         public static function hook_check_for_plugin_conflicts($plugin = \false)
         {
@@ -4385,11 +5399,6 @@ namespace {
         {
         }
     }
-    /**
-     * WPSEO plugin file.
-     *
-     * @package WPSEO\Admin
-     */
     /**
      * Class WPSEO_Premium_Upsell_Admin_Block
      */
@@ -4462,6 +5471,8 @@ namespace {
     {
         /**
          * Constructor.
+         *
+         * @return void
          */
         public function register_hooks()
         {
@@ -4516,6 +5527,8 @@ namespace {
         }
         /**
          * Adds primary term templates.
+         *
+         * @return void
          */
         public function wp_footer()
         {
@@ -4549,6 +5562,8 @@ namespace {
         }
         /**
          * Includes templates file.
+         *
+         * @return void
          */
         protected function include_js_templates()
         {
@@ -4611,13 +5626,13 @@ namespace {
          *
          * @var string
          */
-        const USER_META_DISMISSED = 'wpseo-remove-upsell-notice';
+        public const USER_META_DISMISSED = 'wpseo-remove-upsell-notice';
         /**
          * Holds the option name.
          *
          * @var string
          */
-        const OPTION_NAME = 'wpseo';
+        public const OPTION_NAME = 'wpseo';
         /**
          * Holds the options.
          *
@@ -4632,18 +5647,24 @@ namespace {
         }
         /**
          * Checks if the notice should be added or removed.
+         *
+         * @return void
          */
         public function initialize()
         {
         }
         /**
          * Sets the upgrade notice.
+         *
+         * @return void
          */
         public function set_upgrade_notice()
         {
         }
         /**
          * Listener for the upsell notice.
+         *
+         * @return void
          */
         public function dismiss_notice_listener()
         {
@@ -4666,18 +5687,24 @@ namespace {
         }
         /**
          * Sets the first activated on.
+         *
+         * @return void
          */
         protected function set_first_activated_on()
         {
         }
         /**
          * Adds a notification to the notification center.
+         *
+         * @return void
          */
         protected function add_notification()
         {
         }
         /**
          * Removes a notification to the notification center.
+         *
+         * @return void
          */
         protected function remove_notification()
         {
@@ -4708,6 +5735,8 @@ namespace {
         }
         /**
          * Dismisses the notice.
+         *
+         * @return void
          */
         protected function dismiss_notice()
         {
@@ -4722,6 +5751,8 @@ namespace {
         }
         /**
          * Saves the options to the database.
+         *
+         * @return void
          */
         protected function save_options()
         {
@@ -4742,13 +5773,13 @@ namespace {
          *
          * @var string
          */
-        const METHOD_POST = 'post';
+        public const METHOD_POST = 'post';
         /**
          * Holds the get method.
          *
          * @var string
          */
-        const METHOD_GET = 'get';
+        public const METHOD_GET = 'get';
         /**
          * Holds the endpoint to send the request to.
          *
@@ -4786,6 +5817,8 @@ namespace {
          * Sets the request body.
          *
          * @param mixed $body The body to set.
+         *
+         * @return void
          */
         public function set_body($body)
         {
@@ -4864,18 +5897,24 @@ namespace {
         }
         /**
          * Handles if the notification should be added or removed.
+         *
+         * @return void
          */
         public function handle_notification()
         {
         }
         /**
          * Adds a notification to the notification center.
+         *
+         * @return void
          */
         protected function add_notification()
         {
         }
         /**
          * Removes a notification to the notification center.
+         *
+         * @return void
          */
         protected function remove_notification()
         {
@@ -4889,11 +5928,6 @@ namespace {
         {
         }
     }
-    /**
-     * WPSEO plugin file.
-     *
-     * @package WPSEO\Suggested_Plugins
-     */
     /**
      * Class WPSEO_Suggested_Plugins
      */
@@ -4939,12 +5973,12 @@ namespace {
         /**
          * Build Yoast SEO suggested plugins notification.
          *
-         * @param string $name   The plugin name to use for the unique ID.
-         * @param array  $plugin The plugin to retrieve the data from.
+         * @param string                                                $notification_id The id of the notification to be created.
+         * @param array<string, string|bool|array<string, Conditional>> $plugin          The plugin to retrieve the data from.
          *
          * @return Yoast_Notification The notification containing the suggested plugin.
          */
-        protected function get_yoast_seo_suggested_plugins_notification($name, $plugin)
+        protected function get_yoast_seo_suggested_plugins_notification($notification_id, $plugin)
         {
         }
         /**
@@ -4975,18 +6009,119 @@ namespace {
      * @package WPSEO\Admin
      */
     /**
+     * Wincher dashboard widget.
+     */
+    class Wincher_Dashboard_Widget implements \WPSEO_WordPress_Integration
+    {
+        /**
+         * Holds an instance of the admin asset manager.
+         *
+         * @var WPSEO_Admin_Asset_Manager
+         */
+        protected $asset_manager;
+        /**
+         * Wincher_Dashboard_Widget constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Register WordPress hooks.
+         *
+         * @return void
+         */
+        public function register_hooks()
+        {
+        }
+        /**
+         * Adds the Wincher dashboard widget if it should be shown.
+         *
+         * @return void
+         */
+        public function queue_wincher_dashboard_widget()
+        {
+        }
+        /**
+         * Adds the Wincher dashboard widget to WordPress.
+         *
+         * @return void
+         */
+        public function add_wincher_dashboard_widget()
+        {
+        }
+        /**
+         * Adds CSS classes to the dashboard widget.
+         *
+         * @param array $classes An array of postbox CSS classes.
+         *
+         * @return array
+         */
+        public function wpseo_wincher_dashboard_overview_class($classes)
+        {
+        }
+        /**
+         * Displays the Wincher dashboard widget.
+         *
+         * @return void
+         */
+        public function display_wincher_dashboard_widget()
+        {
+        }
+        /**
+         * Enqueues assets for the dashboard if the current page is the dashboard.
+         *
+         * @return void
+         */
+        public function enqueue_wincher_dashboard_assets()
+        {
+        }
+        /**
+         * Translates strings used in the Wincher dashboard widget.
+         *
+         * @return array The translated strings.
+         */
+        public function localize_wincher_dashboard_script()
+        {
+        }
+        /**
+         * Checks if the current screen is the dashboard screen.
+         *
+         * @return bool Whether or not this is the dashboard screen.
+         */
+        private function is_dashboard_screen()
+        {
+        }
+        /**
+         * Returns true when the Wincher dashboard widget should be shown.
+         *
+         * @return bool
+         */
+        private function show_widget()
+        {
+        }
+    }
+    /**
+     * WPSEO plugin file.
+     *
+     * @package WPSEO\Admin
+     */
+    /**
      * Represents the yoast columns.
      */
     class WPSEO_Yoast_Columns implements \WPSEO_WordPress_Integration
     {
         /**
          * Registers all hooks to WordPress.
+         *
+         * @return void
          */
         public function register_hooks()
         {
         }
         /**
          * Adds the help tab to the help center for current screen.
+         *
+         * @return void
          */
         public function add_help_tab()
         {
@@ -5033,7 +6168,7 @@ namespace {
          *
          * @var string
          */
-        const CACHE_TRANSIENT_KEY = 'wpseo-dashboard-totals';
+        public const CACHE_TRANSIENT_KEY = 'wpseo-dashboard-totals';
         /**
          * Holds an instance of the admin asset manager.
          *
@@ -5051,11 +6186,13 @@ namespace {
          *
          * @param WPSEO_Statistics|null $statistics WPSEO_Statistics instance.
          */
-        public function __construct(\WPSEO_Statistics $statistics = \null)
+        public function __construct(?\WPSEO_Statistics $statistics = \null)
         {
         }
         /**
          * Register WordPress hooks.
+         *
+         * @return void
          */
         public function register_hooks()
         {
@@ -5070,6 +6207,8 @@ namespace {
         }
         /**
          * Adds dashboard widget to WordPress.
+         *
+         * @return void
          */
         public function add_dashboard_widget()
         {
@@ -5086,12 +6225,16 @@ namespace {
         }
         /**
          * Displays the dashboard widget.
+         *
+         * @return void
          */
         public function display_dashboard_widget()
         {
         }
         /**
          * Enqueues assets for the dashboard if the current page is the dashboard.
+         *
+         * @return void
          */
         public function enqueue_dashboard_assets()
         {
@@ -5168,6 +6311,8 @@ namespace {
          * @param string $option           The short name of the option to use for the current page.
          * @param bool   $contains_files   Whether the form should allow for file uploads.
          * @param bool   $option_long_name Group name of the option.
+         *
+         * @return void
          */
         public function admin_header($form = \true, $option = 'wpseo', $contains_files = \false, $option_long_name = \false)
         {
@@ -5178,6 +6323,8 @@ namespace {
          * @since 2.0
          *
          * @param string $option_name Option key.
+         *
+         * @return void
          */
         public function set_option($option_name)
         {
@@ -5189,6 +6336,8 @@ namespace {
          *
          * @param bool $submit       Whether or not a submit button and form end tag should be shown.
          * @param bool $show_sidebar Whether or not to show the banner sidebar - used by premium plugins to disable it.
+         *
+         * @return void
          */
         public function admin_footer($submit = \true, $show_sidebar = \true)
         {
@@ -5197,6 +6346,8 @@ namespace {
          * Generates the sidebar for admin pages.
          *
          * @since 2.0
+         *
+         * @return void
          */
         public function admin_sidebar()
         {
@@ -5208,6 +6359,8 @@ namespace {
          *
          * @param string $text Label text string, which can contain escaped html.
          * @param array  $attr HTML attributes set.
+         *
+         * @return void
          */
         public function label($text, $attr)
         {
@@ -5219,6 +6372,8 @@ namespace {
          *
          * @param string $text Legend text string.
          * @param array  $attr HTML attributes set.
+         *
+         * @return void
          */
         public function legend($text, $attr)
         {
@@ -5232,6 +6387,8 @@ namespace {
          * @param string $label      The label to show for the variable.
          * @param bool   $label_left Whether the label should be left (true) or right (false).
          * @param array  $attr       Extra attributes to add to the checkbox.
+         *
+         * @return void
          */
         public function checkbox($variable, $label, $label_left = \false, $attr = [])
         {
@@ -5244,6 +6401,8 @@ namespace {
          * @param string $variable The variables within the option to create the checkbox list for.
          * @param string $labels   The labels to show for the variable.
          * @param array  $attr     Extra attributes to add to the checkbox list.
+         *
+         * @return void
          */
         public function checkbox_list($variable, $labels, $attr = [])
         {
@@ -5261,6 +6420,8 @@ namespace {
          * @param bool   $strong   Whether the visual label is displayed in strong text. Default is false.
          *                         Starting from Yoast SEO 16.5, the visual label is forced to bold via CSS.
          * @param array  $attr     Extra attributes to add to the light switch.
+         *
+         * @return void
          */
         public function light_switch($variable, $label, $buttons = [], $reverse = \true, $help = '', $strong = \false, $attr = [])
         {
@@ -5274,6 +6435,8 @@ namespace {
          * @param string       $variable The variable within the option to create the text input field for.
          * @param string       $label    The label to show for the variable.
          * @param array|string $attr     Extra attributes to add to the input field. Can be class, disabled, autocomplete.
+         *
+         * @return void
          */
         public function textinput($variable, $label, $attr = [])
         {
@@ -5284,6 +6447,8 @@ namespace {
          * @param string       $variable The variable within the option to create the text input field for.
          * @param string       $label    The label to show for the variable.
          * @param array|string $attr     Extra attributes to add to the input field. Can be class, disabled, autocomplete.
+         *
+         * @return void
          */
         public function number($variable, $label, $attr = [])
         {
@@ -5308,6 +6473,8 @@ namespace {
          * @param string       $variable The variable within the option to create the textarea for.
          * @param string       $label    The label to show for the variable.
          * @param string|array $attr     The CSS class or an array of attributes to assign to the textarea.
+         *
+         * @return void
          */
         public function textarea($variable, $label, $attr = [])
         {
@@ -5320,6 +6487,8 @@ namespace {
          * @param string $variable The variable within the option to create the hidden input for.
          * @param string $id       The ID of the element.
          * @param mixed  $val      Optional. The value to set in the input field. Otherwise the value from the options will be used.
+         *
+         * @return void
          */
         public function hidden($variable, $id = '', $val = \null)
         {
@@ -5336,6 +6505,8 @@ namespace {
          * @param bool   $show_label     Whether or not to show the label, if not, it will be applied as an aria-label.
          * @param array  $attr           Extra attributes to add to the select.
          * @param string $help           Optional. Inline Help HTML that will be printed after the label. Default is empty.
+         *
+         * @return void
          */
         public function select($variable, $label, array $select_options, $styled = 'unstyled', $show_label = \true, $attr = [], $help = '')
         {
@@ -5348,6 +6519,8 @@ namespace {
          * @param string $variable The variable within the option to create the file upload field for.
          * @param string $label    The label to show for the variable.
          * @param array  $attr     Extra attributes to add to the file upload input.
+         *
+         * @return void
          */
         public function file_upload($variable, $label, $attr = [])
         {
@@ -5356,10 +6529,14 @@ namespace {
          * Media input.
          *
          * @since 2.0
+         * @deprecated 23.5
+         * @codeCoverageIgnore
          *
          * @param string $variable Option name.
          * @param string $label    Label message.
          * @param array  $attr     Extra attributes to add to the media input and buttons.
+         *
+         * @return void
          */
         public function media_input($variable, $label, $attr = [])
         {
@@ -5374,6 +6551,8 @@ namespace {
          * @param string $legend      Optional. The legend to show for the field set, if any.
          * @param array  $legend_attr Optional. The attributes for the legend, if any.
          * @param array  $attr        Extra attributes to add to the radio button.
+         *
+         * @return void
          */
         public function radio($variable, $values, $legend = '', $legend_attr = [], $attr = [])
         {
@@ -5390,6 +6569,8 @@ namespace {
          * @param string $label    The visual label for the radio buttons group, used as the fieldset legend.
          * @param string $help     Inline Help that will be printed out before the visible toggles text.
          * @param array  $attr     Extra attributes to add to the toggle switch.
+         *
+         * @return void
          */
         public function toggle_switch($variable, $values, $label, $help = '', $attr = [])
         {
@@ -5493,7 +6674,7 @@ namespace {
          *
          * @since 12.1
          *
-         * @var array
+         * @var array<string, string>
          */
         private static $error_descriptions = [];
         /**
@@ -5542,8 +6723,13 @@ namespace {
          *
          * @since 12.1
          *
-         * @param array $descriptions An associative array of error descriptions.
+         * @param array<string, string> $descriptions An associative array of error descriptions.
          *                            For each entry, the key must be the setting variable.
+         *
+         * @return void
+         *
+         * @deprecated 23.3
+         * @codeCoverageIgnore
          */
         public static function set_error_descriptions($descriptions = [])
         {
@@ -5553,7 +6739,10 @@ namespace {
          *
          * @since 12.1
          *
-         * @return array An associative array of error descriptions.
+         * @deprecated 23.3
+         * @codeCoverageIgnore
+         *
+         * @return array<string, string> An associative array of error descriptions.
          */
         public static function get_error_descriptions()
         {
@@ -5627,6 +6816,9 @@ namespace {
          * @param string $error_code Code of the error set via `add_settings_error()`, normally the variable name.
          *
          * @return string The submitted invalid input field value.
+         *
+         * @deprecated 23.3
+         * @codeCoverageIgnore
          */
         public static function get_dirty_value($error_code)
         {
@@ -5639,6 +6831,9 @@ namespace {
          * @param string $error_code Code of the error set via `add_settings_error()`, normally the variable name.
          *
          * @return string The error invalid value message or empty string.
+         *
+         * @deprecated 23.3
+         * @codeCoverageIgnore
          */
         public static function get_dirty_value_message($error_code)
         {
@@ -5676,13 +6871,13 @@ namespace {
          *
          * @var string
          */
-        const UPDATE_OPTIONS_ACTION = 'yoast_handle_network_options';
+        public const UPDATE_OPTIONS_ACTION = 'yoast_handle_network_options';
         /**
          * Action identifier for restoring a site.
          *
          * @var string
          */
-        const RESTORE_SITE_ACTION = 'yoast_restore_site';
+        public const RESTORE_SITE_ACTION = 'yoast_restore_site';
         /**
          * Gets the available sites as choices, e.g. for a dropdown.
          *
@@ -5928,17 +7123,17 @@ namespace {
          *
          * @var string
          */
-        const STORAGE_KEY = 'yoast_notifications';
+        public const STORAGE_KEY = 'yoast_notifications';
         /**
          * The singleton instance of this object.
          *
-         * @var \Yoast_Notification_Center
+         * @var Yoast_Notification_Center
          */
         private static $instance = \null;
         /**
          * Holds the notifications.
          *
-         * @var \Yoast_Notification[][]
+         * @var Yoast_Notification[][]
          */
         private $notifications = [];
         /**
@@ -5987,6 +7182,8 @@ namespace {
         }
         /**
          * Dismiss a notification.
+         *
+         * @return void
          */
         public static function ajax_dismiss_notification()
         {
@@ -6064,6 +7261,8 @@ namespace {
          * Add notification to the cookie.
          *
          * @param Yoast_Notification $notification Notification object instance.
+         *
+         * @return void
          */
         public function add_notification(\Yoast_Notification $notification)
         {
@@ -6094,6 +7293,8 @@ namespace {
          *
          * @param Yoast_Notification $notification Notification to remove.
          * @param bool               $resolve      Resolve as fixed.
+         *
+         * @return void
          */
         public function remove_notification(\Yoast_Notification $notification, $resolve = \true)
         {
@@ -6139,12 +7340,16 @@ namespace {
         }
         /**
          * AJAX display notifications.
+         *
+         * @return void
          */
         public function ajax_get_notifications()
         {
         }
         /**
          * Remove storage when the plugin is deactivated.
+         *
+         * @return void
          */
         public function deactivate_hook()
         {
@@ -6257,6 +7462,8 @@ namespace {
         }
         /**
          * Clear local stored notifications.
+         *
+         * @return void
          */
         private function clear_notifications()
         {
@@ -6341,6 +7548,8 @@ namespace {
          *
          * @param callable $callback Callback that performs the transaction.
          * @param array    $args     Arguments to pass to the callback.
+         *
+         * @return void
          */
         private function add_transaction_to_queue($callback, $args)
         {
@@ -6388,31 +7597,31 @@ namespace {
          *
          * @var string
          */
-        const MATCH_ALL = 'all';
+        public const MATCH_ALL = 'all';
         /**
          * Type of capability check.
          *
          * @var string
          */
-        const MATCH_ANY = 'any';
+        public const MATCH_ANY = 'any';
         /**
          * Notification type.
          *
          * @var string
          */
-        const ERROR = 'error';
+        public const ERROR = 'error';
         /**
          * Notification type.
          *
          * @var string
          */
-        const WARNING = 'warning';
+        public const WARNING = 'warning';
         /**
          * Notification type.
          *
          * @var string
          */
-        const UPDATED = 'updated';
+        public const UPDATED = 'updated';
         /**
          * Options of this Notification.
          *
@@ -6435,7 +7644,7 @@ namespace {
          *
          * @var array
          */
-        private $defaults = ['type' => self::UPDATED, 'id' => '', 'user' => \null, 'nonce' => \null, 'priority' => 0.5, 'data_json' => [], 'dismissal_key' => \null, 'capabilities' => [], 'capability_check' => self::MATCH_ALL, 'yoast_branding' => \false];
+        private $defaults = ['type' => self::UPDATED, 'id' => '', 'user_id' => \null, 'nonce' => \null, 'priority' => 0.5, 'data_json' => [], 'dismissal_key' => \null, 'capabilities' => [], 'capability_check' => self::MATCH_ALL, 'yoast_branding' => \false];
         /**
          * The message for the notification.
          *
@@ -6462,6 +7671,9 @@ namespace {
         /**
          * Retrieve the user to show the notification for.
          *
+         * @deprecated 21.6
+         * @codeCoverageIgnore
+         *
          * @return WP_User The user to show this notification for.
          */
         public function get_user()
@@ -6487,6 +7699,8 @@ namespace {
         }
         /**
          * Make sure the nonce is up to date.
+         *
+         * @return void
          */
         public function refresh_nonce()
         {
@@ -6576,6 +7790,14 @@ namespace {
         {
         }
         /**
+         * Get the message for the notification.
+         *
+         * @return string The message.
+         */
+        public function get_message()
+        {
+        }
+        /**
          * Wraps the message with a Yoast SEO icon.
          *
          * @param string $message The message to wrap.
@@ -6608,6 +7830,8 @@ namespace {
          *
          * @param string $value Attribute value.
          * @param string $key   Attribute name.
+         *
+         * @return void
          */
         private function parse_attributes(&$value, $key)
         {
@@ -6628,7 +7852,7 @@ namespace {
          *
          * @var string
          */
-        const ADMIN_PAGE = 'wpseo_dashboard';
+        public const ADMIN_PAGE = 'wpseo_dashboard';
         /**
          * Total notifications count.
          *
@@ -6679,24 +7903,32 @@ namespace {
         }
         /**
          * Add hooks
+         *
+         * @return void
          */
         private function add_hooks()
         {
         }
         /**
          * Enqueue assets.
+         *
+         * @return void
          */
         public function enqueue_assets()
         {
         }
         /**
          * Handle ajax request to dismiss a notification.
+         *
+         * @return void
          */
         public function ajax_dismiss_notification()
         {
         }
         /**
          * Handle ajax request to restore a notification.
+         *
+         * @return void
          */
         public function ajax_restore_notification()
         {
@@ -6705,6 +7937,8 @@ namespace {
          * Create AJAX response data.
          *
          * @param string $type Notification type.
+         *
+         * @return void
          */
         private function output_ajax_response($type)
         {
@@ -6731,6 +7965,8 @@ namespace {
         }
         /**
          * Collect the notifications and group them together.
+         *
+         * @return void
          */
         public static function collect_notifications()
         {
@@ -6820,19 +8056,19 @@ namespace {
          *
          * @var string
          */
-        const REST_NAMESPACE = 'yoast/v1';
+        public const REST_NAMESPACE = 'yoast/v1';
         /**
          * The route of the endpoint to retrieve the file size.
          *
          * @var string
          */
-        const ENDPOINT_SINGULAR = 'file_size';
+        public const ENDPOINT_SINGULAR = 'file_size';
         /**
          * The name of the capability needed to retrieve data using the endpoints.
          *
          * @var string
          */
-        const CAPABILITY_RETRIEVE = 'manage_options';
+        public const CAPABILITY_RETRIEVE = 'manage_options';
         /**
          * The service provider.
          *
@@ -6879,19 +8115,19 @@ namespace {
          *
          * @var string
          */
-        const REST_NAMESPACE = 'yoast/v1';
+        public const REST_NAMESPACE = 'yoast/v1';
         /**
          * The route of the statistics endpoint.
          *
          * @var string
          */
-        const ENDPOINT_RETRIEVE = 'statistics';
+        public const ENDPOINT_RETRIEVE = 'statistics';
         /**
          * The name of the capability needed to retrieve data using the endpoints.
          *
          * @var string
          */
-        const CAPABILITY_RETRIEVE = 'read';
+        public const CAPABILITY_RETRIEVE = 'read';
         /**
          * Service to use.
          *
@@ -6908,6 +8144,8 @@ namespace {
         }
         /**
          * Registers the REST routes that are available on the endpoint.
+         *
+         * @return void
          */
         public function register()
         {
@@ -6967,7 +8205,7 @@ namespace {
          *
          * @var string
          */
-        const FILTER_QUERY_ARG = 'yoast_filter';
+        public const FILTER_QUERY_ARG = 'yoast_filter';
         /**
          * Modify the query based on the FILTER_QUERY_ARG variable in $_GET.
          *
@@ -6996,6 +8234,8 @@ namespace {
         protected abstract function get_label();
         /**
          * Registers the hooks.
+         *
+         * @return void
          */
         public function register_hooks()
         {
@@ -7019,11 +8259,11 @@ namespace {
         /**
          * Adds a filter link to the views.
          *
-         * @param array $views Array with the views.
+         * @param array<string, string> $views Array with the views.
          *
-         * @return array Array of views including the added view.
+         * @return array<string, string> Array of views including the added view.
          */
-        public function add_filter_link(array $views)
+        public function add_filter_link($views)
         {
         }
         /**
@@ -7100,7 +8340,7 @@ namespace {
          *
          * @var string
          */
-        const META_NAME = 'is_cornerstone';
+        public const META_NAME = 'is_cornerstone';
         /**
          * Registers the hooks.
          *
@@ -7192,7 +8432,7 @@ namespace {
         /**
          * Returns the values.
          *
-         * @return array
+         * @return array<string,string|array<string|int|bool>|bool|int>
          */
         public function get_values()
         {
@@ -7200,50 +8440,9 @@ namespace {
         /**
          * Returns array with all the values always needed by a scraper object.
          *
-         * @return array Default settings for the metabox.
+         * @return array<string,string|array<string|int|bool>|bool|int> Default settings for the metabox.
          */
         private function get_defaults()
-        {
-        }
-        /**
-         * Returns required yoast-component translations.
-         *
-         * @return array
-         */
-        private function get_content_analysis_component_translations()
-        {
-        }
-        /**
-         * Returns Jed compatible YoastSEO.js translations.
-         *
-         * @return array
-         */
-        private function get_translations()
-        {
-        }
-        /**
-         * Checks if Jetpack's markdown module is enabled.
-         * Can be extended to work with other plugins that parse markdown in the content.
-         *
-         * @return bool
-         */
-        private function is_markdown_enabled()
-        {
-        }
-        /**
-         * Checks if the user is logged in to SEMrush.
-         *
-         * @return bool The SEMrush login status.
-         */
-        private function get_semrush_login_status()
-        {
-        }
-        /**
-         * Checks whether a multilingual plugin is currently active. Currently, we only check the following plugins: WPML, Polylang, and TranslatePress.
-         *
-         * @return bool Whether a multilingual plugin is currently active.
-         */
-        private function multilingual_plugin_active()
         {
         }
     }
@@ -7265,11 +8464,6 @@ namespace {
         public function get_values();
     }
     /**
-     * WPSEO plugin file.
-     *
-     * @package WPSEO\Admin\Formatter
-     */
-    /**
      * This class provides data for the post metabox by return its values for localization.
      */
     class WPSEO_Post_Metabox_Formatter implements \WPSEO_Metabox_Formatter_Interface
@@ -7287,12 +8481,6 @@ namespace {
          */
         private $permalink;
         /**
-         * Whether we must return social templates values.
-         *
-         * @var bool
-         */
-        private $use_social_templates = \false;
-        /**
          * Constructor.
          *
          * @param WP_Post|array $post      Post object.
@@ -7305,7 +8493,8 @@ namespace {
         /**
          * Determines whether the social templates should be used.
          *
-         * @return bool Whether the social templates should be used.
+         * @deprecated 23.1
+         * @codeCoverageIgnore
          */
         public function use_social_templates()
         {
@@ -7319,135 +8508,6 @@ namespace {
         {
         }
         /**
-         * Gets the image URL for the post's social preview.
-         *
-         * @return string|null The image URL for the social preview.
-         */
-        protected function get_image_url()
-        {
-        }
-        /**
-         * Returns the url to search for keyword for the post.
-         *
-         * @return string
-         */
-        private function search_url()
-        {
-        }
-        /**
-         * Returns the url to edit the taxonomy.
-         *
-         * @return string
-         */
-        private function edit_url()
-        {
-        }
-        /**
-         * Returns a base URL for use in the JS, takes permalink structure into account.
-         *
-         * @return string
-         */
-        private function base_url_for_js()
-        {
-        }
-        /**
-         * Counts the number of given keywords used for other posts other than the given post_id.
-         *
-         * @return array The keyword and the associated posts that use it.
-         */
-        private function get_focus_keyword_usage()
-        {
-        }
-        /**
-         * Retrieves the post types for the given post IDs.
-         *
-         * @param array $post_ids_per_keyword An associative array with keywords as keys and an array of post ids where those keywords are used.
-         * @return array The post types for the given post IDs.
-         */
-        private function get_post_types_for_all_ids($post_ids_per_keyword)
-        {
-        }
-        /**
-         * Gets the keyword usage for the current post and the specified keyword.
-         *
-         * @param string $keyword The keyword to check the usage of.
-         *
-         * @return array The post IDs which use the passed keyword.
-         */
-        protected function get_keyword_usage_for_current_post($keyword)
-        {
-        }
-        /**
-         * Retrieves the title template.
-         *
-         * @param bool $fallback Whether to return the hardcoded fallback if the template value is empty.
-         *
-         * @return string The title template.
-         */
-        private function get_title_template($fallback = \true)
-        {
-        }
-        /**
-         * Retrieves the metadesc template.
-         *
-         * @return string The metadesc template.
-         */
-        private function get_metadesc_template()
-        {
-        }
-        /**
-         * Retrieves the social title template.
-         *
-         * @return string The social title template.
-         */
-        private function get_social_title_template()
-        {
-        }
-        /**
-         * Retrieves the social description template.
-         *
-         * @return string The social description template.
-         */
-        private function get_social_description_template()
-        {
-        }
-        /**
-         * Retrieves the social image template.
-         *
-         * @return string The social description template.
-         */
-        private function get_social_image_template()
-        {
-        }
-        /**
-         * Retrieves a template.
-         *
-         * @param string $template_option_name The name of the option in which the template you want to get is saved.
-         *
-         * @return string
-         */
-        private function get_template($template_option_name)
-        {
-        }
-        /**
-         * Retrieves a social template.
-         *
-         * @param string $template_option_name The name of the option in which the template you want to get is saved.
-         *
-         * @return string
-         */
-        private function get_social_template($template_option_name)
-        {
-        }
-        /**
-         * Determines the date to be displayed in the snippet preview.
-         *
-         * @return string
-         */
-        private function get_metadesc_date()
-        {
-        }
-        /**
          * Determines whether the insights feature is enabled for this post.
          *
          * @return bool
@@ -7456,11 +8516,6 @@ namespace {
         {
         }
     }
-    /**
-     * WPSEO plugin file.
-     *
-     * @package WPSEO\Admin\Formatter
-     */
     /**
      * This class provides data for the term metabox by return its values for localization.
      */
@@ -7516,108 +8571,6 @@ namespace {
         {
         }
         /**
-         * Gets the image URL for the term's social preview.
-         *
-         * @return string|null The image URL for the social preview.
-         */
-        protected function get_image_url()
-        {
-        }
-        /**
-         * Returns the url to search for keyword for the taxonomy.
-         *
-         * @return string
-         */
-        private function search_url()
-        {
-        }
-        /**
-         * Returns the url to edit the taxonomy.
-         *
-         * @return string
-         */
-        private function edit_url()
-        {
-        }
-        /**
-         * Returns a base URL for use in the JS, takes permalink structure into account.
-         *
-         * @return string
-         */
-        private function base_url_for_js()
-        {
-        }
-        /**
-         * Counting the number of given keyword used for other term than given term_id.
-         *
-         * @return array
-         */
-        private function get_focus_keyword_usage()
-        {
-        }
-        /**
-         * Retrieves the title template.
-         *
-         * @param bool $fallback Whether to return the hardcoded fallback if the template value is empty.
-         *
-         * @return string The title template.
-         */
-        private function get_title_template($fallback = \true)
-        {
-        }
-        /**
-         * Retrieves the metadesc template.
-         *
-         * @return string The metadesc template.
-         */
-        private function get_metadesc_template()
-        {
-        }
-        /**
-         * Retrieves the social title template.
-         *
-         * @return string The social title template.
-         */
-        private function get_social_title_template()
-        {
-        }
-        /**
-         * Retrieves the social description template.
-         *
-         * @return string The social description template.
-         */
-        private function get_social_description_template()
-        {
-        }
-        /**
-         * Retrieves the social image template.
-         *
-         * @return string The social description template.
-         */
-        private function get_social_image_template()
-        {
-        }
-        /**
-         * Retrieves a template.
-         *
-         * @param string $template_option_name The name of the option in which the template you want to get is saved.
-         *
-         * @return string
-         */
-        private function get_template($template_option_name)
-        {
-        }
-        /**
-         * Retrieves a social template.
-         *
-         * @param string $template_option_name The name of the option in which the template you want to get is saved.
-         *
-         * @return string
-         */
-        private function get_social_template($template_option_name)
-        {
-        }
-        /**
          * Determines whether the insights feature is enabled for this taxonomy.
          *
          * @return bool
@@ -7641,7 +8594,7 @@ namespace {
          *
          * @var string
          */
-        const OPTION_WPSEO_GSC = 'wpseo-gsc';
+        public const OPTION_WPSEO_GSC = 'wpseo-gsc';
         /**
          * Outputs the HTML for the redirect page.
          *
@@ -7671,6 +8624,8 @@ namespace {
         public $needs_import = [];
         /**
          * Detects whether we need to import anything.
+         *
+         * @return void
          */
         public function detect()
         {
@@ -7737,7 +8692,7 @@ namespace {
          *
          * @var string
          */
-        const NONCE_ACTION = 'wpseo-import-settings';
+        public const NONCE_ACTION = 'wpseo-import-settings';
         /**
          * Holds the import status instance.
          *
@@ -7780,6 +8735,8 @@ namespace {
          * @param string $name         Name string.
          * @param array  $option_group Option group data.
          * @param array  $options      Options data.
+         *
+         * @return void
          */
         protected function parse_option_group($name, $option_group, $options)
         {
@@ -7788,6 +8745,8 @@ namespace {
          * Imports the options if found.
          *
          * @param array $options The options parsed from the provided settings.
+         *
+         * @return void
          */
         protected function import_options($options)
         {
@@ -8018,6 +8977,8 @@ namespace {
         }
         /**
          * Sets the import status to false and returns a message about why it failed.
+         *
+         * @return void
          */
         protected function set_missing_db_rights_status()
         {
@@ -8041,6 +9002,8 @@ namespace {
          * @param string $new_key The key to save.
          * @param mixed  $value   The value to set the key to.
          * @param int    $post_id The Post to save the meta for.
+         *
+         * @return void
          */
         protected function maybe_save_post_meta($new_key, $value, $post_id)
         {
@@ -8147,11 +9110,13 @@ namespace {
          * @param string   $aioseo_prefix                      The AiOSEO prefix to use
          *                                                     (e.g. `custom-field` for custom fields or `tax_name` for custom taxonomies).
          * @param string   $yoast_prefix                       The Yoast prefix to use (e.g. `cf` for custom fields).
+         *
+         * @return void
          */
         protected function replace_custom_field_or_taxonomy_replace_vars($unique_custom_fields_or_taxonomies, $wpdb, $aioseo_prefix, $yoast_prefix)
         {
         }
-        // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+        // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
         /**
          * Retrieve all the meta values from the temporary meta table that contain
          * at least one AiOSEO custom field replace var.
@@ -8165,7 +9130,7 @@ namespace {
         protected function get_meta_values_with_custom_field_or_taxonomy($wpdb, $aioseo_prefix)
         {
         }
-        // phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+        // phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
         /**
          * Detects whether there is AIOSEO data to import by looking whether the AIOSEO data have been cleaned up.
          *
@@ -8237,6 +9202,8 @@ namespace {
          * Imports the OpenGraph and Twitter settings for a single post.
          *
          * @param int $post_id Post ID.
+         *
+         * @return void
          */
         private function import_post_opengraph($post_id)
         {
@@ -8595,12 +9562,16 @@ namespace {
         }
         /**
          * RankMath stores robots meta quite differently, so we have to parse it out.
+         *
+         * @return void
          */
         private function import_meta_robots()
         {
         }
         /**
          * Imports some of the RankMath settings.
+         *
+         * @return void
          */
         private function import_settings()
         {
@@ -8629,7 +9600,7 @@ namespace {
          *
          * @var string
          */
-        protected $plugin_name = 'SEO Framework';
+        protected $plugin_name = 'The SEO Framework';
         /**
          * Meta key, used in SQL LIKE clause for delete query.
          *
@@ -9197,11 +10168,6 @@ namespace {
         public function listen();
     }
     /**
-     * WPSEO plugin file.
-     *
-     * @package WPSEO\Admin\Menu
-     */
-    /**
      * Admin menu base class.
      */
     abstract class WPSEO_Base_Menu implements \WPSEO_WordPress_Integration
@@ -9390,6 +10356,8 @@ namespace {
         }
         /**
          * Registers the menu item submenus.
+         *
+         * @return void
          */
         public function register_settings_page()
         {
@@ -9436,7 +10404,7 @@ namespace {
          *
          * @var string
          */
-        const PAGE_IDENTIFIER = 'wpseo_dashboard';
+        public const PAGE_IDENTIFIER = 'wpseo_dashboard';
         /**
          * List of classes that add admin functionality.
          *
@@ -9608,6 +10576,8 @@ namespace {
          * @param array $arguments The arguments to validate.
          *
          * @throws InvalidArgumentException Thrown when not all required arguments are present.
+         *
+         * @return void
          */
         protected function validate_arguments(array $arguments)
         {
@@ -9720,10 +10690,14 @@ namespace {
     {
         /**
          * Outputs the section link.
+         *
+         * @return void
          */
         public function display_link();
         /**
          * Outputs the section content.
+         *
+         * @return void
          */
         public function display_content();
     }
@@ -9780,6 +10754,8 @@ namespace {
         }
         /**
          * Outputs the section link if any section has been added.
+         *
+         * @return void
          */
         public function display_link()
         {
@@ -10053,6 +11029,8 @@ namespace {
         }
         /**
          * Outputs the section content if any tab has been added.
+         *
+         * @return void
          */
         public function display_content()
         {
@@ -10080,6 +11058,8 @@ namespace {
          * Registers hooks to WordPress.
          *
          * @codeCoverageIgnore
+         *
+         * @return void
          */
         public function register_hooks()
         {
@@ -10095,6 +11075,8 @@ namespace {
         }
         /**
          * Enqueues the CSS to use in the TinyMCE editor.
+         *
+         * @return void
          */
         public function add_editor_styles()
         {
@@ -10299,6 +11281,11 @@ namespace {
         }
     }
     /**
+     * WPSEO plugin file.
+     *
+     * @package WPSEO\Admin
+     */
+    /**
      * Generates and displays the React root element for a metabox section.
      */
     class WPSEO_Metabox_Section_Inclusive_Language implements \WPSEO_Metabox_Section
@@ -10311,12 +11298,16 @@ namespace {
         public $name = 'inclusive-language';
         /**
          * Outputs the section link.
+         *
+         * @return void
          */
         public function display_link()
         {
         }
         /**
          * Outputs the section content.
+         *
+         * @return void
          */
         public function display_content()
         {
@@ -10415,12 +11406,16 @@ namespace {
         public $name = 'readability';
         /**
          * Outputs the section link.
+         *
+         * @return void
          */
         public function display_link()
         {
         }
         /**
          * Outputs the section content.
+         *
+         * @return void
          */
         public function display_content()
         {
@@ -10489,7 +11484,6 @@ namespace {
          *            Array format:
          *                (required)       'type'          => (string) field type. i.e. text / textarea / checkbox /
          *                                                    radio / select / multiselect / upload etc.
-         *                (required)       'title'         => (string) table row title.
          *                (recommended)    'default_value' => (string|array) default value for the field.
          *                                                    IMPORTANT:
          *                                                    - if the field has options, the default has to be the
@@ -10506,96 +11500,38 @@ namespace {
          *                (optional)        'autocomplete' => (bool) whether autocomplete is on for text fields,
          *                                                    defaults to true.
          *                (optional)        'class'        => (string) classname(s) to add to the actual <input> tag.
-         *                (optional)        'description'  => (string) description to show underneath the field.
-         *                (optional)        'expl'         => (string) label for a checkbox.
-         *                (optional)        'help'         => (string) help text to show on mouse over ? image.
          *                (optional)        'rows'         => (int) number of rows for a textarea, defaults to 3.
-         *                (optional)        'placeholder'  => (string) Currently only used by add-on plugins.
          *                (optional)        'serialized'   => (bool) whether the value is expected to be serialized,
          *                                                     i.e. an array or object, defaults to false.
          *                                                     Currently only used by add-on plugins.
          */
         public static $meta_fields = [
-            'general' => ['focuskw' => ['type' => 'hidden', 'title' => ''], 'title' => [
-                'type' => 'hidden',
-                'title' => '',
-                // Translation added later.
-                'default_value' => '',
-                'description' => '',
-                // Translation added later.
-                'help' => '',
-            ], 'metadesc' => [
-                'type' => 'hidden',
-                'title' => '',
-                // Translation added later.
-                'default_value' => '',
-                'class' => 'metadesc',
-                'rows' => 2,
-                'description' => '',
-                // Translation added later.
-                'help' => '',
-            ], 'linkdex' => ['type' => 'hidden', 'title' => 'linkdex', 'default_value' => '0', 'description' => ''], 'content_score' => ['type' => 'hidden', 'title' => 'content_score', 'default_value' => '0', 'description' => ''], 'inclusive_language_score' => ['type' => 'hidden', 'title' => 'inclusive_language_score', 'default_value' => '0', 'description' => ''], 'is_cornerstone' => ['type' => 'hidden', 'title' => 'is_cornerstone', 'default_value' => 'false', 'description' => '']],
+            'general' => ['focuskw' => ['type' => 'hidden', 'title' => ''], 'title' => ['type' => 'hidden', 'default_value' => ''], 'metadesc' => ['type' => 'hidden', 'default_value' => '', 'class' => 'metadesc', 'rows' => 2], 'linkdex' => ['type' => 'hidden', 'default_value' => '0'], 'content_score' => ['type' => 'hidden', 'default_value' => '0'], 'inclusive_language_score' => ['type' => 'hidden', 'default_value' => '0'], 'is_cornerstone' => ['type' => 'hidden', 'default_value' => 'false']],
             'advanced' => ['meta-robots-noindex' => [
                 'type' => 'hidden',
-                'title' => '',
-                // Translation added later.
                 'default_value' => '0',
                 // = post-type default.
                 'options' => [
                     '0' => '',
-                    // Post type default - translation added later.
+                    // Post type default.
                     '2' => '',
-                    // Index - translation added later.
+                    // Index.
                     '1' => '',
                 ],
             ], 'meta-robots-nofollow' => [
                 'type' => 'hidden',
-                'title' => '',
-                // Translation added later.
                 'default_value' => '0',
                 // = follow.
                 'options' => [
                     '0' => '',
-                    // Follow - translation added later.
+                    // Follow.
                     '1' => '',
                 ],
-            ], 'meta-robots-adv' => [
-                'type' => 'hidden',
-                'title' => '',
-                // Translation added later.
-                'default_value' => '',
-                'description' => '',
-                // Translation added later.
-                'options' => [
-                    'noimageindex' => '',
-                    // Translation added later.
-                    'noarchive' => '',
-                    // Translation added later.
-                    'nosnippet' => '',
-                ],
-            ], 'bctitle' => [
-                'type' => 'hidden',
-                'title' => '',
-                // Translation added later.
-                'default_value' => '',
-                'description' => '',
-            ], 'canonical' => [
-                'type' => 'hidden',
-                'title' => '',
-                // Translation added later.
-                'default_value' => '',
-                'description' => '',
-            ], 'redirect' => [
-                'type' => 'url',
-                'title' => '',
-                // Translation added later.
-                'default_value' => '',
-                'description' => '',
-            ]],
+            ], 'meta-robots-adv' => ['type' => 'hidden', 'default_value' => '', 'options' => ['noimageindex' => '', 'noarchive' => '', 'nosnippet' => '']], 'bctitle' => ['type' => 'hidden', 'default_value' => ''], 'canonical' => ['type' => 'hidden', 'default_value' => ''], 'redirect' => ['type' => 'url', 'default_value' => '']],
             'social' => [],
-            'schema' => ['schema_page_type' => ['type' => 'hidden', 'title' => '', 'options' => \Yoast\WP\SEO\Config\Schema_Types::PAGE_TYPES], 'schema_article_type' => ['type' => 'hidden', 'title' => '', 'hide_on_pages' => \true, 'options' => \Yoast\WP\SEO\Config\Schema_Types::ARTICLE_TYPES]],
+            'schema' => ['schema_page_type' => ['type' => 'hidden', 'options' => \Yoast\WP\SEO\Config\Schema_Types::PAGE_TYPES], 'schema_article_type' => ['type' => 'hidden', 'hide_on_pages' => \true, 'options' => \Yoast\WP\SEO\Config\Schema_Types::ARTICLE_TYPES]],
             /* Fields we should validate & save, but not show on any form. */
-            'non_form' => ['linkdex' => ['type' => \null, 'default_value' => '0'], 'zapier_trigger_sent' => ['type' => \null, 'default_value' => '0']],
+            'non_form' => ['linkdex' => ['type' => \null, 'default_value' => '0']],
         ];
         /**
          * Helper property - reverse index of the definition array.
@@ -10890,6 +11826,8 @@ namespace {
         }
         /**
          * Adds an alternative metabox for internet explorer users.
+         *
+         * @return void
          */
         public function internet_explorer_metabox()
         {
@@ -10907,6 +11845,11 @@ namespace {
          *
          * IMPORTANT: if you want to add a new string (option) somewhere, make sure you add that array key to
          * the main meta box definition array in the class WPSEO_Meta() as well!!!!
+         *
+         * @deprecated 23.5
+         * @codeCoverageIgnore
+         *
+         * @return void
          */
         public static function translate_meta_boxes()
         {
@@ -10936,9 +11879,9 @@ namespace {
         /**
          * Adds CSS classes to the meta box.
          *
-         * @param array $classes An array of postbox CSS classes.
+         * @param string[] $classes An array of postbox CSS classes.
          *
-         * @return array List of classes that will be applied to the editbox container.
+         * @return string[]  List of classes that will be applied to the editbox container.
          */
         public function wpseo_metabox_class($classes)
         {
@@ -10946,7 +11889,7 @@ namespace {
         /**
          * Passes variables to js for use with the post-scraper.
          *
-         * @return array
+         * @return array<string,string|array<string|int|bool>|bool|int>
          */
         public function get_metabox_script_data()
         {
@@ -10970,6 +11913,8 @@ namespace {
         }
         /**
          * Outputs the meta box.
+         *
+         * @return void
          */
         public function meta_box()
         {
@@ -11009,10 +11954,11 @@ namespace {
         /**
          * Adds a line in the meta box.
          *
-         * @todo [JRF] Check if $class is added appropriately everywhere.
+         * @deprecated 23.5
+         * @codeCoverageIgnore
          *
-         * @param array  $meta_field_def Contains the vars based on which output is generated.
-         * @param string $key            Internal key (without prefix).
+         * @param string[] $meta_field_def Contains the vars based on which output is generated.
+         * @param string   $key            Internal key (without prefix).
          *
          * @return string
          */
@@ -11045,6 +11991,8 @@ namespace {
          * Enqueues all the needed JS and CSS.
          *
          * @todo [JRF => whomever] Create css/metabox-mp6.css file and add it to the below allowed colors array when done.
+         *
+         * @return void
          */
         public function enqueue()
         {
@@ -11052,7 +12000,7 @@ namespace {
         /**
          * Returns post in metabox context.
          *
-         * @return WP_Post|array
+         * @return WP_Post|array<string|int|bool>
          */
         protected function get_metabox_post()
         {
@@ -11060,7 +12008,7 @@ namespace {
         /**
          * Returns an array with shortcode tags for all registered shortcodes.
          *
-         * @return array
+         * @return string[]
          */
         private function get_valid_shortcode_tags()
         {
@@ -11068,7 +12016,7 @@ namespace {
         /**
          * Prepares the replace vars for localization.
          *
-         * @return array Replace vars.
+         * @return string[] Replace vars.
          */
         private function get_replace_vars()
         {
@@ -11084,7 +12032,7 @@ namespace {
         /**
          * Prepares the recommended replace vars for localization.
          *
-         * @return array Recommended replacement variables.
+         * @return array<string[]> Recommended replacement variables.
          */
         private function get_recommended_replace_vars()
         {
@@ -11094,7 +12042,7 @@ namespace {
          *
          * @param WP_Post $post The post to check for custom taxonomies and fields.
          *
-         * @return array Array containing all the replacement variables.
+         * @return array<string[]> Array containing all the replacement variables.
          */
         private function get_custom_replace_vars($post)
         {
@@ -11104,7 +12052,7 @@ namespace {
          *
          * @param WP_Post $post The post to check for custom taxonomies.
          *
-         * @return array Array containing all the replacement variables.
+         * @return array<string[]> Array containing all the replacement variables.
          */
         private function get_custom_taxonomies_replace_vars($post)
         {
@@ -11114,7 +12062,7 @@ namespace {
          *
          * @param WP_Post $post The post to check for custom fields.
          *
-         * @return array Array containing all the replacement variables.
+         * @return array<string[]> Array containing all the replacement variables.
          */
         private function get_custom_fields_replace_vars($post)
         {
@@ -11145,6 +12093,14 @@ namespace {
          * @return string The product title.
          */
         protected function get_product_title()
+        {
+        }
+        /**
+         * Gets the permalink.
+         *
+         * @return string
+         */
+        protected function get_permalink()
         {
         }
     }
@@ -11460,48 +12416,6 @@ namespace {
      * @package WPSEO\Admin\Roles
      */
     /**
-     * VIP implementation of the Role Manager.
-     *
-     * @deprecated 19.9
-     * @codeCoverageIgnore
-     */
-    final class WPSEO_Role_Manager_VIP extends \WPSEO_Abstract_Role_Manager
-    {
-        /**
-         * Adds a role to the system.
-         *
-         * @deprecated 19.9
-         * @codeCoverageIgnore
-         *
-         * @param string $role         Role to add.
-         * @param string $display_name Name to display for the role.
-         * @param array  $capabilities Capabilities to add to the role.
-         *
-         * @return void
-         */
-        protected function add_role($role, $display_name, array $capabilities = [])
-        {
-        }
-        /**
-         * Removes a role from the system.
-         *
-         * @deprecated 19.9
-         * @codeCoverageIgnore
-         *
-         * @param string $role Role to remove.
-         *
-         * @return void
-         */
-        protected function remove_role($role)
-        {
-        }
-    }
-    /**
-     * WPSEO plugin file.
-     *
-     * @package WPSEO\Admin\Roles
-     */
-    /**
      * WordPress' default implementation of the Role Manager.
      */
     final class WPSEO_Role_Manager_WP extends \WPSEO_Abstract_Role_Manager
@@ -11645,7 +12559,7 @@ namespace {
          *
          * @var string
          */
-        const CACHE_TRANSIENT_KEY = 'wpseo-statistics-totals';
+        public const CACHE_TRANSIENT_KEY = 'wpseo-statistics-totals';
         /**
          * Class that generates interesting statistics about things.
          *
@@ -12117,6 +13031,8 @@ namespace {
         }
         /**
          * Shows the Yoast SEO metabox for the term.
+         *
+         * @return void
          */
         public function display()
         {
@@ -12199,6 +13115,8 @@ namespace {
         }
         /**
          * Add hooks late enough for taxonomy object to be available for checks.
+         *
+         * @return void
          */
         public function admin_init()
         {
@@ -12207,6 +13125,8 @@ namespace {
          * Show the SEO inputs for term.
          *
          * @param stdClass|WP_Term $term Term to show the edit boxes for.
+         *
+         * @return void
          */
         public function term_metabox($term)
         {
@@ -12223,6 +13143,8 @@ namespace {
          * Queue assets for taxonomy screens.
          *
          * @since 1.5.0
+         *
+         * @return void
          */
         public function admin_enqueue_scripts()
         {
@@ -12233,6 +13155,8 @@ namespace {
          * @param int    $term_id  ID of the term to save data for.
          * @param int    $tt_id    The taxonomy_term_id for the term.
          * @param string $taxonomy The taxonomy the term belongs to.
+         *
+         * @return void
          */
         public function update_term($term_id, $tt_id, $taxonomy)
         {
@@ -12248,12 +13172,16 @@ namespace {
         }
         /**
          * Allows post-kses-filtered HTML in term descriptions.
+         *
+         * @return void
          */
         public function custom_category_descriptions_allow_html()
         {
         }
         /**
          * Output the WordPress editor.
+         *
+         * @return void
          */
         public function custom_category_description_editor()
         {
@@ -12341,7 +13269,7 @@ namespace {
         /**
          * Prepares the replace vars for localization.
          *
-         * @return array The replacement variables.
+         * @return array<string, string> The replacement variables.
          */
         private function get_replace_vars()
         {
@@ -12349,9 +13277,17 @@ namespace {
         /**
          * Prepares the recommended replace vars for localization.
          *
-         * @return array The recommended replacement variables.
+         * @return array<string> The recommended replacement variables.
          */
         private function get_recommended_replace_vars()
+        {
+        }
+        /**
+         * Returns an array with shortcode tags for all registered shortcodes.
+         *
+         * @return array<string> Array with shortcode tags.
+         */
+        private function get_valid_shortcode_tags()
         {
         }
     }
@@ -12568,13 +13504,13 @@ namespace {
          * @var array All of the option_names which need to be
          * anonymized before they can be sent elsewhere.
          */
-        private $anonymous_settings = ['baiduverify', 'googleverify', 'msverify', 'yandexverify', 'myyoast-oauth', 'website_name', 'alternate_website_name', 'company_logo', 'company_name', 'company_alternate_name', 'person_name', 'person_logo', 'person_logo_id', 'company_logo_id', 'facebook_site', 'instagram_url', 'linkedin_url', 'myspace_url', 'og_default_image', 'og_default_image_id', 'og_frontpage_title', 'og_frontpage_desc', 'og_frontpage_image', 'og_frontpage_image_id', 'open_graph_frontpage_title', 'open_graph_frontpage_desc', 'open_graph_frontpage_image', 'open_graph_frontpage_image_id', 'other_social_urls', 'mastodon_url', 'pinterest_url', 'pinterestverify', 'twitter_site', 'youtube_url', 'wikipedia_url', 'semrush_tokens', 'zapier_api_key', 'wincher_tokens', 'wincher_website_id', 'least_readability_ignore_list', 'least_seo_score_ignore_list', 'most_linked_ignore_list', 'least_linked_ignore_list', 'indexables_page_reading_list'];
+        private $anonymous_settings = ['baiduverify', 'googleverify', 'msverify', 'yandexverify', 'myyoast-oauth', 'website_name', 'alternate_website_name', 'company_logo', 'company_name', 'company_alternate_name', 'person_name', 'person_logo', 'person_logo_id', 'company_logo_id', 'facebook_site', 'instagram_url', 'linkedin_url', 'myspace_url', 'og_default_image', 'og_default_image_id', 'og_frontpage_title', 'og_frontpage_desc', 'og_frontpage_image', 'og_frontpage_image_id', 'open_graph_frontpage_title', 'open_graph_frontpage_desc', 'open_graph_frontpage_image', 'open_graph_frontpage_image_id', 'other_social_urls', 'mastodon_url', 'pinterest_url', 'pinterestverify', 'twitter_site', 'youtube_url', 'wikipedia_url', 'semrush_tokens', 'wincher_tokens', 'wincher_website_id', 'least_readability_ignore_list', 'least_seo_score_ignore_list', 'most_linked_ignore_list', 'least_linked_ignore_list', 'indexables_page_reading_list', 'publishing_principles_id', 'ownership_funding_info_id', 'actionable_feedback_policy_id', 'corrections_policy_id', 'ethics_policy_id', 'diversity_policy_id', 'diversity_staffing_report_id'];
         /**
          * The options we want to track.
          *
          * @var array The option_names for the options we want to track.
          */
-        private $include_list = ['ms_defaults_set', 'version', 'disableadvanced_meta', 'ryte_indexability', 'baiduverify', 'googleverify', 'msverify', 'yandexverify', 'site_type', 'has_multiple_authors', 'environment_type', 'content_analysis_active', 'keyword_analysis_active', 'inclusive_language_analysis_active', 'enable_admin_bar_menu', 'enable_cornerstone_content', 'enable_xml_sitemap', 'enable_text_link_counter', 'show_onboarding_notice', 'first_activated_on', 'myyoast-oauth', 'dynamic_permalinks', 'website_name', 'alternate_website_name', 'company_logo', 'company_name', 'company_or_person', 'person_name', 'forcerewritetitle', 'separator', 'title-home-wpseo', 'title-author-wpseo', 'title-archive-wpseo', 'title-search-wpseo', 'title-404-wpseo', 'metadesc-home-wpseo', 'metadesc-author-wpseo', 'metadesc-archive-wpseo', 'rssbefore', 'rssafter', 'noindex-author-wpseo', 'noindex-author-noposts-wpseo', 'noindex-archive-wpseo', 'disable-author', 'disable-date', 'disable-post_format', 'disable-attachment', 'breadcrumbs-404crumb', 'breadcrumbs-display-blog-page', 'breadcrumbs-boldlast', 'breadcrumbs-archiveprefix', 'breadcrumbs-enable', 'breadcrumbs-home', 'breadcrumbs-prefix', 'breadcrumbs-searchprefix', 'breadcrumbs-sep', 'person_logo', 'person_logo_id', 'company_logo_id', 'company_or_person_user_id', 'stripcategorybase', 'noindex-post', 'display-metabox-pt-post', 'noindex-page', 'display-metabox-pt-page', 'noindex-attachment', 'display-metabox-pt-attachment', 'display-metabox-tax-category', 'noindex-tax-category', 'display-metabox-tax-post_tag', 'noindex-tax-post_tag', 'display-metabox-tax-post_format', 'noindex-tax-post_format', 'taxonomy-category-ptparent', 'taxonomy-post_tag-ptparent', 'taxonomy-post_format-ptparent', 'breadcrumbs-blog-remove', 'hideeditbox-post', 'hideeditbox-page', 'hideeditbox-attachment', 'hideeditbox-tax-category', 'hideeditbox-tax-post_tag', 'hideeditbox-tax-post_format', 'facebook_site', 'instagram_url', 'linkedin_url', 'myspace_url', 'og_default_image', 'og_default_image_id', 'og_frontpage_title', 'og_frontpage_desc', 'og_frontpage_image', 'og_frontpage_image_id', 'open_graph_frontpage_title', 'open_graph_frontpage_desc', 'open_graph_frontpage_image', 'open_graph_frontpage_image_id', 'opengraph', 'pinterest_url', 'pinterestverify', 'twitter', 'twitter_site', 'twitter_card_type', 'youtube_url', 'wikipedia_url', 'mastodon_url', 'indexables_indexing_completed', 'semrush_integration_active', 'semrush_tokens', 'semrush_country_code', 'enable_enhanced_slack_sharing', 'zapier_integration_active', 'zapier_api_key', 'enable_metabox_insights', 'enable_link_suggestions', 'enable_index_now', 'workouts', 'wincher_integration_active', 'wincher_tokens', 'wincher_website_id', 'wincher_automatically_add_keyphrases', 'first_time_install', 'other_social_urls', 'remove_feed_global', 'remove_feed_global_comments', 'remove_feed_post_comments', 'remove_feed_authors', 'remove_feed_categories', 'remove_feed_tags', 'remove_feed_custom_taxonomies', 'remove_feed_post_types', 'remove_feed_search', 'remove_atom_rdf_feeds', 'remove_shortlinks', 'remove_rest_api_links', 'remove_rsd_wlw_links', 'remove_oembed_links', 'remove_generator', 'remove_emoji_scripts', 'remove_powered_by_header', 'remove_pingback_header', 'clean_campaign_tracking_urls', 'clean_permalinks', 'clean_permalinks_extra_variables', 'search_cleanup', 'search_cleanup_emoji', 'search_cleanup_patterns', 'search_character_limit', 'redirect_search_pretty_urls', 'wordproof_integration_active', 'indexables_overview_state', 'deny_search_crawling', 'deny_wp_json_crawling'];
+        private $include_list = ['ms_defaults_set', 'version', 'disableadvanced_meta', 'ryte_indexability', 'baiduverify', 'googleverify', 'msverify', 'yandexverify', 'site_type', 'has_multiple_authors', 'environment_type', 'content_analysis_active', 'keyword_analysis_active', 'inclusive_language_analysis_active', 'enable_admin_bar_menu', 'enable_cornerstone_content', 'enable_xml_sitemap', 'enable_text_link_counter', 'show_onboarding_notice', 'first_activated_on', 'myyoast-oauth', 'dynamic_permalinks', 'website_name', 'alternate_website_name', 'company_logo', 'company_name', 'company_or_person', 'person_name', 'forcerewritetitle', 'separator', 'title-home-wpseo', 'title-author-wpseo', 'title-archive-wpseo', 'title-search-wpseo', 'title-404-wpseo', 'metadesc-home-wpseo', 'metadesc-author-wpseo', 'metadesc-archive-wpseo', 'rssbefore', 'rssafter', 'noindex-author-wpseo', 'noindex-author-noposts-wpseo', 'noindex-archive-wpseo', 'disable-author', 'disable-date', 'disable-post_format', 'disable-attachment', 'breadcrumbs-404crumb', 'breadcrumbs-display-blog-page', 'breadcrumbs-boldlast', 'breadcrumbs-archiveprefix', 'breadcrumbs-enable', 'breadcrumbs-home', 'breadcrumbs-prefix', 'breadcrumbs-searchprefix', 'breadcrumbs-sep', 'person_logo', 'person_logo_id', 'company_logo_id', 'company_or_person_user_id', 'stripcategorybase', 'noindex-post', 'display-metabox-pt-post', 'noindex-page', 'display-metabox-pt-page', 'noindex-attachment', 'display-metabox-pt-attachment', 'display-metabox-tax-category', 'noindex-tax-category', 'display-metabox-tax-post_tag', 'noindex-tax-post_tag', 'display-metabox-tax-post_format', 'noindex-tax-post_format', 'taxonomy-category-ptparent', 'taxonomy-post_tag-ptparent', 'taxonomy-post_format-ptparent', 'breadcrumbs-blog-remove', 'hideeditbox-post', 'hideeditbox-page', 'hideeditbox-attachment', 'hideeditbox-tax-category', 'hideeditbox-tax-post_tag', 'hideeditbox-tax-post_format', 'facebook_site', 'instagram_url', 'linkedin_url', 'myspace_url', 'og_default_image', 'og_default_image_id', 'og_frontpage_title', 'og_frontpage_desc', 'og_frontpage_image', 'og_frontpage_image_id', 'open_graph_frontpage_title', 'open_graph_frontpage_desc', 'open_graph_frontpage_image', 'open_graph_frontpage_image_id', 'opengraph', 'pinterest_url', 'pinterestverify', 'twitter', 'twitter_site', 'twitter_card_type', 'youtube_url', 'wikipedia_url', 'mastodon_url', 'indexables_indexing_completed', 'semrush_integration_active', 'semrush_tokens', 'semrush_country_code', 'enable_enhanced_slack_sharing', 'enable_metabox_insights', 'enable_link_suggestions', 'enable_index_now', 'enable_ai_generator', 'workouts', 'wincher_integration_active', 'wincher_tokens', 'wincher_website_id', 'wincher_automatically_add_keyphrases', 'first_time_install', 'other_social_urls', 'remove_feed_global', 'remove_feed_global_comments', 'remove_feed_post_comments', 'remove_feed_authors', 'remove_feed_categories', 'remove_feed_tags', 'remove_feed_custom_taxonomies', 'remove_feed_post_types', 'remove_feed_search', 'remove_atom_rdf_feeds', 'remove_shortlinks', 'remove_rest_api_links', 'remove_rsd_wlw_links', 'remove_oembed_links', 'remove_generator', 'remove_emoji_scripts', 'remove_powered_by_header', 'remove_pingback_header', 'clean_campaign_tracking_urls', 'clean_permalinks', 'clean_permalinks_extra_variables', 'search_cleanup', 'search_cleanup_emoji', 'search_cleanup_patterns', 'search_character_limit', 'redirect_search_pretty_urls', 'indexables_overview_state', 'deny_search_crawling', 'deny_wp_json_crawling', 'deny_adsbot_crawling', 'deny_ccbot_crawling', 'deny_google_extended_crawling', 'deny_gptbot_crawling', 'last_known_no_unindexed'];
         /**
          * Returns the collection data.
          *
@@ -12624,11 +13560,6 @@ namespace {
         }
     }
     /**
-     * WPSEO plugin file.
-     *
-     * @package WPSEO\Admin\Tracking
-     */
-    /**
      * This class handles the tracking routine.
      */
     class WPSEO_Tracking implements \WPSEO_WordPress_Integration
@@ -12668,6 +13599,8 @@ namespace {
         }
         /**
          * Registers all hooks to WordPress.
+         *
+         * @return void
          */
         public function register_hooks()
         {
@@ -12691,6 +13624,8 @@ namespace {
          *
          * @param bool $force Whether to send the tracking data ignoring the two
          *                    weeks time threshold. Default false.
+         *
+         * @return void
          */
         public function send($force = \false)
         {
@@ -13039,6 +13974,8 @@ namespace {
         }
         /**
          * Print the rendered view.
+         *
+         * @return void
          */
         public function output_html()
         {
@@ -13056,6 +13993,8 @@ namespace {
          *
          * @param string $attribute The name of the attribute to add.
          * @param string $value     The value of the attribute.
+         *
+         * @return void
          */
         public function add_attribute($attribute, $value)
         {
@@ -13081,6 +14020,8 @@ namespace {
          *
          * @param string $value     The value of the attribute.
          * @param string $attribute The attribute to look for.
+         *
+         * @return void
          */
         private function parse_attribute(&$value, $attribute)
         {
@@ -13207,7 +14148,7 @@ namespace {
         {
         }
         /**
-         * Shows an message when a post is about to get trashed.
+         * Shows a message when a post is about to get trashed.
          *
          * @param int $post_id The current post ID.
          *
@@ -13217,7 +14158,7 @@ namespace {
         {
         }
         /**
-         * Shows an message when a post is about to get trashed.
+         * Shows a message when a post is about to get trashed.
          *
          * @param int $post_id The current post ID.
          *
@@ -13229,11 +14170,11 @@ namespace {
         /**
          * Shows a message when a term is about to get deleted.
          *
-         * @param int $term_id The term ID that will be deleted.
+         * @param int $term_taxonomy_id The term taxonomy ID that will be deleted.
          *
          * @return void
          */
-        public function detect_term_delete($term_id)
+        public function detect_term_delete($term_taxonomy_id)
         {
         }
         /**
@@ -13249,11 +14190,11 @@ namespace {
         /**
          * Checks if the term is viewable.
          *
-         * @param string $term_id The term ID to check.
+         * @param int $term_taxonomy_id The term taxonomy ID to check.
          *
          * @return bool Whether the term is viewable or not.
          */
-        protected function is_term_viewable($term_id)
+        protected function is_term_viewable($term_taxonomy_id)
         {
         }
         /**
@@ -13289,11 +14230,12 @@ namespace {
         /**
          * Returns the message around changed URLs.
          *
-         * @param string $first_sentence The first sentence of the notification.
+         * @param string $first_sentence  The first sentence of the notification.
+         * @param string $second_sentence The second sentence of the notification.
          *
          * @return string The full notification.
          */
-        protected function get_message($first_sentence)
+        protected function get_message($first_sentence, $second_sentence)
         {
         }
         /**
@@ -13308,11 +14250,6 @@ namespace {
         }
     }
     /**
-     * WPSEO plugin file.
-     *
-     * @package WPSEO\Inc
-     */
-    /**
      * Represents the addon manager.
      */
     class WPSEO_Addon_Manager
@@ -13322,49 +14259,49 @@ namespace {
          *
          * @var string
          */
-        const SITE_INFORMATION_TRANSIENT = 'wpseo_site_information';
+        public const SITE_INFORMATION_TRANSIENT = 'wpseo_site_information';
         /**
          * Holds the name of the transient.
          *
          * @var string
          */
-        const SITE_INFORMATION_TRANSIENT_QUICK = 'wpseo_site_information_quick';
+        public const SITE_INFORMATION_TRANSIENT_QUICK = 'wpseo_site_information_quick';
         /**
          * Holds the slug for YoastSEO free.
          *
          * @var string
          */
-        const FREE_SLUG = 'yoast-seo-wordpress';
+        public const FREE_SLUG = 'yoast-seo-wordpress';
         /**
          * Holds the slug for YoastSEO Premium.
          *
          * @var string
          */
-        const PREMIUM_SLUG = 'yoast-seo-wordpress-premium';
+        public const PREMIUM_SLUG = 'yoast-seo-wordpress-premium';
         /**
          * Holds the slug for Yoast News.
          *
          * @var string
          */
-        const NEWS_SLUG = 'yoast-seo-news';
+        public const NEWS_SLUG = 'yoast-seo-news';
         /**
          * Holds the slug for Video.
          *
          * @var string
          */
-        const VIDEO_SLUG = 'yoast-seo-video';
+        public const VIDEO_SLUG = 'yoast-seo-video';
         /**
          * Holds the slug for WooCommerce.
          *
          * @var string
          */
-        const WOOCOMMERCE_SLUG = 'yoast-seo-woocommerce';
+        public const WOOCOMMERCE_SLUG = 'yoast-seo-woocommerce';
         /**
          * Holds the slug for Local.
          *
          * @var string
          */
-        const LOCAL_SLUG = 'yoast-seo-local';
+        public const LOCAL_SLUG = 'yoast-seo-local';
         /**
          * The expected addon data.
          *
@@ -13507,6 +14444,8 @@ namespace {
          * If the plugin is lacking an active subscription, throw a warning.
          *
          * @param array $plugin_data The data for the plugin in this row.
+         *
+         * @return void
          */
         public function expired_subscription_warning($plugin_data)
         {
@@ -13531,6 +14470,8 @@ namespace {
         }
         /**
          * Validates the addons and show a notice for the ones that are invalid.
+         *
+         * @return void
          */
         public function validate_addons()
         {
@@ -13957,8 +14898,12 @@ namespace {
         public static function has_metabox_enabled($post_type)
         {
         }
+        /* ********************* DEPRECATED METHODS ********************* */
         /**
          * Removes the notification related to the post types which have been made public.
+         *
+         * @deprecated 20.10
+         * @codeCoverageIgnore
          *
          * @return void
          */
@@ -13967,6 +14912,9 @@ namespace {
         }
         /**
          * Removes the notification related to the taxonomies which have been made public.
+         *
+         * @deprecated 20.10
+         * @codeCoverageIgnore
          *
          * @return void
          */
@@ -13994,6 +14942,8 @@ namespace {
          * Trigger a rewrite_rule flush on shutdown.
          *
          * @since 1.2.8
+         *
+         * @return void
          */
         public function schedule_flush()
         {
@@ -14013,9 +14963,9 @@ namespace {
         /**
          * Update the query vars with the redirect var when stripcategorybase is active.
          *
-         * @param array $query_vars Main query vars to filter.
+         * @param array<string> $query_vars Main query vars to filter.
          *
-         * @return array
+         * @return array<string> The query vars.
          */
         public function query_vars($query_vars)
         {
@@ -14023,17 +14973,27 @@ namespace {
         /**
          * Checks whether the redirect needs to be created.
          *
-         * @param array $query_vars Query vars to check for existence of redirect var.
+         * @param array<string> $query_vars Query vars to check for existence of redirect var.
          *
-         * @return array|void The query vars.
+         * @return array<string> The query vars.
          */
         public function request($query_vars)
         {
         }
         /**
+         * Wrapper for the category_rewrite_rules() below, so we can add the $rules param in a BC way.
+         *
+         * @param array<string> $rules Rewrite rules generated for the current permastruct, keyed by their regex pattern.
+         *
+         * @return array<string> The category rewrite rules.
+         */
+        public function category_rewrite_rules_wrapper($rules)
+        {
+        }
+        /**
          * This function taken and only slightly adapted from WP No Category Base plugin by Saurabh Gupta.
          *
-         * @return array
+         * @return array<string> The category rewrite rules.
          */
         public function category_rewrite_rules()
         {
@@ -14041,12 +15001,12 @@ namespace {
         /**
          * Adds required category rewrites rules.
          *
-         * @param array  $rewrites        The current set of rules.
-         * @param string $category_name   Category nicename.
-         * @param string $blog_prefix     Multisite blog prefix.
-         * @param string $pagination_base WP_Query pagination base.
+         * @param array<string> $rewrites        The current set of rules.
+         * @param string        $category_name   Category nicename.
+         * @param string        $blog_prefix     Multisite blog prefix.
+         * @param string        $pagination_base WP_Query pagination base.
          *
-         * @return array The added set of rules.
+         * @return array<string> The added set of rules.
          */
         protected function add_category_rewrites($rewrites, $category_name, $blog_prefix, $pagination_base)
         {
@@ -14113,7 +15073,7 @@ namespace {
         /**
          * Retrieves the content of the history items currently stored.
          *
-         * @return array The contents of the history option.
+         * @return array<array<string>> The contents of the history option.
          */
         public function get()
         {
@@ -14121,9 +15081,11 @@ namespace {
         /**
          * Adds a new history entry in the storage.
          *
-         * @param string $old_version  The version we are upgrading from.
-         * @param string $new_version  The version we are upgrading to.
-         * @param array  $option_names The options that need to be stored.
+         * @param string        $old_version  The version we are upgrading from.
+         * @param string        $new_version  The version we are upgrading to.
+         * @param array<string> $option_names The options that need to be stored.
+         *
+         * @return void
          */
         public function add($old_version, $new_version, array $option_names)
         {
@@ -14131,9 +15093,9 @@ namespace {
         /**
          * Retrieves the data for the specified option names from the database.
          *
-         * @param array $option_names The option names to retrieve.
+         * @param array<string> $option_names The option names to retrieve.
          *
-         * @return array
+         * @return array<int|string|bool|float,array<string|int|bool|float>> The retrieved data.
          */
         protected function get_options_data(array $option_names)
         {
@@ -14141,7 +15103,7 @@ namespace {
         /**
          * Stores the new history state.
          *
-         * @param array $data The data to store.
+         * @param array<array<string>> $data The data to store.
          *
          * @return void
          */
@@ -14199,6 +15161,8 @@ namespace {
          *
          * @param string $current_version The old version from which we are upgrading.
          * @param string $new_version     The version we are upgrading to.
+         *
+         * @return void
          */
         protected function add_upgrade_history($current_version, $new_version)
         {
@@ -14217,80 +15181,106 @@ namespace {
          * Run the Yoast SEO 1.5 upgrade routine.
          *
          * @param string $version Current plugin version.
+         *
+         * @return void
          */
         private function upgrade_15($version)
         {
         }
         /**
          * Moves options that moved position in WPSEO 2.0.
+         *
+         * @return void
          */
         private function upgrade_20()
         {
         }
         /**
          * Detects if taxonomy terms were split and updates the corresponding taxonomy meta's accordingly.
+         *
+         * @return void
          */
         private function upgrade_21()
         {
         }
         /**
          * Performs upgrade functions to Yoast SEO 2.2.
+         *
+         * @return void
          */
         private function upgrade_22()
         {
         }
         /**
          * Schedules upgrade function to Yoast SEO 2.3.
+         *
+         * @return void
          */
         private function upgrade_23()
         {
         }
         /**
          * Performs upgrade query to Yoast SEO 2.3.
+         *
+         * @return void
          */
         public function upgrade_23_query()
         {
         }
         /**
          * Performs upgrade functions to Yoast SEO 3.0.
+         *
+         * @return void
          */
         private function upgrade_30()
         {
         }
         /**
          * Performs upgrade functions to Yoast SEO 3.3.
+         *
+         * @return void
          */
         private function upgrade_33()
         {
         }
         /**
          * Performs upgrade functions to Yoast SEO 3.6.
+         *
+         * @return void
          */
-        private function upgrade_36()
+        protected function upgrade_36()
         {
         }
         /**
          * Removes the about notice when its still in the database.
+         *
+         * @return void
          */
         private function upgrade_40()
         {
         }
         /**
          * Moves the content-analysis-active and keyword-analysis-acive options from wpseo-titles to wpseo.
+         *
+         * @return void
          */
         private function upgrade_44()
         {
         }
         /**
          * Renames the meta name for the cornerstone content. It was a public meta field and it has to be private.
+         *
+         * @return void
          */
         private function upgrade_47()
         {
         }
         /**
          * Removes the 'wpseo-dismiss-about' notice for every user that still has it.
+         *
+         * @return void
          */
-        private function upgrade_49()
+        protected function upgrade_49()
         {
         }
         /**
@@ -14305,12 +15295,16 @@ namespace {
         }
         /**
          * Adds the yoast_seo_links table to the database.
+         *
+         * @return void
          */
-        private function upgrade_50()
+        protected function upgrade_50()
         {
         }
         /**
          * Register new capabilities and roles.
+         *
+         * @return void
          */
         private function upgrade_55()
         {
@@ -14352,7 +15346,7 @@ namespace {
          *
          * @return void
          */
-        private function upgrade_74()
+        protected function upgrade_74()
         {
         }
         /**
@@ -14386,7 +15380,7 @@ namespace {
          *
          * @return void
          */
-        private function upgrade_90()
+        protected function upgrade_90()
         {
         }
         /**
@@ -14409,6 +15403,8 @@ namespace {
          * Performs the 12.3 upgrade.
          *
          * Removes the about notice when its still in the database.
+         *
+         * @return void
          */
         private function upgrade_123()
         {
@@ -14417,36 +15413,48 @@ namespace {
          * Performs the 12.4 upgrade.
          *
          * Removes the Google plus defaults from the database.
+         *
+         * @return void
          */
         private function upgrade_124()
         {
         }
         /**
          * Performs the 12.5 upgrade.
+         *
+         * @return void
          */
         public function upgrade_125()
         {
         }
         /**
          * Performs the 12.8 upgrade.
+         *
+         * @return void
          */
         private function upgrade_128()
         {
         }
         /**
          * Performs the 13.2 upgrade.
+         *
+         * @return void
          */
         private function upgrade_132()
         {
         }
         /**
          * Perform the 14.0.3 upgrade.
+         *
+         * @return void
          */
         private function upgrade_1403()
         {
         }
         /**
          * Performs the 14.1 upgrade.
+         *
+         * @return void
          */
         private function upgrade_141()
         {
@@ -14455,18 +15463,24 @@ namespace {
          * Performs the 14.2 upgrade.
          *
          * Removes the yoast-acf-analysis notice when it's still in the database.
+         *
+         * @return void
          */
         private function upgrade_142()
         {
         }
         /**
          * Performs the 14.5 upgrade.
+         *
+         * @return void
          */
         private function upgrade_145()
         {
         }
         /**
          * Performs the 14.9 upgrade.
+         *
+         * @return void
          */
         private function upgrade_149()
         {
@@ -14505,12 +15519,16 @@ namespace {
         }
         /**
          * Performs the 15.9.1 upgrade routine.
+         *
+         * @return void
          */
         private function upgrade_1591()
         {
         }
         /**
          * Performs the 16.2 upgrade routine.
+         *
+         * @return void
          */
         private function upgrade_162()
         {
@@ -14533,68 +15551,118 @@ namespace {
         }
         /**
          * Performs the 17.7.1 upgrade routine.
+         *
+         * @return void
          */
         private function upgrade_1771()
         {
         }
         /**
          * Performs the 17.9 upgrade routine.
+         *
+         * @return void
          */
         private function upgrade_179()
         {
         }
         /**
          * Performs the 18.3 upgrade routine.
+         *
+         * @return void
          */
         private function upgrade_183()
         {
         }
         /**
          * Performs the 18.6 upgrade routine.
+         *
+         * @return void
          */
         private function upgrade_186()
         {
         }
         /**
          * Performs the 18.9 upgrade routine.
+         *
+         * @return void
          */
         private function upgrade_189()
         {
         }
         /**
          * Performs the 19.1 upgrade routine.
+         *
+         * @return void
          */
         private function upgrade_191()
         {
         }
         /**
          * Performs the 19.3 upgrade routine.
+         *
+         * @return void
          */
         private function upgrade_193()
         {
         }
         /**
          * Performs the 19.6 upgrade routine.
+         *
+         * @return void
          */
         private function upgrade_196()
         {
         }
         /**
          * Performs the 19.11 upgrade routine.
+         *
+         * @return void
          */
         private function upgrade_1911()
         {
         }
         /**
          * Performs the 20.2 upgrade routine.
+         *
+         * @return void
          */
         private function upgrade_202()
         {
         }
         /**
          * Performs the 20.5 upgrade routine.
+         *
+         * @return void
          */
         private function upgrade_205()
+        {
+        }
+        /**
+         * Performs the 20.7 upgrade routine.
+         * Removes the metadata related to the settings page introduction modal for all the users.
+         * Also, schedules another cleanup scheduled action.
+         *
+         * @return void
+         */
+        private function upgrade_207()
+        {
+        }
+        /**
+         * Performs the 20.8 upgrade routine.
+         * Schedules another cleanup scheduled action.
+         *
+         * @return void
+         */
+        private function upgrade_208()
+        {
+        }
+        /**
+         * Performs the 22.6 upgrade routine.
+         * Schedules another cleanup scheduled action, but starting from the last cleanup action we just added (if there aren't any running cleanups already).
+         *
+         * @return void
+         */
+        private function upgrade_226()
         {
         }
         /**
@@ -14618,18 +15686,24 @@ namespace {
          * Checks if the indexable indexation is completed.
          * If so, sets the `indexables_indexation_completed` option to `true`,
          * else to `false`.
+         *
+         * @return void
          */
         public function set_indexation_completed_option_for_145()
         {
         }
         /**
          * Cleans up the private taxonomies from the indexables table for the upgrade routine to 14.1.
+         *
+         * @return void
          */
         public function clean_up_private_taxonomies_for_141()
         {
         }
         /**
          * Resets the permalinks of attachments to `null` in the indexable table for the upgrade routine to 14.1.
+         *
+         * @return void
          */
         private function reset_permalinks_of_attachments_for_141()
         {
@@ -14691,7 +15765,7 @@ namespace {
          *
          * @param string $option_name Option to retrieve.
          *
-         * @return array|mixed The content of the option if exists, otherwise an empty array.
+         * @return int|string|bool|float|array<string|int|bool|float> The content of the option if exists, otherwise an empty array.
          */
         protected function get_option_from_database($option_name)
         {
@@ -14709,9 +15783,9 @@ namespace {
         /**
          * Saves an option setting to where it should be stored.
          *
-         * @param array       $source_data    The option containing the value to be migrated.
-         * @param string      $source_setting Name of the key in the "from" option.
-         * @param string|null $target_setting Name of the key in the "to" option.
+         * @param int|string|bool|float|array<string|int|bool|float> $source_data    The option containing the value to be migrated.
+         * @param string                                             $source_setting Name of the key in the "from" option.
+         * @param string|null                                        $target_setting Name of the key in the "to" option.
          *
          * @return void
          */
@@ -14783,7 +15857,7 @@ namespace {
          *
          * @return void
          */
-        private function deduplicate_unindexed_indexable_rows()
+        protected function deduplicate_unindexed_indexable_rows()
         {
         }
         /**
@@ -14791,7 +15865,7 @@ namespace {
          *
          * @return void
          */
-        private function clean_unindexed_indexable_rows_with_no_object_id()
+        protected function clean_unindexed_indexable_rows_with_no_object_id()
         {
         }
         /**
@@ -14799,19 +15873,27 @@ namespace {
          *
          * @return void
          */
-        private function remove_indexable_rows_for_disabled_authors_archive()
+        protected function remove_indexable_rows_for_disabled_authors_archive()
         {
         }
         /**
          * Creates a query for de-duplicating indexables for a particular type.
          *
-         * @param string $object_type The object type to deduplicate.
-         * @param array  $duplicates  The result of the duplicate query.
-         * @param wpdb   $wpdb        The wpdb object.
+         * @param string                              $object_type The object type to deduplicate.
+         * @param string|array<array<int,int,string>> $duplicates  The result of the duplicate query.
+         * @param wpdb                                $wpdb        The wpdb object.
          *
          * @return string The query that removes all but one duplicate for each object of the object type.
          */
-        private function get_indexable_deduplication_query_for_type($object_type, $duplicates, $wpdb)
+        protected function get_indexable_deduplication_query_for_type($object_type, $duplicates, $wpdb)
+        {
+        }
+        /**
+         * Removes the settings' introduction modal data for users.
+         *
+         * @return void
+         */
+        public function delete_user_introduction_meta()
         {
         }
     }
@@ -14825,31 +15907,31 @@ namespace {
          *
          * @var string
          */
-        const MENU_IDENTIFIER = 'wpseo-menu';
+        public const MENU_IDENTIFIER = 'wpseo-menu';
         /**
          * The identifier used for the Keyword Research submenu.
          *
          * @var string
          */
-        const KEYWORD_RESEARCH_SUBMENU_IDENTIFIER = 'wpseo-kwresearch';
+        public const KEYWORD_RESEARCH_SUBMENU_IDENTIFIER = 'wpseo-kwresearch';
         /**
          * The identifier used for the Analysis submenu.
          *
          * @var string
          */
-        const ANALYSIS_SUBMENU_IDENTIFIER = 'wpseo-analysis';
+        public const ANALYSIS_SUBMENU_IDENTIFIER = 'wpseo-analysis';
         /**
          * The identifier used for the Settings submenu.
          *
          * @var string
          */
-        const SETTINGS_SUBMENU_IDENTIFIER = 'wpseo-settings';
+        public const SETTINGS_SUBMENU_IDENTIFIER = 'wpseo-settings';
         /**
          * The identifier used for the Network Settings submenu.
          *
          * @var string
          */
-        const NETWORK_SETTINGS_SUBMENU_IDENTIFIER = 'wpseo-network-settings';
+        public const NETWORK_SETTINGS_SUBMENU_IDENTIFIER = 'wpseo-network-settings';
         /**
          * Asset manager instance.
          *
@@ -14907,7 +15989,7 @@ namespace {
          * @param Product_Helper|null            $product_helper       Optional. The product helper.
          * @param WPSEO_Shortlinker|null         $shortlinker          The shortlinker.
          */
-        public function __construct(\WPSEO_Admin_Asset_Manager $asset_manager = \null, \Yoast\WP\SEO\Repositories\Indexable_Repository $indexable_repository = \null, \Yoast\WP\SEO\Helpers\Score_Icon_Helper $score_icon_helper = \null, \Yoast\WP\SEO\Helpers\Product_Helper $product_helper = \null, \WPSEO_Shortlinker $shortlinker = \null)
+        public function __construct(?\WPSEO_Admin_Asset_Manager $asset_manager = \null, ?\Yoast\WP\SEO\Repositories\Indexable_Repository $indexable_repository = \null, ?\Yoast\WP\SEO\Helpers\Score_Icon_Helper $score_icon_helper = \null, ?\Yoast\WP\SEO\Helpers\Product_Helper $product_helper = \null, ?\WPSEO_Shortlinker $shortlinker = \null)
         {
         }
         /**
@@ -15128,9 +16210,11 @@ namespace {
         /**
          * Gets the notification counter if in a valid context.
          *
+         * @param int $notification_count Number of notifications.
+         *
          * @return string Notification counter markup, or empty string if not available.
          */
-        protected function get_notification_counter()
+        protected function get_notification_counter($notification_count)
         {
         }
         /**
@@ -15320,7 +16404,7 @@ namespace {
          * Find the right version of an image based on size.
          *
          * @param int          $attachment_id Attachment ID.
-         * @param string|array $size     Size name, or array of width and height in pixels (e.g [800,400]).
+         * @param string|array $size          Size name, or array of width and height in pixels (e.g [800,400]).
          *
          * @return array|false Returns an array with image data on success, false on failure.
          */
@@ -15508,6 +16592,8 @@ namespace {
         }
         /**
          * Sets the options on first install for showing the installation notice and disabling of the settings pages.
+         *
+         * @return void
          */
         public function set_first_install_options()
         {
@@ -15556,6 +16642,8 @@ namespace {
          * Sets the new primary term ID.
          *
          * @param int $new_primary_term New primary term ID.
+         *
+         * @return void
          */
         public function set_primary_term($new_primary_term)
         {
@@ -15585,31 +16673,31 @@ namespace {
          *
          * @var string
          */
-        const BAD = 'bad';
+        public const BAD = 'bad';
         /**
          * Constant used for determining an OK SEO rating.
          *
          * @var string
          */
-        const OK = 'ok';
+        public const OK = 'ok';
         /**
          * Constant used for determining a good SEO rating.
          *
          * @var string
          */
-        const GOOD = 'good';
+        public const GOOD = 'good';
         /**
          * Constant used for determining that no focus keyphrase is set.
          *
          * @var string
          */
-        const NO_FOCUS = 'na';
+        public const NO_FOCUS = 'na';
         /**
          * Constant used for determining that this content is not indexed.
          *
          * @var string
          */
-        const NO_INDEX = 'noindex';
+        public const NO_INDEX = 'noindex';
         /**
          * All possible ranks.
          *
@@ -15661,6 +16749,15 @@ namespace {
         {
         }
         /**
+         * Returns an inclusive language label for this rank.
+         * The only difference with get_label above is that we return "Potentially non-inclusive" for an OK rank.
+         *
+         * @return string
+         */
+        public function get_inclusive_language_label()
+        {
+        }
+        /**
          * Returns a label for use in a drop down.
          *
          * @return mixed
@@ -15674,6 +16771,14 @@ namespace {
          * @return string The readability rank label.
          */
         public function get_drop_down_readability_labels()
+        {
+        }
+        /**
+         * Gets the drop down labels for the inclusive language score.
+         *
+         * @return string The inclusive language rank label.
+         */
+        public function get_drop_down_inclusive_language_labels()
         {
         }
         /**
@@ -15716,6 +16821,14 @@ namespace {
          * @return WPSEO_Rank[]
          */
         public static function get_all_readability_ranks()
+        {
+        }
+        /**
+         * Returns a list of all possible Inclusive Language Ranks.
+         *
+         * @return WPSEO_Rank[]
+         */
+        public static function get_all_inclusive_language_ranks()
         {
         }
         /**
@@ -15763,6 +16876,8 @@ namespace {
         protected static $external_replacements = [];
         /**
          * Setup the help texts and external replacements as statics so they will be available to all instances.
+         *
+         * @return void
          */
         public static function setup_statics_once()
         {
@@ -16279,6 +17394,8 @@ namespace {
          *
          * @param string                     $type                 Type of variable: 'basic' or 'advanced'.
          * @param WPSEO_Replacement_Variable $replacement_variable The replacement variable to register.
+         *
+         * @return void
          */
         private static function register_help_text($type, \WPSEO_Replacement_Variable $replacement_variable)
         {
@@ -16369,12 +17486,16 @@ namespace {
         }
         /**
          * Set/translate the help texts for the WPSEO standard basic variables.
+         *
+         * @return void
          */
         private static function set_basic_help_texts()
         {
         }
         /**
          * Set/translate the help texts for the WPSEO standard advanced variables.
+         *
+         * @return void
          */
         private static function set_advanced_help_texts()
         {
@@ -16506,14 +17627,6 @@ namespace {
     class WPSEO_Shortlinker
     {
         /**
-         * Collects the additional data necessary for the shortlink.
-         *
-         * @return array The shortlink data.
-         */
-        protected function collect_additional_shortlink_data()
-        {
-        }
-        /**
          * Builds a URL to use in the plugin as shortlink.
          *
          * @param string $url The URL to build upon.
@@ -16537,6 +17650,8 @@ namespace {
          * Echoes a version of the URL with a utm_content with the current version.
          *
          * @param string $url The URL to build upon.
+         *
+         * @return void
          */
         public static function show($url)
         {
@@ -16547,46 +17662,6 @@ namespace {
          * @return array The shortlink's query params.
          */
         public static function get_query_params()
-        {
-        }
-        /**
-         * Gets the current site's PHP version, without the extra info.
-         *
-         * @return string The PHP version.
-         */
-        private function get_php_version()
-        {
-        }
-        /**
-         * Gets the current site's platform version.
-         *
-         * @return string The wp_version.
-         */
-        protected function get_platform_version()
-        {
-        }
-        /**
-         * Get our software and whether it's active or not.
-         *
-         * @return string The software name + activation state.
-         */
-        private function get_software()
-        {
-        }
-        /**
-         * Gets the number of days the plugin has been active.
-         *
-         * @return int The number of days the plugin is active.
-         */
-        private function get_days_active()
-        {
-        }
-        /**
-         * Gets the user's language.
-         *
-         * @return string|false The user's language or `false` when it couldn't be retrieved.
-         */
-        private function get_user_language()
         {
         }
     }
@@ -16784,6 +17859,8 @@ namespace {
          * Clears the WP or W3TC cache depending on which is used.
          *
          * @since 1.8.0
+         *
+         * @return void
          */
         public static function clear_cache()
         {
@@ -16792,6 +17869,8 @@ namespace {
          * Clear rewrite rules.
          *
          * @since 1.8.0
+         *
+         * @return void
          */
         public static function clear_rewrites()
         {
@@ -17069,20 +18148,122 @@ namespace {
         public static function retrieve_enabled_features()
         {
         }
-        /* ********************* DEPRECATED METHODS ********************* */
+    }
+    /**
+     * WPSEO plugin file.
+     *
+     * @package WPSEO\Internals
+     */
+    /**
+     * Class containing an alternative rewrite rules API for handling them dynamically without requiring flushing rules.
+     */
+    class Yoast_Dynamic_Rewrites implements \WPSEO_WordPress_Integration
+    {
         /**
-         * Translates a decimal analysis score into a textual one.
+         * Additional rewrite rules with high priority.
          *
-         * @since 1.8.0
-         * @deprecated 19.5
-         * @codeCoverageIgnore
-         *
-         * @param int  $val       The decimal score to translate.
-         * @param bool $css_value Whether to return the i18n translated score or the CSS class value.
-         *
-         * @return string
+         * @var array
          */
-        public static function translate_score($val, $css_value = \true)
+        protected $extra_rules_top = [];
+        /**
+         * Additional rewrite rules with low priority.
+         *
+         * @var array
+         */
+        protected $extra_rules_bottom = [];
+        /**
+         * Main instance holder.
+         *
+         * @var self|null
+         */
+        protected static $instance = \null;
+        /**
+         * WP_Rewrite instance to use.
+         *
+         * @var WP_Rewrite
+         */
+        public $wp_rewrite;
+        /**
+         * Gets the main instance of the class.
+         *
+         * @return self Dynamic rewrites main instance.
+         */
+        public static function instance()
+        {
+        }
+        /**
+         * Constructor.
+         *
+         * Sets the WP_Rewrite instance to use.
+         *
+         * @param WP_Rewrite|null $rewrite Optional. WP_Rewrite instance to use. Default is the $wp_rewrite global.
+         * @throws RuntimeException Throws an exception if the $wp_rewrite global is not set.
+         */
+        public function __construct($rewrite = \null)
+        {
+        }
+        /**
+         * Registers all necessary hooks with WordPress.
+         *
+         * @return void
+         */
+        public function register_hooks()
+        {
+        }
+        /**
+         * Adds a dynamic rewrite rule that transforms a URL structure to a set of query vars.
+         *
+         * Rules registered with this method are applied dynamically and do not require the rewrite rules
+         * to be flushed in order to become active, which is a benefit over the regular WordPress core API.
+         * Note however that the dynamic application only works for rules that correspond to index.php.
+         * Non-WordPress rewrite rules still require flushing.
+         *
+         * Any value in the $after parameter that isn't 'bottom' will result in the rule
+         * being placed at the top of the rewrite rules.
+         *
+         * @param string       $regex    Regular expression to match request against.
+         * @param string|array $query    The corresponding query vars for this rewrite rule.
+         * @param string       $priority Optional. Priority of the new rule. Accepts 'top'
+         *                               or 'bottom'. Default 'bottom'.
+         *
+         * @return void
+         */
+        public function add_rule($regex, $query, $priority = 'bottom')
+        {
+        }
+        /**
+         * Triggers the hook on which rewrite rules should be added.
+         *
+         * This allows for a more specific point in time from the generic `init` hook where this is
+         * otherwise handled.
+         *
+         * @return void
+         */
+        public function trigger_dynamic_rewrite_rules_hook()
+        {
+        }
+        /**
+         * Filters the rewrite rules option to dynamically add additional rewrite rules.
+         *
+         * @param array|string $rewrite_rules Array of rewrite rule $regex => $query pairs, or empty string
+         *                                    if currently not set.
+         *
+         * @return array|string Filtered value of $rewrite_rules.
+         */
+        public function filter_rewrite_rules_option($rewrite_rules)
+        {
+        }
+        /**
+         * Sanitizes the rewrite rules option prior to writing it to the database.
+         *
+         * This method ensures that the dynamic rewrite rules do not become part of the actual option.
+         *
+         * @param array|string $rewrite_rules Array pf rewrite rule $regex => $query pairs, or empty string
+         *                                    in order to unset.
+         *
+         * @return array|string Filtered value of $rewrite_rules before writing the option.
+         */
+        public function sanitize_rewrite_rules_option($rewrite_rules)
         {
         }
     }
@@ -17183,17 +18364,6 @@ namespace {
         public static function get_site_language_name()
         {
         }
-        /**
-         * Returns the l10n array for the knowledge graph company info missing.
-         *
-         * @deprecated 20.3
-         * @codeCoverageIgnore
-         *
-         * @return array The l10n array.
-         */
-        public static function get_knowledge_graph_company_info_missing_l10n()
-        {
-        }
     }
     /**
      * WPSEO plugin file.
@@ -17201,7 +18371,7 @@ namespace {
      * @package WPSEO\Internals\Options
      */
     /**
-     * This abstract class and it's concrete classes implement defaults and value validation for
+     * This abstract class and its concrete classes implement defaults and value validation for
      * all WPSEO options and subkeys within options.
      *
      * Some guidelines:
@@ -17217,9 +18387,9 @@ namespace {
      *
      * [Updating/Adding options]
      * - For multisite site_options, please use the WPSEO_Options::update_site_option() method.
-     * - For normal options, use the normal add/update_option() functions. As long a the classes here
+     * - For normal options, use the normal add/update_option() functions. As long as the classes here
      *   are instantiated, validation for all options and their subkeys will be automatic.
-     * - On (succesfull) update of a couple of options, certain related actions will be run automatically.
+     * - On (successful) update of a couple of options, certain related actions will be run automatically.
      *   Some examples:
      *   - on change of wpseo[yoast_tracking], the cron schedule will be adjusted accordingly
      *   - on change of wpseo and wpseo_title, some caches will be cleared
@@ -17236,7 +18406,7 @@ namespace {
      *   translate_defaults() method.
      * - When you remove an array key from an option: if it's important that the option is really removed,
      *   add the WPSEO_Option::clean_up( $option_name ) method to the upgrade run.
-     *   This will re-save the option and automatically remove the array key no longer in existance.
+     *   This will re-save the option and automatically remove the array key no longer in existence.
      * - When you rename a sub-option: add it to the clean_option() routine and run that in the upgrade run.
      * - When you change the default for an option sub-key, make sure you verify that the validation routine will
      *   still work the way it should.
@@ -17256,7 +18426,7 @@ namespace {
          *
          * @var string
          */
-        const ALLOW_KEY_PREFIX = 'allow_';
+        public const ALLOW_KEY_PREFIX = 'allow_';
         /**
          * Option name - MUST be set in concrete class and set to public.
          *
@@ -17267,8 +18437,8 @@ namespace {
          * Option group name for use in settings forms.
          *
          * Will be set automagically if not set in concrete class (i.e.
-         * if it confirm to the normal pattern 'yoast' . $option_name . 'options',
-         * only set in conrete class if it doesn't).
+         * if it conforms to the normal pattern 'yoast' . $option_name . 'options',
+         * only set in concrete class if it doesn't).
          *
          * @var string
          */
@@ -17296,7 +18466,7 @@ namespace {
          */
         protected $defaults;
         /**
-         * Array of variable option name patterns for the option - if any -.
+         * Array of variable option name patterns for the option - if any.
          *
          * Set this when the option contains array keys which vary based on post_type
          * or taxonomy.
@@ -17345,7 +18515,7 @@ namespace {
          * ```
          * ---------------
          *
-         * Concrete classes *may* contain a enrich_defaults method to add additional defaults once
+         * Concrete classes *may* contain an enrich_defaults method to add additional defaults once
          * all post_types and taxonomies have been registered.
          *
          * ```
@@ -17393,6 +18563,8 @@ namespace {
          * @param array  $dirty Dirty data with the new values.
          * @param array  $old   Old data.
          * @param array  $clean Clean data by reference, normally the default values.
+         *
+         * @return void
          */
         public function validate_verification_string($key, $dirty, $old, &$clean)
         {
@@ -17405,6 +18577,8 @@ namespace {
          * @param array  $dirty Dirty data with the new values.
          * @param array  $old   Old data.
          * @param array  $clean Clean data by reference, normally the default values.
+         *
+         * @return void
          */
         public function validate_url($key, $dirty, $old, &$clean)
         {
@@ -17460,7 +18634,7 @@ namespace {
         public function get_option($options = \null)
         {
         }
-        /* *********** METHODS influencing add_uption(), update_option() and saving from admin pages. *********** */
+        /* *********** METHODS influencing add_option(), update_option() and saving from admin pages. *********** */
         /**
          * Register (whitelist) the option for the configuration pages.
          * The validation callback is already registered separately on the sanitize_option hook,
@@ -17472,7 +18646,7 @@ namespace {
         {
         }
         /**
-         * Validate the option
+         * Validate the option.
          *
          * @param mixed $option_value The unvalidated new value for the option.
          *
@@ -17535,7 +18709,7 @@ namespace {
          *
          * @param mixed $value The new value for the option.
          *
-         * @return bool Whether the update was succesfull.
+         * @return bool Whether the update was successful.
          */
         public function update_site_option($value)
         {
@@ -17547,7 +18721,7 @@ namespace {
          * @uses WPSEO_Option::import()
          *
          * @param string|null $current_version Optional. Version from which to upgrade, if not set,
-         *                                     version specific upgrades will be disregarded.
+         *                                     version-specific upgrades will be disregarded.
          *
          * @return void
          */
@@ -17570,7 +18744,7 @@ namespace {
          *
          * @param array       $option_value          Option value to be imported.
          * @param string|null $current_version       Optional. Version from which to upgrade, if not set,
-         *                                           version specific upgrades will be disregarded.
+         *                                           version-specific upgrades will be disregarded.
          * @param array|null  $all_old_option_values Optional. Only used when importing old options to
          *                                           have access to the real old values, in contrast to
          *                                           the saved ones.
@@ -17665,7 +18839,7 @@ namespace {
         /**
          * Check whether a given array key conforms to one of the variable array key patterns for this option.
          *
-         * @usedby validate_option() methods for options with variable array keys.
+         * @used-by validate_option() methods for options with variable array keys.
          *
          * @param string $key Array key to check.
          *
@@ -17955,7 +19129,7 @@ namespace {
          *
          * {@internal Note: Some of the default values are added via the translate_defaults() method.}}
          *
-         * @var array
+         * @var string[]
          */
         protected $defaults = [
             // Form fields.
@@ -18040,23 +19214,42 @@ namespace {
             'open_graph_frontpage_image' => '',
             // Text field.
             'open_graph_frontpage_image_id' => 0,
+            'publishing_principles_id' => 0,
+            'ownership_funding_info_id' => 0,
+            'actionable_feedback_policy_id' => 0,
+            'corrections_policy_id' => 0,
+            'ethics_policy_id' => 0,
+            'diversity_policy_id' => 0,
+            'diversity_staffing_report_id' => 0,
+            'org-description' => '',
+            'org-email' => '',
+            'org-phone' => '',
+            'org-legal-name' => '',
+            'org-founding-date' => '',
+            'org-number-employees' => '',
+            'org-vat-id' => '',
+            'org-tax-id' => '',
+            'org-iso' => '',
+            'org-duns' => '',
+            'org-leicode' => '',
+            'org-naics' => '',
         ];
         /**
          * Used for "caching" during pageload.
          *
-         * @var array
+         * @var string[]
          */
         protected $enriched_defaults = \null;
         /**
          * Array of variable option name patterns for the option.
          *
-         * @var array
+         * @var string[]
          */
-        protected $variable_array_key_patterns = ['title-', 'metadesc-', 'noindex-', 'display-metabox-pt-', 'bctitle-ptarchive-', 'post_types-', 'taxonomy-', 'schema-page-type-', 'schema-article-type-', 'social-title-', 'social-description-', 'social-image-url-', 'social-image-id-'];
+        protected $variable_array_key_patterns = ['title-', 'metadesc-', 'noindex-', 'display-metabox-pt-', 'bctitle-ptarchive-', 'post_types-', 'taxonomy-', 'schema-page-type-', 'schema-article-type-', 'social-title-', 'social-description-', 'social-image-url-', 'social-image-id-', 'org-'];
         /**
          * Array of sub-options which should not be overloaded with multi-site defaults.
          *
-         * @var array
+         * @var string[]
          */
         public $ms_exclude = ['forcerewritetitle'];
         /**
@@ -18071,6 +19264,8 @@ namespace {
         }
         /**
          * Make sure we can recognize the right action for the double cleaning.
+         *
+         * @return void
          */
         public function end_of_init()
         {
@@ -18086,7 +19281,7 @@ namespace {
         /**
          * Get the available separator options.
          *
-         * @return array
+         * @return string[]
          */
         public function get_separator_options()
         {
@@ -18094,7 +19289,7 @@ namespace {
         /**
          * Get the available separator options aria-labels.
          *
-         * @return array Array with the separator options aria-labels.
+         * @return string[] Array with the separator options aria-labels.
          */
         public function get_separator_options_for_display()
         {
@@ -18130,11 +19325,11 @@ namespace {
         /**
          * Validate the option.
          *
-         * @param array $dirty New value for the option.
-         * @param array $clean Clean value for the option, normally the defaults.
-         * @param array $old   Old value of the option.
+         * @param string[] $dirty New value for the option.
+         * @param string[] $clean Clean value for the option, normally the defaults.
+         * @param string[] $old   Old value of the option.
          *
-         * @return array Validated clean value for the option to be saved to the database.
+         * @return string[] Validated clean value for the option to be saved to the database.
          */
         protected function validate_option($dirty, $clean, $old)
         {
@@ -18145,7 +19340,7 @@ namespace {
          *
          * {@internal Don't make static as new types may still be registered.}}
          *
-         * @return array
+         * @return string[]
          */
         protected function get_allowed_post_types()
         {
@@ -18153,14 +19348,11 @@ namespace {
         /**
          * Clean a given option value.
          *
-         * @param array       $option_value          Old (not merged with defaults or filtered) option value to
-         *                                           clean according to the rules for this option.
-         * @param string|null $current_version       Optional. Version from which to upgrade, if not set,
-         *                                           version specific upgrades will be disregarded.
-         * @param array|null  $all_old_option_values Optional. Only used when importing old options to have
-         *                                           access to the real old values, in contrast to the saved ones.
+         * @param string[]      $option_value          Old (not merged with defaults or filtered) option value to clean according to the rules for this option.
+         * @param string[]|null $current_version       Optional. Version from which to upgrade, if not set, version specific upgrades will be disregarded.
+         * @param string[]|null $all_old_option_values Optional. Only used when importing old options to have access to the real old values, in contrast to the saved ones.
          *
-         * @return array Cleaned option.
+         * @return string[] Cleaned option.
          */
         protected function clean_option($option_value, $current_version = \null, $all_old_option_values = \null)
         {
@@ -18173,12 +19365,12 @@ namespace {
          *            variable key does not get removed. IMPORTANT: keep this method in line with
          *            the parent on which it is based!}}
          *
-         * @param array $dirty Original option as retrieved from the database.
-         * @param array $clean Filtered option where any options which shouldn't be in our option
+         * @param string[] $dirty Original option as retrieved from the database.
+         * @param string[] $clean Filtered option where any options which shouldn't be in our option
          *                     have already been removed and any options which weren't set
          *                     have been set to their defaults.
          *
-         * @return array
+         * @return string[]
          */
         protected function retain_variable_keys($dirty, $clean)
         {
@@ -18186,7 +19378,7 @@ namespace {
         /**
          * Retrieves a list of separator options.
          *
-         * @return array An array of the separator options.
+         * @return string[] An array of the separator options.
          */
         protected static function get_separator_option_list()
         {
@@ -18254,6 +19446,8 @@ namespace {
             'enable_xml_sitemap' => \true,
             'enable_text_link_counter' => \true,
             'enable_index_now' => \true,
+            'enable_ai_generator' => \true,
+            'ai_enabled_pre_default' => \false,
             'show_onboarding_notice' => \false,
             'first_activated_on' => \false,
             'myyoast-oauth' => ['config' => ['clientId' => \null, 'secret' => \null], 'access_tokens' => []],
@@ -18267,9 +19461,6 @@ namespace {
             'tag_base_url' => '',
             'custom_taxonomy_slugs' => [],
             'enable_enhanced_slack_sharing' => \true,
-            'zapier_integration_active' => \false,
-            'zapier_subscription' => [],
-            'zapier_api_key' => '',
             'enable_metabox_insights' => \true,
             'enable_link_suggestions' => \true,
             'algolia_integration_active' => \false,
@@ -18278,14 +19469,11 @@ namespace {
             'configuration_finished_steps' => [],
             'dismiss_configuration_workout_notice' => \false,
             'dismiss_premium_deactivated_notice' => \false,
-            'dismiss_old_premium_version_notice' => '',
             'importing_completed' => [],
             'wincher_integration_active' => \true,
             'wincher_tokens' => [],
             'wincher_automatically_add_keyphrases' => \false,
             'wincher_website_id' => '',
-            'wordproof_integration_active' => \false,
-            'wordproof_integration_changed' => \false,
             'first_time_install' => \false,
             'should_redirect_after_install_free' => \false,
             'activation_redirect_timestamp_free' => 0,
@@ -18316,6 +19504,10 @@ namespace {
             'search_character_limit' => 50,
             'deny_search_crawling' => \false,
             'deny_wp_json_crawling' => \false,
+            'deny_adsbot_crawling' => \false,
+            'deny_ccbot_crawling' => \false,
+            'deny_google_extended_crawling' => \false,
+            'deny_gptbot_crawling' => \false,
             'redirect_search_pretty_urls' => \false,
             'least_readability_ignore_list' => [],
             'least_seo_score_ignore_list' => [],
@@ -18325,6 +19517,12 @@ namespace {
             'indexables_overview_state' => 'dashboard-not-visited',
             'last_known_public_post_types' => [],
             'last_known_public_taxonomies' => [],
+            'last_known_no_unindexed' => [],
+            'new_post_types' => [],
+            'new_taxonomies' => [],
+            'show_new_content_type_notification' => \false,
+            'site_kit_configuration_permanently_dismissed' => \false,
+            'site_kit_connected' => \false,
         ];
         /**
          * Sub-options which should not be overloaded with multi-site defaults.
@@ -18522,6 +19720,8 @@ namespace {
         }
         /**
          * Register our hooks.
+         *
+         * @return void
          */
         public function register_hooks()
         {
@@ -18538,6 +19738,8 @@ namespace {
          * Registers an option to the options list.
          *
          * @param WPSEO_Option $option_instance Instance of the option.
+         *
+         * @return void
          */
         public static function register_option(\WPSEO_Option $option_instance)
         {
@@ -18595,9 +19797,11 @@ namespace {
         /**
          * Retrieve all the options for the SEO plugin in one go.
          *
+         * @param array<string> $specific_options The option groups of the option you want to get.
+         *
          * @return array Array combining the values of all the options.
          */
-        public static function get_all()
+        public static function get_all($specific_options = [])
         {
         }
         /**
@@ -18623,35 +19827,43 @@ namespace {
         /**
          * Retrieve a single field from any option for the SEO plugin. Keys are always unique.
          *
-         * @param string $key           The key it should return.
-         * @param mixed  $default_value The default value that should be returned if the key isn't set.
+         * @param string        $key           The key it should return.
+         * @param mixed         $default_value The default value that should be returned if the key isn't set.
+         * @param array<string> $option_groups The option groups to retrieve the option from.
          *
          * @return mixed Returns value if found, $default_value if not.
          */
-        public static function get($key, $default_value = \null)
+        public static function get($key, $default_value = \null, $option_groups = [])
         {
         }
         /**
          * Resets the cache to null.
+         *
+         * @return void
          */
         public static function clear_cache()
         {
         }
         /**
          * Primes our cache.
+         *
+         * @param array<string> $option_groups The option groups to prime the cache with.
+         *
+         * @return void
          */
-        private static function prime_cache()
+        private static function prime_cache($option_groups = [])
         {
         }
         /**
          * Retrieve a single field from an option for the SEO plugin.
          *
-         * @param string $key   The key to set.
-         * @param mixed  $value The value to set.
+         * @param string $key          The key to set.
+         * @param mixed  $value        The value to set.
+         * @param string $option_group The lookup table which represents the option_group where the key is stored.
          *
          * @return mixed|null Returns value if found, $default if not.
          */
-        public static function set($key, $value)
+        public static function set($key, $value, $option_group = '')
         {
         }
         /**
@@ -18757,9 +19969,11 @@ namespace {
         /**
          * Retrieves a lookup table to find in which option_group a key is stored.
          *
+         * @param string $option_group The option_group where the key is stored.
+         *
          * @return array The lookup table.
          */
-        private static function get_lookup_table()
+        private static function get_lookup_table($option_group = '')
         {
         }
         /**
@@ -18870,6 +20084,8 @@ namespace {
         }
         /**
          * Add extra default options received from a filter.
+         *
+         * @return void
          */
         public function enrich_defaults()
         {
@@ -18945,6 +20161,8 @@ namespace {
          * @param int    $term_id     ID of the term to save data for.
          * @param string $taxonomy    The taxonomy the term belongs to.
          * @param array  $meta_values The values that will be saved.
+         *
+         * @return void
          */
         public static function set_values($term_id, $taxonomy, array $meta_values)
         {
@@ -18956,6 +20174,8 @@ namespace {
          * @param string $taxonomy   The taxonomy the term belongs to.
          * @param string $meta_key   The target meta key to store the value in.
          * @param string $meta_value The value of the target meta key.
+         *
+         * @return void
          */
         public static function set_value($term_id, $taxonomy, $meta_key, $meta_value)
         {
@@ -18978,6 +20198,8 @@ namespace {
          * @param int    $term_id  ID of the term to save data for.
          * @param string $taxonomy The taxonomy the term belongs to.
          * @param array  $clean    Array with clean values.
+         *
+         * @return void
          */
         private static function save_clean_values($term_id, $taxonomy, array $clean)
         {
@@ -18994,6 +20216,8 @@ namespace {
          * Saving the tax meta values to the database.
          *
          * @param array $tax_meta Array with the meta values for taxonomy.
+         *
+         * @return void
          */
         private static function save_tax_meta($tax_meta)
         {
@@ -19203,6 +20427,8 @@ namespace {
          * Check for relevant post type before invalidation.
          *
          * @param int $post_id Post ID to possibly invalidate for.
+         *
+         * @return void
          */
         public function save_post($post_id)
         {
@@ -19304,6 +20530,28 @@ namespace {
         protected function get_url($post)
         {
         }
+        /**
+         * Get all dates for a post type by using the WITH clause for performance.
+         *
+         * @param string $post_type   Post type to retrieve dates for.
+         * @param int    $max_entries Maximum number of entries to retrieve.
+         *
+         * @return array Array of dates.
+         */
+        private function get_all_dates_using_with_clause($post_type, $max_entries)
+        {
+        }
+        /**
+         * Get all dates for a post type.
+         *
+         * @param string $post_type   Post type to retrieve dates for.
+         * @param int    $max_entries Maximum number of entries to retrieve.
+         *
+         * @return array Array of dates.
+         */
+        private function get_all_dates($post_type, $max_entries)
+        {
+        }
     }
     /**
      * WPSEO plugin file.
@@ -19320,19 +20568,19 @@ namespace {
          *
          * @var string
          */
-        const OK = 'ok';
+        public const OK = 'ok';
         /**
          * Status for unusable sitemap.
          *
          * @var string
          */
-        const ERROR = 'error';
+        public const ERROR = 'error';
         /**
          * Status for unusable sitemap because it cannot be identified.
          *
          * @var string
          */
-        const UNKNOWN = 'unknown';
+        public const UNKNOWN = 'unknown';
         /**
          * Set the content of the sitemap.
          *
@@ -19394,6 +20642,8 @@ namespace {
          * Set the sitemap XML data
          *
          * @param string $sitemap XML Content of the sitemap.
+         *
+         * @return void
          */
         public function set_sitemap($sitemap)
         {
@@ -19711,15 +20961,22 @@ namespace {
          * if the post is being published, is a post type that a sitemap is built for
          * and is a post that is included in sitemaps.
          *
-         * @param string   $new_status New post status.
-         * @param string   $old_status Old post status.
-         * @param \WP_Post $post       Post object.
+         * @param string  $new_status New post status.
+         * @param string  $old_status Old post status.
+         * @param WP_Post $post       Post object.
+         *
+         * @return void
          */
         public function status_transition($new_status, $old_status, $post)
         {
         }
         /**
          * Notify Google of the updated sitemap.
+         *
+         * @deprecated 22.0
+         * @codeCoverageIgnore
+         *
+         * @return void
          */
         public function ping_search_engines()
         {
@@ -19730,15 +20987,19 @@ namespace {
          * When importing is done, if we have a post_type that is saved in the sitemap
          * try to ping the search engines.
          *
-         * @param string   $new_status New post status.
-         * @param string   $old_status Old post status.
-         * @param \WP_Post $post       Post object.
+         * @param string  $new_status New post status.
+         * @param string  $old_status Old post status.
+         * @param WP_Post $post       Post object.
+         *
+         * @return void
          */
         private function status_transition_bulk($new_status, $old_status, $post)
         {
         }
         /**
          * After import finished, walk through imported post_types and update info.
+         *
+         * @return void
          */
         public function status_transition_bulk_finished()
         {
@@ -19761,19 +21022,19 @@ namespace {
          *
          * @var string
          */
-        const STORAGE_KEY_PREFIX = 'yst_sm_';
+        public const STORAGE_KEY_PREFIX = 'yst_sm_';
         /**
          * Name of the option that holds the global validation value.
          *
          * @var string
          */
-        const VALIDATION_GLOBAL_KEY = 'wpseo_sitemap_cache_validator_global';
+        public const VALIDATION_GLOBAL_KEY = 'wpseo_sitemap_cache_validator_global';
         /**
          * The format which creates the key of the option that holds the type validation value.
          *
          * @var string
          */
-        const VALIDATION_TYPE_KEY_FORMAT = 'wpseo_sitemap_%s_cache_validator';
+        public const VALIDATION_TYPE_KEY_FORMAT = 'wpseo_sitemap_%s_cache_validator';
         /**
          * Get the cache key for a certain type and page.
          *
@@ -19937,6 +21198,8 @@ namespace {
         }
         /**
          * Setup context for static calls.
+         *
+         * @return void
          */
         public function init()
         {
@@ -20058,6 +21321,8 @@ namespace {
         }
         /**
          * Invalidate storage for cache types queued to clear.
+         *
+         * @return void
          */
         public static function clear_queued()
         {
@@ -20069,6 +21334,8 @@ namespace {
          *
          * @param string $option Option name.
          * @param string $type   Sitemap type.
+         *
+         * @return void
          */
         public static function register_clear_on_option_update($option, $type = '')
         {
@@ -20129,7 +21396,7 @@ namespace {
         /**
          * Builds the sitemap index.
          *
-         * @param array $links Set of sitemaps index links.
+         * @param array<string> $links Set of sitemaps index links.
          *
          * @return string
          */
@@ -20139,9 +21406,9 @@ namespace {
         /**
          * Builds the sitemap.
          *
-         * @param array  $links        Set of sitemap links.
-         * @param string $type         Sitemap type.
-         * @param int    $current_page Current sitemap page number.
+         * @param array<string> $links        Set of sitemap links.
+         * @param string        $type         Sitemap type.
+         * @param int           $current_page Current sitemap page number.
          *
          * @return string
          */
@@ -20170,6 +21437,8 @@ namespace {
          * Set a custom stylesheet for this sitemap. Set to empty to just remove the default stylesheet.
          *
          * @param string $stylesheet Full XML-stylesheet declaration.
+         *
+         * @return void
          */
         public function set_stylesheet($stylesheet)
         {
@@ -20177,7 +21446,7 @@ namespace {
         /**
          * Build the `<sitemap>` tag for a given URL.
          *
-         * @param array $url Array of parts that make up this entry.
+         * @param array<string> $url Array of parts that make up this entry.
          *
          * @return string
          */
@@ -20189,7 +21458,7 @@ namespace {
          *
          * Public access for backwards compatibility reasons.
          *
-         * @param array $url Array of parts that make up this entry.
+         * @param array<string> $url Array of parts that make up this entry.
          *
          * @return string
          */
@@ -20242,11 +21511,6 @@ namespace {
         }
     }
     /**
-     * WPSEO plugin file.
-     *
-     * @package WPSEO\XML_Sitemaps
-     */
-    /**
      * Rewrite setup and handling for sitemaps functionality.
      */
     class WPSEO_Sitemaps_Router
@@ -20258,7 +21522,32 @@ namespace {
         {
         }
         /**
+         * Adds rewrite routes for sitemaps.
+         *
+         * @param Yoast_Dynamic_Rewrites $dynamic_rewrites Dynamic rewrites handler instance.
+         *
+         * @return void
+         */
+        public function add_rewrite_rules($dynamic_rewrites)
+        {
+        }
+        /**
+         * Adds query variables for sitemaps.
+         *
+         * @param  array<string> $query_vars List of query variables to filter.
+         *
+         * @return array<string> Filtered query variables.
+         */
+        public function add_query_vars($query_vars)
+        {
+        }
+        /**
          * Sets up rewrite rules.
+         *
+         * @deprecated 21.8
+         * @codeCoverageIgnore
+         *
+         * @return void
          */
         public function init()
         {
@@ -20275,6 +21564,8 @@ namespace {
         }
         /**
          * Redirects sitemap.xml to sitemap_index.xml.
+         *
+         * @return void
          */
         public function template_redirect()
         {
@@ -20317,7 +21608,7 @@ namespace {
          *
          * @var string
          */
-        const SITEMAP_INDEX_TYPE = '1';
+        public const SITEMAP_INDEX_TYPE = '1';
         /**
          * Content of the sitemap to output.
          *
@@ -20392,12 +21683,16 @@ namespace {
          * Initialize sitemap providers classes.
          *
          * @since 5.3
+         *
+         * @return void
          */
         public function init_sitemaps_providers()
         {
         }
         /**
          * Check the current request URI, if we can determine it's probably an XML sitemap, kill loading the widgets.
+         *
+         * @return void
          */
         public function reduce_query_load()
         {
@@ -20408,6 +21703,8 @@ namespace {
          * @param string   $name              The name of the sitemap.
          * @param callback $building_function Function to build your sitemap.
          * @param string   $rewrite           Optional. Regular expression to match your sitemap with.
+         *
+         * @return void
          */
         public function register_sitemap($name, $building_function, $rewrite = '')
         {
@@ -20420,6 +21717,8 @@ namespace {
          * @param string   $name              The name of the XSL file.
          * @param callback $building_function Function to build your XSL file.
          * @param string   $rewrite           Optional. Regular expression to match your sitemap with.
+         *
+         * @return void
          */
         public function register_xsl($name, $building_function, $rewrite = '')
         {
@@ -20429,6 +21728,8 @@ namespace {
          * in a one-off process.
          *
          * @param int $current_page The part that should be generated.
+         *
+         * @return void
          */
         public function set_n($current_page)
         {
@@ -20437,6 +21738,8 @@ namespace {
          * Set the sitemap content to display after you have generated it.
          *
          * @param string $sitemap The generated sitemap to output.
+         *
+         * @return void
          */
         public function set_sitemap($sitemap)
         {
@@ -20445,6 +21748,8 @@ namespace {
          * Set as true to make the request 404. Used stop the display of empty sitemaps or invalid requests.
          *
          * @param bool $is_bad Is this a bad request. True or false.
+         *
+         * @return void
          */
         public function set_bad_sitemap($is_bad)
         {
@@ -20453,6 +21758,8 @@ namespace {
          * Prevent stupid plugins from running shutdown scripts when we're obviously not outputting HTML.
          *
          * @since 1.4.16
+         *
+         * @return void
          */
         public function sitemap_close()
         {
@@ -20460,7 +21767,9 @@ namespace {
         /**
          * Hijack requests for potential sitemaps and XSL files.
          *
-         * @param \WP_Query $query Main query instance.
+         * @param WP_Query $query Main query instance.
+         *
+         * @return void
          */
         public function redirect($query)
         {
@@ -20493,12 +21802,16 @@ namespace {
          * Sets $bad_sitemap if this isn't for the root sitemap, a post type or taxonomy.
          *
          * @param string $type The requested sitemap's identifier.
+         *
+         * @return void
          */
         public function build_sitemap($type)
         {
         }
         /**
          * Build the root sitemap (example.com/sitemap_index.xml) which lists sub-sitemaps for other content types.
+         *
+         * @return void
          */
         public function build_root_map()
         {
@@ -20509,12 +21822,16 @@ namespace {
          * @since 1.4.13
          *
          * @param string $type Type to output.
+         *
+         * @return void
          */
         public function xsl_output($type)
         {
         }
         /**
          * Spit out the generated sitemap.
+         *
+         * @return void
          */
         public function output()
         {
@@ -20550,20 +21867,6 @@ namespace {
         public function get_last_modified($post_types)
         {
         }
-        // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Argument is kept for documentation purposes.
-        /**
-         * Notify search engines of the updated sitemap.
-         *
-         * @deprecated 19.2
-         *
-         * @codeCoverageIgnore
-         *
-         * @param string|null $url Optional URL to make the ping for.
-         */
-        public static function ping_search_engines($url = \null)
-        {
-        }
-        // phpcs:enable
         /**
          * Get the maximum number of entries per XML sitemap.
          *
@@ -20586,6 +21889,8 @@ namespace {
         }
         /**
          * Sends all the required HTTP Headers.
+         *
+         * @return void
          */
         private function send_headers()
         {
@@ -20693,6 +21998,8 @@ namespace Yoast\WP\Lib {
         private $cached_surfaces = [];
         /**
          * Loads the plugin.
+         *
+         * @return void
          *
          * @throws Exception If loading fails and YOAST_ENVIRONMENT is development.
          */
@@ -20848,13 +22155,13 @@ namespace Yoast\WP\Lib {
          *
          * @var string
          */
-        const DEFAULT_ID_COLUMN = 'id';
+        public const DEFAULT_ID_COLUMN = 'id';
         /**
          * Default foreign key suffix used by relationship methods.
          *
          * @var string
          */
-        const DEFAULT_FOREIGN_KEY_SUFFIX = '_id';
+        public const DEFAULT_FOREIGN_KEY_SUFFIX = '_id';
         /**
          * Set a prefix for model names. This can be a namespace or any other
          * abitrary prefix such as the PEAR naming convention.
@@ -21070,7 +22377,7 @@ namespace Yoast\WP\Lib {
          *
          * @return ORM Instance of the ORM.
          *
-         * @throws \Exception When ID of current model has a null value.
+         * @throws Exception When ID of current model has a null value.
          */
         protected function has_one_or_many($associated_class_name, $foreign_key_name = null, $foreign_key_name_in_current_models_table = null)
         {
@@ -21085,7 +22392,7 @@ namespace Yoast\WP\Lib {
          *
          * @return ORM Instance of the ORM.
          *
-         * @throws \Exception  When ID of current model has a null value.
+         * @throws Exception  When ID of current model has a null value.
          */
         protected function has_one($associated_class_name, $foreign_key_name = null, $foreign_key_name_in_current_models_table = null)
         {
@@ -21100,7 +22407,7 @@ namespace Yoast\WP\Lib {
          *
          * @return ORM Instance of the ORM.
          *
-         * @throws \Exception When ID has a null value.
+         * @throws Exception When ID has a null value.
          */
         protected function has_many($associated_class_name, $foreign_key_name = null, $foreign_key_name_in_current_models_table = null)
         {
@@ -21281,7 +22588,7 @@ namespace Yoast\WP\Lib {
          *
          * @return int The database ID of the models instance.
          *
-         * @throws \Exception When the ID is a null value.
+         * @throws Exception When the ID is a null value.
          */
         public function id()
         {
@@ -21358,8 +22665,8 @@ namespace Yoast\WP\Lib {
         /*
          * --- CLASS CONSTANTS ---
          */
-        const CONDITION_FRAGMENT = 0;
-        const CONDITION_VALUES = 1;
+        public const CONDITION_FRAGMENT = 0;
+        public const CONDITION_VALUES = 1;
         /*
          * --- INSTANCE PROPERTIES ---
          */
@@ -21775,8 +23082,8 @@ namespace Yoast\WP\Lib {
          *
          * @return int The amount of null columns.
          *
-         * @throws \Exception Primary key ID contains null value(s).
-         * @throws \Exception Primary key ID missing from row or is null.
+         * @throws Exception Primary key ID contains null value(s).
+         * @throws Exception Primary key ID missing from row or is null.
          */
         public function count_null_id_columns()
         {
@@ -22707,6 +24014,8 @@ namespace Yoast\WP\Lib {
         }
         /**
          * Resets the Idiorm instance state.
+         *
+         * @return void
          */
         private function reset_idiorm_state()
         {
@@ -22748,8 +24057,8 @@ namespace Yoast\WP\Lib {
          *
          * @return array|mixed|null
          *
-         * @throws \Exception Primary key ID contains null value(s).
-         * @throws \Exception Primary key ID missing from row or is null.
+         * @throws Exception Primary key ID contains null value(s).
+         * @throws Exception Primary key ID missing from row or is null.
          */
         public function id($disallow_null = false)
         {
@@ -22817,8 +24126,8 @@ namespace Yoast\WP\Lib {
          *
          * @return bool True on success.
          *
-         * @throws \Exception Primary key ID contains null value(s).
-         * @throws \Exception Primary key ID missing from row or is null.
+         * @throws Exception Primary key ID contains null value(s).
+         * @throws Exception Primary key ID missing from row or is null.
          */
         public function save()
         {
@@ -22830,7 +24139,7 @@ namespace Yoast\WP\Lib {
          *
          * @return array The distinct set of columns that are dirty in at least one of the models.
          *
-         * @throws \InvalidArgumentException Instance to be inserted is not a new one.
+         * @throws InvalidArgumentException Instance to be inserted is not a new one.
          */
         public function get_dirty_column_names($models)
         {
@@ -22844,8 +24153,8 @@ namespace Yoast\WP\Lib {
          *
          * @return bool True for successful insert, false for failed.
          *
-         * @throws \InvalidArgumentException Invalid instances to be inserted.
-         * @throws \InvalidArgumentException Instance to be inserted is not a new one.
+         * @throws InvalidArgumentException Invalid instances to be inserted.
+         * @throws InvalidArgumentException Instance to be inserted is not a new one.
          */
         public function insert_many($models)
         {
@@ -22898,8 +24207,8 @@ namespace Yoast\WP\Lib {
          *
          * @return string The delete query.
          *
-         * @throws \Exception Primary key ID contains null value(s).
-         * @throws \Exception Primary key ID missing from row or is null.
+         * @throws Exception Primary key ID contains null value(s).
+         * @throws Exception Primary key ID missing from row or is null.
          */
         public function delete()
         {
@@ -22942,6 +24251,8 @@ namespace Yoast\WP\Lib {
          *
          * @param string|int $offset Key.
          * @param mixed      $value  Value.
+         *
+         * @return void
          */
         #[\ReturnTypeWillChange]
         public function offsetSet($offset, $value)
@@ -22951,6 +24262,8 @@ namespace Yoast\WP\Lib {
          * Removes the given key from the data.
          *
          * @param mixed $offset Key.
+         *
+         * @return void
          */
         #[\ReturnTypeWillChange]
         public function offsetUnset($offset)
@@ -22974,6 +24287,8 @@ namespace Yoast\WP\Lib {
          *
          * @param string|int $key   Key.
          * @param mixed      $value Value.
+         *
+         * @return void
          */
         public function __set($key, $value)
         {
@@ -22982,6 +24297,8 @@ namespace Yoast\WP\Lib {
          * Handles magic unset via offset.
          *
          * @param mixed $key Key.
+         *
+         * @return void
          */
         public function __unset($key)
         {
@@ -23130,7 +24447,7 @@ namespace Yoast\WP\SEO\Actions {
      */
     class Alert_Dismissal_Action
     {
-        const USER_META_KEY = '_yoast_alerts_dismissed';
+        public const USER_META_KEY = '_yoast_alerts_dismissed';
         /**
          * Holds the user helper instance.
          *
@@ -23223,7 +24540,7 @@ namespace Yoast\WP\SEO\Actions\Configuration {
         /**
          * The fields for the site representation payload.
          */
-        const SITE_REPRESENTATION_FIELDS = ['company_or_person', 'company_name', 'website_name', 'company_logo', 'company_logo_id', 'person_logo', 'person_logo_id', 'company_or_person_user_id', 'description'];
+        public const SITE_REPRESENTATION_FIELDS = ['company_or_person', 'company_name', 'website_name', 'company_logo', 'company_logo_id', 'person_logo', 'person_logo_id', 'company_or_person_user_id', 'description'];
         /**
          * The Options_Helper instance.
          *
@@ -23333,13 +24650,23 @@ namespace Yoast\WP\SEO\Actions\Configuration {
         private function can_edit_profile($person_id)
         {
         }
+        /**
+         * Gets the old values for the given fields.
+         *
+         * @param array $fields_names The fields to get the old values for.
+         *
+         * @return array The old values.
+         */
+        private function get_old_values(array $fields_names) : array
+        {
+        }
     }
 }
-namespace Yoast\WP\SEO\Actions\Indexing {
+namespace Yoast\WP\SEO\Actions\Importing {
     /**
      * Interface definition of reindexing action for indexables.
      */
-    interface Indexation_Action_Interface
+    interface Importing_Indexation_Action_Interface
     {
         /**
          * Returns the total number of unindexed objects.
@@ -23364,6 +24691,8 @@ namespace Yoast\WP\SEO\Actions\Indexing {
          */
         public function get_limit();
     }
+}
+namespace Yoast\WP\SEO\Actions\Indexing {
     /**
      * Interface definition of a reindexing action for indexables that have a limited unindexed count.
      */
@@ -23380,7 +24709,7 @@ namespace Yoast\WP\SEO\Actions\Indexing {
     }
 }
 namespace Yoast\WP\SEO\Actions\Importing {
-    interface Importing_Action_Interface extends \Yoast\WP\SEO\Actions\Indexing\Indexation_Action_Interface, \Yoast\WP\SEO\Actions\Indexing\Limited_Indexing_Action_Interface
+    interface Importing_Action_Interface extends \Yoast\WP\SEO\Actions\Importing\Importing_Indexation_Action_Interface, \Yoast\WP\SEO\Actions\Indexing\Limited_Indexing_Action_Interface
     {
         /**
          * Returns the name of the plugin we import from.
@@ -23414,13 +24743,13 @@ namespace Yoast\WP\SEO\Actions\Importing {
          *
          * @var string
          */
-        const PLUGIN = null;
+        public const PLUGIN = null;
         /**
          * The type the class deals with.
          *
          * @var string
          */
-        const TYPE = null;
+        public const TYPE = null;
         /**
          * The AIOSEO helper.
          *
@@ -23482,6 +24811,8 @@ namespace Yoast\WP\SEO\Actions\Importing {
          * @required
          *
          * @param Aioseo_Helper $aioseo_helper The AIOSEO helper.
+         *
+         * @return void
          */
         public function set_aioseo_helper(\Yoast\WP\SEO\Helpers\Aioseo_Helper $aioseo_helper)
         {
@@ -23594,17 +24925,17 @@ namespace Yoast\WP\SEO\Actions\Importing\Aioseo {
          *
          * @var string
          */
-        const PLUGIN = null;
+        public const PLUGIN = null;
         /**
          * The type the class deals with.
          *
          * @var string
          */
-        const TYPE = null;
+        public const TYPE = null;
         /**
          * The option_name of the AIOSEO option that contains the settings.
          */
-        const SOURCE_OPTION_NAME = null;
+        public const SOURCE_OPTION_NAME = null;
         /**
          * The map of aioseo_options to yoast settings.
          *
@@ -23643,6 +24974,8 @@ namespace Yoast\WP\SEO\Actions\Importing\Aioseo {
          * @required
          *
          * @param Import_Helper $import_helper The import helper.
+         *
+         * @return void
          */
         public function set_import_helper(\Yoast\WP\SEO\Helpers\Import_Helper $import_helper)
         {
@@ -23795,11 +25128,11 @@ namespace Yoast\WP\SEO\Actions\Importing\Aioseo {
         /**
          * The plugin of the action.
          */
-        const PLUGIN = 'aioseo';
+        public const PLUGIN = 'aioseo';
         /**
          * The type of the action.
          */
-        const TYPE = 'cleanup';
+        public const TYPE = 'cleanup';
         /**
          * The AIOSEO meta_keys to be cleaned up.
          *
@@ -23890,15 +25223,15 @@ namespace Yoast\WP\SEO\Actions\Importing\Aioseo {
         /**
          * The plugin of the action.
          */
-        const PLUGIN = 'aioseo';
+        public const PLUGIN = 'aioseo';
         /**
          * The type of the action.
          */
-        const TYPE = 'custom_archive_settings';
+        public const TYPE = 'custom_archive_settings';
         /**
          * The option_name of the AIOSEO option that contains the settings.
          */
-        const SOURCE_OPTION_NAME = 'aioseo_options_dynamic';
+        public const SOURCE_OPTION_NAME = 'aioseo_options_dynamic';
         /**
          * The map of aioseo_options to yoast settings.
          *
@@ -23950,15 +25283,15 @@ namespace Yoast\WP\SEO\Actions\Importing\Aioseo {
         /**
          * The plugin of the action.
          */
-        const PLUGIN = 'aioseo';
+        public const PLUGIN = 'aioseo';
         /**
          * The type of the action.
          */
-        const TYPE = 'default_archive_settings';
+        public const TYPE = 'default_archive_settings';
         /**
          * The option_name of the AIOSEO option that contains the settings.
          */
-        const SOURCE_OPTION_NAME = 'aioseo_options';
+        public const SOURCE_OPTION_NAME = 'aioseo_options';
         /**
          * The map of aioseo_options to yoast settings.
          *
@@ -23996,15 +25329,15 @@ namespace Yoast\WP\SEO\Actions\Importing\Aioseo {
         /**
          * The plugin of the action.
          */
-        const PLUGIN = 'aioseo';
+        public const PLUGIN = 'aioseo';
         /**
          * The type of the action.
          */
-        const TYPE = 'general_settings';
+        public const TYPE = 'general_settings';
         /**
          * The option_name of the AIOSEO option that contains the settings.
          */
-        const SOURCE_OPTION_NAME = 'aioseo_options';
+        public const SOURCE_OPTION_NAME = 'aioseo_options';
         /**
          * The map of aioseo_options to yoast settings.
          *
@@ -24094,11 +25427,11 @@ namespace Yoast\WP\SEO\Actions\Importing\Aioseo {
         /**
          * The plugin of the action.
          */
-        const PLUGIN = 'aioseo';
+        public const PLUGIN = 'aioseo';
         /**
          * The type of the action.
          */
-        const TYPE = 'posts';
+        public const TYPE = 'posts';
         /**
          * The map of aioseo to yoast meta.
          *
@@ -24337,15 +25670,15 @@ namespace Yoast\WP\SEO\Actions\Importing\Aioseo {
         /**
          * The plugin of the action.
          */
-        const PLUGIN = 'aioseo';
+        public const PLUGIN = 'aioseo';
         /**
          * The type of the action.
          */
-        const TYPE = 'posttype_default_settings';
+        public const TYPE = 'posttype_default_settings';
         /**
          * The option_name of the AIOSEO option that contains the settings.
          */
-        const SOURCE_OPTION_NAME = 'aioseo_options_dynamic';
+        public const SOURCE_OPTION_NAME = 'aioseo_options_dynamic';
         /**
          * The map of aioseo_options to yoast settings.
          *
@@ -24385,15 +25718,15 @@ namespace Yoast\WP\SEO\Actions\Importing\Aioseo {
         /**
          * The plugin of the action.
          */
-        const PLUGIN = 'aioseo';
+        public const PLUGIN = 'aioseo';
         /**
          * The type of the action.
          */
-        const TYPE = 'taxonomy_settings';
+        public const TYPE = 'taxonomy_settings';
         /**
          * The option_name of the AIOSEO option that contains the settings.
          */
-        const SOURCE_OPTION_NAME = 'aioseo_options_dynamic';
+        public const SOURCE_OPTION_NAME = 'aioseo_options_dynamic';
         /**
          * The map of aioseo_options to yoast settings.
          *
@@ -24465,11 +25798,11 @@ namespace Yoast\WP\SEO\Actions\Importing\Aioseo {
         /**
          * The plugin of the action.
          */
-        const PLUGIN = 'aioseo';
+        public const PLUGIN = 'aioseo';
         /**
          * The type of the action.
          */
-        const TYPE = 'validate_data';
+        public const TYPE = 'validate_data';
         /**
          * The WordPress database instance.
          *
@@ -24592,13 +25925,13 @@ namespace Yoast\WP\SEO\Actions\Importing {
          *
          * @var string
          */
-        const PLUGIN = 'conflicting-plugins';
+        public const PLUGIN = 'conflicting-plugins';
         /**
          * The type the class deals with.
          *
          * @var string
          */
-        const TYPE = 'deactivation';
+        public const TYPE = 'deactivation';
         /**
          * The replacevar handler.
          *
@@ -24633,6 +25966,8 @@ namespace Yoast\WP\SEO\Actions\Importing {
         }
         /**
          * Get the total number of conflicting plugins.
+         *
+         * @return int
          */
         public function get_total_unindexed()
         {
@@ -24647,6 +25982,8 @@ namespace Yoast\WP\SEO\Actions\Importing {
         }
         /**
          * Deactivate conflicting plugins.
+         *
+         * @return array
          */
         public function index()
         {
@@ -24804,6 +26141,34 @@ namespace Yoast\WP\SEO\Actions\Indexables {
 }
 namespace Yoast\WP\SEO\Actions\Indexing {
     /**
+     * Interface definition of reindexing action for indexables.
+     */
+    interface Indexation_Action_Interface
+    {
+        /**
+         * Returns the total number of unindexed objects.
+         *
+         * @return int The total number of unindexed objects.
+         */
+        public function get_total_unindexed();
+        /**
+         * Indexes a number of objects.
+         *
+         * NOTE: ALWAYS use limits, this method is intended to be called multiple times over several requests.
+         *
+         * For indexing that requires JavaScript simply return the objects that should be indexed.
+         *
+         * @return array The reindexed objects.
+         */
+        public function index();
+        /**
+         * Returns the number of objects that will be indexed in a single indexing pass.
+         *
+         * @return int The limit.
+         */
+        public function get_limit();
+    }
+    /**
      * Base class of indexing actions.
      */
     abstract class Abstract_Indexing_Action implements \Yoast\WP\SEO\Actions\Indexing\Indexation_Action_Interface, \Yoast\WP\SEO\Actions\Indexing\Limited_Indexing_Action_Interface
@@ -24815,13 +26180,13 @@ namespace Yoast\WP\SEO\Actions\Indexing {
          *
          * @var string
          */
-        const UNINDEXED_COUNT_TRANSIENT = null;
+        public const UNINDEXED_COUNT_TRANSIENT = null;
         /**
          * The transient cache key for limited counts.
          *
          * @var string
          */
-        const UNINDEXED_LIMITED_COUNT_TRANSIENT = self::UNINDEXED_COUNT_TRANSIENT . '_limited';
+        public const UNINDEXED_LIMITED_COUNT_TRANSIENT = self::UNINDEXED_COUNT_TRANSIENT . '_limited';
         /**
          * Builds a query for selecting the ID's of unindexed posts.
          *
@@ -24867,6 +26232,12 @@ namespace Yoast\WP\SEO\Actions\Indexing {
          */
         protected $link_builder;
         /**
+         * The indexable helper.
+         *
+         * @var Indexable_Helper
+         */
+        protected $indexable_helper;
+        /**
          * The indexable repository.
          *
          * @var Indexable_Repository
@@ -24881,11 +26252,12 @@ namespace Yoast\WP\SEO\Actions\Indexing {
         /**
          * Indexable_Post_Indexing_Action constructor
          *
-         * @param Indexable_Link_Builder $link_builder The indexable link builder.
-         * @param Indexable_Repository   $repository   The indexable repository.
-         * @param wpdb                   $wpdb         The WordPress database instance.
+         * @param Indexable_Link_Builder $link_builder     The indexable link builder.
+         * @param Indexable_Helper       $indexable_helper The indexable repository.
+         * @param Indexable_Repository   $repository       The indexable repository.
+         * @param wpdb                   $wpdb             The WordPress database instance.
          */
-        public function __construct(\Yoast\WP\SEO\Builders\Indexable_Link_Builder $link_builder, \Yoast\WP\SEO\Repositories\Indexable_Repository $repository, \wpdb $wpdb)
+        public function __construct(\Yoast\WP\SEO\Builders\Indexable_Link_Builder $link_builder, \Yoast\WP\SEO\Helpers\Indexable_Helper $indexable_helper, \Yoast\WP\SEO\Repositories\Indexable_Repository $repository, \wpdb $wpdb)
         {
         }
         /**
@@ -24930,7 +26302,7 @@ namespace Yoast\WP\SEO\Actions\Indexing {
         /**
          * The transient cache key.
          */
-        const UNINDEXED_COUNT_TRANSIENT = 'wpseo_total_unindexed_general_items';
+        public const UNINDEXED_COUNT_TRANSIENT = 'wpseo_total_unindexed_general_items';
         /**
          * Represents the indexables repository.
          *
@@ -25026,13 +26398,13 @@ namespace Yoast\WP\SEO\Actions\Indexing {
          *
          * @var string
          */
-        const UNINDEXED_COUNT_TRANSIENT = 'wpseo_total_unindexed_posts';
+        public const UNINDEXED_COUNT_TRANSIENT = 'wpseo_total_unindexed_posts';
         /**
          * The transient cache key for limited counts.
          *
          * @var string
          */
-        const UNINDEXED_LIMITED_COUNT_TRANSIENT = self::UNINDEXED_COUNT_TRANSIENT . '_limited';
+        public const UNINDEXED_LIMITED_COUNT_TRANSIENT = self::UNINDEXED_COUNT_TRANSIENT . '_limited';
         /**
          * The post type helper.
          *
@@ -25120,7 +26492,7 @@ namespace Yoast\WP\SEO\Actions\Indexing {
         /**
          * The transient cache key.
          */
-        const UNINDEXED_COUNT_TRANSIENT = 'wpseo_total_unindexed_post_type_archives';
+        public const UNINDEXED_COUNT_TRANSIENT = 'wpseo_total_unindexed_post_type_archives';
         /**
          * The post type helper.
          *
@@ -25227,13 +26599,13 @@ namespace Yoast\WP\SEO\Actions\Indexing {
         /**
          * The transient cache key.
          */
-        const UNINDEXED_COUNT_TRANSIENT = 'wpseo_total_unindexed_terms';
+        public const UNINDEXED_COUNT_TRANSIENT = 'wpseo_total_unindexed_terms';
         /**
          * The transient cache key for limited counts.
          *
          * @var string
          */
-        const UNINDEXED_LIMITED_COUNT_TRANSIENT = self::UNINDEXED_COUNT_TRANSIENT . '_limited';
+        public const UNINDEXED_LIMITED_COUNT_TRANSIENT = self::UNINDEXED_COUNT_TRANSIENT . '_limited';
         /**
          * The post type helper.
          *
@@ -25372,13 +26744,13 @@ namespace Yoast\WP\SEO\Actions\Indexing {
          *
          * @var string
          */
-        const UNINDEXED_COUNT_TRANSIENT = 'wpseo_unindexed_post_link_count';
+        public const UNINDEXED_COUNT_TRANSIENT = 'wpseo_unindexed_post_link_count';
         /**
          * The transient cache key for limited counts.
          *
          * @var string
          */
-        const UNINDEXED_LIMITED_COUNT_TRANSIENT = self::UNINDEXED_COUNT_TRANSIENT . '_limited';
+        public const UNINDEXED_LIMITED_COUNT_TRANSIENT = self::UNINDEXED_COUNT_TRANSIENT . '_limited';
         /**
          * The post type helper.
          *
@@ -25434,13 +26806,13 @@ namespace Yoast\WP\SEO\Actions\Indexing {
          *
          * @var string
          */
-        const UNINDEXED_COUNT_TRANSIENT = 'wpseo_unindexed_term_link_count';
+        public const UNINDEXED_COUNT_TRANSIENT = 'wpseo_unindexed_term_link_count';
         /**
          * The transient cache key for limited counts.
          *
          * @var string
          */
-        const UNINDEXED_LIMITED_COUNT_TRANSIENT = self::UNINDEXED_COUNT_TRANSIENT . '_limited';
+        public const UNINDEXED_LIMITED_COUNT_TRANSIENT = self::UNINDEXED_COUNT_TRANSIENT . '_limited';
         /**
          * The post type helper.
          *
@@ -25510,8 +26882,8 @@ namespace Yoast\WP\SEO\Actions {
         /**
          * Sets an integration state.
          *
-         * @param string  $integration_name The name of the integration to activate/deactivate.
-         * @param boolean $value            The value to store.
+         * @param string $integration_name The name of the integration to activate/deactivate.
+         * @param bool   $value            The value to store.
          *
          * @return object The response object.
          */
@@ -25552,6 +26924,8 @@ namespace Yoast\WP\SEO\Actions\SEMrush {
         }
         /**
          * Performs the login request, if necessary.
+         *
+         * @return void
          */
         public function login()
         {
@@ -25595,13 +26969,13 @@ namespace Yoast\WP\SEO\Actions\SEMrush {
         /**
          * The transient cache key.
          */
-        const TRANSIENT_CACHE_KEY = 'wpseo_semrush_related_keyphrases_%s_%s';
+        public const TRANSIENT_CACHE_KEY = 'wpseo_semrush_related_keyphrases_%s_%s';
         /**
          * The SEMrush keyphrase URL.
          *
          * @var string
          */
-        const KEYPHRASES_URL = 'https://oauth.semrush.com/api/v1/keywords/phrase_fullsearch';
+        public const KEYPHRASES_URL = 'https://oauth.semrush.com/api/v1/keywords/phrase_fullsearch';
         /**
          * The SEMrush_Client instance.
          *
@@ -25639,93 +27013,14 @@ namespace Yoast\WP\SEO\Actions\SEMrush {
         }
     }
 }
-namespace Yoast\WP\SEO\Actions {
-    /**
-     * Settings_Introduction_Action class.
-     */
-    class Settings_Introduction_Action
-    {
-        const USER_META_KEY = '_yoast_settings_introduction';
-        const DEFAULT_VALUES = ['wistia_embed_permission' => false, 'show' => true];
-        /**
-         * Holds the User_Helper instance.
-         *
-         * @var User_Helper
-         */
-        private $user_helper;
-        /**
-         * Constructs Settings_Introduction_Action.
-         *
-         * @param User_Helper $user_helper The User_Helper.
-         */
-        public function __construct(\Yoast\WP\SEO\Helpers\User_Helper $user_helper)
-        {
-        }
-        /**
-         * Retrieves the Wistia embed permission value.
-         *
-         * @throws Exception If an invalid user ID is supplied.
-         *
-         * @return bool The value of the Wistia embed permission.
-         */
-        public function get_wistia_embed_permission()
-        {
-        }
-        /**
-         * Sets the Wistia embed permission value.
-         *
-         * @param bool $value The value.
-         *
-         * @throws Exception If an invalid user ID is supplied.
-         *
-         * @return bool Whether the update was successful.
-         */
-        public function set_wistia_embed_permission($value)
-        {
-        }
-        /**
-         * Retrieves the show value.
-         *
-         * @throws Exception If an invalid user ID is supplied.
-         *
-         * @return bool The value of show.
-         */
-        public function get_show()
-        {
-        }
-        /**
-         * Sets the show value.
-         *
-         * @param bool $value The value.
-         *
-         * @throws Exception If an invalid user ID is supplied.
-         *
-         * @return bool Whether the update was successful.
-         */
-        public function set_show($value)
-        {
-        }
-        /**
-         * Retrieves the (meta) values for a user.
-         *
-         * @param int $user_id User ID.
-         *
-         * @throws Exception If an invalid user ID is supplied.
-         *
-         * @return array The (meta) values.
-         */
-        private function get_values_for_user($user_id)
-        {
-        }
-    }
-}
 namespace Yoast\WP\SEO\Actions\Wincher {
     /**
      * Class Wincher_Account_Action
      */
     class Wincher_Account_Action
     {
-        const ACCOUNT_URL = 'https://api.wincher.com/beta/account';
+        public const ACCOUNT_URL = 'https://api.wincher.com/beta/account';
+        public const UPGRADE_CAMPAIGN_URL = 'https://api.wincher.com/v1/yoast/upgrade-campaign';
         /**
          * The Wincher_Client instance.
          *
@@ -25755,6 +27050,14 @@ namespace Yoast\WP\SEO\Actions\Wincher {
         public function check_limit()
         {
         }
+        /**
+         * Gets the upgrade campaign.
+         *
+         * @return object The response object.
+         */
+        public function get_upgrade_campaign()
+        {
+        }
     }
     /**
      * Class Wincher_Keyphrases_Action
@@ -25766,19 +27069,19 @@ namespace Yoast\WP\SEO\Actions\Wincher {
          *
          * @var string
          */
-        const KEYPHRASES_ADD_URL = 'https://api.wincher.com/beta/websites/%s/keywords/bulk';
+        public const KEYPHRASES_ADD_URL = 'https://api.wincher.com/beta/websites/%s/keywords/bulk';
         /**
          * The Wincher tracked keyphrase retrieval URL.
          *
          * @var string
          */
-        const KEYPHRASES_URL = 'https://api.wincher.com/beta/yoast/%s';
+        public const KEYPHRASES_URL = 'https://api.wincher.com/beta/yoast/%s';
         /**
          * The Wincher delete tracked keyphrase URL.
          *
          * @var string
          */
-        const KEYPHRASE_DELETE_URL = 'https://api.wincher.com/beta/websites/%s/keywords/%s';
+        public const KEYPHRASE_DELETE_URL = 'https://api.wincher.com/beta/websites/%s/keywords/%s';
         /**
          * The Wincher_Client instance.
          *
@@ -25834,10 +27137,11 @@ namespace Yoast\WP\SEO\Actions\Wincher {
          *
          * @param array|null  $used_keyphrases The currently used keyphrases. Optional.
          * @param string|null $permalink       The current permalink. Optional.
+         * @param string|null $start_at        The position start date. Optional.
          *
          * @return object The keyphrase chart data.
          */
-        public function get_tracked_keyphrases($used_keyphrases = null, $permalink = null)
+        public function get_tracked_keyphrases($used_keyphrases = null, $permalink = null, $start_at = null)
         {
         }
         /**
@@ -25938,6 +27242,352 @@ namespace Yoast\WP\SEO\Actions\Wincher {
         }
     }
 }
+namespace Yoast\WP\SEO\Analytics\Application {
+    /**
+     * Manages the collection of the missing indexable data.
+     *
+     * @makePublic
+     */
+    class Missing_Indexables_Collector implements \WPSEO_Collection
+    {
+        /**
+         * All the indexation actions.
+         *
+         * @var array<Indexation_Action_Interface>
+         */
+        private $indexation_actions;
+        /**
+         * The collector constructor.
+         *
+         * @param Indexation_Action_Interface ...$indexation_actions All the Indexation actions.
+         */
+        public function __construct(\Yoast\WP\SEO\Actions\Indexing\Indexation_Action_Interface ...$indexation_actions)
+        {
+        }
+        /**
+         * Gets the data for the tracking collector.
+         *
+         * @return array The list of missing indexables.
+         */
+        public function get()
+        {
+        }
+        /**
+         * Adds additional indexing actions to count from the 'wpseo_indexable_collector_add_indexation_actions' filter.
+         *
+         * @return void
+         */
+        private function add_additional_indexing_actions()
+        {
+        }
+    }
+    /**
+     * Collects data about to-be-cleaned indexables.
+     *
+     * @makePublic
+     */
+    class To_Be_Cleaned_Indexables_Collector implements \WPSEO_Collection
+    {
+        /**
+         * The cleanup query repository.
+         *
+         * @var Indexable_Cleanup_Repository
+         */
+        private $indexable_cleanup_repository;
+        /**
+         * The constructor.
+         *
+         * @param Indexable_Cleanup_Repository $indexable_cleanup_repository The Indexable cleanup repository.
+         */
+        public function __construct(\Yoast\WP\SEO\Repositories\Indexable_Cleanup_Repository $indexable_cleanup_repository)
+        {
+        }
+        /**
+         * Gets the data for the collector.
+         *
+         * @return array
+         */
+        public function get()
+        {
+        }
+        /**
+         * Allows additional tasks to be added via the 'wpseo_add_cleanup_counts_to_indexable_bucket' action.
+         *
+         * @param To_Be_Cleaned_Indexable_Bucket $to_be_cleaned_indexable_bucket The current bucket with data.
+         *
+         * @return void
+         */
+        private function add_additional_counts($to_be_cleaned_indexable_bucket)
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Analytics\Domain {
+    /**
+     * A collection domain object.
+     */
+    class Missing_Indexable_Bucket
+    {
+        /**
+         * All the missing indexable count objects.
+         *
+         * @var array<Missing_Indexable_Count>
+         */
+        private $missing_indexable_counts;
+        /**
+         * The constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Adds a missing indexable count object to this bucket.
+         *
+         * @param Missing_Indexable_Count $missing_indexable_count The missing indexable count object.
+         *
+         * @return void
+         */
+        public function add_missing_indexable_count(\Yoast\WP\SEO\Analytics\Domain\Missing_Indexable_Count $missing_indexable_count) : void
+        {
+        }
+        /**
+         * Returns the array representation of all indexable counts.
+         *
+         * @return array
+         */
+        public function to_array()
+        {
+        }
+    }
+    /**
+     * Domain object that holds indexable count information.
+     */
+    class Missing_Indexable_Count
+    {
+        /**
+         * The indexable type that is represented by this.
+         *
+         * @var string
+         */
+        private $indexable_type;
+        /**
+         * The amount of missing indexables.
+         *
+         * @var int
+         */
+        private $count;
+        /**
+         * The constructor.
+         *
+         * @param string $indexable_type The indexable type that is represented by this.
+         * @param int    $count          The amount of missing indexables.
+         */
+        public function __construct($indexable_type, $count)
+        {
+        }
+        /**
+         * Returns an array representation of the data.
+         *
+         * @return array Returns both values in an array format.
+         */
+        public function to_array()
+        {
+        }
+        /**
+         * Gets the indexable type.
+         *
+         * @return string Returns the indexable type.
+         */
+        public function get_indexable_type()
+        {
+        }
+        /**
+         * Gets the count.
+         *
+         * @return int Returns the amount of missing indexables.
+         */
+        public function get_count()
+        {
+        }
+    }
+    /**
+     * A collection domain object.
+     */
+    class To_Be_Cleaned_Indexable_Bucket
+    {
+        /**
+         * All the to be cleaned indexable count objects.
+         *
+         * @var array<To_Be_Cleaned_Indexable_Count>
+         */
+        private $to_be_cleaned_indexable_counts;
+        /**
+         * The constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Adds a 'to be cleaned' indexable count object to this bucket.
+         *
+         * @param To_Be_Cleaned_Indexable_Count $to_be_cleaned_indexable_counts The to be cleaned indexable count object.
+         *
+         * @return void
+         */
+        public function add_to_be_cleaned_indexable_count(\Yoast\WP\SEO\Analytics\Domain\To_Be_Cleaned_Indexable_Count $to_be_cleaned_indexable_counts)
+        {
+        }
+        /**
+         * Returns the array representation of all indexable counts.
+         *
+         * @return array
+         */
+        public function to_array()
+        {
+        }
+    }
+    /**
+     * The to be cleaned indexable domain object.
+     */
+    class To_Be_Cleaned_Indexable_Count
+    {
+        /**
+         * The cleanup task that is represented by this.
+         *
+         * @var string
+         */
+        private $cleanup_name;
+        /**
+         * The amount of missing indexables.
+         *
+         * @var int
+         */
+        private $count;
+        /**
+         * The constructor.
+         *
+         * @param string $cleanup_name The indexable type that is represented by this.
+         * @param int    $count        The amount of missing indexables.
+         */
+        public function __construct($cleanup_name, $count)
+        {
+        }
+        /**
+         * Returns an array representation of the data.
+         *
+         * @return array Returns both values in an array format.
+         */
+        public function to_array()
+        {
+        }
+        /**
+         * Gets the name.
+         *
+         * @return string
+         */
+        public function get_cleanup_name()
+        {
+        }
+        /**
+         * Gets the count.
+         *
+         * @return int Returns the amount of missing indexables.
+         */
+        public function get_count()
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO {
+    /**
+     * An interface for registering integrations with WordPress
+     */
+    interface Loadable_Interface
+    {
+        /**
+         * Returns the conditionals based on which this loadable should be active.
+         *
+         * @return array
+         */
+        public static function get_conditionals();
+    }
+}
+namespace Yoast\WP\SEO\Integrations {
+    /**
+     * An interface for registering integrations with WordPress.
+     *
+     * @codeCoverageIgnore It represents an interface.
+     */
+    interface Integration_Interface extends \Yoast\WP\SEO\Loadable_Interface
+    {
+        /**
+         * Initializes the integration.
+         *
+         * This is the place to register hooks and filters.
+         *
+         * @return void
+         */
+        public function register_hooks();
+    }
+}
+namespace Yoast\WP\SEO\Conditionals {
+    /**
+     * Trait for integrations that do not have any conditionals.
+     */
+    trait No_Conditionals
+    {
+        /**
+         * Returns an empty array, meaning no conditionals are required to load whatever uses this trait.
+         *
+         * @return array The conditionals that must be met to load this.
+         */
+        public static function get_conditionals()
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Analytics\User_Interface {
+    /**
+     * Handles setting a timestamp when the indexation of a specific indexation action is completed.
+     */
+    class Last_Completed_Indexation_Integration implements \Yoast\WP\SEO\Integrations\Integration_Interface
+    {
+        use \Yoast\WP\SEO\Conditionals\No_Conditionals;
+        /**
+         * The options helper.
+         *
+         * @var Options_Helper The options helper.
+         */
+        private $options_helper;
+        /**
+         * The constructor.
+         *
+         * @param Options_Helper $options_helper The options helper.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\Options_Helper $options_helper)
+        {
+        }
+        /**
+         * Registers action hook to maybe save an option.
+         *
+         * @return void
+         */
+        public function register_hooks() : void
+        {
+        }
+        /**
+         * Saves a timestamp option when there are no unindexed indexables.
+         *
+         * @param string $indexable_name The name of the indexable that is being checked.
+         * @param int    $count          The amount of missing indexables.
+         *
+         * @return void
+         */
+        public function maybe_set_indexables_unindexed_calculated(string $indexable_name, int $count) : void
+        {
+        }
+    }
+}
 namespace Yoast\WP\SEO\Builders {
     /**
      * Trait for determine the social image to use in the indexable.
@@ -25972,6 +27622,8 @@ namespace Yoast\WP\SEO\Builders {
          * @param Image_Helper            $image            The image helper.
          * @param Open_Graph_Image_Helper $open_graph_image The Open Graph image helper.
          * @param Twitter_Image_Helper    $twitter_image    The Twitter image helper.
+         *
+         * @return void
          */
         public function set_social_image_helpers(\Yoast\WP\SEO\Helpers\Image_Helper $image, \Yoast\WP\SEO\Helpers\Open_Graph\Image_Helper $open_graph_image, \Yoast\WP\SEO\Helpers\Twitter\Image_Helper $twitter_image)
         {
@@ -25981,6 +27633,8 @@ namespace Yoast\WP\SEO\Builders {
          *
          * @param array     $alternative_image The alternative image to set.
          * @param Indexable $indexable         The indexable to set image for.
+         *
+         * @return void
          */
         protected function set_alternative_image(array $alternative_image, \Yoast\WP\SEO\Models\Indexable $indexable)
         {
@@ -25989,6 +27643,8 @@ namespace Yoast\WP\SEO\Builders {
          * Sets the Open Graph image meta data for an og image
          *
          * @param Indexable $indexable The indexable.
+         *
+         * @return void
          */
         protected function set_open_graph_image_meta_data(\Yoast\WP\SEO\Models\Indexable $indexable)
         {
@@ -25997,6 +27653,8 @@ namespace Yoast\WP\SEO\Builders {
          * Handles the social images.
          *
          * @param Indexable $indexable The indexable to handle.
+         *
+         * @return void
          */
         protected function handle_social_images(\Yoast\WP\SEO\Models\Indexable $indexable)
         {
@@ -26005,6 +27663,8 @@ namespace Yoast\WP\SEO\Builders {
          * Resets the social images.
          *
          * @param Indexable $indexable The indexable to set images for.
+         *
+         * @return void
          */
         protected function reset_social_images(\Yoast\WP\SEO\Models\Indexable $indexable)
         {
@@ -26031,26 +27691,26 @@ namespace Yoast\WP\SEO\Builders {
          */
         protected $version;
         /**
+         * Holds the options helper instance.
+         *
+         * @var Options_Helper
+         */
+        protected $options_helper;
+        /**
          * Holds the taxonomy helper instance.
          *
          * @var Post_Helper
          */
         protected $post_helper;
         /**
-         * The WPDB instance.
-         *
-         * @var wpdb
-         */
-        protected $wpdb;
-        /**
          * Indexable_Author_Builder constructor.
          *
          * @param Author_Archive_Helper      $author_archive The author archive helper.
          * @param Indexable_Builder_Versions $versions       The Indexable version manager.
+         * @param Options_Helper             $options_helper The options helper.
          * @param Post_Helper                $post_helper    The post helper.
-         * @param wpdb                       $wpdb           The WPDB instance.
          */
-        public function __construct(\Yoast\WP\SEO\Helpers\Author_Archive_Helper $author_archive, \Yoast\WP\SEO\Values\Indexables\Indexable_Builder_Versions $versions, \Yoast\WP\SEO\Helpers\Post_Helper $post_helper, \wpdb $wpdb)
+        public function __construct(\Yoast\WP\SEO\Helpers\Author_Archive_Helper $author_archive, \Yoast\WP\SEO\Values\Indexables\Indexable_Builder_Versions $versions, \Yoast\WP\SEO\Helpers\Options_Helper $options_helper, \Yoast\WP\SEO\Helpers\Post_Helper $post_helper)
         {
         }
         /**
@@ -26229,6 +27889,8 @@ namespace Yoast\WP\SEO\Builders {
          * @required
          *
          * @param Indexable_Repository $indexable_repository The indexable repository.
+         *
+         * @return void
          */
         public function set_indexable_repository(\Yoast\WP\SEO\Repositories\Indexable_Repository $indexable_repository)
         {
@@ -26305,18 +27967,7 @@ namespace Yoast\WP\SEO\Builders {
          *
          * @return Indexable The indexable.
          */
-        private function ensure_indexable($indexable, $defaults = [])
-        {
-        }
-        /**
-         * Saves and returns an indexable (on production environments only).
-         *
-         * @param Indexable      $indexable        The indexable.
-         * @param Indexable|null $indexable_before The indexable before possible changes.
-         *
-         * @return Indexable The indexable.
-         */
-        protected function save_indexable($indexable, $indexable_before = null)
+        protected function ensure_indexable($indexable, $defaults = [])
         {
         }
         /**
@@ -26336,7 +27987,7 @@ namespace Yoast\WP\SEO\Builders {
          *
          * @return bool Whether the indexable type is one that is not supposed to have object ID for.
          */
-        private function is_type_with_no_id($type)
+        protected function is_type_with_no_id($type)
         {
         }
         // phpcs:disable Squiz.Commenting.FunctionCommentThrowTag.Missing -- Exceptions are handled by the catch statement in the method.
@@ -26400,9 +28051,9 @@ namespace Yoast\WP\SEO\Builders {
     class Indexable_Hierarchy_Builder
     {
         /**
-         * Holds a list of indexables where the ancestors are saved for.
+         * Holds a list of indexable ids where the ancestors are saved for.
          *
-         * @var array
+         * @var array<int>
          */
         protected $saved_ancestors = [];
         /**
@@ -26436,14 +28087,21 @@ namespace Yoast\WP\SEO\Builders {
          */
         private $post;
         /**
+         * Holds the Indexable_Helper instance.
+         *
+         * @var Indexable_Helper
+         */
+        private $indexable_helper;
+        /**
          * Indexable_Author_Builder constructor.
          *
          * @param Indexable_Hierarchy_Repository $indexable_hierarchy_repository The indexable hierarchy repository.
          * @param Primary_Term_Repository        $primary_term_repository        The primary term repository.
          * @param Options_Helper                 $options                        The options helper.
          * @param Post_Helper                    $post                           The post helper.
+         * @param Indexable_Helper               $indexable_helper               The indexable helper.
          */
-        public function __construct(\Yoast\WP\SEO\Repositories\Indexable_Hierarchy_Repository $indexable_hierarchy_repository, \Yoast\WP\SEO\Repositories\Primary_Term_Repository $primary_term_repository, \Yoast\WP\SEO\Helpers\Options_Helper $options, \Yoast\WP\SEO\Helpers\Post_Helper $post)
+        public function __construct(\Yoast\WP\SEO\Repositories\Indexable_Hierarchy_Repository $indexable_hierarchy_repository, \Yoast\WP\SEO\Repositories\Primary_Term_Repository $primary_term_repository, \Yoast\WP\SEO\Helpers\Options_Helper $options, \Yoast\WP\SEO\Helpers\Post_Helper $post, \Yoast\WP\SEO\Helpers\Indexable_Helper $indexable_helper)
         {
         }
         /**
@@ -26452,6 +28110,8 @@ namespace Yoast\WP\SEO\Builders {
          * @required
          *
          * @param Indexable_Repository $indexable_repository The indexable repository.
+         *
+         * @return void
          */
         public function set_indexable_repository(\Yoast\WP\SEO\Repositories\Indexable_Repository $indexable_repository)
         {
@@ -26523,7 +28183,7 @@ namespace Yoast\WP\SEO\Builders {
         /**
          * Find the deepest term in an array of term objects.
          *
-         * @param array $terms Terms set.
+         * @param array<WP_Term> $terms Terms set.
          *
          * @return int The deepest term ID.
          */
@@ -26607,21 +28267,14 @@ namespace Yoast\WP\SEO\Builders {
          */
         protected $post_helper;
         /**
-         * The WPDB instance.
-         *
-         * @var wpdb
-         */
-        protected $wpdb;
-        /**
          * Indexable_Home_Page_Builder constructor.
          *
          * @param Options_Helper             $options     The options helper.
          * @param Url_Helper                 $url_helper  The url helper.
          * @param Indexable_Builder_Versions $versions    Knows the latest version of each Indexable type.
          * @param Post_Helper                $post_helper The post helper.
-         * @param wpdb                       $wpdb        The WPDB instance.
          */
-        public function __construct(\Yoast\WP\SEO\Helpers\Options_Helper $options, \Yoast\WP\SEO\Helpers\Url_Helper $url_helper, \Yoast\WP\SEO\Values\Indexables\Indexable_Builder_Versions $versions, \Yoast\WP\SEO\Helpers\Post_Helper $post_helper, \wpdb $wpdb)
+        public function __construct(\Yoast\WP\SEO\Helpers\Options_Helper $options, \Yoast\WP\SEO\Helpers\Url_Helper $url_helper, \Yoast\WP\SEO\Values\Indexables\Indexable_Builder_Versions $versions, \Yoast\WP\SEO\Helpers\Post_Helper $post_helper)
         {
         }
         /**
@@ -26667,6 +28320,12 @@ namespace Yoast\WP\SEO\Builders {
          */
         protected $image_helper;
         /**
+         * The indexable helper.
+         *
+         * @var Indexable_Helper
+         */
+        protected $indexable_helper;
+        /**
          * The post helper.
          *
          * @var Post_Helper
@@ -26685,14 +28344,21 @@ namespace Yoast\WP\SEO\Builders {
          */
         protected $indexable_repository;
         /**
+         * Class that finds all images in a content string and extracts them.
+         *
+         * @var Image_Content_Extractor
+         */
+        private $image_content_extractor;
+        /**
          * Indexable_Link_Builder constructor.
          *
          * @param SEO_Links_Repository $seo_links_repository The SEO links repository.
          * @param Url_Helper           $url_helper           The URL helper.
          * @param Post_Helper          $post_helper          The post helper.
          * @param Options_Helper       $options_helper       The options helper.
+         * @param Indexable_Helper     $indexable_helper     The indexable helper.
          */
-        public function __construct(\Yoast\WP\SEO\Repositories\SEO_Links_Repository $seo_links_repository, \Yoast\WP\SEO\Helpers\Url_Helper $url_helper, \Yoast\WP\SEO\Helpers\Post_Helper $post_helper, \Yoast\WP\SEO\Helpers\Options_Helper $options_helper)
+        public function __construct(\Yoast\WP\SEO\Repositories\SEO_Links_Repository $seo_links_repository, \Yoast\WP\SEO\Helpers\Url_Helper $url_helper, \Yoast\WP\SEO\Helpers\Post_Helper $post_helper, \Yoast\WP\SEO\Helpers\Options_Helper $options_helper, \Yoast\WP\SEO\Helpers\Indexable_Helper $indexable_helper, \Yoast\WP\SEO\Images\Application\Image_Content_Extractor $image_content_extractor)
         {
         }
         /**
@@ -26730,7 +28396,8 @@ namespace Yoast\WP\SEO\Builders {
         {
         }
         /**
-         * Fixes existing SEO links that are supposed to have a target indexable but don't, because of prior indexable cleanup.
+         * Fixes existing SEO links that are supposed to have a target indexable but don't, because of prior indexable
+         * cleanup.
          *
          * @param Indexable $indexable The indexable to be the target of SEO Links.
          *
@@ -26750,21 +28417,11 @@ namespace Yoast\WP\SEO\Builders {
         {
         }
         /**
-         * Gathers all images from content.
-         *
-         * @param string $content The content.
-         *
-         * @return string[] An array of urls.
-         */
-        protected function gather_images($content)
-        {
-        }
-        /**
          * Creates link models from lists of URLs and image sources.
          *
          * @param Indexable $indexable The indexable.
          * @param string[]  $links     The link URLs.
-         * @param string[]  $images    The image sources.
+         * @param int[]     $images    The image sources.
          *
          * @return SEO_Links[] The link models.
          */
@@ -26789,10 +28446,11 @@ namespace Yoast\WP\SEO\Builders {
          * @param array     $home_url  The home url, as parsed by wp_parse_url.
          * @param Indexable $indexable The indexable of the post containing the link.
          * @param bool      $is_image  Whether or not the link is an image.
+         * @param int       $image_id  The ID of the internal image.
          *
          * @return SEO_Links The created link.
          */
-        protected function create_internal_link($url, $home_url, $indexable, $is_image = false)
+        protected function create_internal_link($url, $home_url, $indexable, $is_image = false, $image_id = 0)
         {
         }
         /**
@@ -26881,6 +28539,17 @@ namespace Yoast\WP\SEO\Builders {
         protected function update_incoming_links_for_related_indexables($related_indexable_ids)
         {
         }
+        /**
+         * Updates the image ids when the indexable images are marked as first content image.
+         *
+         * @param Indexable         $indexable The indexable to change.
+         * @param array<string|int> $images    The image array.
+         *
+         * @return void
+         */
+        public function update_first_content_image(\Yoast\WP\SEO\Models\Indexable $indexable, array $images) : void
+        {
+        }
     }
     /**
      * Post Builder for the indexables.
@@ -26937,6 +28606,8 @@ namespace Yoast\WP\SEO\Builders {
          * @required
          *
          * @param Indexable_Repository $indexable_repository The indexable repository.
+         *
+         * @return void
          */
         public function set_indexable_repository(\Yoast\WP\SEO\Repositories\Indexable_Repository $indexable_repository)
         {
@@ -27094,26 +28765,26 @@ namespace Yoast\WP\SEO\Builders {
          */
         protected $version;
         /**
-         * Holds the taxonomy helper instance.
+         * Holds the post helper instance.
          *
          * @var Post_Helper
          */
         protected $post_helper;
         /**
-         * The WPDB instance.
+         * Holds the post type helper instance.
          *
-         * @var wpdb
+         * @var Post_Type_Helper
          */
-        protected $wpdb;
+        protected $post_type_helper;
         /**
          * Indexable_Post_Type_Archive_Builder constructor.
          *
-         * @param Options_Helper             $options     The options helper.
-         * @param Indexable_Builder_Versions $versions    The latest version of each Indexable builder.
-         * @param Post_Helper                $post_helper The post helper.
-         * @param wpdb                       $wpdb        The WPDB instance.
+         * @param Options_Helper             $options          The options helper.
+         * @param Indexable_Builder_Versions $versions         The latest version of each Indexable builder.
+         * @param Post_Helper                $post_helper      The post helper.
+         * @param Post_Type_Helper           $post_type_helper The post type helper.
          */
-        public function __construct(\Yoast\WP\SEO\Helpers\Options_Helper $options, \Yoast\WP\SEO\Values\Indexables\Indexable_Builder_Versions $versions, \Yoast\WP\SEO\Helpers\Post_Helper $post_helper, \wpdb $wpdb)
+        public function __construct(\Yoast\WP\SEO\Helpers\Options_Helper $options, \Yoast\WP\SEO\Values\Indexables\Indexable_Builder_Versions $versions, \Yoast\WP\SEO\Helpers\Post_Helper $post_helper, \Yoast\WP\SEO\Helpers\Post_Type_Helper $post_type_helper)
         {
         }
         /**
@@ -27123,6 +28794,7 @@ namespace Yoast\WP\SEO\Builders {
          * @param Indexable $indexable The indexable to format.
          *
          * @return Indexable The extended indexable.
+         * @throws Post_Type_Not_Built_Exception Throws exception if the post type is excluded.
          */
         public function build($post_type, \Yoast\WP\SEO\Models\Indexable $indexable)
         {
@@ -27158,7 +28830,7 @@ namespace Yoast\WP\SEO\Builders {
         /**
          * Mapping of object type to title option keys.
          */
-        const OPTION_MAPPING = ['search-result' => ['title' => 'title-search-wpseo'], '404' => ['title' => 'title-404-wpseo', 'breadcrumb_title' => 'breadcrumbs-404crumb']];
+        public const OPTION_MAPPING = ['search-result' => ['title' => 'title-search-wpseo'], '404' => ['title' => 'title-404-wpseo', 'breadcrumb_title' => 'breadcrumbs-404crumb']];
         /**
          * The options helper.
          *
@@ -27219,20 +28891,13 @@ namespace Yoast\WP\SEO\Builders {
          */
         protected $post_helper;
         /**
-         * The WPDB instance.
-         *
-         * @var wpdb
-         */
-        protected $wpdb;
-        /**
          * Indexable_Term_Builder constructor.
          *
          * @param Taxonomy_Helper            $taxonomy_helper The taxonomy helper.
          * @param Indexable_Builder_Versions $versions        The latest version of each Indexable Builder.
          * @param Post_Helper                $post_helper     The post helper.
-         * @param wpdb                       $wpdb            The WPDB instance.
          */
-        public function __construct(\Yoast\WP\SEO\Helpers\Taxonomy_Helper $taxonomy_helper, \Yoast\WP\SEO\Values\Indexables\Indexable_Builder_Versions $versions, \Yoast\WP\SEO\Helpers\Post_Helper $post_helper, \wpdb $wpdb)
+        public function __construct(\Yoast\WP\SEO\Helpers\Taxonomy_Helper $taxonomy_helper, \Yoast\WP\SEO\Values\Indexables\Indexable_Builder_Versions $versions, \Yoast\WP\SEO\Helpers\Post_Helper $post_helper)
         {
         }
         /**
@@ -27326,6 +28991,12 @@ namespace Yoast\WP\SEO\Builders {
          */
         protected $repository;
         /**
+         * The indexable helper.
+         *
+         * @var Indexable_Helper
+         */
+        private $indexable_helper;
+        /**
          * The primary term helper.
          *
          * @var Primary_Term_Helper
@@ -27340,11 +29011,12 @@ namespace Yoast\WP\SEO\Builders {
         /**
          * Primary_Term_Builder constructor.
          *
-         * @param Primary_Term_Repository $repository   The primary term repository.
-         * @param Primary_Term_Helper     $primary_term The primary term helper.
-         * @param Meta_Helper             $meta         The meta helper.
+         * @param Primary_Term_Repository $repository       The primary term repository.
+         * @param Indexable_Helper        $indexable_helper The indexable helper.
+         * @param Primary_Term_Helper     $primary_term     The primary term helper.
+         * @param Meta_Helper             $meta             The meta helper.
          */
-        public function __construct(\Yoast\WP\SEO\Repositories\Primary_Term_Repository $repository, \Yoast\WP\SEO\Helpers\Primary_Term_Helper $primary_term, \Yoast\WP\SEO\Helpers\Meta_Helper $meta)
+        public function __construct(\Yoast\WP\SEO\Repositories\Primary_Term_Repository $repository, \Yoast\WP\SEO\Helpers\Indexable_Helper $indexable_helper, \Yoast\WP\SEO\Helpers\Primary_Term_Helper $primary_term, \Yoast\WP\SEO\Helpers\Meta_Helper $meta)
         {
         }
         /**
@@ -27528,6 +29200,12 @@ namespace Yoast\WP\SEO\Commands {
          */
         private $prepare_indexing_action;
         /**
+         * Represents the indexable helper.
+         *
+         * @var Indexable_Helper
+         */
+        protected $indexable_helper;
+        /**
          * Generate_Indexables_Command constructor.
          *
          * @param Indexable_Post_Indexation_Action              $post_indexation_action              The post indexation
@@ -27546,8 +29224,9 @@ namespace Yoast\WP\SEO\Commands {
          *                                                                                           action.
          * @param Term_Link_Indexing_Action                     $term_link_indexing_action           The term link indexation
          *                                                                                           action.
+         * @param Indexable_Helper                              $indexable_helper                    The indexable helper.
          */
-        public function __construct(\Yoast\WP\SEO\Actions\Indexing\Indexable_Post_Indexation_Action $post_indexation_action, \Yoast\WP\SEO\Actions\Indexing\Indexable_Term_Indexation_Action $term_indexation_action, \Yoast\WP\SEO\Actions\Indexing\Indexable_Post_Type_Archive_Indexation_Action $post_type_archive_indexation_action, \Yoast\WP\SEO\Actions\Indexing\Indexable_General_Indexation_Action $general_indexation_action, \Yoast\WP\SEO\Actions\Indexing\Indexable_Indexing_Complete_Action $complete_indexation_action, \Yoast\WP\SEO\Actions\Indexing\Indexing_Prepare_Action $prepare_indexing_action, \Yoast\WP\SEO\Actions\Indexing\Post_Link_Indexing_Action $post_link_indexing_action, \Yoast\WP\SEO\Actions\Indexing\Term_Link_Indexing_Action $term_link_indexing_action)
+        public function __construct(\Yoast\WP\SEO\Actions\Indexing\Indexable_Post_Indexation_Action $post_indexation_action, \Yoast\WP\SEO\Actions\Indexing\Indexable_Term_Indexation_Action $term_indexation_action, \Yoast\WP\SEO\Actions\Indexing\Indexable_Post_Type_Archive_Indexation_Action $post_type_archive_indexation_action, \Yoast\WP\SEO\Actions\Indexing\Indexable_General_Indexation_Action $general_indexation_action, \Yoast\WP\SEO\Actions\Indexing\Indexable_Indexing_Complete_Action $complete_indexation_action, \Yoast\WP\SEO\Actions\Indexing\Indexing_Prepare_Action $prepare_indexing_action, \Yoast\WP\SEO\Actions\Indexing\Post_Link_Indexing_Action $post_link_indexing_action, \Yoast\WP\SEO\Actions\Indexing\Term_Link_Indexing_Action $term_link_indexing_action, \Yoast\WP\SEO\Helpers\Indexable_Helper $indexable_helper)
         {
         }
         /**
@@ -27616,6 +29295,8 @@ namespace Yoast\WP\SEO\Commands {
         }
         /**
          * Clears the database related to the indexables.
+         *
+         * @return void
          */
         protected function clear()
         {
@@ -27795,6 +29476,34 @@ namespace Yoast\WP\SEO\Conditionals\Admin {
         {
         }
     }
+    /**
+     * Conditional that is only met when on a Yoast SEO admin page.
+     */
+    class Yoast_Admin_Conditional implements \Yoast\WP\SEO\Conditionals\Conditional
+    {
+        /**
+         * Holds the Current_Page_Helper.
+         *
+         * @var Current_Page_Helper
+         */
+        private $current_page_helper;
+        /**
+         * Constructs the conditional.
+         *
+         * @param Current_Page_Helper $current_page_helper The current page helper.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\Current_Page_Helper $current_page_helper)
+        {
+        }
+        /**
+         * Returns `true` when on the admin dashboard, update or Yoast SEO pages.
+         *
+         * @return bool `true` when on the admin dashboard, update or Yoast SEO pages.
+         */
+        public function is_met()
+        {
+        }
+    }
 }
 namespace Yoast\WP\SEO\Conditionals {
     /**
@@ -27820,6 +29529,34 @@ namespace Yoast\WP\SEO\Conditionals {
          * Returns whether the 'Redirect attachment URLs to the attachment itself' setting has been enabled.
          *
          * @return bool `true` when the 'Redirect attachment URLs to the attachment itself' setting has been enabled.
+         */
+        public function is_met()
+        {
+        }
+    }
+    /**
+     * Conditional for the CHECK_REQUIRED_VERSION feature flag.
+     */
+    class Check_Required_Version_Conditional extends \Yoast\WP\SEO\Conditionals\Feature_Flag_Conditional
+    {
+        /**
+         * Returns the name of the feature flag.
+         *
+         * @return string The name of the feature flag.
+         */
+        protected function get_feature_flag()
+        {
+        }
+    }
+    /**
+     * Conditional that is only met when on deactivating Yoast SEO.
+     */
+    class Deactivating_Yoast_Seo_Conditional implements \Yoast\WP\SEO\Conditionals\Conditional
+    {
+        /**
+         * Returns whether this conditional is met.
+         *
+         * @return bool Whether the conditional is met.
          */
         public function is_met()
         {
@@ -27864,6 +29601,20 @@ namespace Yoast\WP\SEO\Conditionals {
          * @return bool Whether or not the conditional is met.
          */
         public function is_met()
+        {
+        }
+    }
+    /**
+     * Conditional for the GOOGLE_SITE_KIT_FEATURE feature flag.
+     */
+    class Google_Site_Kit_Feature_Conditional extends \Yoast\WP\SEO\Conditionals\Feature_Flag_Conditional
+    {
+        /**
+         * Returns the name of the feature flag.
+         *
+         * @return string The name of the feature flag.
+         */
+        protected function get_feature_flag()
         {
         }
     }
@@ -27949,20 +29700,6 @@ namespace Yoast\WP\SEO\Conditionals {
          * @return bool Whether or not the conditional is met.
          */
         public function is_met()
-        {
-        }
-    }
-    /**
-     * Trait for integrations that do not have any conditionals.
-     */
-    trait No_Conditionals
-    {
-        /**
-         * Returns an empty array, meaning no conditionals are required to load whatever uses this trait.
-         *
-         * @return array The conditionals that must be met to load this.
-         */
-        public static function get_conditionals()
         {
         }
     }
@@ -28264,40 +30001,20 @@ namespace Yoast\WP\SEO\Conditionals\Third_Party {
         public function is_met()
         {
         }
-    }
-    /**
-     * Conditional that is only met when Jetpack_Boost exists.
-     */
-    class Jetpack_Boost_Active_Conditional implements \Yoast\WP\SEO\Conditionals\Conditional
-    {
         /**
-         * Returns `true` when the Jetpack_Boost class exists within this WordPress installation.
+         * Checks if the current request' GET action is 'elementor'.
          *
-         * @return bool `true` when the Jetpack_Boost class exists within this WordPress installation.
+         * @return bool True when the GET action is 'elementor'.
          */
-        public function is_met()
-        {
-        }
-    }
-    /**
-     * Conditional that is met when Jetpack Boost is not installed, activated or premium.
-     */
-    class Jetpack_Boost_Not_Premium_Conditional implements \Yoast\WP\SEO\Conditionals\Conditional
-    {
-        /**
-         * Whether Jetpack Boost is not premium.
-         *
-         * @return bool Whether Jetpack Boost is not premium.
-         */
-        public function is_met()
+        private function is_elementor_get_action() : bool
         {
         }
         /**
-         * Retrieves, if available, if Jetpack Boost has priority feature available.
+         * Checks if the current request' POST action is 'wpseo_elementor_save'.
          *
-         * @return bool Whether Jetpack Boost is premium.
+         * @return bool True when the POST action is 'wpseo_elementor_save'.
          */
-        private function is_premium()
+        private function is_yoast_save_post_action() : bool
         {
         }
     }
@@ -28344,48 +30061,6 @@ namespace Yoast\WP\SEO\Conditionals\Third_Party {
         }
     }
     /**
-     * Conditional that is met when the WordProof integration is toggled on.
-     */
-    class Wordproof_Integration_Active_Conditional implements \Yoast\WP\SEO\Conditionals\Conditional
-    {
-        /**
-         * The WordProof helper.
-         *
-         * @var Wordproof_Helper
-         */
-        private $wordproof;
-        /**
-         * WordProof integration active constructor.
-         *
-         * @param Wordproof_Helper $wordproof The options helper.
-         */
-        public function __construct(\Yoast\WP\SEO\Helpers\Wordproof_Helper $wordproof)
-        {
-        }
-        /**
-         * Returns whether or not the WordProof Timestamp plugin is active.
-         *
-         * @return bool Whether or not the WordProof Timestamp plugin is active.
-         */
-        public function is_met()
-        {
-        }
-    }
-    /**
-     * Conditional that is met when the WordProof Timestamp plugin is inactive.
-     */
-    class Wordproof_Plugin_Inactive_Conditional implements \Yoast\WP\SEO\Conditionals\Conditional
-    {
-        /**
-         * Returns whether or not the WordProof Timestamp plugin is active.
-         *
-         * @return bool Whether or not the WordProof Timestamp plugin is active.
-         */
-        public function is_met()
-        {
-        }
-    }
-    /**
      * Conditional that is only met when WPML is active.
      */
     class WPML_Conditional implements \Yoast\WP\SEO\Conditionals\Conditional
@@ -28410,7 +30085,7 @@ namespace Yoast\WP\SEO\Conditionals\Third_Party {
          *
          * @internal
          */
-        const PATH_TO_WPML_WPSEO_PLUGIN_FILE = 'wp-seo-multilingual/plugin.php';
+        public const PATH_TO_WPML_WPSEO_PLUGIN_FILE = 'wp-seo-multilingual/plugin.php';
         /**
          * Returns whether or not the Yoast SEO Multilingual plugin is active.
          *
@@ -28453,6 +30128,22 @@ namespace Yoast\WP\SEO\Conditionals {
         }
     }
     /**
+     * Conditional that is only met when the current user has the `edit_users` capability.
+     *
+     * @phpcs:disable Yoast.NamingConventions.ObjectNameDepth.MaxExceeded
+     */
+    class User_Can_Edit_Users_Conditional implements \Yoast\WP\SEO\Conditionals\Conditional
+    {
+        /**
+         * Returns whether or not this conditional is met.
+         *
+         * @return bool Whether or not the conditional is met.
+         */
+        public function is_met()
+        {
+        }
+    }
+    /**
      * Conditional that is only met when the current user has the `wpseo_manage_options` capability.
      *
      * @phpcs:disable Yoast.NamingConventions.ObjectNameDepth.MaxExceeded
@@ -28474,6 +30165,34 @@ namespace Yoast\WP\SEO\Conditionals {
      * @phpcs:disable Yoast.NamingConventions.ObjectNameDepth.MaxExceeded
      */
     class User_Can_Publish_Posts_And_Pages_Conditional implements \Yoast\WP\SEO\Conditionals\Conditional
+    {
+        /**
+         * Returns whether or not this conditional is met.
+         *
+         * @return bool Whether or not the conditional is met.
+         */
+        public function is_met()
+        {
+        }
+    }
+    /**
+     * Conditional that is only met when current page is the Edit User page or the User's profile page.
+     */
+    class User_Edit_Conditional implements \Yoast\WP\SEO\Conditionals\Conditional
+    {
+        /**
+         * Returns whether or not this conditional is met.
+         *
+         * @return bool Whether or not the conditional is met.
+         */
+        public function is_met()
+        {
+        }
+    }
+    /**
+     * Conditional that is only met when current page is the tools page.
+     */
+    class User_Profile_Conditional implements \Yoast\WP\SEO\Conditionals\Conditional
     {
         /**
          * Returns whether or not this conditional is met.
@@ -28603,6 +30322,20 @@ namespace Yoast\WP\SEO\Conditionals {
         }
     }
     /**
+     * Class that checks if WP_CRON is enabled.
+     */
+    class WP_CRON_Enabled_Conditional implements \Yoast\WP\SEO\Conditionals\Conditional
+    {
+        /**
+         * Checks if WP_CRON is enabled.
+         *
+         * @return bool True when WP_CRON is enabled.
+         */
+        public function is_met()
+        {
+        }
+    }
+    /**
      * Class that checks if wp_robots exists.
      */
     class WP_Robots_Conditional implements \Yoast\WP\SEO\Conditionals\Conditional
@@ -28676,11 +30409,11 @@ namespace Yoast\WP\SEO\Config {
      */
     class Badge_Group_Names
     {
-        const GROUP_GLOBAL_TEMPLATES = 'global-templates';
+        public const GROUP_GLOBAL_TEMPLATES = 'global-templates';
         /**
          * Constant describing when certain groups of new badges will no longer be shown.
          */
-        const GROUP_NAMES = [self::GROUP_GLOBAL_TEMPLATES => '16.7-beta0'];
+        public const GROUP_NAMES = [self::GROUP_GLOBAL_TEMPLATES => '16.7-beta0'];
         /**
          * The current plugin version.
          *
@@ -28712,7 +30445,7 @@ namespace Yoast\WP\SEO\Config {
      */
     class Conflicting_Plugins
     {
-        const OPEN_GRAPH_PLUGINS = [
+        public const OPEN_GRAPH_PLUGINS = [
             '2-click-socialmedia-buttons/2-click-socialmedia-buttons.php',
             // 2 Click Social Media Buttons.
             'add-link-to-facebook/add-link-to-facebook.php',
@@ -28777,7 +30510,7 @@ namespace Yoast\WP\SEO\Config {
             // WP-OGP.
             'zoltonorg-social-plugin/zosp.php',
         ];
-        const XML_SITEMAPS_PLUGINS = [
+        public const XML_SITEMAPS_PLUGINS = [
             'google-sitemap-plugin/google-sitemap-plugin.php',
             // Google Sitemap (BestWebSoft).
             'xml-sitemaps/xml-sitemaps.php',
@@ -28808,12 +30541,12 @@ namespace Yoast\WP\SEO\Config {
             // Sewn In XML Sitemap (jcow).
             'rps-sitemap-generator/rps-sitemap-generator.php',
         ];
-        const CLOAKING_PLUGINS = [
+        public const CLOAKING_PLUGINS = [
             'rs-head-cleaner/rs-head-cleaner.php',
             // RS Head Cleaner Plus https://wordpress.org/plugins/rs-head-cleaner/.
             'rs-head-cleaner-lite/rs-head-cleaner-lite.php',
         ];
-        const SEO_PLUGINS = [
+        public const SEO_PLUGINS = [
             'all-in-one-seo-pack/all_in_one_seo_pack.php',
             // All in One SEO Pack.
             'seo-ultimate/seo-ultimate.php',
@@ -28837,35 +30570,35 @@ namespace Yoast\WP\SEO\Config {
         /**
          * Represents the reason that the indexing process failed and should be tried again.
          */
-        const REASON_INDEXING_FAILED = 'indexing_failed';
+        public const REASON_INDEXING_FAILED = 'indexing_failed';
         /**
          * Represents the reason that the permalink settings are changed.
          */
-        const REASON_PERMALINK_SETTINGS = 'permalink_settings_changed';
+        public const REASON_PERMALINK_SETTINGS = 'permalink_settings_changed';
         /**
          * Represents the reason that the category base is changed.
          */
-        const REASON_CATEGORY_BASE_PREFIX = 'category_base_changed';
+        public const REASON_CATEGORY_BASE_PREFIX = 'category_base_changed';
         /**
          * Represents the reason that the tag base is changed.
          */
-        const REASON_TAG_BASE_PREFIX = 'tag_base_changed';
+        public const REASON_TAG_BASE_PREFIX = 'tag_base_changed';
         /**
          * Represents the reason that the home url option is changed.
          */
-        const REASON_HOME_URL_OPTION = 'home_url_option_changed';
+        public const REASON_HOME_URL_OPTION = 'home_url_option_changed';
         /**
          * Represents the reason that a post type has been made public.
          */
-        const REASON_POST_TYPE_MADE_PUBLIC = 'post_type_made_public';
+        public const REASON_POST_TYPE_MADE_PUBLIC = 'post_type_made_public';
         /**
          * Represents the reason that a post type has been made viewable.
          */
-        const REASON_TAXONOMY_MADE_PUBLIC = 'taxonomy_made_public';
+        public const REASON_TAXONOMY_MADE_PUBLIC = 'taxonomy_made_public';
         /**
          * Represents the reason that attachments have stopped being redirected.
          */
-        const REASON_ATTACHMENTS_MADE_ENABLED = 'attachments_made_enabled';
+        public const REASON_ATTACHMENTS_MADE_ENABLED = 'attachments_made_enabled';
     }
     /**
      * Migration_Status class.
@@ -28879,7 +30612,7 @@ namespace Yoast\WP\SEO\Config {
          *
          * @var string
          */
-        const MIGRATION_OPTION_KEY = 'yoast_migrations_';
+        public const MIGRATION_OPTION_KEY = 'yoast_migrations_';
         /**
          * The migration options.
          *
@@ -28981,49 +30714,43 @@ namespace Yoast\WP\SEO\Config {
         /**
          * Hash used for the Author `@id`.
          */
-        const AUTHOR_HASH = '#author';
+        public const AUTHOR_HASH = '#author';
         /**
          * Hash used for the Author Logo's `@id`.
          */
-        const AUTHOR_LOGO_HASH = '#authorlogo';
+        public const AUTHOR_LOGO_HASH = '#authorlogo';
         /**
          * Hash used for the Breadcrumb's `@id`.
          */
-        const BREADCRUMB_HASH = '#breadcrumb';
+        public const BREADCRUMB_HASH = '#breadcrumb';
         /**
          * Hash used for the Person `@id`.
          */
-        const PERSON_HASH = '#/schema/person/';
+        public const PERSON_HASH = '#/schema/person/';
         /**
          * Hash used for the Article `@id`.
          */
-        const ARTICLE_HASH = '#article';
+        public const ARTICLE_HASH = '#article';
         /**
          * Hash used for the Organization `@id`.
          */
-        const ORGANIZATION_HASH = '#organization';
+        public const ORGANIZATION_HASH = '#organization';
         /**
          * Hash used for the Organization `@id`.
          */
-        const ORGANIZATION_LOGO_HASH = '#/schema/logo/image/';
+        public const ORGANIZATION_LOGO_HASH = '#/schema/logo/image/';
         /**
          * Hash used for the logo `@id`.
          */
-        const PERSON_LOGO_HASH = '#/schema/person/image/';
+        public const PERSON_LOGO_HASH = '#/schema/person/image/';
         /**
          * Hash used for an Article's primary image `@id`.
          */
-        const PRIMARY_IMAGE_HASH = '#primaryimage';
-        /**
-         * Hash used for the WebPage's `@id`.
-         *
-         * @deprecated 19.3
-         */
-        const WEBPAGE_HASH = '';
+        public const PRIMARY_IMAGE_HASH = '#primaryimage';
         /**
          * Hash used for the Website's `@id`.
          */
-        const WEBSITE_HASH = '#website';
+        public const WEBSITE_HASH = '#website';
     }
     /**
      * Class Schema_Types.
@@ -29037,7 +30764,7 @@ namespace Yoast\WP\SEO\Config {
          *
          * @var string[]
          */
-        const PAGE_TYPES = ['WebPage' => '', 'ItemPage' => '', 'AboutPage' => '', 'FAQPage' => '', 'QAPage' => '', 'ProfilePage' => '', 'ContactPage' => '', 'MedicalWebPage' => '', 'CollectionPage' => '', 'CheckoutPage' => '', 'RealEstateListing' => '', 'SearchResultsPage' => ''];
+        public const PAGE_TYPES = ['WebPage' => '', 'ItemPage' => '', 'AboutPage' => '', 'FAQPage' => '', 'QAPage' => '', 'ProfilePage' => '', 'ContactPage' => '', 'MedicalWebPage' => '', 'CollectionPage' => '', 'CheckoutPage' => '', 'RealEstateListing' => '', 'SearchResultsPage' => ''];
         /**
          * Holds the possible schema article types.
          *
@@ -29045,7 +30772,7 @@ namespace Yoast\WP\SEO\Config {
          *
          * @var string[]
          */
-        const ARTICLE_TYPES = ['Article' => '', 'BlogPosting' => '', 'SocialMediaPosting' => '', 'NewsArticle' => '', 'AdvertiserContentArticle' => '', 'SatiricalArticle' => '', 'ScholarlyArticle' => '', 'TechArticle' => '', 'Report' => '', 'None' => ''];
+        public const ARTICLE_TYPES = ['Article' => '', 'BlogPosting' => '', 'SocialMediaPosting' => '', 'NewsArticle' => '', 'AdvertiserContentArticle' => '', 'SatiricalArticle' => '', 'ScholarlyArticle' => '', 'TechArticle' => '', 'Report' => '', 'None' => ''];
         /**
          * Gets the page type options.
          *
@@ -29060,17 +30787,6 @@ namespace Yoast\WP\SEO\Config {
          * @return array[] The schema article type options.
          */
         public function get_article_type_options()
-        {
-        }
-        /**
-         * Gets the values of the article type options.
-         *
-         * @deprecated 19.12
-         * @codeCoverageIgnore
-         *
-         * @return array[] The values of the Schema article type options.
-         */
-        public function get_article_type_options_values()
         {
         }
     }
@@ -29162,7 +30878,7 @@ namespace YoastSEO_Vendor\League\OAuth2\Client\Provider {
         use \YoastSEO_Vendor\League\OAuth2\Client\Tool\GuardedPropertyTrait;
         use \YoastSEO_Vendor\League\OAuth2\Client\Tool\QueryBuilderTrait;
         /**
-         * @var string Key used in a token response to identify the resource owner.
+         * @var string|null Key used in a token response to identify the resource owner.
          */
         const ACCESS_TOKEN_RESOURCE_OWNER_ID = null;
         /**
@@ -29173,6 +30889,17 @@ namespace YoastSEO_Vendor\League\OAuth2\Client\Provider {
          * @var string HTTP method used to fetch access tokens.
          */
         const METHOD_POST = 'POST';
+        /**
+         * @var string PKCE method used to fetch authorization token.
+         * The PKCE code challenge will be hashed with sha256 (recommended).
+         */
+        const PKCE_METHOD_S256 = 'S256';
+        /**
+         * @var string PKCE method used to fetch authorization token.
+         * The PKCE code challenge will be sent as plain text, this is NOT recommended.
+         * Only use `plain` if no other option is possible.
+         */
+        const PKCE_METHOD_PLAIN = 'plain';
         /**
          * @var string
          */
@@ -29189,6 +30916,10 @@ namespace YoastSEO_Vendor\League\OAuth2\Client\Provider {
          * @var string
          */
         protected $state;
+        /**
+         * @var string|null
+         */
+        protected $pkceCode = null;
         /**
          * @var GrantFactory
          */
@@ -29309,6 +31040,27 @@ namespace YoastSEO_Vendor\League\OAuth2\Client\Provider {
         {
         }
         /**
+         * Set the value of the pkceCode parameter.
+         *
+         * When using PKCE this should be set before requesting an access token.
+         *
+         * @param string $pkceCode
+         * @return self
+         */
+        public function setPkceCode($pkceCode)
+        {
+        }
+        /**
+         * Returns the current value of the pkceCode parameter.
+         *
+         * This can be accessed by the redirect handler during authorization.
+         *
+         * @return string|null
+         */
+        public function getPkceCode()
+        {
+        }
+        /**
          * Returns the base URL for authorizing a client.
          *
          * Eg. https://oauth.service.com/authorize
@@ -29343,6 +31095,17 @@ namespace YoastSEO_Vendor\League\OAuth2\Client\Provider {
         {
         }
         /**
+         * Returns a new random string to use as PKCE code_verifier and
+         * hashed as code_challenge parameters in an authorization flow.
+         * Must be between 43 and 128 characters long.
+         *
+         * @param  int $length Length of the random string to be generated.
+         * @return string
+         */
+        protected function getRandomPkceCode($length = 64)
+        {
+        }
+        /**
          * Returns the default scopes used by this provider.
          *
          * This should only be the scopes that are required to request the details
@@ -29358,6 +31121,12 @@ namespace YoastSEO_Vendor\League\OAuth2\Client\Provider {
          * @return string Scope separator, defaults to ','
          */
         protected function getScopeSeparator()
+        {
+        }
+        /**
+         * @return string|null
+         */
+        protected function getPkceMethod()
         {
         }
         /**
@@ -29463,8 +31232,8 @@ namespace YoastSEO_Vendor\League\OAuth2\Client\Provider {
         /**
          * Requests an access token using a specified grant and option set.
          *
-         * @param  mixed $grant
-         * @param  array $options
+         * @param  mixed                $grant
+         * @param  array<string, mixed> $options
          * @throws IdentityProviderException
          * @return AccessTokenInterface
          */
@@ -29487,7 +31256,7 @@ namespace YoastSEO_Vendor\League\OAuth2\Client\Provider {
          *
          * @param  string $method
          * @param  string $url
-         * @param  AccessTokenInterface|string $token
+         * @param  AccessTokenInterface|string|null $token
          * @param  array $options Any of "headers", "body", and "protocolVersion".
          * @return RequestInterface
          */
@@ -29724,6 +31493,10 @@ namespace YoastSEO_Vendor\League\OAuth2\Client\Provider {
          */
         private $responseResourceOwnerId = 'id';
         /**
+         * @var string|null
+         */
+        private $pkceMethod = null;
+        /**
          * @param array $options
          * @param array $collaborators
          */
@@ -29801,6 +31574,12 @@ namespace YoastSEO_Vendor\League\OAuth2\Client\Provider {
         /**
          * @inheritdoc
          */
+        protected function getPkceMethod()
+        {
+        }
+        /**
+         * @inheritdoc
+         */
         protected function checkResponse(\YoastSEO_Vendor\Psr\Http\Message\ResponseInterface $response, $data)
         {
         }
@@ -29866,7 +31645,7 @@ namespace Yoast\WP\SEO\Config {
          *
          * @return string
          *
-         * @throws \Exception Throws exception if an invalid value is passed to random_bytes.
+         * @throws Exception Throws exception if an invalid value is passed to random_bytes.
          */
         protected function getRandomPkceCode($length = 64)
         {
@@ -29887,7 +31666,7 @@ namespace Yoast\WP\SEO\Config {
          * @return array The authorization parameters
          *
          * @throws InvalidArgumentException Throws exception if an invalid PCKE method is passed in the options.
-         * @throws \Exception               When something goes wrong with generating the PKCE code.
+         * @throws Exception                When something goes wrong with generating the PKCE code.
          */
         protected function getAuthorizationParameters(array $options)
         {
@@ -29927,198 +31706,288 @@ namespace Yoast\WP\SEO\Config {
         }
     }
 }
-namespace YoastSEO_Vendor\WordProof\SDK\Config {
-    interface AppConfigInterface
-    {
-        /**
-         * Your partner name.
-         *
-         * @default wordproof
-         * @return string
-         */
-        public function getPartner();
-        /**
-         * The WordProof environment used. Either staging or production.
-         *
-         * @default production
-         * @return string
-         */
-        public function getEnvironment();
-        /**
-         * The WordProof environment used. Either staging or production.
-         *
-         * @default true
-         * @return boolean
-         */
-        public function getLoadUikitFromCdn();
-        /**
-         * Only used for local development.
-         *
-         * @return integer
-         */
-        public function getOauthClient();
-        /**
-         * Only used for local development.
-         *
-         * @return string
-         */
-        public function getWordProofUrl();
-        /**
-         * Only used for local development.
-         *
-         * @return string
-         */
-        public function getScriptsFileOverwrite();
-    }
-    class DefaultAppConfig implements \YoastSEO_Vendor\WordProof\SDK\Config\AppConfigInterface
-    {
-        /**
-         * @return string
-         */
-        public function getPartner()
-        {
-        }
-        /**
-         * @return string
-         */
-        public function getEnvironment()
-        {
-        }
-        /**
-         * @return boolean
-         */
-        public function getLoadUikitFromCdn()
-        {
-        }
-        /**
-         * @return null
-         */
-        public function getOauthClient()
-        {
-        }
-        /**
-         * @return null
-         */
-        public function getWordProofUrl()
-        {
-        }
-        /**
-         * @return null
-         */
-        public function getScriptsFileOverwrite()
-        {
-        }
-    }
-}
-namespace Yoast\WP\SEO\Config {
+namespace Yoast\WP\SEO\Content_Type_Visibility\Application {
     /**
-     * Class WordProof_App_Config.
-     *
-     * @package Yoast\WP\SEO\Config
+     * Handles dismissing notifications and "New" badges for new content types.
      */
-    class Wordproof_App_Config extends \YoastSEO_Vendor\WordProof\SDK\Config\DefaultAppConfig
+    class Content_Type_Visibility_Dismiss_Notifications
     {
         /**
-         * Returns the partner.
+         * Holds the Options_Helper instance.
          *
-         * @return string The partner.
+         * @var Options_Helper
          */
-        public function getPartner()
+        private $options;
+        /**
+         * Constructs Content_Type_Visibility_Dismiss_New_Route.
+         *
+         * @param Options_Helper $options The options helper.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\Options_Helper $options)
         {
         }
         /**
-         * Returns if the WordProof Uikit should be loaded from a cdn.
+         * Removes New badge from a post type in the Settings, remove notifications if needed.
          *
-         * @return bool True or false.
+         * @param string $post_type_name The post type name from the request.
+         * @return array The response.
          */
-        public function getLoadUikitFromCdn()
+        public function post_type_dismiss($post_type_name)
+        {
+        }
+        /**
+         * Removes New badge from a taxonomy in the Settings, remove notifications if needed.
+         *
+         * @param string $taxonomy_name The taxonomy name from the request.
+         * @return array The response.
+         */
+        public function taxonomy_dismiss($taxonomy_name)
+        {
+        }
+        /**
+         * Checks if there are new content types or taxonomies.
+         *
+         * @param array $new_content_types The new content types.
+         * @return void
+         */
+        public function maybe_dismiss_notifications($new_content_types = [])
+        {
+        }
+        /**
+         * Dismisses the notification in the notification center when there are no more new content types.
+         *
+         * @return bool
+         */
+        public function dismiss_notifications()
+        {
+        }
+        /**
+         * Check if there is a new content type to show notification only once in the settings.
+         *
+         * @return bool Should the notification be shown.
+         */
+        public function maybe_add_settings_notification()
         {
         }
     }
-}
-namespace YoastSEO_Vendor\WordProof\SDK\Translations {
-    interface TranslationsInterface
-    {
-        public function getNoBalanceNotice();
-        public function getTimestampSuccessNotice();
-        public function getTimestampFailedNotice();
-        public function getWebhookFailedNotice();
-        public function getNotAuthenticatedNotice();
-        public function getOpenSettingsButtonText();
-        public function getOpenAuthenticationButtonText();
-        public function getContactWordProofSupportButtonText();
-    }
-}
-namespace Yoast\WP\SEO\Config {
     /**
-     * Class WordProof_Translations
-     *
-     * @package Yoast\WP\SEO\Config
+     * Handles showing notifications for new content types.
+     * Actions are used in the indexable taxonomy and post type change watchers.
      */
-    class Wordproof_Translations implements \YoastSEO_Vendor\WordProof\SDK\Translations\TranslationsInterface
+    class Content_Type_Visibility_Watcher_Actions implements \Yoast\WP\SEO\Integrations\Integration_Interface
     {
         /**
-         * Returns no balance notice translation.
+         * Holds the Options_Helper instance.
          *
-         * @return string The translation.
+         * @var Options_Helper
          */
-        public function getNoBalanceNotice()
+        private $options;
+        /**
+         * The notifications center.
+         *
+         * @var Yoast_Notification_Center
+         */
+        private $notification_center;
+        /**
+         * The notifications center.
+         *
+         * @var Content_Type_Visibility_Dismiss_Notifications
+         */
+        private $content_type_dismiss_notifications;
+        /**
+         * Indexable_Post_Type_Change_Watcher constructor.
+         *
+         * @param Options_Helper                                $options                            The options helper.
+         * @param Yoast_Notification_Center                     $notification_center                The notification center.
+         * @param Content_Type_Visibility_Dismiss_Notifications $content_type_dismiss_notifications The content type dismiss notifications.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\Options_Helper $options, \Yoast_Notification_Center $notification_center, \Yoast\WP\SEO\Content_Type_Visibility\Application\Content_Type_Visibility_Dismiss_Notifications $content_type_dismiss_notifications)
         {
         }
         /**
-         * Returns no balance notice translation.
+         * Returns the conditionals based on which this loadable should be active.
          *
-         * @return string The translation.
+         * @return array
          */
-        public function getTimestampSuccessNotice()
+        public static function get_conditionals()
         {
         }
         /**
-         * Returns timestamp failed notice translation.
+         * Initializes the integration.
          *
-         * @return string The translation.
+         * Register actions that are used in the post types and taxonomies indexable watcher.
+         *
+         * @return void
          */
-        public function getTimestampFailedNotice()
+        public function register_hooks()
         {
         }
         /**
-         * Returns webhook failed notice translation.
+         * Update db and tigger notification when a new post type is registered.
          *
-         * @return string The translation.
+         * @param array $newly_made_public_post_types The newly made public post types.
+         * @return void
          */
-        public function getWebhookFailedNotice()
+        public function new_post_type($newly_made_public_post_types)
         {
         }
         /**
-         * Returns no authentication notice translation.
+         * Update db when a post type is made removed.
          *
-         * @return string The translation.
+         * @param array $newly_made_non_public_post_types The newly made non public post types.
+         * @return void
          */
-        public function getNotAuthenticatedNotice()
+        public function clean_new_public_post_type($newly_made_non_public_post_types)
         {
         }
         /**
-         * Returns authenticate button text.
+         * Update db and tigger notification when a new taxonomy is registered.
          *
-         * @return string The translation.
+         * @param array $newly_made_public_taxonomies The newly made public post types.
+         * @return void
          */
-        public function getOpenAuthenticationButtonText()
+        public function new_taxonomy($newly_made_public_taxonomies)
         {
         }
         /**
-         * Returns open settings button translation.
+         * Update db when a post type is made removed.
          *
-         * @return string The translation.
+         * @param array $newly_made_non_public_taxonomies The newly made non public post types.
+         * @return void
          */
-        public function getOpenSettingsButtonText()
+        public function clean_new_public_taxonomy($newly_made_non_public_taxonomies)
         {
         }
         /**
-         * Returns get contact WordProof Support button translation.
+         * Decides if a notification should be added in the notification center.
          *
-         * @return string The translation.
+         * @return void
          */
-        public function getContactWordProofSupportButtonText()
+        public function maybe_add_notification()
+        {
+        }
+        /**
+         * Adds a notification to be shown on the next page request since posts are updated in an ajax request.
+         *
+         * @return void
+         */
+        private function add_notification()
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Routes {
+    /**
+     * Route interface.
+     */
+    interface Route_Interface extends \Yoast\WP\SEO\Loadable_Interface
+    {
+        /**
+         * Registers routes with WordPress.
+         *
+         * @return void
+         */
+        public function register_routes();
+    }
+}
+namespace Yoast\WP\SEO\Content_Type_Visibility\User_Interface {
+    /**
+     * Handles the dismiss route for "New" badges of new content types in settings menu.
+     * @phpcs:disable Yoast.NamingConventions.ObjectNameDepth.MaxExceeded
+     */
+    class Content_Type_Visibility_Dismiss_New_Route implements \Yoast\WP\SEO\Routes\Route_Interface
+    {
+        use \Yoast\WP\SEO\Conditionals\No_Conditionals;
+        /**
+         * Represents the alerts route prefix.
+         *
+         * @var string
+         */
+        public const ROUTE_PREFIX = 'new-content-type-visibility';
+        /**
+         * Represents post type dismiss route.
+         *
+         * @var string
+         */
+        public const POST_TYPE_DISMISS_ROUTE = self::ROUTE_PREFIX . '/dismiss-post-type';
+        /**
+         * Represents taxonomy dismiss route.
+         *
+         * @var string
+         */
+        public const TAXONOMY_DISMISS_ROUTE = self::ROUTE_PREFIX . '/dismiss-taxonomy';
+        /**
+         * Holds the Options_Helper instance.
+         *
+         * @var Content_Type_Visibility_Dismiss_Notifications
+         */
+        private $dismiss_notifications;
+        /**
+         * Constructs Content_Type_Visibility_Dismiss_New_Route.
+         *
+         * @param Content_Type_Visibility_Dismiss_Notifications $dismiss_notifications The options helper.
+         */
+        public function __construct(\Yoast\WP\SEO\Content_Type_Visibility\Application\Content_Type_Visibility_Dismiss_Notifications $dismiss_notifications)
+        {
+        }
+        /**
+         * Registers routes with WordPress.
+         *
+         * @return void
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Whether or not the current user is allowed to dismiss alerts.
+         *
+         * @return bool Whether or not the current user is allowed to dismiss alerts.
+         */
+        public function can_dismiss()
+        {
+        }
+        /**
+         * Validates post type.
+         *
+         * @param string          $param   The parameter.
+         * @param WP_REST_Request $request Full details about the request.
+         * @param string          $key     The key.
+         *
+         * @return bool
+         */
+        public function validate_post_type($param, $request, $key)
+        {
+        }
+        /**
+         * Wrapper method for Content_Type_Visibility_Dismiss_Notifications::post_type_dismiss().
+         *
+         * @param WP_REST_Request $request The request. This request should have a key param set.
+         *
+         * @return WP_REST_Response The response.
+         */
+        public function post_type_dismiss_callback($request)
+        {
+        }
+        /**
+         * Validates taxonomy.
+         *
+         * @param string          $param   The parameter.
+         * @param WP_REST_Request $request Full details about the request.
+         * @param string          $key     The key.
+         *
+         * @return bool
+         */
+        public function validate_taxonomy($param, $request, $key)
+        {
+        }
+        /**
+         * Wrapper method for Content_Type_Visibility_Dismiss_Notifications::taxonomy_dismiss().
+         *
+         * @param WP_REST_Request $request The request. This request should have a key param set.
+         *
+         * @return WP_REST_Response The response.
+         */
+        public function taxonomy_dismiss_callback(\WP_REST_Request $request)
         {
         }
     }
@@ -30214,7 +32083,7 @@ namespace Yoast\WP\SEO\Context {
      * @property int             $site_user_id
      * @property string          $site_represents
      * @property array|false     $site_represents_reference
-     * @property string          $schema_page_type
+     * @property string|string[] $schema_page_type
      * @property string|string[] $schema_article_type      Represents the type of article.
      * @property string          $main_schema_id
      * @property string|array    $main_entity_of_page
@@ -30435,7 +32304,7 @@ namespace Yoast\WP\SEO\Context {
         /**
          * Retrieve the person logo meta.
          *
-         * @return array|bool
+         * @return array<string|array<int>>|bool
          */
         public function generate_person_logo_meta()
         {
@@ -30451,7 +32320,7 @@ namespace Yoast\WP\SEO\Context {
         /**
          * Retrieve the company logo meta.
          *
-         * @return array|bool
+         * @return array<string|array<int>>|bool
          */
         public function generate_company_logo_meta()
         {
@@ -30475,7 +32344,7 @@ namespace Yoast\WP\SEO\Context {
         /**
          * Returns the site represents reference.
          *
-         * @return array|bool The site represents reference. False if none.
+         * @return array<string>|bool The site represents reference. False if none.
          */
         public function generate_site_represents_reference()
         {
@@ -30507,7 +32376,7 @@ namespace Yoast\WP\SEO\Context {
         /**
          * Returns the schema page type.
          *
-         * @return string|array The schema page type.
+         * @return string|array<string> The schema page type.
          */
         public function generate_schema_page_type()
         {
@@ -30515,7 +32384,7 @@ namespace Yoast\WP\SEO\Context {
         /**
          * Returns the schema article type.
          *
-         * @return string|array The schema article type.
+         * @return string|array<string> The schema article type.
          */
         public function generate_schema_article_type()
         {
@@ -30539,7 +32408,7 @@ namespace Yoast\WP\SEO\Context {
         {
         }
         /**
-         * Gets the main image ID.
+         * Generates the main image ID.
          *
          * @return int|null The main image ID.
          */
@@ -30557,7 +32426,7 @@ namespace Yoast\WP\SEO\Context {
         /**
          * Strips all nested dependencies from the debug info.
          *
-         * @return array
+         * @return array<Indexable,Indexable_Presentation>
          */
         public function __debugInfo()
         {
@@ -30578,6 +32447,5006 @@ namespace Yoast\WP\SEO\Context {
          * @return int|null
          */
         private function get_singular_post_image($id)
+        {
+        }
+        /**
+         * Gets the main image ID for REST requests.
+         *
+         * @return int|null The main image ID.
+         */
+        private function get_main_image_id_for_rest_request()
+        {
+        }
+        /**
+         * Gets the main image URL for REST requests.
+         *
+         * @return string|null The main image URL.
+         */
+        private function get_main_image_url_for_rest_request()
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Application\Configuration {
+    /**
+     * Responsible for the dashboard configuration.
+     */
+    class Dashboard_Configuration
+    {
+        /**
+         * The content types repository.
+         *
+         * @var Content_Types_Repository $content_types_repository
+         */
+        private $content_types_repository;
+        /**
+         * The indexable helper.
+         *
+         * @var Indexable_Helper $indexable_helper
+         */
+        private $indexable_helper;
+        /**
+         * The user helper.
+         *
+         * @var User_Helper $user_helper
+         */
+        private $user_helper;
+        /**
+         * The repository.
+         *
+         * @var Enabled_Analysis_Features_Repository
+         */
+        private $enabled_analysis_features_repository;
+        /**
+         * The endpoints repository.
+         *
+         * @var Endpoints_Repository
+         */
+        private $endpoints_repository;
+        /**
+         * The nonce repository.
+         *
+         * @var Nonce_Repository
+         */
+        private $nonce_repository;
+        /**
+         * The Site Kit integration data.
+         *
+         * @var Site_Kit
+         */
+        private $site_kit_integration_data;
+        /**
+         * The constructor.
+         *
+         * @param Content_Types_Repository             $content_types_repository             The content types repository.
+         * @param Indexable_Helper                     $indexable_helper                     The indexable helper
+         *                                                                                   repository.
+         * @param User_Helper                          $user_helper                          The user helper.
+         * @param Enabled_Analysis_Features_Repository $enabled_analysis_features_repository The analysis feature.
+         *                                                                                        repository.
+         * @param Endpoints_Repository                 $endpoints_repository                 The endpoints repository.
+         * @param Nonce_Repository                     $nonce_repository                     The nonce repository.
+         * @param Site_Kit                             $site_kit_integration_data            The Site Kit integration data.
+         */
+        public function __construct(\Yoast\WP\SEO\Dashboard\Application\Content_Types\Content_Types_Repository $content_types_repository, \Yoast\WP\SEO\Helpers\Indexable_Helper $indexable_helper, \Yoast\WP\SEO\Helpers\User_Helper $user_helper, \Yoast\WP\SEO\Editors\Application\Analysis_Features\Enabled_Analysis_Features_Repository $enabled_analysis_features_repository, \Yoast\WP\SEO\Dashboard\Application\Endpoints\Endpoints_Repository $endpoints_repository, \Yoast\WP\SEO\Dashboard\Infrastructure\Nonces\Nonce_Repository $nonce_repository, \Yoast\WP\SEO\Dashboard\Infrastructure\Integrations\Site_Kit $site_kit_integration_data)
+        {
+        }
+        /**
+         * Returns a configuration
+         *
+         * @return array<string,array<string>>
+         */
+        public function get_configuration() : array
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Application\Content_Types {
+    /**
+     * The repository to get content types.
+     */
+    class Content_Types_Repository
+    {
+        /**
+         * The post type helper.
+         *
+         * @var Content_Types_Collector
+         */
+        protected $content_types_collector;
+        /**
+         * The taxonomies repository.
+         *
+         * @var Taxonomies_Repository
+         */
+        private $taxonomies_repository;
+        /**
+         * The constructor.
+         *
+         * @param Content_Types_Collector $content_types_collector The post type helper.
+         * @param Taxonomies_Repository   $taxonomies_repository   The taxonomies repository.
+         */
+        public function __construct(\Yoast\WP\SEO\Dashboard\Infrastructure\Content_Types\Content_Types_Collector $content_types_collector, \Yoast\WP\SEO\Dashboard\Application\Taxonomies\Taxonomies_Repository $taxonomies_repository)
+        {
+        }
+        /**
+         * Returns the content types array.
+         *
+         * @return array<array<string,array<string, array<string, array<string, string|null>>>>> The content types array.
+         */
+        public function get_content_types() : array
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Application\Endpoints {
+    /**
+     * Repository for endpoints.
+     */
+    class Endpoints_Repository
+    {
+        /**
+         * Holds the endpoints.
+         *
+         * @var array<Endpoint_Interface>
+         */
+        private $endpoints;
+        /**
+         * Constructs the repository.
+         *
+         * @param Endpoint_Interface ...$endpoints The endpoints to add to the repository.
+         */
+        public function __construct(\Yoast\WP\SEO\Dashboard\Domain\Endpoint\Endpoint_Interface ...$endpoints)
+        {
+        }
+        /**
+         * Creates a list with all endpoints.
+         *
+         * @return Endpoint_List The list with all endpoints.
+         */
+        public function get_all_endpoints() : \Yoast\WP\SEO\Dashboard\Domain\Endpoint\Endpoint_List
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Application\Filter_Pairs {
+    /**
+     * The repository to get hardcoded filter pairs.
+     */
+    class Filter_Pairs_Repository
+    {
+        /**
+         * The taxonomies collector.
+         *
+         * @var Taxonomies_Collector
+         */
+        private $taxonomies_collector;
+        /**
+         * All filter pairs.
+         *
+         * @var Filter_Pairs_Interface[]
+         */
+        private $filter_pairs;
+        /**
+         * The constructor.
+         *
+         * @param Taxonomies_Collector   $taxonomies_collector The taxonomies collector.
+         * @param Filter_Pairs_Interface ...$filter_pairs      All filter pairs.
+         */
+        public function __construct(\Yoast\WP\SEO\Dashboard\Infrastructure\Taxonomies\Taxonomies_Collector $taxonomies_collector, \Yoast\WP\SEO\Dashboard\Domain\Filter_Pairs\Filter_Pairs_Interface ...$filter_pairs)
+        {
+        }
+        /**
+         * Returns a taxonomy based on a content type, by looking into hardcoded filter pairs.
+         *
+         * @param string $content_type The content type.
+         *
+         * @return Taxonomy|null The taxonomy filter.
+         */
+        public function get_taxonomy(string $content_type) : ?\Yoast\WP\SEO\Dashboard\Domain\Taxonomies\Taxonomy
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Application\Score_Groups\SEO_Score_Groups {
+    /**
+     * The repository to get SEO score groups.
+     */
+    class SEO_Score_Groups_Repository
+    {
+        /**
+         * All SEO score groups.
+         *
+         * @var SEO_Score_Groups_Interface[]
+         */
+        private $seo_score_groups;
+        /**
+         * The constructor.
+         *
+         * @param SEO_Score_Groups_Interface ...$seo_score_groups All SEO score groups.
+         */
+        public function __construct(\Yoast\WP\SEO\Dashboard\Domain\Score_Groups\SEO_Score_Groups\SEO_Score_Groups_Interface ...$seo_score_groups)
+        {
+        }
+        /**
+         * Returns the SEO score group that a SEO score belongs to.
+         *
+         * @param int $seo_score The SEO score to be assigned into a group.
+         *
+         * @return SEO_Score_Groups_Interface The SEO score group that the SEO score belongs to.
+         */
+        public function get_seo_score_group(?int $seo_score) : \Yoast\WP\SEO\Dashboard\Domain\Score_Groups\SEO_Score_Groups\SEO_Score_Groups_Interface
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Application\Score_Results {
+    /**
+     * The abstract score results repository.
+     */
+    abstract class Abstract_Score_Results_Repository
+    {
+        /**
+         * The score results collector.
+         *
+         * @var Score_Results_Collector_Interface
+         */
+        protected $score_results_collector;
+        /**
+         * The current scores repository.
+         *
+         * @var Current_Scores_Repository
+         */
+        protected $current_scores_repository;
+        /**
+         * All score groups.
+         *
+         * @var Score_Groups_Interface[]
+         */
+        protected $score_groups;
+        /**
+         * Sets the repositories.
+         *
+         * @required
+         *
+         * @param Current_Scores_Repository $current_scores_repository The current scores repository.
+         *
+         * @return void
+         */
+        public function set_repositories(\Yoast\WP\SEO\Dashboard\Application\Score_Results\Current_Scores_Repository $current_scores_repository)
+        {
+        }
+        /**
+         * Returns the score results for a content type.
+         *
+         * @param Content_Type  $content_type       The content type.
+         * @param Taxonomy|null $taxonomy           The taxonomy of the term we're filtering for.
+         * @param int|null      $term_id            The ID of the term we're filtering for.
+         * @param bool|null     $is_troubleshooting Whether we're in troubleshooting mode.
+         *
+         * @return array<array<string, string|int|array<string, string>>> The scores.
+         *
+         * @throws Exception When getting score results from the infrastructure fails.
+         */
+        public function get_score_results(\Yoast\WP\SEO\Dashboard\Domain\Content_Types\Content_Type $content_type, ?\Yoast\WP\SEO\Dashboard\Domain\Taxonomies\Taxonomy $taxonomy, ?int $term_id, ?bool $is_troubleshooting) : array
+        {
+        }
+    }
+    /**
+     * The current scores repository.
+     */
+    class Current_Scores_Repository
+    {
+        /**
+         * The score group link collector.
+         *
+         * @var Score_Group_Link_Collector
+         */
+        protected $score_group_link_collector;
+        /**
+         * The constructor.
+         *
+         * @param Score_Group_Link_Collector $score_group_link_collector The score group link collector.
+         */
+        public function __construct(\Yoast\WP\SEO\Dashboard\Infrastructure\Score_Groups\Score_Group_Link_Collector $score_group_link_collector)
+        {
+        }
+        /**
+         * Returns the current results.
+         *
+         * @param Score_Groups_Interface[] $score_groups  The score groups.
+         * @param array<string, string>    $score_results The score results.
+         * @param Content_Type             $content_type  The content type.
+         * @param Taxonomy|null            $taxonomy      The taxonomy of the term we're filtering for.
+         * @param int|null                 $term_id       The ID of the term we're filtering for.
+         *
+         * @return array<array<string, string|int|array<string, string>>> The current results.
+         */
+        public function get_current_scores(array $score_groups, array $score_results, \Yoast\WP\SEO\Dashboard\Domain\Content_Types\Content_Type $content_type, ?\Yoast\WP\SEO\Dashboard\Domain\Taxonomies\Taxonomy $taxonomy, ?int $term_id) : \Yoast\WP\SEO\Dashboard\Domain\Score_Results\Current_Scores_List
+        {
+        }
+        /**
+         * Returns the links for the current scores of a score group.
+         *
+         * @param Score_Groups_Interface $score_group  The scoure group.
+         * @param Content_Type           $content_type The content type.
+         * @param Taxonomy|null          $taxonomy     The taxonomy of the term we're filtering for.
+         * @param int|null               $term_id      The ID of the term we're filtering for.
+         *
+         * @return array<string,string> The current score links.
+         */
+        protected function get_current_score_links(\Yoast\WP\SEO\Dashboard\Domain\Score_Groups\Score_Groups_Interface $score_group, \Yoast\WP\SEO\Dashboard\Domain\Content_Types\Content_Type $content_type, ?\Yoast\WP\SEO\Dashboard\Domain\Taxonomies\Taxonomy $taxonomy, ?int $term_id) : array
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Application\Score_Results\Readability_Score_Results {
+    /**
+     * The repository to get readability score results.
+     */
+    class Readability_Score_Results_Repository extends \Yoast\WP\SEO\Dashboard\Application\Score_Results\Abstract_Score_Results_Repository
+    {
+        /**
+         * The constructor.
+         *
+         * @param Cached_Readability_Score_Results_Collector $readability_score_results_collector The cached readability score results collector.
+         * @param Readability_Score_Groups_Interface         ...$readability_score_groups         All readability score groups.
+         */
+        public function __construct(\Yoast\WP\SEO\Dashboard\Infrastructure\Score_Results\Readability_Score_Results\Cached_Readability_Score_Results_Collector $readability_score_results_collector, \Yoast\WP\SEO\Dashboard\Domain\Score_Groups\Readability_Score_Groups\Readability_Score_Groups_Interface ...$readability_score_groups)
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Application\Score_Results\SEO_Score_Results {
+    /**
+     * The repository to get SEO score results.
+     */
+    class SEO_Score_Results_Repository extends \Yoast\WP\SEO\Dashboard\Application\Score_Results\Abstract_Score_Results_Repository
+    {
+        /**
+         * The constructor.
+         *
+         * @param Cached_SEO_Score_Results_Collector $seo_score_results_collector The cached SEO score results collector.
+         * @param SEO_Score_Groups_Interface         ...$seo_score_groups         All SEO score groups.
+         */
+        public function __construct(\Yoast\WP\SEO\Dashboard\Infrastructure\Score_Results\SEO_Score_Results\Cached_SEO_Score_Results_Collector $seo_score_results_collector, \Yoast\WP\SEO\Dashboard\Domain\Score_Groups\SEO_Score_Groups\SEO_Score_Groups_Interface ...$seo_score_groups)
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Domain\Data_Provider {
+    /**
+     * Interface describing the way to get data for a specific data provider.
+     */
+    interface Dashboard_Repository_Interface
+    {
+        /**
+         * Method to get search related data from a provider.
+         *
+         * @param Parameters $parameters The parameter to get the search data for.
+         *
+         * @return Data_Container
+         */
+        public function get_data(\Yoast\WP\SEO\Dashboard\Domain\Data_Provider\Parameters $parameters) : \Yoast\WP\SEO\Dashboard\Domain\Data_Provider\Data_Container;
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Application\Search_Rankings {
+    /**
+     * The data provider for search ranking related data.
+     */
+    class Top_Page_Repository implements \Yoast\WP\SEO\Dashboard\Domain\Data_Provider\Dashboard_Repository_Interface
+    {
+        /**
+         * The adapter.
+         *
+         * @var Site_Kit_Search_Console_Adapter $site_kit_search_console_adapter
+         */
+        private $site_kit_search_console_adapter;
+        /**
+         * The top page indexable collector.
+         *
+         * @var Top_Page_Indexable_Collector $top_page_indexable_collector
+         */
+        private $top_page_indexable_collector;
+        /**
+         * The constructor.
+         *
+         * @param Site_Kit_Search_Console_Adapter $site_kit_search_console_adapter The adapter.
+         * @param Top_Page_Indexable_Collector    $top_page_indexable_collector    The top page indexable collector.
+         */
+        public function __construct(\Yoast\WP\SEO\Dashboard\Infrastructure\Search_Console\Site_Kit_Search_Console_Adapter $site_kit_search_console_adapter, \Yoast\WP\SEO\Dashboard\Infrastructure\Indexables\Top_Page_Indexable_Collector $top_page_indexable_collector)
+        {
+        }
+        /**
+         * Gets the top pages' data.
+         *
+         * @param Parameters $parameters The parameter to use for getting the top pages.
+         *
+         * @return Data_Container
+         *
+         * @throws Exception When getting the top pages' data fails.
+         */
+        public function get_data(\Yoast\WP\SEO\Dashboard\Domain\Data_Provider\Parameters $parameters) : \Yoast\WP\SEO\Dashboard\Domain\Data_Provider\Data_Container
+        {
+        }
+    }
+    /**
+     * The data provider for search ranking related data.
+     */
+    class Top_Query_Repository implements \Yoast\WP\SEO\Dashboard\Domain\Data_Provider\Dashboard_Repository_Interface
+    {
+        /**
+         * The adapter.
+         *
+         * @var Site_Kit_Search_Console_Adapter $site_kit_search_console_adapter
+         */
+        private $site_kit_search_console_adapter;
+        /**
+         * The constructor.
+         *
+         * @param Site_Kit_Search_Console_Adapter $site_kit_search_console_adapter The adapter.
+         */
+        public function __construct(\Yoast\WP\SEO\Dashboard\Infrastructure\Search_Console\Site_Kit_Search_Console_Adapter $site_kit_search_console_adapter)
+        {
+        }
+        /**
+         * Method to get search related data from a provider.
+         *
+         * @param Parameters $parameters The parameter to get the search data for.
+         *
+         * @return Data_Container
+         */
+        public function get_data(\Yoast\WP\SEO\Dashboard\Domain\Data_Provider\Parameters $parameters) : \Yoast\WP\SEO\Dashboard\Domain\Data_Provider\Data_Container
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Application\Taxonomies {
+    /**
+     * The repository to get taxonomies.
+     */
+    class Taxonomies_Repository
+    {
+        /**
+         * The taxonomies collector.
+         *
+         * @var Taxonomies_Collector
+         */
+        private $taxonomies_collector;
+        /**
+         * The filter pairs repository.
+         *
+         * @var Filter_Pairs_Repository
+         */
+        private $filter_pairs_repository;
+        /**
+         * The constructor.
+         *
+         * @param Taxonomies_Collector    $taxonomies_collector    The taxonomies collector.
+         * @param Filter_Pairs_Repository $filter_pairs_repository The filter pairs repository.
+         */
+        public function __construct(\Yoast\WP\SEO\Dashboard\Infrastructure\Taxonomies\Taxonomies_Collector $taxonomies_collector, \Yoast\WP\SEO\Dashboard\Application\Filter_Pairs\Filter_Pairs_Repository $filter_pairs_repository)
+        {
+        }
+        /**
+         * Returns the object of the filtering taxonomy of a content type.
+         *
+         * @param string $content_type The content type that the taxonomy filters.
+         *
+         * @return Taxonomy|null The filtering taxonomy of the content type.
+         */
+        public function get_content_type_taxonomy(string $content_type)
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Domain\Content_Types {
+    /**
+     * This class describes a Content Type.
+     */
+    class Content_Type
+    {
+        /**
+         * The name of the content type.
+         *
+         * @var string
+         */
+        private $name;
+        /**
+         * The label of the content type.
+         *
+         * @var string
+         */
+        private $label;
+        /**
+         * The taxonomy that filters the content type.
+         *
+         * @var Taxonomy
+         */
+        private $taxonomy;
+        /**
+         * The constructor.
+         *
+         * @param string        $name     The name of the content type.
+         * @param string        $label    The label of the content type.
+         * @param Taxonomy|null $taxonomy The taxonomy that filters the content type.
+         */
+        public function __construct(string $name, string $label, ?\Yoast\WP\SEO\Dashboard\Domain\Taxonomies\Taxonomy $taxonomy = null)
+        {
+        }
+        /**
+         * Gets name of the content type.
+         *
+         * @return string The name of the content type.
+         */
+        public function get_name() : string
+        {
+        }
+        /**
+         * Gets label of the content type.
+         *
+         * @return string The label of the content type.
+         */
+        public function get_label() : string
+        {
+        }
+        /**
+         * Gets the taxonomy that filters the content type.
+         *
+         * @return Taxonomy|null The taxonomy that filters the content type.
+         */
+        public function get_taxonomy() : ?\Yoast\WP\SEO\Dashboard\Domain\Taxonomies\Taxonomy
+        {
+        }
+        /**
+         * Sets the taxonomy that filters the content type.
+         *
+         * @param Taxonomy|null $taxonomy The taxonomy that filters the content type.
+         *
+         * @return void
+         */
+        public function set_taxonomy(?\Yoast\WP\SEO\Dashboard\Domain\Taxonomies\Taxonomy $taxonomy) : void
+        {
+        }
+    }
+    /**
+     * This class describes a list of content types.
+     */
+    class Content_Types_List
+    {
+        /**
+         * The content types.
+         *
+         * @var array<Content_Type>
+         */
+        private $content_types = [];
+        /**
+         * Adds a content type to the list.
+         *
+         * @param Content_Type $content_type The content type to add.
+         *
+         * @return void
+         */
+        public function add(\Yoast\WP\SEO\Dashboard\Domain\Content_Types\Content_Type $content_type) : void
+        {
+        }
+        /**
+         * Returns the content types in the list.
+         *
+         * @return array<Content_Type> The content types in the list.
+         */
+        public function get() : array
+        {
+        }
+        /**
+         * Parses the content type list to the expected key value representation.
+         *
+         * @return array<array<string,array<string, array<string, array<string, string|null>>>>> The content type list presented as the expected key value representation.
+         */
+        public function to_array() : array
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Domain\Data_Provider {
+    /**
+     * The data container.
+     */
+    class Data_Container
+    {
+        /**
+         * All the data points.
+         *
+         * @var array<Data_Interface> $data_container
+         */
+        private $data_container;
+        /**
+         * The constructor
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Method to add data.
+         *
+         * @param Data_Interface $data The data.
+         *
+         * @return void
+         */
+        public function add_data(\Yoast\WP\SEO\Dashboard\Domain\Data_Provider\Data_Interface $data)
+        {
+        }
+        /**
+         * Method to get all the data points.
+         *
+         * @return Data_Interface[] All the data points.
+         */
+        public function get_data() : array
+        {
+        }
+        /**
+         * Converts the data points into an array.
+         *
+         * @return array<string,string> The array of the data points.
+         */
+        public function to_array() : array
+        {
+        }
+    }
+    /**
+     * The interface to describe the data domain.
+     */
+    interface Data_Interface
+    {
+        /**
+         * A to array method.
+         *
+         * @return array<string>
+         */
+        public function to_array() : array;
+    }
+    /**
+     * Object representation of the request parameters.
+     */
+    abstract class Parameters
+    {
+        /**
+         * The start date.
+         *
+         * @var string $start_date
+         */
+        private $start_date;
+        /**
+         * The end date.
+         *
+         * @var string $end_date
+         */
+        private $end_date;
+        /**
+         * The amount of results.
+         *
+         * @var int $limit
+         */
+        private $limit;
+        /**
+         * Getter for the start date.
+         *
+         * @return string
+         */
+        public function get_start_date() : string
+        {
+        }
+        /**
+         * Getter for the end date.
+         * The date format should be Y-M-D.
+         *
+         * @return string
+         */
+        public function get_end_date() : string
+        {
+        }
+        /**
+         * Getter for the result limit.
+         *
+         * @return int
+         */
+        public function get_limit() : int
+        {
+        }
+        /**
+         * The start date setter.
+         *
+         * @param string $start_date The start date.
+         *
+         * @return void
+         */
+        public function set_start_date(string $start_date) : void
+        {
+        }
+        /**
+         * The end date setter.
+         *
+         * @param string $end_date The end date.
+         *
+         * @return void
+         */
+        public function set_end_date(string $end_date) : void
+        {
+        }
+        /**
+         * The result limit.
+         *
+         * @param int $limit The result limit.
+         * @return void
+         */
+        public function set_limit(int $limit) : void
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Domain\Endpoint {
+    interface Endpoint_Interface
+    {
+        /**
+         * Gets the name.
+         *
+         * @return string
+         */
+        public function get_name() : string;
+        /**
+         * Gets the namespace.
+         *
+         * @return string
+         */
+        public function get_namespace() : string;
+        /**
+         * Gets the route.
+         *
+         * @return string
+         */
+        public function get_route() : string;
+        /**
+         * Gets the URL.
+         *
+         * @return string
+         */
+        public function get_url() : string;
+    }
+    /**
+     * List of endpoints.
+     */
+    class Endpoint_List
+    {
+        /**
+         * Holds the endpoints.
+         *
+         * @var array<Endpoint_Interface> $endpoints
+         */
+        private $endpoints = [];
+        /**
+         * Adds an endpoint to the list.
+         *
+         * @param Endpoint_Interface $endpoint An endpoint.
+         *
+         * @return void
+         */
+        public function add_endpoint(\Yoast\WP\SEO\Dashboard\Domain\Endpoint\Endpoint_Interface $endpoint) : void
+        {
+        }
+        /**
+         * Converts the list to an array.
+         *
+         * @return array<string,string> The array of endpoints.
+         */
+        public function to_array() : array
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Domain\Filter_Pairs {
+    /**
+     * This interface describes a Filter Pair implementation.
+     */
+    interface Filter_Pairs_Interface
+    {
+        /**
+         * Gets the filtering taxonomy.
+         *
+         * @return string
+         */
+        public function get_filtering_taxonomy() : string;
+        /**
+         * Gets the filtered content type.
+         *
+         * @return string
+         */
+        public function get_filtered_content_type() : string;
+    }
+    /**
+     * This class describes the product category filter pair.
+     */
+    class Product_Category_Filter_Pair implements \Yoast\WP\SEO\Dashboard\Domain\Filter_Pairs\Filter_Pairs_Interface
+    {
+        /**
+         * Gets the filtering taxonomy.
+         *
+         * @return string The filtering taxonomy.
+         */
+        public function get_filtering_taxonomy() : string
+        {
+        }
+        /**
+         * Gets the filtered content type.
+         *
+         * @return string The filtered content type.
+         */
+        public function get_filtered_content_type() : string
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Domain\Score_Groups {
+    /**
+     * This interface describes a score group implementation.
+     */
+    interface Score_Groups_Interface
+    {
+        /**
+         * Gets the name of the score group.
+         *
+         * @return string
+         */
+        public function get_name() : string;
+        /**
+         * Gets the key of the score group that is used when filtering on the posts page.
+         *
+         * @return string
+         */
+        public function get_filter_key() : string;
+        /**
+         * Gets the value of the score group that is used when filtering on the posts page.
+         *
+         * @return string
+         */
+        public function get_filter_value() : string;
+        /**
+         * Gets the minimum score of the score group.
+         *
+         * @return int
+         */
+        public function get_min_score() : ?int;
+        /**
+         * Gets the maximum score of the score group.
+         *
+         * @return int
+         */
+        public function get_max_score() : ?int;
+        /**
+         * Gets the position of the score group.
+         *
+         * @return int
+         */
+        public function get_position() : int;
+    }
+    /**
+     * Abstract class for a score group.
+     */
+    abstract class Abstract_Score_Group implements \Yoast\WP\SEO\Dashboard\Domain\Score_Groups\Score_Groups_Interface
+    {
+        /**
+         * The name of the score group.
+         *
+         * @var string
+         */
+        private $name;
+        /**
+         * The key of the score group that is used when filtering on the posts page.
+         *
+         * @var string
+         */
+        private $filter_key;
+        /**
+         * The value of the score group that is used when filtering on the posts page.
+         *
+         * @var string
+         */
+        private $filter_value;
+        /**
+         * The min score of the score group.
+         *
+         * @var int
+         */
+        private $min_score;
+        /**
+         * The max score of the score group.
+         *
+         * @var int
+         */
+        private $max_score;
+        /**
+         * The position of the score group.
+         *
+         * @var int
+         */
+        private $position;
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Domain\Score_Groups\Readability_Score_Groups {
+    /**
+     * This interface describes a readability score group implementation.
+     */
+    interface Readability_Score_Groups_Interface extends \Yoast\WP\SEO\Dashboard\Domain\Score_Groups\Score_Groups_Interface
+    {
+    }
+    /**
+     * Abstract class for a readability score group.
+     */
+    abstract class Abstract_Readability_Score_Group extends \Yoast\WP\SEO\Dashboard\Domain\Score_Groups\Abstract_Score_Group implements \Yoast\WP\SEO\Dashboard\Domain\Score_Groups\Readability_Score_Groups\Readability_Score_Groups_Interface
+    {
+        /**
+         * Gets the key of the readability score group that is used when filtering on the posts page.
+         *
+         * @return string The name of the readability score group that is used when filtering on the posts page.
+         */
+        public function get_filter_key() : string
+        {
+        }
+    }
+    /**
+     * This class describes a bad readability score group.
+     */
+    class Bad_Readability_Score_Group extends \Yoast\WP\SEO\Dashboard\Domain\Score_Groups\Readability_Score_Groups\Abstract_Readability_Score_Group
+    {
+        /**
+         * Gets the name of the readability score group.
+         *
+         * @return string The name of the readability score group.
+         */
+        public function get_name() : string
+        {
+        }
+        /**
+         * Gets the value of the readability score group that is used when filtering on the posts page.
+         *
+         * @return string The name of the readability score group that is used when filtering on the posts page.
+         */
+        public function get_filter_value() : string
+        {
+        }
+        /**
+         * Gets the position of the readability score group.
+         *
+         * @return int The position of the readability score group.
+         */
+        public function get_position() : int
+        {
+        }
+        /**
+         * Gets the minimum score of the readability score group.
+         *
+         * @return int The minimum score of the readability score group.
+         */
+        public function get_min_score() : ?int
+        {
+        }
+        /**
+         * Gets the maximum score of the readability score group.
+         *
+         * @return int The maximum score of the readability score group.
+         */
+        public function get_max_score() : ?int
+        {
+        }
+    }
+    /**
+     * This class describes a good readability score group.
+     */
+    class Good_Readability_Score_Group extends \Yoast\WP\SEO\Dashboard\Domain\Score_Groups\Readability_Score_Groups\Abstract_Readability_Score_Group
+    {
+        /**
+         * Gets the name of the readability score group.
+         *
+         * @return string The name of the readability score group.
+         */
+        public function get_name() : string
+        {
+        }
+        /**
+         * Gets the value of the readability score group that is used when filtering on the posts page.
+         *
+         * @return string The name of the readability score group that is used when filtering on the posts page.
+         */
+        public function get_filter_value() : string
+        {
+        }
+        /**
+         * Gets the position of the readability score group.
+         *
+         * @return int The position of the readability score group.
+         */
+        public function get_position() : int
+        {
+        }
+        /**
+         * Gets the minimum score of the readability score group.
+         *
+         * @return int The minimum score of the readability score group.
+         */
+        public function get_min_score() : ?int
+        {
+        }
+        /**
+         * Gets the maximum score of the readability score group.
+         *
+         * @return int The maximum score of the readability score group.
+         */
+        public function get_max_score() : ?int
+        {
+        }
+    }
+    /**
+     * This class describes a missing readability score group.
+     */
+    class No_Readability_Score_Group extends \Yoast\WP\SEO\Dashboard\Domain\Score_Groups\Readability_Score_Groups\Abstract_Readability_Score_Group
+    {
+        /**
+         * Gets the name of the readability score group.
+         *
+         * @return string The name of the readability score group.
+         */
+        public function get_name() : string
+        {
+        }
+        /**
+         * Gets the value of the readability score group that is used when filtering on the posts page.
+         *
+         * @return string The name of the readability score group that is used when filtering on the posts page.
+         */
+        public function get_filter_value() : string
+        {
+        }
+        /**
+         * Gets the position of the readability score group.
+         *
+         * @return int The position of the readability score group.
+         */
+        public function get_position() : int
+        {
+        }
+        /**
+         * Gets the minimum score of the readability score group.
+         *
+         * @return null The minimum score of the readability score group.
+         */
+        public function get_min_score() : ?int
+        {
+        }
+        /**
+         * Gets the maximum score of the readability score group.
+         *
+         * @return null The maximum score of the readability score group.
+         */
+        public function get_max_score() : ?int
+        {
+        }
+    }
+    /**
+     * This class describes an OK readability score group.
+     */
+    class Ok_Readability_Score_Group extends \Yoast\WP\SEO\Dashboard\Domain\Score_Groups\Readability_Score_Groups\Abstract_Readability_Score_Group
+    {
+        /**
+         * Gets the name of the readability score group.
+         *
+         * @return string The the name of the readability score group.
+         */
+        public function get_name() : string
+        {
+        }
+        /**
+         * Gets the value of the readability score group that is used when filtering on the posts page.
+         *
+         * @return string The name of the readability score group that is used when filtering on the posts page.
+         */
+        public function get_filter_value() : string
+        {
+        }
+        /**
+         * Gets the position of the readability score group.
+         *
+         * @return int The position of the readability score group.
+         */
+        public function get_position() : int
+        {
+        }
+        /**
+         * Gets the minimum score of the readability score group.
+         *
+         * @return int The minimum score of the readability score group.
+         */
+        public function get_min_score() : ?int
+        {
+        }
+        /**
+         * Gets the maximum score of the readability score group.
+         *
+         * @return int The maximum score of the readability score group.
+         */
+        public function get_max_score() : ?int
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Domain\Score_Groups\SEO_Score_Groups {
+    /**
+     * This interface describes an SEO score group implementation.
+     */
+    interface SEO_Score_Groups_Interface extends \Yoast\WP\SEO\Dashboard\Domain\Score_Groups\Score_Groups_Interface
+    {
+    }
+    /**
+     * Abstract class for an SEO score group.
+     */
+    abstract class Abstract_SEO_Score_Group extends \Yoast\WP\SEO\Dashboard\Domain\Score_Groups\Abstract_Score_Group implements \Yoast\WP\SEO\Dashboard\Domain\Score_Groups\SEO_Score_Groups\SEO_Score_Groups_Interface
+    {
+        /**
+         * Gets the key of the SEO score group that is used when filtering on the posts page.
+         *
+         * @return string The name of the SEO score group that is used when filtering on the posts page.
+         */
+        public function get_filter_key() : string
+        {
+        }
+    }
+    /**
+     * This class describes a bad SEO score group.
+     */
+    class Bad_SEO_Score_Group extends \Yoast\WP\SEO\Dashboard\Domain\Score_Groups\SEO_Score_Groups\Abstract_SEO_Score_Group
+    {
+        /**
+         * Gets the name of the SEO score group.
+         *
+         * @return string The name of the SEO score group.
+         */
+        public function get_name() : string
+        {
+        }
+        /**
+         * Gets the value of the SEO score group that is used when filtering on the posts page.
+         *
+         * @return string The name of the SEO score group that is used when filtering on the posts page.
+         */
+        public function get_filter_value() : string
+        {
+        }
+        /**
+         * Gets the position of the SEO score group.
+         *
+         * @return int The position of the SEO score group.
+         */
+        public function get_position() : int
+        {
+        }
+        /**
+         * Gets the minimum score of the SEO score group.
+         *
+         * @return int The minimum score of the SEO score group.
+         */
+        public function get_min_score() : ?int
+        {
+        }
+        /**
+         * Gets the maximum score of the SEO score group.
+         *
+         * @return int The maximum score of the SEO score group.
+         */
+        public function get_max_score() : ?int
+        {
+        }
+    }
+    /**
+     * This class describes a good SEO score group.
+     */
+    class Good_SEO_Score_Group extends \Yoast\WP\SEO\Dashboard\Domain\Score_Groups\SEO_Score_Groups\Abstract_SEO_Score_Group
+    {
+        /**
+         * Gets the name of the SEO score group.
+         *
+         * @return string The name of the SEO score group.
+         */
+        public function get_name() : string
+        {
+        }
+        /**
+         * Gets the value of the SEO score group that is used when filtering on the posts page.
+         *
+         * @return string The name of the SEO score group that is used when filtering on the posts page.
+         */
+        public function get_filter_value() : string
+        {
+        }
+        /**
+         * Gets the position of the SEO score group.
+         *
+         * @return int The position of the SEO score group.
+         */
+        public function get_position() : int
+        {
+        }
+        /**
+         * Gets the minimum score of the SEO score group.
+         *
+         * @return int The minimum score of the SEO score group.
+         */
+        public function get_min_score() : ?int
+        {
+        }
+        /**
+         * Gets the maximum score of the SEO score group.
+         *
+         * @return int The maximum score of the SEO score group.
+         */
+        public function get_max_score() : ?int
+        {
+        }
+    }
+    /**
+     * This class describes a missing SEO score group.
+     */
+    class No_SEO_Score_Group extends \Yoast\WP\SEO\Dashboard\Domain\Score_Groups\SEO_Score_Groups\Abstract_SEO_Score_Group
+    {
+        /**
+         * Gets the name of the SEO score group.
+         *
+         * @return string The name of the SEO score group.
+         */
+        public function get_name() : string
+        {
+        }
+        /**
+         * Gets the value of the SEO score group that is used when filtering on the posts page.
+         *
+         * @return string The name of the SEO score group that is used when filtering on the posts page.
+         */
+        public function get_filter_value() : string
+        {
+        }
+        /**
+         * Gets the position of the SEO score group.
+         *
+         * @return int The position of the SEO score group.
+         */
+        public function get_position() : int
+        {
+        }
+        /**
+         * Gets the minimum score of the SEO score group.
+         *
+         * @return null The minimum score of the SEO score group.
+         */
+        public function get_min_score() : ?int
+        {
+        }
+        /**
+         * Gets the maximum score of the SEO score group.
+         *
+         * @return null The maximum score of the SEO score group.
+         */
+        public function get_max_score() : ?int
+        {
+        }
+    }
+    /**
+     * This class describes an OK SEO score group.
+     */
+    class Ok_SEO_Score_Group extends \Yoast\WP\SEO\Dashboard\Domain\Score_Groups\SEO_Score_Groups\Abstract_SEO_Score_Group
+    {
+        /**
+         * Gets the name of the SEO score group.
+         *
+         * @return string The the name of the SEO score group.
+         */
+        public function get_name() : string
+        {
+        }
+        /**
+         * Gets the value of the SEO score group that is used when filtering on the posts page.
+         *
+         * @return string The name of the SEO score group that is used when filtering on the posts page.
+         */
+        public function get_filter_value() : string
+        {
+        }
+        /**
+         * Gets the position of the SEO score group.
+         *
+         * @return int The position of the SEO score group.
+         */
+        public function get_position() : int
+        {
+        }
+        /**
+         * Gets the minimum score of the SEO score group.
+         *
+         * @return int The minimum score of the SEO score group.
+         */
+        public function get_min_score() : ?int
+        {
+        }
+        /**
+         * Gets the maximum score of the SEO score group.
+         *
+         * @return int The maximum score of the SEO score group.
+         */
+        public function get_max_score() : ?int
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Domain\Score_Results {
+    /**
+     * This class describes a current score.
+     */
+    class Current_Score
+    {
+        /**
+         * The name of the current score.
+         *
+         * @var string
+         */
+        private $name;
+        /**
+         * The amount of the current score.
+         *
+         * @var string
+         */
+        private $amount;
+        /**
+         * The ids of the current score.
+         *
+         * @var string
+         */
+        private $ids;
+        /**
+         * The links of the current score.
+         *
+         * @var array<string, string>
+         */
+        private $links;
+        /**
+         * The constructor.
+         *
+         * @param string                $name   The name of the current score.
+         * @param int                   $amount The amount of the current score.
+         * @param string                $ids    The ids of the current score.
+         * @param array<string, string> $links  The links of the current score.
+         */
+        public function __construct(string $name, int $amount, ?string $ids = null, ?array $links = null)
+        {
+        }
+        /**
+         * Gets name of the current score.
+         *
+         * @return string The name of the current score.
+         */
+        public function get_name() : string
+        {
+        }
+        /**
+         * Gets the amount of the current score.
+         *
+         * @return string The amount of the current score.
+         */
+        public function get_amount() : int
+        {
+        }
+        /**
+         * Gets the ids of the current score.
+         *
+         * @return string The ids of the current score.
+         */
+        public function get_ids() : ?string
+        {
+        }
+        /**
+         * Gets the links of the current score in the expected key value representation.
+         *
+         * @return array<string,string> The links of the current score in the expected key value representation.
+         */
+        public function get_links_to_array() : ?array
+        {
+        }
+    }
+    /**
+     * This class describes a list of current scores.
+     */
+    class Current_Scores_List
+    {
+        /**
+         * The current scores.
+         *
+         * @var Current_Score[]
+         */
+        private $current_scores = [];
+        /**
+         * Adds a current score to the list.
+         *
+         * @param Current_Score $current_score The current score to add.
+         * @param int           $position      The position to add the current score.
+         *
+         * @return void
+         */
+        public function add(\Yoast\WP\SEO\Dashboard\Domain\Score_Results\Current_Score $current_score, int $position) : void
+        {
+        }
+        /**
+         * Parses the current score list to the expected key value representation.
+         *
+         * @return array<array<string, string|int|array<string, string>>> The score list presented as the expected key value representation.
+         */
+        public function to_array() : array
+        {
+        }
+    }
+    /**
+     * This class describes a score result.
+     */
+    class Score_Result
+    {
+        /**
+         * The list of the current scores of the score result.
+         *
+         * @var Current_Scores_List
+         */
+        private $current_scores_list;
+        /**
+         * The time the query took to get the score results.
+         *
+         * @var float
+         */
+        private $query_time;
+        /**
+         * Whether cache was used to get the score results.
+         *
+         * @var bool
+         */
+        private $is_cached_used;
+        /**
+         * The constructor.
+         *
+         * @param Current_Scores_List $current_scores_list The list of the current scores of the score result.
+         * @param float               $query_time          The time the query took to get the score results.
+         * @param bool                $is_cached_used      Whether cache was used to get the score results.
+         */
+        public function __construct(\Yoast\WP\SEO\Dashboard\Domain\Score_Results\Current_Scores_List $current_scores_list, float $query_time, bool $is_cached_used)
+        {
+        }
+        /**
+         * Return this object represented by a key value array.
+         *
+         * @return array<string,array<array<string, string|int|array<string, string>>>|float|bool> Returns the name and if the feature is enabled.
+         */
+        public function to_array() : array
+        {
+        }
+    }
+    /**
+     * Exception for when score results are not found.
+     */
+    class Score_Results_Not_Found_Exception extends \Exception
+    {
+        /**
+         * Constructor of the exception.
+         */
+        public function __construct()
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Domain\Search_Console {
+    /**
+     * Exception for when a search console request fails.
+     */
+    class Failed_Request_Exception extends \Exception
+    {
+        /**
+         * Constructor of the exception.
+         *
+         * @param string $error_message     The error message of the request.
+         * @param int    $error_status_code The error status code of the request.
+         */
+        public function __construct($error_message, $error_status_code)
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Domain\Search_Rankings {
+    /**
+     * Domain object that represents a single Search Data record.
+     */
+    class Search_Data implements \Yoast\WP\SEO\Dashboard\Domain\Data_Provider\Data_Interface
+    {
+        /**
+         * The amount of clicks a `subject` gets.
+         *
+         * @var int $clicks
+         */
+        private $clicks;
+        /**
+         * The click-through rate a `subject` gets.
+         *
+         * @var float $clicks
+         */
+        private $ctr;
+        /**
+         * The amount of impressions a `subject` gets.
+         *
+         * @var int $impressions
+         */
+        private $impressions;
+        /**
+         * The average position for the given `subject`.
+         *
+         * @var float $position
+         */
+        private $position;
+        /**
+         * In the context of this domain object subject can represent a `URI` or a `search term`
+         *
+         * @var string
+         */
+        private $subject;
+        /**
+         * The constructor.
+         *
+         * @param int    $clicks      The clicks.
+         * @param float  $ctr         The ctr.
+         * @param int    $impressions The impressions.
+         * @param float  $position    The position.
+         * @param string $subject     The subject of the data.
+         */
+        public function __construct(int $clicks, float $ctr, int $impressions, float $position, string $subject)
+        {
+        }
+        /**
+         * The array representation of this domain object.
+         *
+         * @return array<string|float|int|string[]>
+         */
+        public function to_array() : array
+        {
+        }
+        /**
+         * Gets the subject.
+         *
+         * @return string The subject.
+         */
+        public function get_subject() : string
+        {
+        }
+    }
+    /**
+     * Domain object that represents a single Top Page Data record.
+     */
+    class Top_Page_Data implements \Yoast\WP\SEO\Dashboard\Domain\Data_Provider\Data_Interface
+    {
+        /**
+         * The search data for the top page.
+         *
+         * @var Search_Data $search_data
+         */
+        private $search_data;
+        /**
+         * The SEO score group the top page belongs to.
+         *
+         * @var SEO_Score_Groups_Interface
+         */
+        private $seo_score_group;
+        /**
+         * The edit link of the top page.
+         *
+         * @var string $edit_link
+         */
+        private $edit_link;
+        /**
+         * The constructor.
+         *
+         * @param Search_Data                $search_data     The search data for the top page.
+         * @param SEO_Score_Groups_Interface $seo_score_group The SEO score group the top page belongs to.
+         * @param string                     $edit_link       The edit link of the top page.
+         */
+        public function __construct(\Yoast\WP\SEO\Dashboard\Domain\Search_Rankings\Search_Data $search_data, \Yoast\WP\SEO\Dashboard\Domain\Score_Groups\SEO_Score_Groups\SEO_Score_Groups_Interface $seo_score_group, ?string $edit_link = null)
+        {
+        }
+        /**
+         * The array representation of this domain object.
+         *
+         * @return array<string|float|int|string[]>
+         */
+        public function to_array() : array
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Domain\Taxonomies {
+    /**
+     * This class describes a Taxonomy.
+     */
+    class Taxonomy
+    {
+        /**
+         * The name of the taxonomy.
+         *
+         * @var string
+         */
+        private $name;
+        /**
+         * The label of the taxonomy.
+         *
+         * @var string
+         */
+        private $label;
+        /**
+         * The REST URL of the taxonomy.
+         *
+         * @var string
+         */
+        private $rest_url;
+        /**
+         * The constructor.
+         *
+         * @param string $name     The name of the taxonomy.
+         * @param string $label    The label of the taxonomy.
+         * @param string $rest_url The REST URL of the taxonomy.
+         */
+        public function __construct(string $name, string $label, string $rest_url)
+        {
+        }
+        /**
+         * Returns the name of the taxonomy.
+         *
+         * @return string The name of the taxonomy.
+         */
+        public function get_name() : string
+        {
+        }
+        /**
+         * Parses the taxonomy to the expected key value representation.
+         *
+         * @return array<string, array<string, string>> The taxonomy presented as the expected key value representation.
+         */
+        public function to_array() : array
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Domain\Time_Based_SEO_Metrics {
+    /**
+     * Exception for when the repository for the given widget are not found.
+     */
+    class Repository_Not_Found_Exception extends \Exception
+    {
+        /**
+         * Constructor of the exception.
+         */
+        public function __construct()
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Infrastructure\Configuration {
+    /**
+     * Interface for the Permanently Dismissed Site Kit configuration Repository.
+     *
+     * @phpcs:disable Yoast.NamingConventions.ObjectNameDepth.MaxExceeded
+     */
+    interface Permanently_Dismissed_Site_Kit_Configuration_Repository_Interface
+    {
+        /**
+         * Sets the Site Kit configuration dismissal status.
+         *
+         * @param bool $is_dismissed The dismissal status.
+         *
+         * @return bool False when the update failed, true when the update succeeded.
+         */
+        public function set_site_kit_configuration_dismissal(bool $is_dismissed) : bool;
+        /**
+         * Checks if the Site Kit configuration is dismissed permanently.
+         * *
+         *
+         * @return bool True when the configuration is dismissed, false when it is not.
+         */
+        public function is_site_kit_configuration_dismissed() : bool;
+    }
+    /**
+     * Stores and retrieves whether the Site Kit configuration is permanently dismissed.
+     *
+     * @phpcs:disable Yoast.NamingConventions.ObjectNameDepth.MaxExceeded
+     */
+    class Permanently_Dismissed_Site_Kit_Configuration_Repository implements \Yoast\WP\SEO\Dashboard\Infrastructure\Configuration\Permanently_Dismissed_Site_Kit_Configuration_Repository_Interface
+    {
+        /**
+         * Holds the Options_Helper instance.
+         *
+         * @var Options_Helper
+         */
+        private $options_helper;
+        /**
+         * Constructs the class.
+         *
+         * @param Options_Helper $options_helper The options helper.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\Options_Helper $options_helper)
+        {
+        }
+        /**
+         * Sets the Site Kit dismissal status.
+         *
+         * @param bool $is_dismissed The dismissal status.
+         *
+         * @return bool False when the update failed, true when the update succeeded.
+         */
+        public function set_site_kit_configuration_dismissal(bool $is_dismissed) : bool
+        {
+        }
+        /**
+         * Checks if the Site Kit configuration is dismissed permanently.
+         * *
+         *
+         * @return bool True when the configuration is dismissed, false when it is not.
+         */
+        public function is_site_kit_configuration_dismissed() : bool
+        {
+        }
+    }
+    /**
+     * Interface for theSite Kit Consent Repository.
+     *
+     * @phpcs:disable Yoast.NamingConventions.ObjectNameDepth.MaxExceeded
+     */
+    interface Site_Kit_Consent_Repository_Interface
+    {
+        /**
+         * Sets the Site Kit consent.
+         *
+         * @param bool $consent The consent value.
+         *
+         * @return bool False when the update failed, true when the update succeeded.
+         */
+        public function set_site_kit_consent(bool $consent) : bool;
+        /**
+         * Returns the Site Kit consent status.
+         * *
+         *
+         * @return bool True when the consent has been granted, false when it is not.
+         */
+        public function is_consent_granted() : bool;
+    }
+    /**
+     * Stores and retrieves the Site Kit consent status.
+     *
+     * @phpcs:disable Yoast.NamingConventions.ObjectNameDepth.MaxExceeded
+     */
+    class Site_Kit_Consent_Repository implements \Yoast\WP\SEO\Dashboard\Infrastructure\Configuration\Site_Kit_Consent_Repository_Interface
+    {
+        /**
+         * Holds the Options_Helper instance.
+         *
+         * @var Options_Helper
+         */
+        private $options_helper;
+        /**
+         * Constructs the class.
+         *
+         * @param Options_Helper $options_helper The options helper.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\Options_Helper $options_helper)
+        {
+        }
+        /**
+         * Sets the Site Kit consent value.
+         *
+         * @param bool $consent The consent status.
+         *
+         * @return bool False when the update failed, true when the update succeeded.
+         */
+        public function set_site_kit_consent(bool $consent) : bool
+        {
+        }
+        /**
+         * Checks if consent has ben given for Site Kit.
+         * *
+         *
+         * @return bool True when consent has been given, false when it is not.
+         */
+        public function is_consent_granted() : bool
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Infrastructure\Content_Types {
+    /**
+     * Class that collects post types and relevant information.
+     */
+    class Content_Types_Collector
+    {
+        /**
+         * The post type helper.
+         *
+         * @var Post_Type_Helper
+         */
+        private $post_type_helper;
+        /**
+         * The constructor.
+         *
+         * @param Post_Type_Helper $post_type_helper The post type helper.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\Post_Type_Helper $post_type_helper)
+        {
+        }
+        /**
+         * Returns the content types in a list.
+         *
+         * @return Content_Types_List The content types in a list.
+         */
+        public function get_content_types() : \Yoast\WP\SEO\Dashboard\Domain\Content_Types\Content_Types_List
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Infrastructure\Endpoints {
+    /**
+     * Represents the readability scores endpoint.
+     */
+    class Readability_Scores_Endpoint implements \Yoast\WP\SEO\Dashboard\Domain\Endpoint\Endpoint_Interface
+    {
+        /**
+         * Gets the name.
+         *
+         * @return string
+         */
+        public function get_name() : string
+        {
+        }
+        /**
+         * Gets the namespace.
+         *
+         * @return string
+         */
+        public function get_namespace() : string
+        {
+        }
+        /**
+         * Gets the route.
+         *
+         * @throws Exception If the route prefix is not overwritten this throws.
+         * @return string
+         */
+        public function get_route() : string
+        {
+        }
+        /**
+         * Gets the URL.
+         *
+         * @return string
+         */
+        public function get_url() : string
+        {
+        }
+    }
+    /**
+     * Represents the SEO scores endpoint.
+     */
+    class SEO_Scores_Endpoint implements \Yoast\WP\SEO\Dashboard\Domain\Endpoint\Endpoint_Interface
+    {
+        /**
+         * Gets the name.
+         *
+         * @return string
+         */
+        public function get_name() : string
+        {
+        }
+        /**
+         * Gets the namespace.
+         *
+         * @return string
+         */
+        public function get_namespace() : string
+        {
+        }
+        /**
+         * Gets the route.
+         *
+         * @throws Exception If the route prefix is not overwritten this throws.
+         * @return string
+         */
+        public function get_route() : string
+        {
+        }
+        /**
+         * Gets the URL.
+         *
+         * @return string
+         */
+        public function get_url() : string
+        {
+        }
+    }
+    /**
+     * Represents the readability scores endpoint.
+     */
+    class Site_Kit_Configuration_Dismissal_Endpoint implements \Yoast\WP\SEO\Dashboard\Domain\Endpoint\Endpoint_Interface
+    {
+        /**
+         * Gets the name.
+         *
+         * @return string
+         */
+        public function get_name() : string
+        {
+        }
+        /**
+         * Gets the namespace.
+         *
+         * @return string
+         */
+        public function get_namespace() : string
+        {
+        }
+        /**
+         * Gets the route.
+         *
+         * @throws Exception If the route prefix is not overwritten this throws.
+         * @return string
+         */
+        public function get_route() : string
+        {
+        }
+        /**
+         * Gets the URL.
+         *
+         * @return string
+         */
+        public function get_url() : string
+        {
+        }
+    }
+    /**
+     * Represents the Site Kit consent management endpoint.
+     */
+    class Site_Kit_Consent_Management_Endpoint implements \Yoast\WP\SEO\Dashboard\Domain\Endpoint\Endpoint_Interface
+    {
+        /**
+         * Gets the name.
+         *
+         * @return string
+         */
+        public function get_name() : string
+        {
+        }
+        /**
+         * Gets the namespace.
+         *
+         * @return string
+         */
+        public function get_namespace() : string
+        {
+        }
+        /**
+         * Gets the route.
+         *
+         * @throws Exception If the route prefix is not overwritten this throws.
+         * @return string
+         */
+        public function get_route() : string
+        {
+        }
+        /**
+         * Gets the URL.
+         *
+         * @return string
+         */
+        public function get_url() : string
+        {
+        }
+    }
+    /**
+     * Represents the time based SEO metrics endpoint.
+     */
+    class Time_Based_SEO_Metrics_Endpoint implements \Yoast\WP\SEO\Dashboard\Domain\Endpoint\Endpoint_Interface
+    {
+        /**
+         * Gets the name.
+         *
+         * @return string
+         */
+        public function get_name() : string
+        {
+        }
+        /**
+         * Gets the namespace.
+         *
+         * @return string
+         */
+        public function get_namespace() : string
+        {
+        }
+        /**
+         * Gets the route.
+         *
+         * @return string
+         */
+        public function get_route() : string
+        {
+        }
+        /**
+         * Gets the URL.
+         *
+         * @return string
+         */
+        public function get_url() : string
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Infrastructure\Indexables {
+    /**
+     * The indexable collector that gets SEO scores from the indexables of top pages.
+     */
+    class Top_Page_Indexable_Collector
+    {
+        /**
+         * The indexable repository.
+         *
+         * @var Indexable_Repository $indexable_repository
+         */
+        private $indexable_repository;
+        /**
+         * The SEO score groups repository.
+         *
+         * @var SEO_Score_Groups_Repository $seo_score_groups_repository
+         */
+        private $seo_score_groups_repository;
+        /**
+         * The constructor.
+         *
+         * @param Indexable_Repository        $indexable_repository        The indexable repository.
+         * @param SEO_Score_Groups_Repository $seo_score_groups_repository The SEO score groups repository.
+         */
+        public function __construct(\Yoast\WP\SEO\Repositories\Indexable_Repository $indexable_repository, \Yoast\WP\SEO\Dashboard\Application\Score_Groups\SEO_Score_Groups\SEO_Score_Groups_Repository $seo_score_groups_repository)
+        {
+        }
+        /**
+         * Gets full data for top pages.
+         *
+         * @param Data_Container $top_pages The top pages.
+         *
+         * @return Data_Container Data about SEO scores of top pages.
+         */
+        public function get_data(\Yoast\WP\SEO\Dashboard\Domain\Data_Provider\Data_Container $top_pages) : \Yoast\WP\SEO\Dashboard\Domain\Data_Provider\Data_Container
+        {
+        }
+        /**
+         * Gets indexable for a top page URL.
+         *
+         * @param string $url The URL of the top page.
+         *
+         * @return bool|Indexable The indexable of the top page URL or false if there is none.
+         */
+        protected function get_top_page_indexable(string $url)
+        {
+        }
+        /**
+         * Gets edit links from a top page's indexable.
+         *
+         * @param Indexable $indexable The top page's indexable.
+         *
+         * @return string|null The edit link for the top page.
+         */
+        protected function get_top_page_edit_link(\Yoast\WP\SEO\Models\Indexable $indexable) : ?string
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Editors\Domain\Integrations {
+    /**
+     * Describes the interface for integration domain objects which can be enabled or not
+     */
+    interface Integration_Data_Provider_Interface
+    {
+        /**
+         * If the integration is activated.
+         *
+         * @return bool If the integration is activated.
+         */
+        public function is_enabled() : bool;
+        /**
+         * Return this object represented by a key value array.
+         *
+         * @return array<string,bool> Returns the name and if the feature is enabled.
+         */
+        public function to_array() : array;
+        /**
+         * Returns this object represented by a key value structure that is compliant with the script data array.
+         *
+         * @return array<string,bool> Returns the legacy key and if the feature is enabled.
+         */
+        public function to_legacy_array() : array;
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Infrastructure\Integrations {
+    /**
+     * Describes if the Site kit integration is enabled and configured.
+     */
+    class Site_Kit implements \Yoast\WP\SEO\Editors\Domain\Integrations\Integration_Data_Provider_Interface
+    {
+        private const SITE_KIT_FILE = 'google-site-kit/google-site-kit.php';
+        /**
+         * The Site Kit consent repository.
+         *
+         * @var Site_Kit_Consent_Repository_Interface
+         */
+        private $site_kit_consent_repository;
+        /**
+         * The Site Kit consent repository.
+         *
+         * @var Permanently_Dismissed_Site_Kit_Configuration_Repository_Interface
+         */
+        private $permanently_dismissed_site_kit_configuration_repository;
+        /**
+         * The constructor.
+         *
+         * @param Site_Kit_Consent_Repository_Interface                             $site_kit_consent_repository                             The
+         *                                                                                                                                   Site
+         *                                                                                                                                   Kit
+         *                                                                                                                                   consent
+         *                                                                                                                                   repository.
+         * @param Permanently_Dismissed_Site_Kit_Configuration_Repository_Interface $permanently_dismissed_site_kit_configuration_repository The
+         *                                                                                                                                   Site
+         *                                                                                                                                   Kit
+         *                                                                                                                                   permanently
+         *                                                                                                                                   dismissed
+         *                                                                                                                                   configuration
+         *                                                                                                                                   repository.
+         */
+        public function __construct(\Yoast\WP\SEO\Dashboard\Infrastructure\Configuration\Site_Kit_Consent_Repository_Interface $site_kit_consent_repository, \Yoast\WP\SEO\Dashboard\Infrastructure\Configuration\Permanently_Dismissed_Site_Kit_Configuration_Repository_Interface $permanently_dismissed_site_kit_configuration_repository)
+        {
+        }
+        /**
+         * If the integration is activated.
+         *
+         * @return bool If the integration is activated.
+         */
+        public function is_enabled() : bool
+        {
+        }
+        /**
+         * Return this object represented by a key value array.
+         *
+         * @return array<string,bool> Returns the name and if the feature is enabled.
+         */
+        public function to_array() : array
+        {
+        }
+        /**
+         * Return this object represented by a key value array.
+         *
+         * @return array<string,bool> Returns the name and if the feature is enabled.
+         */
+        public function to_legacy_array() : array
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Infrastructure\Nonces {
+    /**
+     * Repository for WP nonces.
+     */
+    class Nonce_Repository
+    {
+        /**
+         * Creates the nonce for a WP REST request.
+         *
+         * @return string
+         */
+        public function get_rest_nonce() : string
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Infrastructure\Score_Groups {
+    /**
+     * Getting links for score groups.
+     */
+    class Score_Group_Link_Collector
+    {
+        /**
+         * Builds the view link of the score group.
+         *
+         * @param Score_Groups_Interface $score_group  The score group.
+         * @param Content_Type           $content_type The content type.
+         * @param Taxonomy|null          $taxonomy     The taxonomy of the term we might be filtering.
+         * @param int|null               $term_id      The ID of the term we might be filtering.
+         *
+         * @return string The view link of the score.
+         */
+        public function get_view_link(\Yoast\WP\SEO\Dashboard\Domain\Score_Groups\Score_Groups_Interface $score_group, \Yoast\WP\SEO\Dashboard\Domain\Content_Types\Content_Type $content_type, ?\Yoast\WP\SEO\Dashboard\Domain\Taxonomies\Taxonomy $taxonomy, ?int $term_id) : ?string
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Infrastructure\Score_Results {
+    /**
+     * The interface of score result collectors.
+     */
+    interface Score_Results_Collector_Interface
+    {
+        /**
+         * Retrieves the score results for a content type.
+         *
+         * @param Score_Groups_Interface[] $score_groups       All score groups.
+         * @param Content_Type             $content_type       The content type.
+         * @param int|null                 $term_id            The ID of the term we're filtering for.
+         * @param bool|null                $is_troubleshooting Whether we're in troubleshooting mode.
+         *
+         * @return array<string, string> The score results for a content type.
+         */
+        public function get_score_results(array $score_groups, \Yoast\WP\SEO\Dashboard\Domain\Content_Types\Content_Type $content_type, ?int $term_id, ?bool $is_troubleshooting);
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Infrastructure\Score_Results\Readability_Score_Results {
+    /**
+     * The caching decorator to get readability score results.
+     */
+    class Cached_Readability_Score_Results_Collector implements \Yoast\WP\SEO\Dashboard\Infrastructure\Score_Results\Score_Results_Collector_Interface
+    {
+        public const READABILITY_SCORES_TRANSIENT = 'wpseo_readability_scores';
+        /**
+         * The actual collector implementation.
+         *
+         * @var Readability_Score_Results_Collector $readability_score_results_collector
+         */
+        private $readability_score_results_collector;
+        /**
+         * The constructor.
+         *
+         * @param Readability_Score_Results_Collector $readability_score_results_collector The collector implementation to
+         *                                                                                 use.
+         */
+        public function __construct(\Yoast\WP\SEO\Dashboard\Infrastructure\Score_Results\Readability_Score_Results\Readability_Score_Results_Collector $readability_score_results_collector)
+        {
+        }
+        /**
+         * Retrieves readability score results for a content type.
+         * Based on caching returns either the result or gets it from the collector.
+         *
+         * @param Readability_Score_Groups_Interface[] $score_groups       All readability score groups.
+         * @param Content_Type                         $content_type       The content type.
+         * @param int|null                             $term_id            The ID of the term we're filtering for.
+         * @param bool|null                            $is_troubleshooting Whether we're in troubleshooting mode.
+         *
+         * @throws Score_Results_Not_Found_Exception When the query of getting score results fails.
+         * @return array<string, object|bool|float> The readability score results for a content type.
+         */
+        public function get_score_results(array $score_groups, \Yoast\WP\SEO\Dashboard\Domain\Content_Types\Content_Type $content_type, ?int $term_id, ?bool $is_troubleshooting)
+        {
+        }
+    }
+    /**
+     * Getting readability score results from the indexable database table.
+     */
+    class Readability_Score_Results_Collector implements \Yoast\WP\SEO\Dashboard\Infrastructure\Score_Results\Score_Results_Collector_Interface
+    {
+        /**
+         * Retrieves readability score results for a content type.
+         *
+         * @param Readability_Score_Groups_Interface[] $readability_score_groups All readability score groups.
+         * @param Content_Type                         $content_type             The content type.
+         * @param int|null                             $term_id                  The ID of the term we're filtering for.
+         * @param bool|null                            $is_troubleshooting       Whether we're in troubleshooting mode.
+         *
+         * @return array<string, object|bool|float> The readability score results for a content type.
+         *
+         * @throws Score_Results_Not_Found_Exception When the query of getting score results fails.
+         */
+        public function get_score_results(array $readability_score_groups, \Yoast\WP\SEO\Dashboard\Domain\Content_Types\Content_Type $content_type, ?int $term_id, ?bool $is_troubleshooting)
+        {
+        }
+        /**
+         * Builds the select statement for the readability scores query.
+         *
+         * @param Readability_Score_Groups_Interface[] $readability_score_groups All readability score groups.
+         * @param bool|null                            $is_troubleshooting       Whether we're in troubleshooting mode.
+         *
+         * @return array<string, string> The select statement for the readability scores query.
+         */
+        private function build_select(array $readability_score_groups, ?bool $is_troubleshooting) : array
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Infrastructure\Score_Results\SEO_Score_Results {
+    /**
+     * The caching decorator to get readability score results.
+     */
+    class Cached_SEO_Score_Results_Collector implements \Yoast\WP\SEO\Dashboard\Infrastructure\Score_Results\Score_Results_Collector_Interface
+    {
+        public const SEO_SCORES_TRANSIENT = 'wpseo_seo_scores';
+        /**
+         * The actual collector implementation.
+         *
+         * @var SEO_Score_Results_Collector $seo_score_results_collector
+         */
+        private $seo_score_results_collector;
+        /**
+         * The constructor.
+         *
+         * @param SEO_Score_Results_Collector $seo_score_results_collector The collector implementation to use.
+         */
+        public function __construct(\Yoast\WP\SEO\Dashboard\Infrastructure\Score_Results\SEO_Score_Results\SEO_Score_Results_Collector $seo_score_results_collector)
+        {
+        }
+        /**
+         * Retrieves the SEO score results for a content type.
+         * Based on caching returns either the result or gets it from the collector.
+         *
+         * @param SEO_Score_Groups_Interface[] $score_groups       All SEO score groups.
+         * @param Content_Type                 $content_type       The content type.
+         * @param int|null                     $term_id            The ID of the term we're filtering for.
+         * @param bool|null                    $is_troubleshooting Whether we're in troubleshooting mode.
+         *
+         * @throws Score_Results_Not_Found_Exception When the query of getting score results fails.
+         * @return array<string, object|bool|float> The SEO score results for a content type.
+         */
+        public function get_score_results(array $score_groups, \Yoast\WP\SEO\Dashboard\Domain\Content_Types\Content_Type $content_type, ?int $term_id, ?bool $is_troubleshooting)
+        {
+        }
+    }
+    /**
+     * Getting SEO score results from the indexable database table.
+     */
+    class SEO_Score_Results_Collector implements \Yoast\WP\SEO\Dashboard\Infrastructure\Score_Results\Score_Results_Collector_Interface
+    {
+        /**
+         * Retrieves the SEO score results for a content type.
+         *
+         * @param SEO_Score_Groups_Interface[] $seo_score_groups   All SEO score groups.
+         * @param Content_Type                 $content_type       The content type.
+         * @param int|null                     $term_id            The ID of the term we're filtering for.
+         * @param bool|null                    $is_troubleshooting Whether we're in troubleshooting mode.
+         *
+         * @return array<string, object|bool|float> The SEO score results for a content type.
+         *
+         * @throws Score_Results_Not_Found_Exception When the query of getting score results fails.
+         */
+        public function get_score_results(array $seo_score_groups, \Yoast\WP\SEO\Dashboard\Domain\Content_Types\Content_Type $content_type, ?int $term_id, ?bool $is_troubleshooting) : array
+        {
+        }
+        /**
+         * Builds the select statement for the SEO scores query.
+         *
+         * @param SEO_Score_Groups_Interface[] $seo_score_groups   All SEO score groups.
+         * @param bool|null                    $is_troubleshooting Whether we're in troubleshooting mode.
+         *
+         * @return array<string, string> The select statement for the SEO scores query.
+         */
+        private function build_select(array $seo_score_groups, ?bool $is_troubleshooting) : array
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Infrastructure\Search_Console {
+    /**
+     * Domain object to add search console specific data to the parameters.
+     */
+    class Search_Console_Parameters extends \Yoast\WP\SEO\Dashboard\Domain\Data_Provider\Parameters
+    {
+        /**
+         * The search dimensions to query.
+         *
+         * @var string[] $dimensions
+         */
+        private $dimensions;
+        /**
+         * Sets the dimension parameter.
+         *
+         * @param array<string> $dimensions The dimensions.
+         *
+         * @return void
+         */
+        public function set_dimensions(array $dimensions) : void
+        {
+        }
+        /**
+         * Getter for the dimensions.
+         *
+         * @return string[]
+         */
+        public function get_dimensions() : array
+        {
+        }
+    }
+    /**
+     * The site API adapter to make calls via the Site_Kit plugin.
+     */
+    class Site_Kit_Search_Console_Adapter
+    {
+        /**
+         * The search console module class from Site kit.
+         *
+         * @var Module
+         */
+        private static $search_console_module;
+        /**
+         * The register method that sets the instance in the adapter.
+         *
+         * @return void
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * The wrapper method to add our parameters to a Site Kit API request.
+         *
+         * @param Search_Console_Parameters $parameters The parameters.
+         *
+         * @return Data_Container The Site Kit API response.
+         *
+         * @throws Failed_Request_Exception When the query of getting score results fails.
+         */
+        public function get_data(\Yoast\WP\SEO\Dashboard\Infrastructure\Search_Console\Search_Console_Parameters $parameters) : \Yoast\WP\SEO\Dashboard\Domain\Data_Provider\Data_Container
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\Infrastructure\Taxonomies {
+    /**
+     * Class that collects taxonomies and relevant information.
+     */
+    class Taxonomies_Collector
+    {
+        /**
+         * The taxonomy validator.
+         *
+         * @var Taxonomy_Validator
+         */
+        private $taxonomy_validator;
+        /**
+         * The constructor.
+         *
+         * @param Taxonomy_Validator $taxonomy_validator The taxonomy validator.
+         */
+        public function __construct(\Yoast\WP\SEO\Dashboard\Infrastructure\Taxonomies\Taxonomy_Validator $taxonomy_validator)
+        {
+        }
+        /**
+         * Returns a custom pair of taxonomy/content type, that's been given by users via hooks.
+         *
+         * @param string $content_type The content type we're hooking for.
+         *
+         * @return Taxonomy|null The hooked filtering taxonomy.
+         */
+        public function get_custom_filtering_taxonomy(string $content_type)
+        {
+        }
+        /**
+         * Returns the fallback, WP-native category taxonomy, if it's associated with the specific content type.
+         *
+         * @param string $content_type The content type.
+         *
+         * @return Taxonomy|null The taxonomy object for the category taxonomy.
+         */
+        public function get_fallback_taxonomy(string $content_type) : ?\Yoast\WP\SEO\Dashboard\Domain\Taxonomies\Taxonomy
+        {
+        }
+        /**
+         * Returns the taxonomy object that filters a specific content type.
+         *
+         * @param string $taxonomy_name The name of the taxonomy we're going to build the object for.
+         * @param string $content_type  The content type that the taxonomy object is filtering.
+         *
+         * @return Taxonomy|null The taxonomy object.
+         */
+        public function get_taxonomy(string $taxonomy_name, string $content_type) : ?\Yoast\WP\SEO\Dashboard\Domain\Taxonomies\Taxonomy
+        {
+        }
+        /**
+         * Builds the REST API URL for the taxonomy.
+         *
+         * @param WP_Taxonomy $taxonomy The taxonomy we want to build the REST API URL for.
+         *
+         * @return string The REST API URL for the taxonomy.
+         */
+        protected function get_taxonomy_rest_url(\WP_Taxonomy $taxonomy) : string
+        {
+        }
+    }
+    /**
+     * Class that validates taxonomies.
+     */
+    class Taxonomy_Validator
+    {
+        /**
+         * Returns whether the taxonomy in question is valid and associated with a given content type.
+         *
+         * @param WP_Taxonomy|false|null $taxonomy     The taxonomy to check.
+         * @param string                 $content_type The name of the content type to check.
+         *
+         * @return bool Whether the taxonomy in question is valid.
+         */
+        public function is_valid_taxonomy($taxonomy, string $content_type) : bool
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\User_Interface\Configuration {
+    /**
+     * Registers a route to set whether the Site Kit configuration is permanently dismissed.
+     *
+     * @makePublic
+     *
+     * @phpcs:disable Yoast.NamingConventions.ObjectNameDepth.MaxExceeded
+     */
+    class Site_Kit_Configuration_Dismissal_Route implements \Yoast\WP\SEO\Routes\Route_Interface
+    {
+        use \Yoast\WP\SEO\Conditionals\No_Conditionals;
+        /**
+         *  The namespace for this route.
+         *
+         * @var string
+         */
+        public const ROUTE_NAMESPACE = \Yoast\WP\SEO\Main::API_V1_NAMESPACE;
+        /**
+         *  The prefix for this route.
+         *
+         * @var string
+         */
+        public const ROUTE_PREFIX = '/site_kit_configuration_permanent_dismissal';
+        /**
+         * Holds the introductions collector instance.
+         *
+         * @var Permanently_Dismissed_Site_Kit_Configuration_Repository_Interface
+         */
+        private $permanently_dismissed_site_kit_configuration_repository;
+        /**
+         * Constructs the class.
+         *
+         * @param Permanently_Dismissed_Site_Kit_Configuration_Repository_Interface $permanently_dismissed_site_kit_configuration_repository The repository.
+         */
+        public function __construct(\Yoast\WP\SEO\Dashboard\Infrastructure\Configuration\Permanently_Dismissed_Site_Kit_Configuration_Repository_Interface $permanently_dismissed_site_kit_configuration_repository)
+        {
+        }
+        /**
+         * Registers routes with WordPress.
+         *
+         * @return void
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Sets whether the Site Kit configuration is permanently dismissed.
+         *
+         * @param WP_REST_Request $request The request object.
+         *
+         * @return WP_REST_Response|WP_Error The success or failure response.
+         */
+        public function set_site_kit_configuration_permanent_dismissal(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Checks if the current user has the required capabilities.
+         *
+         * @return bool
+         */
+        public function check_capabilities()
+        {
+        }
+    }
+    /**
+     * Registers a route to set whether the Site Kit configuration is permanently dismissed.
+     *
+     * @makePublic
+     *
+     * @phpcs:disable Yoast.NamingConventions.ObjectNameDepth.MaxExceeded
+     */
+    class Site_Kit_Consent_Management_Route implements \Yoast\WP\SEO\Routes\Route_Interface
+    {
+        use \Yoast\WP\SEO\Conditionals\No_Conditionals;
+        /**
+         *  The namespace for this route.
+         *
+         * @var string
+         */
+        public const ROUTE_NAMESPACE = \Yoast\WP\SEO\Main::API_V1_NAMESPACE;
+        /**
+         *  The prefix for this route.
+         *
+         * @var string
+         */
+        public const ROUTE_PREFIX = '/site_kit_manage_consent';
+        /**
+         * Holds the repository instance.
+         *
+         * @var Site_Kit_Consent_Repository_Interface
+         */
+        private $site_kit_consent_repository;
+        /**
+         * Constructs the class.
+         *
+         * @param Site_Kit_Consent_Repository_Interface $site_kit_consent_repository The repository.
+         */
+        public function __construct(\Yoast\WP\SEO\Dashboard\Infrastructure\Configuration\Site_Kit_Consent_Repository_Interface $site_kit_consent_repository)
+        {
+        }
+        /**
+         * Registers routes with WordPress.
+         *
+         * @return void
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Sets whether the Site Kit configuration is permanently dismissed.
+         *
+         * @param WP_REST_Request $request The request object.
+         *
+         * @return WP_REST_Response|WP_Error The success or failure response.
+         */
+        public function set_site_kit_consent(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Checks if the current user has the required capabilities.
+         *
+         * @return bool
+         */
+        public function check_capabilities()
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\User_Interface\Scores {
+    /**
+     * Abstract scores route.
+     */
+    abstract class Abstract_Scores_Route implements \Yoast\WP\SEO\Routes\Route_Interface
+    {
+        use \Yoast\WP\SEO\Conditionals\No_Conditionals;
+        /**
+         * The namespace of the rout.
+         *
+         * @var string
+         */
+        public const ROUTE_NAMESPACE = \Yoast\WP\SEO\Main::API_V1_NAMESPACE;
+        /**
+         * The prefix of the rout.
+         *
+         * @var string
+         */
+        public const ROUTE_PREFIX = null;
+        /**
+         * The content types collector.
+         *
+         * @var Content_Types_Collector
+         */
+        protected $content_types_collector;
+        /**
+         * The taxonomies repository.
+         *
+         * @var Taxonomies_Repository
+         */
+        protected $taxonomies_repository;
+        /**
+         * The indexable repository.
+         *
+         * @var Indexable_Repository
+         */
+        protected $indexable_repository;
+        /**
+         * The scores repository.
+         *
+         * @var Abstract_Score_Results_Repository
+         */
+        protected $score_results_repository;
+        /**
+         * Sets the collectors.
+         *
+         * @required
+         *
+         * @param Content_Types_Collector $content_types_collector The content type collector.
+         *
+         * @return void
+         */
+        public function set_collectors(\Yoast\WP\SEO\Dashboard\Infrastructure\Content_Types\Content_Types_Collector $content_types_collector)
+        {
+        }
+        /**
+         * Sets the repositories.
+         *
+         * @required
+         *
+         * @param Taxonomies_Repository $taxonomies_repository The taxonomies repository.
+         * @param Indexable_Repository  $indexable_repository  The indexable repository.
+         *
+         * @return void
+         */
+        public function set_repositories(\Yoast\WP\SEO\Dashboard\Application\Taxonomies\Taxonomies_Repository $taxonomies_repository, \Yoast\WP\SEO\Repositories\Indexable_Repository $indexable_repository)
+        {
+        }
+        /**
+         * Returns the route prefix.
+         *
+         * @return string The route prefix.
+         *
+         * @throws Exception If the ROUTE_PREFIX constant is not set in the child class.
+         */
+        public static function get_route_prefix()
+        {
+        }
+        /**
+         * Registers routes for scores.
+         *
+         * @return void
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Gets the scores of a specific content type.
+         *
+         * @param WP_REST_Request $request The request object.
+         *
+         * @return WP_REST_Response The success or failure response.
+         */
+        public function get_scores(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Gets the content type object.
+         *
+         * @param string $content_type The content type.
+         *
+         * @return Content_Type|null The content type object.
+         *
+         * @throws Exception When the content type is invalid.
+         */
+        protected function get_content_type(string $content_type) : ?\Yoast\WP\SEO\Dashboard\Domain\Content_Types\Content_Type
+        {
+        }
+        /**
+         * Gets the taxonomy object.
+         *
+         * @param string       $taxonomy     The taxonomy.
+         * @param Content_Type $content_type The content type that the taxonomy is filtering.
+         *
+         * @return Taxonomy|null The taxonomy object.
+         *
+         * @throws Exception When the taxonomy is invalid.
+         */
+        protected function get_taxonomy(string $taxonomy, \Yoast\WP\SEO\Dashboard\Domain\Content_Types\Content_Type $content_type) : ?\Yoast\WP\SEO\Dashboard\Domain\Taxonomies\Taxonomy
+        {
+        }
+        /**
+         * Gets the term ID validated against the given taxonomy.
+         *
+         * @param int|null      $term_id  The term ID to be validated.
+         * @param Taxonomy|null $taxonomy The taxonomy.
+         *
+         * @return bool The validated term ID.
+         *
+         * @throws Exception When the term id is invalidated.
+         */
+        protected function get_validated_term_id(?int $term_id, ?\Yoast\WP\SEO\Dashboard\Domain\Taxonomies\Taxonomy $taxonomy) : ?int
+        {
+        }
+        /**
+         * Permission callback.
+         *
+         * @return bool True when user has the 'wpseo_manage_options' capability.
+         */
+        public function permission_manage_options()
+        {
+        }
+    }
+    /**
+     * Registers a route to get readability scores.
+     */
+    class Readability_Scores_Route extends \Yoast\WP\SEO\Dashboard\User_Interface\Scores\Abstract_Scores_Route
+    {
+        /**
+         * The prefix of the route.
+         *
+         * @var string
+         */
+        public const ROUTE_PREFIX = '/readability_scores';
+        /**
+         * Constructs the class.
+         *
+         * @param Readability_Score_Results_Repository $readability_score_results_repository The readability score results repository.
+         */
+        public function __construct(\Yoast\WP\SEO\Dashboard\Application\Score_Results\Readability_Score_Results\Readability_Score_Results_Repository $readability_score_results_repository)
+        {
+        }
+    }
+    /**
+     * Registers a route to get SEO scores.
+     */
+    class SEO_Scores_Route extends \Yoast\WP\SEO\Dashboard\User_Interface\Scores\Abstract_Scores_Route
+    {
+        /**
+         * The prefix of the route.
+         *
+         * @var string
+         */
+        public const ROUTE_PREFIX = '/seo_scores';
+        /**
+         * Constructs the class.
+         *
+         * @param SEO_Score_Results_Repository $seo_score_results_repository The SEO score results repository.
+         */
+        public function __construct(\Yoast\WP\SEO\Dashboard\Application\Score_Results\SEO_Score_Results\SEO_Score_Results_Repository $seo_score_results_repository)
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Dashboard\User_Interface\Time_Based_SEO_Metrics {
+    /**
+     * Abstract scores route.
+     */
+    final class Time_Based_SEO_Metrics_Route implements \Yoast\WP\SEO\Routes\Route_Interface
+    {
+        /**
+         * The namespace of the rout.
+         *
+         * @var string
+         */
+        public const ROUTE_NAMESPACE = \Yoast\WP\SEO\Main::API_V1_NAMESPACE;
+        /**
+         * The prefix of the route.
+         *
+         * @var string
+         */
+        public const ROUTE_NAME = '/time_based_seo_metrics';
+        /**
+         * The data provider for page based search rankings.
+         *
+         * @var Top_Page_Repository $top_page_repository
+         */
+        private $top_page_repository;
+        /**
+         * The data provider for query based search rankings.
+         *
+         * @var Top_Query_Repository $top_query_repository
+         */
+        private $top_query_repository;
+        /**
+         * Returns the needed conditionals.
+         *
+         * @return array<string> The conditionals that must be met to load this.
+         */
+        public static function get_conditionals() : array
+        {
+        }
+        /**
+         * The constructor.
+         *
+         * @param Top_Page_Repository  $top_page_repository  The data provider for page based search rankings.
+         * @param Top_Query_Repository $top_query_repository The data provider for query based search rankings.
+         */
+        public function __construct(\Yoast\WP\SEO\Dashboard\Application\Search_Rankings\Top_Page_Repository $top_page_repository, \Yoast\WP\SEO\Dashboard\Application\Search_Rankings\Top_Query_Repository $top_query_repository)
+        {
+        }
+        /**
+         * Registers routes for scores.
+         *
+         * @return void
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Gets the time based SEO metrics.
+         *
+         * @param WP_REST_Request $request The request object.
+         *
+         * @throws Repository_Not_Found_Exception When the given widget name is not implemented yet.
+         *
+         * @return WP_REST_Response The success or failure response.
+         */
+        public function get_time_based_seo_metrics(\WP_REST_Request $request) : \WP_REST_Response
+        {
+        }
+        /**
+         * Permission callback.
+         *
+         * @return bool True when user has the 'wpseo_manage_options' capability.
+         */
+        public function permission_manage_options()
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Editors\Application\Analysis_Features {
+    /**
+     * The repository to get all enabled features.
+     *
+     * @makePublic
+     */
+    class Enabled_Analysis_Features_Repository
+    {
+        /**
+         * All plugin features.
+         *
+         * @var Analysis_Feature_Interface[]
+         */
+        private $plugin_features;
+        /**
+         * The list of analysis features.
+         *
+         * @var Analysis_Features_List
+         */
+        private $enabled_analysis_features;
+        /**
+         * The constructor.
+         *
+         * @param Analysis_Feature_Interface ...$plugin_features All analysis objects.
+         */
+        public function __construct(\Yoast\WP\SEO\Editors\Domain\Analysis_Features\Analysis_Feature_Interface ...$plugin_features)
+        {
+        }
+        /**
+         * Returns the analysis list.
+         *
+         * @return Analysis_Features_List The analysis list.
+         */
+        public function get_enabled_features() : \Yoast\WP\SEO\Editors\Domain\Analysis_Features\Analysis_Features_List
+        {
+        }
+        /**
+         * Returns the analysis list for the given names.
+         *
+         * @param array<string> $feature_names The feature names to include.
+         *
+         * @return Analysis_Features_List The analysis list.
+         */
+        public function get_features_by_keys(array $feature_names) : \Yoast\WP\SEO\Editors\Domain\Analysis_Features\Analysis_Features_List
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Editors\Application\Integrations {
+    /**
+     * The repository to get all enabled integrations.
+     *
+     * @makePublic
+     */
+    class Integration_Information_Repository
+    {
+        /**
+         * All plugin integrations.
+         *
+         * @var Integration_Data_Provider_Interface[] $plugin_integrations
+         */
+        private $plugin_integrations;
+        /**
+         * The constructor.
+         *
+         * @param Integration_Data_Provider_Interface ...$plugin_integrations All integrations.
+         */
+        public function __construct(\Yoast\WP\SEO\Editors\Domain\Integrations\Integration_Data_Provider_Interface ...$plugin_integrations)
+        {
+        }
+        /**
+         * Returns the analysis list.
+         *
+         * @return array<array<string,bool>> The parsed list.
+         */
+        public function get_integration_information() : array
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Editors\Application\Seo {
+    /**
+     * The repository to get post related SEO data.
+     *
+     * @makePublic
+     */
+    class Post_Seo_Information_Repository
+    {
+        /**
+         * The post.
+         *
+         * @var WP_Post $post
+         */
+        private $post;
+        /**
+         * The data providers.
+         *
+         * @var Abstract_Post_Seo_Data_Provider $seo_data_providers
+         */
+        private $seo_data_providers;
+        /**
+         * The constructor.
+         *
+         * @param Abstract_Post_Seo_Data_Provider ...$seo_data_providers The providers.
+         */
+        public function __construct(\Yoast\WP\SEO\Editors\Framework\Seo\Posts\Abstract_Post_Seo_Data_Provider ...$seo_data_providers)
+        {
+        }
+        /**
+         * The post.
+         *
+         * @param WP_Post $post The post.
+         *
+         * @return void
+         */
+        public function set_post(\WP_Post $post)
+        {
+        }
+        /**
+         * Method to return the compiled SEO data.
+         *
+         * @return array<string> The specific seo data.
+         */
+        public function get_seo_data() : array
+        {
+        }
+    }
+    /**
+     * The repository to get term related SEO data.
+     *
+     * @makePublic
+     */
+    class Term_Seo_Information_Repository
+    {
+        /**
+         * The term.
+         *
+         * @var WP_Term $term
+         */
+        private $term;
+        /**
+         * The data providers.
+         *
+         * @var Abstract_Term_Seo_Data_Provider $seo_data_providers
+         */
+        private $seo_data_providers;
+        /**
+         * The constructor.
+         *
+         * @param Abstract_Term_Seo_Data_Provider ...$seo_data_providers The providers.
+         */
+        public function __construct(\Yoast\WP\SEO\Editors\Framework\Seo\Terms\Abstract_Term_Seo_Data_Provider ...$seo_data_providers)
+        {
+        }
+        /**
+         * The term.
+         *
+         * @param WP_Term $term The term.
+         *
+         * @return void
+         */
+        public function set_term(\WP_Term $term) : void
+        {
+        }
+        /**
+         * Method to return the compiled SEO data.
+         *
+         * @return array<string> The specific seo data.
+         */
+        public function get_seo_data() : array
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Editors\Application\Site {
+    /**
+     * This class manages getting the two site information wrappers.
+     *
+     * @makePublic
+     */
+    class Website_Information_Repository
+    {
+        /**
+         * The post site information wrapper.
+         *
+         * @var Post_Site_Information $post_site_information
+         */
+        private $post_site_information;
+        /**
+         * The term site information wrapper.
+         *
+         * @var Term_Site_Information $term_site_information
+         */
+        private $term_site_information;
+        /**
+         * The constructor.
+         *
+         * @param Post_Site_Information $post_site_information The post specific wrapper.
+         * @param Term_Site_Information $term_site_information The term specific wrapper.
+         */
+        public function __construct(\Yoast\WP\SEO\Editors\Framework\Site\Post_Site_Information $post_site_information, \Yoast\WP\SEO\Editors\Framework\Site\Term_Site_Information $term_site_information)
+        {
+        }
+        /**
+         * Returns the Post Site Information container.
+         *
+         * @return Post_Site_Information
+         */
+        public function get_post_site_information() : \Yoast\WP\SEO\Editors\Framework\Site\Post_Site_Information
+        {
+        }
+        /**
+         * Returns the Term Site Information container.
+         *
+         * @return Term_Site_Information
+         */
+        public function get_term_site_information() : \Yoast\WP\SEO\Editors\Framework\Site\Term_Site_Information
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Editors\Domain\Analysis_Features {
+    /**
+     * This interface describes an Analysis feature implementation.
+     */
+    interface Analysis_Feature_Interface
+    {
+        /**
+         * Returns If the analysis is enabled.
+         *
+         * @return bool
+         */
+        public function is_enabled() : bool;
+        /**
+         * Returns the name of the object.
+         *
+         * @return string
+         */
+        public function get_name() : string;
+        /**
+         * Returns the legacy key used in the front-end to determine if the feature is enabled.
+         *
+         * @return string
+         */
+        public function get_legacy_key() : string;
+    }
+    /**
+     * This class describes a single Analysis feature and if it is enabled.
+     */
+    class Analysis_Feature
+    {
+        /**
+         * If the feature is enabled.
+         *
+         * @var bool
+         */
+        private $is_enabled;
+        /**
+         * What the identifier of the feature is.
+         *
+         * @var string
+         */
+        private $name;
+        /**
+         * What the identifier is for the old script data array.
+         *
+         * @var string
+         */
+        private $legacy_key;
+        /**
+         * The constructor.
+         *
+         * @param bool   $is_enabled If the feature is enabled.
+         * @param string $name       What the identifier of the feature is.
+         * @param string $legacy_key What the identifier is for the old script data array.
+         */
+        public function __construct(bool $is_enabled, string $name, string $legacy_key)
+        {
+        }
+        /**
+         * If the feature is enabled.
+         *
+         * @return bool If the feature is enabled.
+         */
+        public function is_enabled() : bool
+        {
+        }
+        /**
+         * Gets the identifier.
+         *
+         * @return string The feature identifier.
+         */
+        public function get_name() : string
+        {
+        }
+        /**
+         * Return this object represented by a key value array.
+         *
+         * @return array<string,bool> Returns the name and if the feature is enabled.
+         */
+        public function to_array() : array
+        {
+        }
+        /**
+         * Returns this object represented by a key value structure that is compliant with the script data array.
+         *
+         * @return array<string,bool> Returns the legacy key and if the feature is enabled.
+         */
+        public function to_legacy_array() : array
+        {
+        }
+    }
+    /**
+     * This class describes a list of analysis features.
+     */
+    class Analysis_Features_List
+    {
+        /**
+         * The features.
+         *
+         * @var array<Analysis_Feature>
+         */
+        private $features = [];
+        /**
+         * Adds an analysis feature to the list.
+         *
+         * @param Analysis_Feature $feature The analysis feature to add.
+         *
+         * @return void
+         */
+        public function add_feature(\Yoast\WP\SEO\Editors\Domain\Analysis_Features\Analysis_Feature $feature) : void
+        {
+        }
+        /**
+         * Parses the feature list to a legacy ready array representation.
+         *
+         * @return array<string,bool> The list presented as a key value representation.
+         */
+        public function parse_to_legacy_array() : array
+        {
+        }
+        /**
+         * Parses the feature list to an array representation.
+         *
+         * @return array<string,bool> The list presented as a key value representation.
+         */
+        public function to_array() : array
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Editors\Domain\Seo {
+    /**
+     * This class describes the SEO data interface.
+     */
+    interface Seo_Plugin_Data_Interface
+    {
+        /**
+         * Returns the data as an array format.
+         *
+         * @return array<string>
+         */
+        public function to_array() : array;
+        /**
+         * Returns the data as an array format meant for legacy use.
+         *
+         * @return array<string>
+         */
+        public function to_legacy_array() : array;
+    }
+    /**
+     * This class describes the description SEO data.
+     */
+    class Description implements \Yoast\WP\SEO\Editors\Domain\Seo\Seo_Plugin_Data_Interface
+    {
+        /**
+         * The formatted description date.
+         *
+         * @var string $description_date
+         */
+        private $description_date;
+        /**
+         * The description template.
+         *
+         * @var string $description_template
+         */
+        private $description_template;
+        /**
+         * The constructor.
+         *
+         * @param string $description_date     The description date.
+         * @param string $description_template The description template.
+         */
+        public function __construct(string $description_date, string $description_template)
+        {
+        }
+        /**
+         * Returns the data as an array format.
+         *
+         * @return array<string>
+         */
+        public function to_array() : array
+        {
+        }
+        /**
+         * Returns the data as an array format meant for legacy use.
+         *
+         * @return array<string>
+         */
+        public function to_legacy_array() : array
+        {
+        }
+    }
+    /**
+     * This class describes the keyphrase SEO data.
+     */
+    class Keyphrase implements \Yoast\WP\SEO\Editors\Domain\Seo\Seo_Plugin_Data_Interface
+    {
+        /**
+         * The keyphrase and the associated posts that use it.
+         *
+         * @var array<string> $keyword_usage_count
+         */
+        private $keyphrase_usage_count;
+        /**
+         * The post types for the given post IDs.
+         *
+         * @var array<string> $keyword_usage_per_type
+         */
+        private $keyphrase_usage_per_type;
+        /**
+         * The constructor.
+         *
+         * @param array<string> $keyphrase_usage_count    The keyphrase and the associated posts that use it.
+         * @param array<string> $keyphrase_usage_per_type The post types for the given post IDs.
+         */
+        public function __construct(array $keyphrase_usage_count, array $keyphrase_usage_per_type)
+        {
+        }
+        /**
+         * Returns the data as an array format.
+         *
+         * @return array<string>
+         */
+        public function to_array() : array
+        {
+        }
+        /**
+         * Returns the data as an array format meant for legacy use.
+         *
+         * @return array<string>
+         */
+        public function to_legacy_array() : array
+        {
+        }
+    }
+    /**
+     * This class describes the social SEO data.
+     */
+    class Social implements \Yoast\WP\SEO\Editors\Domain\Seo\Seo_Plugin_Data_Interface
+    {
+        /**
+         * The Social title template.
+         *
+         * @var string $social_title_template
+         */
+        private $social_title_template;
+        /**
+         * The Social description template.
+         *
+         * @var string $social_description_template
+         */
+        private $social_description_template;
+        /**
+         * The Social image template.
+         *
+         * @var string $social_image_template
+         */
+        private $social_image_template;
+        /**
+         * The first content image for the social preview.
+         *
+         * @var string $social_first_content_image
+         */
+        private $social_first_content_image;
+        /**
+         * The constructor.
+         *
+         * @param string $social_title_template       The Social title template.
+         * @param string $social_description_template The Social description template.
+         * @param string $social_image_template       The Social image template.
+         * @param string $social_first_content_image  The first content image for the social preview.
+         */
+        public function __construct(string $social_title_template, string $social_description_template, string $social_image_template, string $social_first_content_image)
+        {
+        }
+        /**
+         * Returns the data as an array format.
+         *
+         * @return array<string>
+         */
+        public function to_array() : array
+        {
+        }
+        /**
+         * Returns the data as an array format meant for legacy use.
+         *
+         * @return array<string>
+         */
+        public function to_legacy_array() : array
+        {
+        }
+    }
+    /**
+     * This class describes the title SEO data.
+     */
+    class Title implements \Yoast\WP\SEO\Editors\Domain\Seo\Seo_Plugin_Data_Interface
+    {
+        /**
+         * The title template.
+         *
+         * @var string $title_template
+         */
+        private $title_template;
+        /**
+         * The title template without the fallback.
+         *
+         * @var string $title_template_no_fallback
+         */
+        private $title_template_no_fallback;
+        /**
+         * The constructor.
+         *
+         * @param string $title_template             The title template.
+         * @param string $title_template_no_fallback The title template without the fallback.
+         */
+        public function __construct(string $title_template, string $title_template_no_fallback)
+        {
+        }
+        /**
+         * Returns the data as an array format.
+         *
+         * @return array<string>
+         */
+        public function to_array() : array
+        {
+        }
+        /**
+         * Returns the data as an array format meant for legacy use.
+         *
+         * @return array<string>
+         */
+        public function to_legacy_array() : array
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Editors\Framework {
+    /**
+     * Describes if the Cornerstone content features is enabled.
+     */
+    class Cornerstone_Content implements \Yoast\WP\SEO\Editors\Domain\Analysis_Features\Analysis_Feature_Interface
+    {
+        public const NAME = 'cornerstoneContent';
+        /**
+         * The options helper.
+         *
+         * @var Options_Helper
+         */
+        private $options_helper;
+        /**
+         * The constructor.
+         *
+         * @param Options_Helper $options_helper The options helper.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\Options_Helper $options_helper)
+        {
+        }
+        /**
+         * If cornerstone is enabled.
+         *
+         * @return bool If cornerstone is enabled.
+         */
+        public function is_enabled() : bool
+        {
+        }
+        /**
+         * Gets the name.
+         *
+         * @return string The name.
+         */
+        public function get_name() : string
+        {
+        }
+        /**
+         * Gets the legacy key.
+         *
+         * @return string The legacy key.
+         */
+        public function get_legacy_key() : string
+        {
+        }
+    }
+    /**
+     * Describes the inclusive language analysis feature.
+     */
+    class Inclusive_Language_Analysis implements \Yoast\WP\SEO\Editors\Domain\Analysis_Features\Analysis_Feature_Interface
+    {
+        public const NAME = 'inclusiveLanguageAnalysis';
+        /**
+         * The options helper.
+         *
+         * @var Options_Helper
+         */
+        private $options_helper;
+        /**
+         * The language helper.
+         *
+         * @var Language_Helper
+         */
+        private $language_helper;
+        /**
+         * The product helper.
+         *
+         * @var Product_Helper
+         */
+        private $product_helper;
+        /**
+         * The constructor.
+         *
+         * @param Options_Helper  $options_helper  The options helper.
+         * @param Language_Helper $language_helper The language helper.
+         * @param Product_Helper  $product_helper  The product helper.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\Options_Helper $options_helper, \Yoast\WP\SEO\Helpers\Language_Helper $language_helper, \Yoast\WP\SEO\Helpers\Product_Helper $product_helper)
+        {
+        }
+        /**
+         * If this analysis is enabled.
+         *
+         * @return bool If this analysis is enabled.
+         */
+        public function is_enabled() : bool
+        {
+        }
+        /**
+         * If this analysis is enabled by the user.
+         *
+         * @return bool If this analysis is enabled by the user.
+         */
+        private function is_user_enabled() : bool
+        {
+        }
+        /**
+         * If this analysis is enabled globally.
+         *
+         * @return bool If this analysis is enabled globally.
+         */
+        private function is_globally_enabled() : bool
+        {
+        }
+        /**
+         * If the inclusive language analysis should be loaded in Free.
+         *
+         * It should always be loaded when Premium is not active. If Premium is active, it depends on the version. Some
+         * Premium versions also have inclusive language code (when it was still a Premium only feature) which would result
+         * in rendering the analysis twice. In those cases, the analysis should be only loaded from the Premium side.
+         *
+         * @return bool If the inclusive language analysis should be loaded.
+         */
+        private function is_current_version_supported() : bool
+        {
+        }
+        /**
+         * Gets the name.
+         *
+         * @return string The name.
+         */
+        public function get_name() : string
+        {
+        }
+        /**
+         * Gets the legacy key.
+         *
+         * @return string The legacy key.
+         */
+        public function get_legacy_key() : string
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Editors\Framework\Integrations {
+    /**
+     * Describes if the Jetpack markdown integration is enabled.
+     */
+    class Jetpack_Markdown implements \Yoast\WP\SEO\Editors\Domain\Integrations\Integration_Data_Provider_Interface
+    {
+        /**
+         * If the integration is activated.
+         *
+         * @return bool If the integration is activated.
+         */
+        public function is_enabled() : bool
+        {
+        }
+        /**
+         * Return this object represented by a key value array.
+         *
+         * @return array<string,bool> Returns the name and if the feature is enabled.
+         */
+        public function to_array() : array
+        {
+        }
+        /**
+         * Returns this object represented by a key value structure that is compliant with the script data array.
+         *
+         * @return array<string,bool> Returns the legacy key and if the feature is enabled.
+         */
+        public function to_legacy_array() : array
+        {
+        }
+        /**
+         * Checks if Jetpack's markdown module is enabled.
+         * Can be extended to work with other plugins that parse markdown in the content.
+         *
+         * @return bool
+         */
+        private function is_markdown_enabled()
+        {
+        }
+    }
+    /**
+     * Describes if the Multilingual integration is enabled.
+     */
+    class Multilingual implements \Yoast\WP\SEO\Editors\Domain\Integrations\Integration_Data_Provider_Interface
+    {
+        /**
+         * The WPML conditional.
+         *
+         * @var WPML_Conditional $wpml_conditional
+         */
+        private $wpml_conditional;
+        /**
+         * The Polylang conditional.
+         *
+         * @var Polylang_Conditional $polylang_conditional
+         */
+        private $polylang_conditional;
+        /**
+         * The TranslatePress conditional.
+         *
+         * @var TranslatePress_Conditional $translate_press_conditional
+         */
+        private $translate_press_conditional;
+        /**
+         * The constructor.
+         *
+         * @param WPML_Conditional           $wpml_conditional            The wpml conditional.
+         * @param Polylang_Conditional       $polylang_conditional        The polylang conditional.
+         * @param TranslatePress_Conditional $translate_press_conditional The translate press conditional.
+         */
+        public function __construct(\Yoast\WP\SEO\Conditionals\Third_Party\WPML_Conditional $wpml_conditional, \Yoast\WP\SEO\Conditionals\Third_Party\Polylang_Conditional $polylang_conditional, \Yoast\WP\SEO\Conditionals\Third_Party\TranslatePress_Conditional $translate_press_conditional)
+        {
+        }
+        /**
+         * If the integration is activated.
+         *
+         * @return bool If the integration is activated.
+         */
+        public function is_enabled() : bool
+        {
+        }
+        /**
+         * Return this object represented by a key value array.
+         *
+         * @return array<string,bool> Returns the name and if the feature is enabled.
+         */
+        public function to_array() : array
+        {
+        }
+        /**
+         * Returns this object represented by a key value structure that is compliant with the script data array.
+         *
+         * @return array<string,bool> Returns the legacy key and if the feature is enabled.
+         */
+        public function to_legacy_array() : array
+        {
+        }
+        /**
+         * Checks whether a multilingual plugin is currently active. Currently, we only check the following plugins:
+         * WPML, Polylang, and TranslatePress.
+         *
+         * @return bool Whether a multilingual plugin is currently active.
+         */
+        private function multilingual_plugin_active()
+        {
+        }
+    }
+    /**
+     * Describes if the News SEO plugin is enabled.
+     */
+    class News_SEO implements \Yoast\WP\SEO\Editors\Domain\Integrations\Integration_Data_Provider_Interface
+    {
+        /**
+         * The addon manager.
+         *
+         * @var WPSEO_Addon_Manager
+         */
+        private $addon_manager;
+        /**
+         * The constructor.
+         *
+         * @param WPSEO_Addon_Manager $addon_manager The addon manager.
+         */
+        public function __construct(\WPSEO_Addon_Manager $addon_manager)
+        {
+        }
+        /**
+         * If the plugin is activated.
+         *
+         * @return bool If the plugin is activated.
+         */
+        public function is_enabled() : bool
+        {
+        }
+        /**
+         * Return this object represented by a key value array.
+         *
+         * @return array<string,bool> Returns the name and if the feature is enabled.
+         */
+        public function to_array() : array
+        {
+        }
+        /**
+         * Returns this object represented by a key value structure that is compliant with the script data array.
+         *
+         * @return array<string,bool> Returns the legacy key and if the feature is enabled.
+         */
+        public function to_legacy_array() : array
+        {
+        }
+    }
+    /**
+     * Describes if the Semrush integration is enabled.
+     */
+    class Semrush implements \Yoast\WP\SEO\Editors\Domain\Integrations\Integration_Data_Provider_Interface
+    {
+        /**
+         * The options helper.
+         *
+         * @var Options_Helper
+         */
+        private $options_helper;
+        /**
+         * The constructor.
+         *
+         * @param Options_Helper $options_helper The options helper.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\Options_Helper $options_helper)
+        {
+        }
+        /**
+         * If the integration is activated.
+         *
+         * @return bool If the integration is activated.
+         */
+        public function is_enabled() : bool
+        {
+        }
+        /**
+         * Return this object represented by a key value array.
+         *
+         * @return array<string,bool> Returns the name and if the feature is enabled.
+         */
+        public function to_array() : array
+        {
+        }
+        /**
+         * Returns this object represented by a key value structure that is compliant with the script data array.
+         *
+         * @return array<string,bool> Returns the legacy key and if the feature is enabled.
+         */
+        public function to_legacy_array() : array
+        {
+        }
+        /**
+         * Checks if the user is logged in to SEMrush.
+         *
+         * @return bool The SEMrush login status.
+         */
+        private function get_semrush_login_status()
+        {
+        }
+    }
+    /**
+     * Describes if the Wincher integration is enabled.
+     */
+    class Wincher implements \Yoast\WP\SEO\Editors\Domain\Integrations\Integration_Data_Provider_Interface
+    {
+        /**
+         * The Wincher helper.
+         *
+         * @var Wincher_Helper
+         */
+        private $wincher_helper;
+        /**
+         * The options helper.
+         *
+         * @var Options_Helper
+         */
+        private $options_helper;
+        /**
+         * The constructor.
+         *
+         * @param Wincher_Helper $wincher_helper The Wincher helper.
+         * @param Options_Helper $options_helper The options helper.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\Wincher_Helper $wincher_helper, \Yoast\WP\SEO\Helpers\Options_Helper $options_helper)
+        {
+        }
+        /**
+         * If the integration is activated.
+         *
+         * @return bool If the integration is activated.
+         */
+        public function is_enabled() : bool
+        {
+        }
+        /**
+         * Return this object represented by a key value array.
+         *
+         * @return array<string,bool> Returns the name and if the feature is enabled.
+         */
+        public function to_array() : array
+        {
+        }
+        /**
+         * Returns this object represented by a key value structure that is compliant with the script data array.
+         *
+         * @return array<string,bool> Returns the legacy key and if the feature is enabled.
+         */
+        public function to_legacy_array() : array
+        {
+        }
+    }
+    /**
+     * Describes if the Woocommerce SEO addon is enabled.
+     */
+    class WooCommerce_SEO implements \Yoast\WP\SEO\Editors\Domain\Integrations\Integration_Data_Provider_Interface
+    {
+        /**
+         * The addon manager.
+         *
+         * @var WPSEO_Addon_Manager
+         */
+        private $addon_manager;
+        /**
+         * The constructor.
+         *
+         * @param WPSEO_Addon_Manager $addon_manager The addon manager.
+         */
+        public function __construct(\WPSEO_Addon_Manager $addon_manager)
+        {
+        }
+        /**
+         * If the plugin is activated.
+         *
+         * @return bool If the plugin is activated.
+         */
+        public function is_enabled() : bool
+        {
+        }
+        /**
+         * Return this object represented by a key value array.
+         *
+         * @return array<string,bool> Returns the name and if the addon is enabled.
+         */
+        public function to_array() : array
+        {
+        }
+        /**
+         * Returns this object represented by a key value structure that is compliant with the script data array.
+         *
+         * @return array<string,bool> Returns the legacy key and if the feature is enabled.
+         */
+        public function to_legacy_array() : array
+        {
+        }
+    }
+    /**
+     * Describes if the Woocommerce plugin is enabled.
+     */
+    class WooCommerce implements \Yoast\WP\SEO\Editors\Domain\Integrations\Integration_Data_Provider_Interface
+    {
+        /**
+         * The WooCommerce conditional.
+         *
+         * @var WooCommerce_Conditional $woocommerce_conditional
+         */
+        private $woocommerce_conditional;
+        /**
+         * The constructor.
+         *
+         * @param WooCommerce_Conditional $woocommerce_conditional The WooCommerce conditional.
+         */
+        public function __construct(\Yoast\WP\SEO\Conditionals\WooCommerce_Conditional $woocommerce_conditional)
+        {
+        }
+        /**
+         * If the plugin is activated.
+         *
+         * @return bool If the plugin is activated.
+         */
+        public function is_enabled() : bool
+        {
+        }
+        /**
+         * Return this object represented by a key value array.
+         *
+         * @return array<string,bool> Returns the name and if the feature is enabled.
+         */
+        public function to_array() : array
+        {
+        }
+        /**
+         * Returns this object represented by a key value structure that is compliant with the script data array.
+         *
+         * @return array<string,bool> Returns the legacy key and if the feature is enabled.
+         */
+        public function to_legacy_array() : array
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Editors\Framework {
+    /**
+     * Describes how it is determined if the Keyphrase analysis is turned on.
+     */
+    class Keyphrase_Analysis implements \Yoast\WP\SEO\Editors\Domain\Analysis_Features\Analysis_Feature_Interface
+    {
+        public const NAME = 'keyphraseAnalysis';
+        /**
+         * The options helper.
+         *
+         * @var Options_Helper
+         */
+        private $options_helper;
+        /**
+         * The constructor.
+         *
+         * @param Options_Helper $options_helper The options helper.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\Options_Helper $options_helper)
+        {
+        }
+        /**
+         * If this analysis is enabled.
+         *
+         * @return bool If this analysis is enabled.
+         */
+        public function is_enabled() : bool
+        {
+        }
+        /**
+         * If this analysis is enabled by the user.
+         *
+         * @return bool If this analysis is enabled by the user.
+         */
+        public function is_user_enabled() : bool
+        {
+        }
+        /**
+         * If this analysis is enabled globally.
+         *
+         * @return bool If this analysis is enabled globally.
+         */
+        public function is_globally_enabled() : bool
+        {
+        }
+        /**
+         * Gets the name.
+         *
+         * @return string The name.
+         */
+        public function get_name() : string
+        {
+        }
+        /**
+         * Gets the legacy key.
+         *
+         * @return string The legacy key.
+         */
+        public function get_legacy_key() : string
+        {
+        }
+    }
+    /**
+     * Describes if the previously used keyword feature should be enabled.
+     */
+    class Previously_Used_Keyphrase implements \Yoast\WP\SEO\Editors\Domain\Analysis_Features\Analysis_Feature_Interface
+    {
+        public const NAME = 'previouslyUsedKeyphrase';
+        /**
+         * If this analysis is enabled.
+         *
+         * @return bool If this analysis is enabled.
+         */
+        public function is_enabled() : bool
+        {
+        }
+        /**
+         * Returns the name of the object.
+         *
+         * @return string
+         */
+        public function get_name() : string
+        {
+        }
+        /**
+         * Gets the legacy key.
+         *
+         * @return string The legacy key.
+         */
+        public function get_legacy_key() : string
+        {
+        }
+    }
+    /**
+     * This class describes the Readability analysis feature.
+     */
+    class Readability_Analysis implements \Yoast\WP\SEO\Editors\Domain\Analysis_Features\Analysis_Feature_Interface
+    {
+        public const NAME = 'readabilityAnalysis';
+        /**
+         * The options helper.
+         *
+         * @var Options_Helper
+         */
+        private $options_helper;
+        /**
+         * The constructor.
+         *
+         * @param Options_Helper $options_helper The options helper.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\Options_Helper $options_helper)
+        {
+        }
+        /**
+         * If this analysis is enabled.
+         *
+         * @return bool If this analysis is enabled.
+         */
+        public function is_enabled() : bool
+        {
+        }
+        /**
+         * If this analysis is enabled by the user.
+         *
+         * @return bool If this analysis is enabled by the user.
+         */
+        private function is_user_enabled() : bool
+        {
+        }
+        /**
+         * If this analysis is enabled globally.
+         *
+         * @return bool If this analysis is enabled globally.
+         */
+        private function is_globally_enabled() : bool
+        {
+        }
+        /**
+         * Gets the name.
+         *
+         * @return string The name.
+         */
+        public function get_name() : string
+        {
+        }
+        /**
+         * Gets the legacy key.
+         *
+         * @return string The legacy key.
+         */
+        public function get_legacy_key() : string
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Editors\Framework\Seo {
+    interface Description_Data_Provider_Interface
+    {
+        /**
+         * Retrieves the description template.
+         *
+         * @return string The description template.
+         */
+        public function get_description_template() : string;
+        /**
+         * Determines the date to be displayed in the snippet preview.
+         *
+         * @return string
+         */
+        public function get_description_date() : string;
+    }
+    interface Keyphrase_Interface
+    {
+        /**
+         * Counts the number of given keyphrase used for other posts other than the given post_id.
+         *
+         * @return array<string> The keyphrase and the associated posts that use it.
+         */
+        public function get_focus_keyphrase_usage() : array;
+    }
+}
+namespace Yoast\WP\SEO\Editors\Framework\Seo\Posts {
+    /**
+     * Abstract class for all post data providers.
+     */
+    abstract class Abstract_Post_Seo_Data_Provider
+    {
+        /**
+         * Holds the WordPress Post.
+         *
+         * @var WP_Post
+         */
+        protected $post;
+        /**
+         * The post.
+         *
+         * @param WP_Post $post The post.
+         *
+         * @return void
+         */
+        public function set_post(\WP_Post $post) : void
+        {
+        }
+        /**
+         * Method to return the compiled SEO data.
+         *
+         * @return Seo_Plugin_Data_Interface The specific seo data.
+         */
+        public abstract function get_data() : \Yoast\WP\SEO\Editors\Domain\Seo\Seo_Plugin_Data_Interface;
+    }
+    /**
+     * Describes if the description SEO data.
+     */
+    class Description_Data_Provider extends \Yoast\WP\SEO\Editors\Framework\Seo\Posts\Abstract_Post_Seo_Data_Provider implements \Yoast\WP\SEO\Editors\Framework\Seo\Description_Data_Provider_Interface
+    {
+        /**
+         * The date helper.
+         *
+         * @var Date_Helper $date_helper
+         */
+        private $date_helper;
+        /**
+         * The options helper.
+         *
+         * @var Options_Helper $options_helper
+         */
+        private $options_helper;
+        /**
+         * The constructor.
+         *
+         * @param Date_Helper    $date_helper    The date helper.
+         * @param Options_Helper $options_helper The options helper.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\Date_Helper $date_helper, \Yoast\WP\SEO\Helpers\Options_Helper $options_helper)
+        {
+        }
+        /**
+         * Retrieves the description template.
+         *
+         * @return string The description template.
+         */
+        public function get_description_template() : string
+        {
+        }
+        /**
+         * Determines the date to be displayed in the snippet preview.
+         *
+         * @return string
+         */
+        public function get_description_date() : string
+        {
+        }
+        /**
+         * Retrieves a template.
+         *
+         * @param string $template_option_name The name of the option in which the template you want to get is saved.
+         *
+         * @return string
+         */
+        private function get_template(string $template_option_name) : string
+        {
+        }
+        /**
+         * Method to return the Description domain object with SEO data.
+         *
+         * @return Seo_Plugin_Data_Interface The specific seo data.
+         */
+        public function get_data() : \Yoast\WP\SEO\Editors\Domain\Seo\Seo_Plugin_Data_Interface
+        {
+        }
+    }
+    /**
+     * Describes if the keyphrase SEO data.
+     */
+    class Keyphrase_Data_Provider extends \Yoast\WP\SEO\Editors\Framework\Seo\Posts\Abstract_Post_Seo_Data_Provider implements \Yoast\WP\SEO\Editors\Framework\Seo\Keyphrase_Interface
+    {
+        /**
+         *  The meta helper.
+         *
+         * @var Meta_Helper $meta_helper
+         */
+        private $meta_helper;
+        /**
+         * The constructor.
+         *
+         * @param Meta_Helper $meta_helper The meta helper.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\Meta_Helper $meta_helper)
+        {
+        }
+        /**
+         * Counts the number of given Keyphrase used for other posts other than the given post_id.
+         *
+         * @return array<string> The keyphrase and the associated posts that use it.
+         */
+        public function get_focus_keyphrase_usage() : array
+        {
+        }
+        /**
+         * Retrieves the post types for the given post IDs.
+         *
+         * @param array<string|array<string>> $post_ids_per_keyphrase An associative array with keyphrase as keys and an array of post ids where those keyphrases are used.
+         *
+         * @return array<string|array<string>> The post types for the given post IDs.
+         */
+        public function get_post_types_for_all_ids(array $post_ids_per_keyphrase) : array
+        {
+        }
+        /**
+         * Gets the keyphrase usage for the current post and the specified keyphrase.
+         *
+         * @param string $keyphrase The keyphrase to check the usage of.
+         *
+         * @return array<string> The post IDs which use the passed keyphrase.
+         */
+        private function get_keyphrase_usage_for_current_post(string $keyphrase) : array
+        {
+        }
+        /**
+         * Method to return the keyphrase domain object with SEO data.
+         *
+         * @return Seo_Plugin_Data_Interface The specific seo data.
+         */
+        public function get_data() : \Yoast\WP\SEO\Editors\Domain\Seo\Seo_Plugin_Data_Interface
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Editors\Framework\Seo {
+    interface Social_Data_Provider_Interface
+    {
+        /**
+         * Gets the image URL for the post's social preview.
+         *
+         * @return string|null The image URL for the social preview.
+         */
+        public function get_image_url() : ?string;
+        /**
+         * Retrieves the social title template.
+         *
+         * @return string The social title template.
+         */
+        public function get_social_title_template() : string;
+        /**
+         * Retrieves the social description template.
+         *
+         * @return string The social description template.
+         */
+        public function get_social_description_template() : string;
+        /**
+         * Retrieves the social image template.
+         *
+         * @return string The social description template.
+         */
+        public function get_social_image_template() : string;
+    }
+}
+namespace Yoast\WP\SEO\Editors\Framework\Seo\Posts {
+    /**
+     * Describes if the social SEO data.
+     */
+    class Social_Data_Provider extends \Yoast\WP\SEO\Editors\Framework\Seo\Posts\Abstract_Post_Seo_Data_Provider implements \Yoast\WP\SEO\Editors\Framework\Seo\Social_Data_Provider_Interface
+    {
+        /**
+         * The image helper.
+         *
+         * @var Image_Helper
+         */
+        private $image_helper;
+        /**
+         * Whether we must return social templates values.
+         *
+         * @var bool
+         */
+        private $use_social_templates = false;
+        /**
+         * The options helper.
+         *
+         * @var Options_Helper $options_helper
+         */
+        private $options_helper;
+        /**
+         * The constructor.
+         *
+         * @param Options_Helper $options_helper The options helper.
+         * @param Image_Helper   $image_helper   The image helper.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\Options_Helper $options_helper, \Yoast\WP\SEO\Helpers\Image_Helper $image_helper)
+        {
+        }
+        /**
+         * Determines whether the social templates should be used.
+         *
+         * @return bool Whether the social templates should be used.
+         */
+        private function use_social_templates() : bool
+        {
+        }
+        /**
+         * Gets the image url.
+         *
+         * @return string|null
+         */
+        public function get_image_url() : ?string
+        {
+        }
+        /**
+         * Retrieves the social title template.
+         *
+         * @return string The social title template.
+         */
+        public function get_social_title_template() : string
+        {
+        }
+        /**
+         * Retrieves the social description template.
+         *
+         * @return string The social description template.
+         */
+        public function get_social_description_template() : string
+        {
+        }
+        /**
+         * Retrieves the social image template.
+         *
+         * @return string The social description template.
+         */
+        public function get_social_image_template() : string
+        {
+        }
+        /**
+         * Retrieves a social template.
+         *
+         * @param string $template_option_name The name of the option in which the template you want to get is saved.
+         *
+         * @return string
+         */
+        private function get_social_template($template_option_name)
+        {
+        }
+        /**
+         * Method to return the Social domain object with SEO data.
+         *
+         * @return Seo_Plugin_Data_Interface The specific seo data.
+         */
+        public function get_data() : \Yoast\WP\SEO\Editors\Domain\Seo\Seo_Plugin_Data_Interface
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Editors\Framework\Seo {
+    interface Title_Data_Provider_Interface
+    {
+        /**
+         * Retrieves the title template.
+         *
+         * @param bool $fallback Whether to return the hardcoded fallback if the template value is empty. Default true.
+         *
+         * @return string The title template.
+         */
+        public function get_title_template(bool $fallback = true) : string;
+    }
+}
+namespace Yoast\WP\SEO\Editors\Framework\Seo\Posts {
+    /**
+     * Describes if the title SEO data.
+     */
+    class Title_Data_Provider extends \Yoast\WP\SEO\Editors\Framework\Seo\Posts\Abstract_Post_Seo_Data_Provider implements \Yoast\WP\SEO\Editors\Framework\Seo\Title_Data_Provider_Interface
+    {
+        /**
+         * The options helper.
+         *
+         * @var Options_Helper $options_helper
+         */
+        private $options_helper;
+        /**
+         * The constructor.
+         *
+         * @param Options_Helper $options_helper The options helper.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\Options_Helper $options_helper)
+        {
+        }
+        /**
+         * Retrieves the title template.
+         *
+         * @param bool $fallback Whether to return the hardcoded fallback if the template value is empty.
+         *
+         * @return string The title template.
+         */
+        public function get_title_template(bool $fallback = true) : string
+        {
+        }
+        /**
+         * Retrieves a template.
+         *
+         * @param string $template_option_name The name of the option in which the template you want to get is saved.
+         *
+         * @return string
+         */
+        private function get_template(string $template_option_name) : string
+        {
+        }
+        /**
+         * Method to return the Title domain object with SEO data.
+         *
+         * @return Seo_Plugin_Data_Interface The specific seo data.
+         */
+        public function get_data() : \Yoast\WP\SEO\Editors\Domain\Seo\Seo_Plugin_Data_Interface
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Editors\Framework\Seo\Terms {
+    /**
+     * Abstract class for all term data providers.
+     */
+    abstract class Abstract_Term_Seo_Data_Provider
+    {
+        /**
+         * The term the metabox formatter is for.
+         *
+         * @var WP_Term
+         */
+        protected $term;
+        /**
+         * The term.
+         *
+         * @param WP_Term $term The term.
+         *
+         * @return void
+         */
+        public function set_term(\WP_Term $term) : void
+        {
+        }
+        /**
+         * Retrieves a template.
+         *
+         * @param string $template_option_name The name of the option in which the template you want to get is saved.
+         *
+         * @return string
+         */
+        protected function get_template(string $template_option_name) : string
+        {
+        }
+        /**
+         * Method to return the compiled SEO data.
+         *
+         * @return Seo_Plugin_Data_Interface The specific seo data.
+         */
+        public abstract function get_data() : \Yoast\WP\SEO\Editors\Domain\Seo\Seo_Plugin_Data_Interface;
+    }
+    /**
+     * Describes if the description SEO data.
+     */
+    class Description_Data_Provider extends \Yoast\WP\SEO\Editors\Framework\Seo\Terms\Abstract_Term_Seo_Data_Provider implements \Yoast\WP\SEO\Editors\Framework\Seo\Description_Data_Provider_Interface
+    {
+        /**
+         * Retrieves the description template.
+         *
+         * @return string The description template.
+         */
+        public function get_description_template() : string
+        {
+        }
+        /**
+         * Determines the date to be displayed in the snippet preview.
+         *
+         * @return string
+         */
+        public function get_description_date() : string
+        {
+        }
+        /**
+         * Method to return the Description domain object with SEO data.
+         *
+         * @return Seo_Plugin_Data_Interface The specific seo data.
+         */
+        public function get_data() : \Yoast\WP\SEO\Editors\Domain\Seo\Seo_Plugin_Data_Interface
+        {
+        }
+    }
+    /**
+     * Describes if the keyphrase SEO data.
+     */
+    class Keyphrase_Data_Provider extends \Yoast\WP\SEO\Editors\Framework\Seo\Terms\Abstract_Term_Seo_Data_Provider implements \Yoast\WP\SEO\Editors\Framework\Seo\Keyphrase_Interface
+    {
+        /**
+         * Counting the number of given keyphrase used for other term than given term_id.
+         *
+         * @return array<string>
+         */
+        public function get_focus_keyphrase_usage() : array
+        {
+        }
+        /**
+         * Method to return the keyphrase domain object with SEO data.
+         *
+         * @return Seo_Plugin_Data_Interface The specific seo data.
+         */
+        public function get_data() : \Yoast\WP\SEO\Editors\Domain\Seo\Seo_Plugin_Data_Interface
+        {
+        }
+    }
+    /**
+     * Describes if the social SEO data.
+     */
+    class Social_Data_Provider extends \Yoast\WP\SEO\Editors\Framework\Seo\Terms\Abstract_Term_Seo_Data_Provider implements \Yoast\WP\SEO\Editors\Framework\Seo\Social_Data_Provider_Interface
+    {
+        /**
+         * The options helper.
+         *
+         * @var Options_Helper
+         */
+        private $options_helper;
+        /**
+         * The image helper.
+         *
+         * @var Image_Helper
+         */
+        private $image_helper;
+        /**
+         * Whether we must return social templates values.
+         *
+         * @var bool
+         */
+        private $use_social_templates = false;
+        /**
+         * The constructor.
+         *
+         * @param Options_Helper $options_helper The options helper.
+         * @param Image_Helper   $image_helper   The image helper.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\Options_Helper $options_helper, \Yoast\WP\SEO\Helpers\Image_Helper $image_helper)
+        {
+        }
+        /**
+         * Determines whether the social templates should be used.
+         *
+         * @return bool Whether the social templates should be used.
+         */
+        public function use_social_templates() : bool
+        {
+        }
+        /**
+         * Gets the image url.
+         *
+         * @return string|null
+         */
+        public function get_image_url() : ?string
+        {
+        }
+        /**
+         * Retrieves the social title template.
+         *
+         * @return string The social title template.
+         */
+        public function get_social_title_template() : string
+        {
+        }
+        /**
+         * Retrieves the social description template.
+         *
+         * @return string The social description template.
+         */
+        public function get_social_description_template() : string
+        {
+        }
+        /**
+         * Retrieves the social image template.
+         *
+         * @return string The social description template.
+         */
+        public function get_social_image_template() : string
+        {
+        }
+        /**
+         * Retrieves a social template.
+         *
+         * @param string $template_option_name The name of the option in which the template you want to get is saved.
+         *
+         * @return string
+         */
+        private function get_social_template($template_option_name)
+        {
+        }
+        /**
+         * Method to return the Social domain object with SEO data.
+         *
+         * @return Seo_Plugin_Data_Interface The specific seo data.
+         */
+        public function get_data() : \Yoast\WP\SEO\Editors\Domain\Seo\Seo_Plugin_Data_Interface
+        {
+        }
+    }
+    /**
+     * Describes if the title SEO data.
+     */
+    class Title_Data_Provider extends \Yoast\WP\SEO\Editors\Framework\Seo\Terms\Abstract_Term_Seo_Data_Provider implements \Yoast\WP\SEO\Editors\Framework\Seo\Title_Data_Provider_Interface
+    {
+        /**
+         * Retrieves the title template.
+         *
+         * @param bool $fallback Whether to return the hardcoded fallback if the template value is empty.
+         *
+         * @return string The title template.
+         */
+        public function get_title_template(bool $fallback = true) : string
+        {
+        }
+        /**
+         * Method to return the Title domain object with SEO data.
+         *
+         * @return Seo_Plugin_Data_Interface The specific seo data.
+         */
+        public function get_data() : \Yoast\WP\SEO\Editors\Domain\Seo\Seo_Plugin_Data_Interface
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Editors\Framework\Site {
+    /**
+     * The Base_Site_Information class.
+     */
+    abstract class Base_Site_Information
+    {
+        /**
+         * The short link helper.
+         *
+         * @var Short_Link_Helper $shortlink_helper
+         */
+        protected $short_link_helper;
+        /**
+         * The wistia embed permission repository.
+         *
+         * @var Wistia_Embed_Permission_Repository $wistia_embed_permission_repository
+         */
+        protected $wistia_embed_permission_repository;
+        /**
+         * The meta surface.
+         *
+         * @var Meta_Surface $meta
+         */
+        protected $meta;
+        /**
+         * The product helper.
+         *
+         * @var Product_Helper $product_helper
+         */
+        protected $product_helper;
+        /**
+         * The options helper.
+         *
+         * @var Options_Helper $options_helper
+         */
+        protected $options_helper;
+        /**
+         * The promotion manager.
+         *
+         * @var Promotion_Manager $promotion_manager
+         */
+        protected $promotion_manager;
+        /**
+         * The constructor.
+         *
+         * @param Short_Link_Helper                  $short_link_helper                  The short link helper.
+         * @param Wistia_Embed_Permission_Repository $wistia_embed_permission_repository The wistia embed permission
+         *                                                                               repository.
+         * @param Meta_Surface                       $meta                               The meta surface.
+         * @param Product_Helper                     $product_helper                     The product helper.
+         * @param Options_Helper                     $options_helper                     The options helper.
+         * @param Promotion_Manager                  $promotion_manager                  The promotion manager.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\Short_Link_Helper $short_link_helper, \Yoast\WP\SEO\Introductions\Infrastructure\Wistia_Embed_Permission_Repository $wistia_embed_permission_repository, \Yoast\WP\SEO\Surfaces\Meta_Surface $meta, \Yoast\WP\SEO\Helpers\Product_Helper $product_helper, \Yoast\WP\SEO\Helpers\Options_Helper $options_helper, \Yoast\WP\SEO\Promotions\Application\Promotion_Manager $promotion_manager)
+        {
+        }
+        /**
+         * Returns site information that is the
+         *
+         * @throws Exception If an invalid user ID is supplied to the wistia repository.
+         * @return array<string|string,string[]>
+         */
+        public function get_site_information() : array
+        {
+        }
+        /**
+         * Returns site information that is the
+         *
+         * @throws Exception If an invalid user ID is supplied to the wistia repository.
+         * @return array<string|string,string[]>
+         */
+        public function get_legacy_site_information() : array
+        {
+        }
+    }
+    /**
+     * The Post_Site_Information class.
+     */
+    class Post_Site_Information extends \Yoast\WP\SEO\Editors\Framework\Site\Base_Site_Information
+    {
+        /**
+         * The permalink.
+         *
+         * @var string $permalink
+         */
+        private $permalink;
+        /**
+         * The alert dismissal action.
+         *
+         * @var Alert_Dismissal_Action $alert_dismissal_action
+         */
+        private $alert_dismissal_action;
+        /**
+         * Constructs the class.
+         *
+         * @param Short_Link_Helper                  $short_link_helper                  The short link helper.
+         * @param Wistia_Embed_Permission_Repository $wistia_embed_permission_repository The wistia embed permission
+         *                                                                               repository.
+         * @param Meta_Surface                       $meta                               The meta surface.
+         * @param Product_Helper                     $product_helper                     The product helper.
+         * @param Alert_Dismissal_Action             $alert_dismissal_action             The alert dismissal action.
+         * @param Options_Helper                     $options_helper                     The options helper.
+         * @param Promotion_Manager                  $promotion_manager                  The promotion manager.
+         *
+         * @return void
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\Short_Link_Helper $short_link_helper, \Yoast\WP\SEO\Introductions\Infrastructure\Wistia_Embed_Permission_Repository $wistia_embed_permission_repository, \Yoast\WP\SEO\Surfaces\Meta_Surface $meta, \Yoast\WP\SEO\Helpers\Product_Helper $product_helper, \Yoast\WP\SEO\Actions\Alert_Dismissal_Action $alert_dismissal_action, \Yoast\WP\SEO\Helpers\Options_Helper $options_helper, \Yoast\WP\SEO\Promotions\Application\Promotion_Manager $promotion_manager)
+        {
+        }
+        /**
+         * Sets the permalink.
+         *
+         * @param string $permalink The permalink.
+         *
+         * @return void
+         */
+        public function set_permalink(string $permalink) : void
+        {
+        }
+        /**
+         * Returns post specific site information together with the generic site information.
+         *
+         * @return array<string|string,string[]>
+         */
+        public function get_legacy_site_information() : array
+        {
+        }
+        /**
+         * Returns post specific site information together with the generic site information.
+         *
+         * @return array<string|string,string[]>
+         */
+        public function get_site_information() : array
+        {
+        }
+        /**
+         * Returns the url to search for keyword for the post.
+         *
+         * @return string
+         */
+        private function search_url() : string
+        {
+        }
+        /**
+         * Returns the url to edit the taxonomy.
+         *
+         * @return string
+         */
+        private function edit_url() : string
+        {
+        }
+        /**
+         * Returns a base URL for use in the JS, takes permalink structure into account.
+         *
+         * @return string
+         */
+        private function base_url_for_js() : string
+        {
+        }
+    }
+    /**
+     * The Term_Site_Information class.
+     */
+    class Term_Site_Information extends \Yoast\WP\SEO\Editors\Framework\Site\Base_Site_Information
+    {
+        /**
+         * The taxonomy.
+         *
+         * @var WP_Taxonomy|false
+         */
+        private $taxonomy;
+        /**
+         * The term.
+         *
+         * @var WP_Term|string|false
+         */
+        private $term;
+        /**
+         *  Sets the term for the information object and retrieves its taxonomy.
+         *
+         * @param WP_Term|string|false $term The term.
+         *
+         * @return void
+         */
+        public function set_term($term)
+        {
+        }
+        /**
+         * Returns term specific site information together with the generic site information.
+         *
+         * @return array<string|string,string[]>
+         */
+        public function get_site_information() : array
+        {
+        }
+        /**
+         * Returns term specific site information together with the generic site information.
+         *
+         * @return array<string|string,string[]>
+         */
+        public function get_legacy_site_information() : array
+        {
+        }
+        /**
+         * Returns the url to search for keyword for the taxonomy.
+         *
+         * @return string
+         */
+        private function search_url() : string
+        {
+        }
+        /**
+         * Returns the url to edit the taxonomy.
+         *
+         * @return string
+         */
+        private function edit_url() : string
+        {
+        }
+        /**
+         * Returns a base URL for use in the JS, takes permalink structure into account.
+         *
+         * @return string
+         */
+        private function base_url_for_js() : string
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Editors\Framework {
+    /**
+     * Describes if the word for recognition analysis is enabled
+     */
+    class Word_Form_Recognition implements \Yoast\WP\SEO\Editors\Domain\Analysis_Features\Analysis_Feature_Interface
+    {
+        public const NAME = 'wordFormRecognition';
+        /**
+         * The language helper.
+         *
+         * @var Language_Helper
+         */
+        private $language_helper;
+        /**
+         * The constructor.
+         *
+         * @param Language_Helper $language_helper The language helper.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\Language_Helper $language_helper)
+        {
+        }
+        /**
+         * If this analysis is enabled.
+         *
+         * @return bool If this analysis is enabled.
+         */
+        public function is_enabled() : bool
+        {
+        }
+        /**
+         * Returns the name of the object.
+         *
+         * @return string
+         */
+        public function get_name() : string
+        {
+        }
+        /**
+         * Gets the legacy key.
+         *
+         * @return string The legacy key.
+         */
+        public function get_legacy_key() : string
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Elementor\Infrastructure {
+    /**
+     * Retrieve the WP_Post from the request.
+     */
+    class Request_Post
+    {
+        /**
+         * Retrieves the WP_Post, applicable to the current request.
+         *
+         * @return WP_Post|null
+         */
+        public function get_post() : ?\WP_Post
+        {
+        }
+        /**
+         * Retrieves the post ID, applicable to the current request.
+         *
+         * @return int|null The post ID.
+         */
+        public function get_post_id() : ?int
+        {
+        }
+        /**
+         * Returns the server request method.
+         *
+         * @return string The server request method, in upper case.
+         */
+        private function get_server_request_method() : ?string
+        {
+        }
+        /**
+         * Retrieves the action from the POST request.
+         *
+         * @return string|null The action or null if not found.
+         */
+        private function get_post_action() : ?string
+        {
+        }
+        /**
+         * Retrieves the document ID from the POST request.
+         *
+         * Note: this is specific to Elementor' `elementor_ajax` action. And then the `get_document_config` internal action.
+         * Currently, you can see this in play when:
+         * - showing the Site Settings in the Elementor editor
+         * - going to another Recent post/page in the Elementor editor V2
+         *
+         * @return int|null The document ID or null if not found.
+         */
+        private function get_document_id() : ?int
         {
         }
     }
@@ -30754,7 +37623,7 @@ namespace Yoast\WP\SEO\Exceptions\Indexable {
          *
          * @param int $post_id ID of the post.
          *
-         * @throws Post_Not_Built_Exception When the post is not indexable.
+         * @return Post_Not_Built_Exception
          */
         public static function because_not_indexable($post_id)
         {
@@ -30764,7 +37633,7 @@ namespace Yoast\WP\SEO\Exceptions\Indexable {
          *
          * @param int $post_id ID of the post.
          *
-         * @throws Post_Not_Built_Exception When the post type is excluded.
+         * @return Post_Not_Built_Exception
          */
         public static function because_post_type_excluded($post_id)
         {
@@ -30785,6 +37654,23 @@ namespace Yoast\WP\SEO\Exceptions\Indexable {
         }
     }
     /**
+     * Exception that is thrown whenever a post type could not be built
+     * in the context of the indexables.
+     */
+    class Post_Type_Not_Built_Exception extends \Yoast\WP\SEO\Exceptions\Indexable\Not_Built_Exception
+    {
+        /**
+         * Throws an exception if the post is not indexable.
+         *
+         * @param string $post_type The post type.
+         *
+         * @return Post_Type_Not_Built_Exception
+         */
+        public static function because_not_indexable($post_type)
+        {
+        }
+    }
+    /**
      * Exception that is thrown whenever a term could not be built
      * in the context of the indexables.
      */
@@ -30795,7 +37681,7 @@ namespace Yoast\WP\SEO\Exceptions\Indexable {
          *
          * @param int $term_id ID of the term.
          *
-         * @throws Term_Not_Built_Exception When the term is not built.
+         * @return Term_Not_Built_Exception
          */
         public static function because_not_indexable($term_id)
         {
@@ -30891,13 +37777,140 @@ namespace Yoast\WP\SEO\Exceptions\OAuth\Tokens {
      */
     class Failed_Storage_Exception extends \Exception
     {
-        const DEFAULT_MESSAGE = 'Token storing failed. Please try again.';
+        public const DEFAULT_MESSAGE = 'Token storing failed. Please try again.';
         /**
          * Failed_Storage_Exception constructor.
          *
          * @param string $reason The reason why token storage failed. Optional.
          */
         public function __construct($reason = '')
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\General\User_Interface {
+    /**
+     * Class General_Page_Integration.
+     */
+    class General_Page_Integration implements \Yoast\WP\SEO\Integrations\Integration_Interface
+    {
+        /**
+         * The page name.
+         */
+        public const PAGE = 'wpseo_dashboard';
+        /**
+         * The notification helper.
+         *
+         * @var Notification_Helper
+         */
+        protected $notification_helper;
+        /**
+         * The dashboard configuration.
+         *
+         * @var Dashboard_Configuration
+         */
+        private $dashboard_configuration;
+        /**
+         * Holds the WPSEO_Admin_Asset_Manager.
+         *
+         * @var WPSEO_Admin_Asset_Manager
+         */
+        private $asset_manager;
+        /**
+         * Holds the Current_Page_Helper.
+         *
+         * @var Current_Page_Helper
+         */
+        private $current_page_helper;
+        /**
+         * Holds the Product_Helper.
+         *
+         * @var Product_Helper
+         */
+        private $product_helper;
+        /**
+         * Holds the Short_Link_Helper.
+         *
+         * @var Short_Link_Helper
+         */
+        private $shortlink_helper;
+        /**
+         * The promotion manager.
+         *
+         * @var Promotion_Manager $promotion_manager
+         */
+        private $promotion_manager;
+        /**
+         * The alert dismissal action.
+         *
+         * @var Alert_Dismissal_Action $alert_dismissal_action
+         */
+        private $alert_dismissal_action;
+        /**
+         * Constructs Academy_Integration.
+         *
+         * @param WPSEO_Admin_Asset_Manager $asset_manager           The WPSEO_Admin_Asset_Manager.
+         * @param Current_Page_Helper       $current_page_helper     The Current_Page_Helper.
+         * @param Product_Helper            $product_helper          The Product_Helper.
+         * @param Short_Link_Helper         $shortlink_helper        The Short_Link_Helper.
+         * @param Notification_Helper       $notification_helper     The Notification_Helper.
+         * @param Alert_Dismissal_Action    $alert_dismissal_action  The alert dismissal action.
+         * @param Promotion_Manager         $promotion_manager       The promotion manager.
+         * @param Dashboard_Configuration   $dashboard_configuration The dashboard configuration.
+         */
+        public function __construct(\WPSEO_Admin_Asset_Manager $asset_manager, \Yoast\WP\SEO\Helpers\Current_Page_Helper $current_page_helper, \Yoast\WP\SEO\Helpers\Product_Helper $product_helper, \Yoast\WP\SEO\Helpers\Short_Link_Helper $shortlink_helper, \Yoast\WP\SEO\Helpers\Notification_Helper $notification_helper, \Yoast\WP\SEO\Actions\Alert_Dismissal_Action $alert_dismissal_action, \Yoast\WP\SEO\Promotions\Application\Promotion_Manager $promotion_manager, \Yoast\WP\SEO\Dashboard\Application\Configuration\Dashboard_Configuration $dashboard_configuration)
+        {
+        }
+        /**
+         * Returns the conditionals based on which this loadable should be active.
+         *
+         * @return array<string>
+         */
+        public static function get_conditionals()
+        {
+        }
+        /**
+         * Initializes the integration.
+         *
+         * This is the place to register hooks and filters.
+         *
+         * @return void
+         */
+        public function register_hooks()
+        {
+        }
+        /**
+         * Adds the page.
+         *
+         * @param array<string,array<string>> $pages The pages.
+         *
+         * @return array<string,array<string>> The pages.
+         */
+        public function add_page($pages)
+        {
+        }
+        /**
+         * Displays the page.
+         *
+         * @return void
+         */
+        public function display_page()
+        {
+        }
+        /**
+         * Enqueues the assets.
+         *
+         * @return void
+         */
+        public function enqueue_assets()
+        {
+        }
+        /**
+         * Creates the script data.
+         *
+         * @return array<string,array<string|bool,array<string>>> The script data.
+         */
+        private function get_script_data()
         {
         }
     }
@@ -31469,16 +38482,6 @@ namespace Yoast\WP\SEO\Generated {
         {
         }
         /**
-         * Gets the public 'Yoast\WP\SEO\Actions\Indexables_Page_Action' shared autowired service.
-         *
-         * @return \Yoast\WP\SEO\Actions\Indexables_Page_Action
-         *
-         * @deprecated Yoast\WP\SEO\Actions\Indexables_Page_Action is deprecated since version 20.4!
-         */
-        protected function getIndexablesPageActionService()
-        {
-        }
-        /**
          * Gets the public 'Yoast\WP\SEO\Actions\Indexing\Indexable_General_Indexation_Action' shared autowired service.
          *
          * @return \Yoast\WP\SEO\Actions\Indexing\Indexable_General_Indexation_Action
@@ -31583,14 +38586,6 @@ namespace Yoast\WP\SEO\Generated {
         {
         }
         /**
-         * Gets the public 'Yoast\WP\SEO\Actions\Settings_Introduction_Action' shared autowired service.
-         *
-         * @return \Yoast\WP\SEO\Actions\Settings_Introduction_Action
-         */
-        protected function getSettingsIntroductionActionService()
-        {
-        }
-        /**
          * Gets the public 'Yoast\WP\SEO\Actions\Wincher\Wincher_Account_Action' shared autowired service.
          *
          * @return \Yoast\WP\SEO\Actions\Wincher\Wincher_Account_Action
@@ -31612,6 +38607,30 @@ namespace Yoast\WP\SEO\Generated {
          * @return \Yoast\WP\SEO\Actions\Wincher\Wincher_Login_Action
          */
         protected function getWincherLoginActionService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Analytics\Application\Missing_Indexables_Collector' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Analytics\Application\Missing_Indexables_Collector
+         */
+        protected function getMissingIndexablesCollectorService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Analytics\Application\To_Be_Cleaned_Indexables_Collector' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Analytics\Application\To_Be_Cleaned_Indexables_Collector
+         */
+        protected function getToBeCleanedIndexablesCollectorService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Analytics\User_Interface\Last_Completed_Indexation_Integration' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Analytics\User_Interface\Last_Completed_Indexation_Integration
+         */
+        protected function getLastCompletedIndexationIntegrationService()
         {
         }
         /**
@@ -31775,6 +38794,14 @@ namespace Yoast\WP\SEO\Generated {
         {
         }
         /**
+         * Gets the public 'Yoast\WP\SEO\Conditionals\Admin\Yoast_Admin_Conditional' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Conditionals\Admin\Yoast_Admin_Conditional
+         */
+        protected function getYoastAdminConditionalService()
+        {
+        }
+        /**
          * Gets the public 'Yoast\WP\SEO\Conditionals\Admin_Conditional' shared autowired service.
          *
          * @return \Yoast\WP\SEO\Conditionals\Admin_Conditional
@@ -31788,6 +38815,22 @@ namespace Yoast\WP\SEO\Generated {
          * @return \Yoast\WP\SEO\Conditionals\Attachment_Redirections_Enabled_Conditional
          */
         protected function getAttachmentRedirectionsEnabledConditionalService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Conditionals\Check_Required_Version_Conditional' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Conditionals\Check_Required_Version_Conditional
+         */
+        protected function getCheckRequiredVersionConditionalService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Conditionals\Deactivating_Yoast_Seo_Conditional' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Conditionals\Deactivating_Yoast_Seo_Conditional
+         */
+        protected function getDeactivatingYoastSeoConditionalService()
         {
         }
         /**
@@ -31807,21 +38850,19 @@ namespace Yoast\WP\SEO\Generated {
         {
         }
         /**
-         * Gets the public 'Yoast\WP\SEO\Conditionals\Front_End_Inspector_Conditional' shared autowired service.
-         *
-         * @return \Yoast\WP\SEO\Conditionals\Front_End_Inspector_Conditional
-         *
-         * @deprecated Yoast\WP\SEO\Conditionals\Front_End_Inspector_Conditional is deprecated since version 19.5!
-         */
-        protected function getFrontEndInspectorConditionalService()
-        {
-        }
-        /**
          * Gets the public 'Yoast\WP\SEO\Conditionals\Get_Request_Conditional' shared autowired service.
          *
          * @return \Yoast\WP\SEO\Conditionals\Get_Request_Conditional
          */
         protected function getGetRequestConditionalService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Conditionals\Google_Site_Kit_Feature_Conditional' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Conditionals\Google_Site_Kit_Feature_Conditional
+         */
+        protected function getGoogleSiteKitFeatureConditionalService()
         {
         }
         /**
@@ -31838,16 +38879,6 @@ namespace Yoast\WP\SEO\Generated {
          * @return \Yoast\WP\SEO\Conditionals\Import_Tool_Selected_Conditional
          */
         protected function getImportToolSelectedConditionalService()
-        {
-        }
-        /**
-         * Gets the public 'Yoast\WP\SEO\Conditionals\Indexables_Page_Conditional' shared autowired service.
-         *
-         * @return \Yoast\WP\SEO\Conditionals\Indexables_Page_Conditional
-         *
-         * @deprecated Yoast\WP\SEO\Conditionals\Indexables_Page_Conditional is deprecated since version 20.4!
-         */
-        protected function getIndexablesPageConditionalService()
         {
         }
         /**
@@ -31955,16 +38986,6 @@ namespace Yoast\WP\SEO\Generated {
         {
         }
         /**
-         * Gets the public 'Yoast\WP\SEO\Conditionals\Schema_Blocks_Conditional' shared autowired service.
-         *
-         * @return \Yoast\WP\SEO\Conditionals\Schema_Blocks_Conditional
-         *
-         * @deprecated Yoast\WP\SEO\Conditionals\Schema_Blocks_Conditional is deprecated since version 20.5!
-         */
-        protected function getSchemaBlocksConditionalService()
-        {
-        }
-        /**
          * Gets the public 'Yoast\WP\SEO\Conditionals\Settings_Conditional' shared autowired service.
          *
          * @return \Yoast\WP\SEO\Conditionals\Settings_Conditional
@@ -31989,36 +39010,6 @@ namespace Yoast\WP\SEO\Generated {
         {
         }
         /**
-         * Gets the public 'Yoast\WP\SEO\Conditionals\The_Events_Calendar_Conditional' shared autowired service.
-         *
-         * @return \Yoast\WP\SEO\Conditionals\The_Events_Calendar_Conditional
-         *
-         * @deprecated Yoast\WP\SEO\Conditionals\The_Events_Calendar_Conditional is deprecated since version 19.12!
-         */
-        protected function getTheEventsCalendarConditionalService()
-        {
-        }
-        /**
-         * Gets the public 'Yoast\WP\SEO\Conditionals\Third_Party\CoAuthors_Plus_Activated_Conditional' shared autowired service.
-         *
-         * @return \Yoast\WP\SEO\Conditionals\Third_Party\CoAuthors_Plus_Activated_Conditional
-         *
-         * @deprecated Yoast\WP\SEO\Conditionals\Third_Party\CoAuthors_Plus_Activated_Conditional is deprecated since version 19.12!
-         */
-        protected function getCoAuthorsPlusActivatedConditionalService()
-        {
-        }
-        /**
-         * Gets the public 'Yoast\WP\SEO\Conditionals\Third_Party\CoAuthors_Plus_Flag_Conditional' shared autowired service.
-         *
-         * @return \Yoast\WP\SEO\Conditionals\Third_Party\CoAuthors_Plus_Flag_Conditional
-         *
-         * @deprecated Yoast\WP\SEO\Conditionals\Third_Party\CoAuthors_Plus_Flag_Conditional is deprecated since version 19.12!
-         */
-        protected function getCoAuthorsPlusFlagConditionalService()
-        {
-        }
-        /**
          * Gets the public 'Yoast\WP\SEO\Conditionals\Third_Party\Elementor_Activated_Conditional' shared autowired service.
          *
          * @return \Yoast\WP\SEO\Conditionals\Third_Party\Elementor_Activated_Conditional
@@ -32032,22 +39023,6 @@ namespace Yoast\WP\SEO\Generated {
          * @return \Yoast\WP\SEO\Conditionals\Third_Party\Elementor_Edit_Conditional
          */
         protected function getElementorEditConditionalService()
-        {
-        }
-        /**
-         * Gets the public 'Yoast\WP\SEO\Conditionals\Third_Party\Jetpack_Boost_Active_Conditional' shared autowired service.
-         *
-         * @return \Yoast\WP\SEO\Conditionals\Third_Party\Jetpack_Boost_Active_Conditional
-         */
-        protected function getJetpackBoostActiveConditionalService()
-        {
-        }
-        /**
-         * Gets the public 'Yoast\WP\SEO\Conditionals\Third_Party\Jetpack_Boost_Not_Premium_Conditional' shared autowired service.
-         *
-         * @return \Yoast\WP\SEO\Conditionals\Third_Party\Jetpack_Boost_Not_Premium_Conditional
-         */
-        protected function getJetpackBoostNotPremiumConditionalService()
         {
         }
         /**
@@ -32094,6 +39069,8 @@ namespace Yoast\WP\SEO\Generated {
          * Gets the public 'Yoast\WP\SEO\Conditionals\Third_Party\Wordproof_Integration_Active_Conditional' shared autowired service.
          *
          * @return \Yoast\WP\SEO\Conditionals\Third_Party\Wordproof_Integration_Active_Conditional
+         *
+         * @deprecated Yoast\WP\SEO\Conditionals\Third_Party\Wordproof_Integration_Active_Conditional is deprecated since version 22.10!
          */
         protected function getWordproofIntegrationActiveConditionalService()
         {
@@ -32102,6 +39079,8 @@ namespace Yoast\WP\SEO\Generated {
          * Gets the public 'Yoast\WP\SEO\Conditionals\Third_Party\Wordproof_Plugin_Inactive_Conditional' shared autowired service.
          *
          * @return \Yoast\WP\SEO\Conditionals\Third_Party\Wordproof_Plugin_Inactive_Conditional
+         *
+         * @deprecated Yoast\WP\SEO\Conditionals\Third_Party\Wordproof_Plugin_Inactive_Conditional is deprecated since version 22.10!
          */
         protected function getWordproofPluginInactiveConditionalService()
         {
@@ -32112,6 +39091,14 @@ namespace Yoast\WP\SEO\Generated {
          * @return \Yoast\WP\SEO\Conditionals\Updated_Importer_Framework_Conditional
          */
         protected function getUpdatedImporterFrameworkConditionalService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Conditionals\User_Can_Edit_Users_Conditional' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Conditionals\User_Can_Edit_Users_Conditional
+         */
+        protected function getUserCanEditUsersConditionalService()
         {
         }
         /**
@@ -32128,6 +39115,30 @@ namespace Yoast\WP\SEO\Generated {
          * @return \Yoast\WP\SEO\Conditionals\User_Can_Publish_Posts_And_Pages_Conditional
          */
         protected function getUserCanPublishPostsAndPagesConditionalService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Conditionals\User_Edit_Conditional' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Conditionals\User_Edit_Conditional
+         */
+        protected function getUserEditConditionalService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Conditionals\User_Profile_Conditional' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Conditionals\User_Profile_Conditional
+         */
+        protected function getUserProfileConditionalService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Conditionals\WP_CRON_Enabled_Conditional' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Conditionals\WP_CRON_Enabled_Conditional
+         */
+        protected function getWPCRONEnabledConditionalService()
         {
         }
         /**
@@ -32272,6 +39283,14 @@ namespace Yoast\WP\SEO\Generated {
          * @return \Yoast\WP\SEO\Config\Migrations\AddHasAncestorsColumn
          */
         protected function getAddHasAncestorsColumnService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Config\Migrations\AddInclusiveLanguageScore' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Config\Migrations\AddInclusiveLanguageScore
+         */
+        protected function getAddInclusiveLanguageScoreService()
         {
         }
         /**
@@ -32470,6 +39489,8 @@ namespace Yoast\WP\SEO\Generated {
          * Gets the public 'Yoast\WP\SEO\Config\Wordproof_App_Config' shared autowired service.
          *
          * @return \Yoast\WP\SEO\Config\Wordproof_App_Config
+         *
+         * @deprecated Yoast\WP\SEO\Config\Wordproof_App_Config is deprecated since version 22.10!
          */
         protected function getWordproofAppConfigService()
         {
@@ -32478,8 +39499,26 @@ namespace Yoast\WP\SEO\Generated {
          * Gets the public 'Yoast\WP\SEO\Config\Wordproof_Translations' shared autowired service.
          *
          * @return \Yoast\WP\SEO\Config\Wordproof_Translations
+         *
+         * @deprecated Yoast\WP\SEO\Config\Wordproof_Translations is deprecated since version 22.10!
          */
         protected function getWordproofTranslationsService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Content_Type_Visibility\Application\Content_Type_Visibility_Watcher_Actions' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Content_Type_Visibility\Application\Content_Type_Visibility_Watcher_Actions
+         */
+        protected function getContentTypeVisibilityWatcherActionsService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Content_Type_Visibility\User_Interface\Content_Type_Visibility_Dismiss_New_Route' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Content_Type_Visibility\User_Interface\Content_Type_Visibility_Dismiss_New_Route
+         */
+        protected function getContentTypeVisibilityDismissNewRouteService()
         {
         }
         /**
@@ -32488,6 +39527,94 @@ namespace Yoast\WP\SEO\Generated {
          * @return \Yoast\WP\SEO\Context\Meta_Tags_Context
          */
         protected function getMetaTagsContextService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Dashboard\User_Interface\Configuration\Site_Kit_Configuration_Dismissal_Route' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Dashboard\User_Interface\Configuration\Site_Kit_Configuration_Dismissal_Route
+         */
+        protected function getSiteKitConfigurationDismissalRouteService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Dashboard\User_Interface\Configuration\Site_Kit_Consent_Management_Route' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Dashboard\User_Interface\Configuration\Site_Kit_Consent_Management_Route
+         */
+        protected function getSiteKitConsentManagementRouteService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Dashboard\User_Interface\Scores\Readability_Scores_Route' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Dashboard\User_Interface\Scores\Readability_Scores_Route
+         */
+        protected function getReadabilityScoresRouteService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Dashboard\User_Interface\Scores\SEO_Scores_Route' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Dashboard\User_Interface\Scores\SEO_Scores_Route
+         */
+        protected function getSEOScoresRouteService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Dashboard\User_Interface\Time_Based_SEO_Metrics\Time_Based_SEO_Metrics_Route' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Dashboard\User_Interface\Time_Based_SEO_Metrics\Time_Based_SEO_Metrics_Route
+         */
+        protected function getTimeBasedSEOMetricsRouteService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Editors\Application\Analysis_Features\Enabled_Analysis_Features_Repository' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Editors\Application\Analysis_Features\Enabled_Analysis_Features_Repository
+         */
+        protected function getEnabledAnalysisFeaturesRepositoryService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Editors\Application\Integrations\Integration_Information_Repository' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Editors\Application\Integrations\Integration_Information_Repository
+         */
+        protected function getIntegrationInformationRepositoryService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Editors\Application\Seo\Post_Seo_Information_Repository' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Editors\Application\Seo\Post_Seo_Information_Repository
+         */
+        protected function getPostSeoInformationRepositoryService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Editors\Application\Seo\Term_Seo_Information_Repository' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Editors\Application\Seo\Term_Seo_Information_Repository
+         */
+        protected function getTermSeoInformationRepositoryService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Editors\Application\Site\Website_Information_Repository' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Editors\Application\Site\Website_Information_Repository
+         */
+        protected function getWebsiteInformationRepositoryService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\General\User_Interface\General_Page_Integration' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\General\User_Interface\General_Page_Integration
+         */
+        protected function getGeneralPageIntegrationService()
         {
         }
         /**
@@ -32576,26 +39703,6 @@ namespace Yoast\WP\SEO\Generated {
          * @return \Yoast\WP\SEO\Generators\Schema\Person
          */
         protected function getPersonService()
-        {
-        }
-        /**
-         * Gets the public 'Yoast\WP\SEO\Generators\Schema\Third_Party\CoAuthor' shared autowired service.
-         *
-         * @return \Yoast\WP\SEO\Generators\Schema\Third_Party\CoAuthor
-         *
-         * @deprecated Yoast\WP\SEO\Generators\Schema\Third_Party\CoAuthor is deprecated since version 19.12!
-         */
-        protected function getCoAuthorService()
-        {
-        }
-        /**
-         * Gets the public 'Yoast\WP\SEO\Generators\Schema\Third_Party\Events_Calendar_Schema' shared autowired service.
-         *
-         * @return \Yoast\WP\SEO\Generators\Schema\Third_Party\Events_Calendar_Schema
-         *
-         * @deprecated Yoast\WP\SEO\Generators\Schema\Third_Party\Events_Calendar_Schema is deprecated since version 19.12!
-         */
-        protected function getEventsCalendarSchemaService()
         {
         }
         /**
@@ -32775,16 +39882,6 @@ namespace Yoast\WP\SEO\Generated {
         {
         }
         /**
-         * Gets the public 'Yoast\WP\SEO\Helpers\Indexables_Page_Helper' shared autowired service.
-         *
-         * @return \Yoast\WP\SEO\Helpers\Indexables_Page_Helper
-         *
-         * @deprecated Yoast\WP\SEO\Helpers\Indexables_Page_Helper is deprecated since version 20.4!
-         */
-        protected function getIndexablesPageHelperService()
-        {
-        }
-        /**
          * Gets the public 'Yoast\WP\SEO\Helpers\Indexing_Helper' shared autowired service.
          *
          * @return \Yoast\WP\SEO\Helpers\Indexing_Helper
@@ -32900,6 +39997,8 @@ namespace Yoast\WP\SEO\Generated {
          * Gets the public 'Yoast\WP\SEO\Helpers\Request_Helper' shared autowired service.
          *
          * @return \Yoast\WP\SEO\Helpers\Request_Helper
+         *
+         * @deprecated Yoast\WP\SEO\Helpers\Request_Helper is deprecated since version 23.6!
          */
         protected function getRequestHelperService()
         {
@@ -33084,6 +40183,8 @@ namespace Yoast\WP\SEO\Generated {
          * Gets the public 'Yoast\WP\SEO\Helpers\Wordproof_Helper' shared autowired service.
          *
          * @return \Yoast\WP\SEO\Helpers\Wordproof_Helper
+         *
+         * @deprecated Yoast\WP\SEO\Helpers\Wordproof_Helper is deprecated since version 22.10!
          */
         protected function getWordproofHelperService()
         {
@@ -33121,11 +40222,27 @@ namespace Yoast\WP\SEO\Generated {
         {
         }
         /**
+         * Gets the public 'Yoast\WP\SEO\Initializers\Plugin_Headers' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Initializers\Plugin_Headers
+         */
+        protected function getPluginHeadersService()
+        {
+        }
+        /**
          * Gets the public 'Yoast\WP\SEO\Initializers\Woocommerce' shared autowired service.
          *
          * @return \Yoast\WP\SEO\Initializers\Woocommerce
          */
         protected function getWoocommerceService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Integrations\Academy_Integration' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Integrations\Academy_Integration
+         */
+        protected function getAcademyIntegrationService()
         {
         }
         /**
@@ -33169,6 +40286,14 @@ namespace Yoast\WP\SEO\Generated {
         {
         }
         /**
+         * Gets the public 'Yoast\WP\SEO\Integrations\Admin\Check_Required_Version' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Integrations\Admin\Check_Required_Version
+         */
+        protected function getCheckRequiredVersionService()
+        {
+        }
+        /**
          * Gets the public 'Yoast\WP\SEO\Integrations\Admin\Crawl_Settings_Integration' shared autowired service.
          *
          * @return \Yoast\WP\SEO\Integrations\Admin\Crawl_Settings_Integration
@@ -33196,6 +40321,8 @@ namespace Yoast\WP\SEO\Generated {
          * Gets the public 'Yoast\WP\SEO\Integrations\Admin\Disable_Concatenate_Scripts_Integration' shared autowired service.
          *
          * @return \Yoast\WP\SEO\Integrations\Admin\Disable_Concatenate_Scripts_Integration
+         *
+         * @deprecated Yoast\WP\SEO\Integrations\Admin\Disable_Concatenate_Scripts_Integration is deprecated since version 23.2!
          */
         protected function getDisableConcatenateScriptsIntegrationService()
         {
@@ -33254,16 +40381,6 @@ namespace Yoast\WP\SEO\Generated {
          * @return \Yoast\WP\SEO\Integrations\Admin\Indexables_Exclude_Taxonomy_Integration
          */
         protected function getIndexablesExcludeTaxonomyIntegrationService()
-        {
-        }
-        /**
-         * Gets the public 'Yoast\WP\SEO\Integrations\Admin\Indexables_Page_Integration' shared autowired service.
-         *
-         * @return \Yoast\WP\SEO\Integrations\Admin\Indexables_Page_Integration
-         *
-         * @deprecated Yoast\WP\SEO\Integrations\Admin\Indexables_Page_Integration is deprecated since version 20.4!
-         */
-        protected function getIndexablesPageIntegrationService()
         {
         }
         /**
@@ -33334,6 +40451,8 @@ namespace Yoast\WP\SEO\Generated {
          * Gets the public 'Yoast\WP\SEO\Integrations\Admin\Old_Premium_Integration' shared autowired service.
          *
          * @return \Yoast\WP\SEO\Integrations\Admin\Old_Premium_Integration
+         *
+         * @deprecated Yoast\WP\SEO\Integrations\Admin\Old_Premium_Integration is deprecated since version 20.10!
          */
         protected function getOldPremiumIntegrationService()
         {
@@ -33355,13 +40474,11 @@ namespace Yoast\WP\SEO\Generated {
         {
         }
         /**
-         * Gets the public 'Yoast\WP\SEO\Integrations\Admin\Social_Templates_Integration' shared autowired service.
+         * Gets the public 'Yoast\WP\SEO\Integrations\Admin\Unsupported_PHP_Version_Notice' shared autowired service.
          *
-         * @return \Yoast\WP\SEO\Integrations\Admin\Social_Templates_Integration
-         *
-         * @deprecated Yoast\WP\SEO\Integrations\Admin\Social_Templates_Integration is deprecated since version 20.3!
+         * @return \Yoast\WP\SEO\Integrations\Admin\Unsupported_PHP_Version_Notice
          */
-        protected function getSocialTemplatesIntegrationService()
+        protected function getUnsupportedPHPVersionNoticeService()
         {
         }
         /**
@@ -33373,11 +40490,35 @@ namespace Yoast\WP\SEO\Generated {
         {
         }
         /**
-         * Gets the public 'Yoast\WP\SEO\Integrations\Alerts\Jetpack_Boost_Pre_Publish' shared autowired service.
+         * Gets the public 'Yoast\WP\SEO\Integrations\Alerts\Black_Friday_Product_Editor_Checklist_Notification' shared autowired service.
          *
-         * @return \Yoast\WP\SEO\Integrations\Alerts\Jetpack_Boost_Pre_Publish
+         * @return \Yoast\WP\SEO\Integrations\Alerts\Black_Friday_Product_Editor_Checklist_Notification
          */
-        protected function getJetpackBoostPrePublishService()
+        protected function getBlackFridayProductEditorChecklistNotificationService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Integrations\Alerts\Black_Friday_Promotion_Notification' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Integrations\Alerts\Black_Friday_Promotion_Notification
+         */
+        protected function getBlackFridayPromotionNotificationService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Integrations\Alerts\Black_Friday_Sidebar_Checklist_Notification' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Integrations\Alerts\Black_Friday_Sidebar_Checklist_Notification
+         */
+        protected function getBlackFridaySidebarChecklistNotificationService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Integrations\Alerts\Trustpilot_Review_Notification' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Integrations\Alerts\Trustpilot_Review_Notification
+         */
+        protected function getTrustpilotReviewNotificationService()
         {
         }
         /**
@@ -33386,6 +40527,14 @@ namespace Yoast\WP\SEO\Generated {
          * @return \Yoast\WP\SEO\Integrations\Alerts\Webinar_Promo_Notification
          */
         protected function getWebinarPromoNotificationService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Integrations\Blocks\Block_Editor_Integration' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Integrations\Blocks\Block_Editor_Integration
+         */
+        protected function getBlockEditorIntegrationService()
         {
         }
         /**
@@ -33432,6 +40581,8 @@ namespace Yoast\WP\SEO\Generated {
          * Gets the public 'Yoast\WP\SEO\Integrations\Duplicate_Post_Integration' shared autowired service.
          *
          * @return \Yoast\WP\SEO\Integrations\Duplicate_Post_Integration
+         *
+         * @deprecated Yoast\WP\SEO\Integrations\Duplicate_Post_Integration is deprecated since version 23.4!
          */
         protected function getDuplicatePostIntegrationService()
         {
@@ -33613,21 +40764,19 @@ namespace Yoast\WP\SEO\Generated {
         {
         }
         /**
-         * Gets the public 'Yoast\WP\SEO\Integrations\Schema_Blocks' shared autowired service.
-         *
-         * @return \Yoast\WP\SEO\Integrations\Schema_Blocks
-         *
-         * @deprecated Yoast\WP\SEO\Integrations\Schema_Blocks is deprecated since version 20.5!
-         */
-        protected function getSchemaBlocksService()
-        {
-        }
-        /**
          * Gets the public 'Yoast\WP\SEO\Integrations\Settings_Integration' shared autowired service.
          *
          * @return \Yoast\WP\SEO\Integrations\Settings_Integration
          */
         protected function getSettingsIntegrationService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Integrations\Support_Integration' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Integrations\Support_Integration
+         */
+        protected function getSupportIntegrationService()
         {
         }
         /**
@@ -33644,16 +40793,6 @@ namespace Yoast\WP\SEO\Generated {
          * @return \Yoast\WP\SEO\Integrations\Third_Party\BbPress
          */
         protected function getBbPressService()
-        {
-        }
-        /**
-         * Gets the public 'Yoast\WP\SEO\Integrations\Third_Party\CoAuthors_Plus' shared autowired service.
-         *
-         * @return \Yoast\WP\SEO\Integrations\Third_Party\CoAuthors_Plus
-         *
-         * @deprecated Yoast\WP\SEO\Integrations\Third_Party\CoAuthors_Plus is deprecated since version 19.12!
-         */
-        protected function getCoAuthorsPlusService()
         {
         }
         /**
@@ -33686,16 +40825,6 @@ namespace Yoast\WP\SEO\Generated {
          * @return \Yoast\WP\SEO\Integrations\Third_Party\Jetpack
          */
         protected function getJetpackService()
-        {
-        }
-        /**
-         * Gets the public 'Yoast\WP\SEO\Integrations\Third_Party\The_Events_Calendar' shared autowired service.
-         *
-         * @return \Yoast\WP\SEO\Integrations\Third_Party\The_Events_Calendar
-         *
-         * @deprecated Yoast\WP\SEO\Integrations\Third_Party\The_Events_Calendar is deprecated since version 19.12!
-         */
-        protected function getTheEventsCalendarService()
         {
         }
         /**
@@ -33742,6 +40871,8 @@ namespace Yoast\WP\SEO\Generated {
          * Gets the public 'Yoast\WP\SEO\Integrations\Third_Party\Wincher' shared autowired service.
          *
          * @return \Yoast\WP\SEO\Integrations\Third_Party\Wincher
+         *
+         * @deprecated Yoast\WP\SEO\Integrations\Third_Party\Wincher is deprecated since version 21.6!
          */
         protected function getWincherService()
         {
@@ -33782,6 +40913,8 @@ namespace Yoast\WP\SEO\Generated {
          * Gets the public 'Yoast\WP\SEO\Integrations\Third_Party\Wordproof' shared autowired service.
          *
          * @return \Yoast\WP\SEO\Integrations\Third_Party\Wordproof
+         *
+         * @deprecated Yoast\WP\SEO\Integrations\Third_Party\Wordproof is deprecated since version 22.10!
          */
         protected function getWordproofService()
         {
@@ -33790,6 +40923,8 @@ namespace Yoast\WP\SEO\Generated {
          * Gets the public 'Yoast\WP\SEO\Integrations\Third_Party\Wordproof_Integration_Toggle' shared autowired service.
          *
          * @return \Yoast\WP\SEO\Integrations\Third_Party\Wordproof_Integration_Toggle
+         *
+         * @deprecated Yoast\WP\SEO\Integrations\Third_Party\Wordproof_Integration_Toggle is deprecated since version 21.6!
          */
         protected function getWordproofIntegrationToggleService()
         {
@@ -33995,11 +41130,61 @@ namespace Yoast\WP\SEO\Generated {
         {
         }
         /**
+         * Gets the public 'Yoast\WP\SEO\Integrations\Watchers\Woocommerce_Beta_Editor_Watcher' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Integrations\Watchers\Woocommerce_Beta_Editor_Watcher
+         */
+        protected function getWoocommerceBetaEditorWatcherService()
+        {
+        }
+        /**
          * Gets the public 'Yoast\WP\SEO\Integrations\XMLRPC' shared autowired service.
          *
          * @return \Yoast\WP\SEO\Integrations\XMLRPC
          */
         protected function getXMLRPCService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Introductions\Application\Ai_Generate_Titles_And_Descriptions_Introduction_Upsell' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Introductions\Application\Ai_Generate_Titles_And_Descriptions_Introduction_Upsell
+         *
+         * @deprecated Yoast\WP\SEO\Introductions\Application\Ai_Generate_Titles_And_Descriptions_Introduction_Upsell is deprecated since version 23.2!
+         */
+        protected function getAiGenerateTitlesAndDescriptionsIntroductionUpsellService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Introductions\Infrastructure\Wistia_Embed_Permission_Repository' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Introductions\Infrastructure\Wistia_Embed_Permission_Repository
+         */
+        protected function getWistiaEmbedPermissionRepositoryService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Introductions\User_Interface\Introductions_Integration' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Introductions\User_Interface\Introductions_Integration
+         */
+        protected function getIntroductionsIntegrationService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Introductions\User_Interface\Introductions_Seen_Route' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Introductions\User_Interface\Introductions_Seen_Route
+         */
+        protected function getIntroductionsSeenRouteService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Introductions\User_Interface\Wistia_Embed_Permission_Route' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Introductions\User_Interface\Wistia_Embed_Permission_Route
+         */
+        protected function getWistiaEmbedPermissionRouteService()
         {
         }
         /**
@@ -34131,6 +41316,22 @@ namespace Yoast\WP\SEO\Generated {
         {
         }
         /**
+         * Gets the public 'Yoast\WP\SEO\Promotions\Application\Promotion_Manager' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Promotions\Application\Promotion_Manager
+         */
+        protected function getPromotionManagerService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Repositories\Indexable_Cleanup_Repository' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Repositories\Indexable_Cleanup_Repository
+         */
+        protected function getIndexableCleanupRepositoryService()
+        {
+        }
+        /**
          * Gets the public 'Yoast\WP\SEO\Repositories\Indexable_Hierarchy_Repository' shared autowired service.
          *
          * @return \Yoast\WP\SEO\Repositories\Indexable_Hierarchy_Repository
@@ -34195,16 +41396,6 @@ namespace Yoast\WP\SEO\Generated {
         {
         }
         /**
-         * Gets the public 'Yoast\WP\SEO\Routes\Indexables_Page_Route' shared autowired service.
-         *
-         * @return \Yoast\WP\SEO\Routes\Indexables_Page_Route
-         *
-         * @deprecated Yoast\WP\SEO\Routes\Indexables_Page_Route is deprecated since version 20.4!
-         */
-        protected function getIndexablesPageRouteService()
-        {
-        }
-        /**
          * Gets the public 'Yoast\WP\SEO\Routes\Indexing_Route' shared autowired service.
          *
          * @return \Yoast\WP\SEO\Routes\Indexing_Route
@@ -34237,14 +41428,6 @@ namespace Yoast\WP\SEO\Generated {
         {
         }
         /**
-         * Gets the public 'Yoast\WP\SEO\Routes\Settings_Introduction_Route' shared autowired service.
-         *
-         * @return \Yoast\WP\SEO\Routes\Settings_Introduction_Route
-         */
-        protected function getSettingsIntroductionRouteService()
-        {
-        }
-        /**
          * Gets the public 'Yoast\WP\SEO\Routes\Supported_Features_Route' shared autowired service.
          *
          * @return \Yoast\WP\SEO\Routes\Supported_Features_Route
@@ -34274,16 +41457,6 @@ namespace Yoast\WP\SEO\Generated {
          * @return \Yoast\WP\SEO\Routes\Yoast_Head_REST_Field
          */
         protected function getYoastHeadRESTFieldService()
-        {
-        }
-        /**
-         * Gets the public 'Yoast\WP\SEO\Schema_Templates\Assets\Icons' shared autowired service.
-         *
-         * @return \Yoast\WP\SEO\Schema_Templates\Assets\Icons
-         *
-         * @deprecated Yoast\WP\SEO\Schema_Templates\Assets\Icons is deprecated since version 20.5!
-         */
-        protected function getIconsService()
         {
         }
         /**
@@ -34511,6 +41684,54 @@ namespace Yoast\WP\SEO\Generated {
         {
         }
         /**
+         * Gets the public 'Yoast\WP\SEO\User_Meta\Application\Additional_Contactmethods_Collector' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\User_Meta\Application\Additional_Contactmethods_Collector
+         */
+        protected function getAdditionalContactmethodsCollectorService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\User_Meta\Application\Custom_Meta_Collector' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\User_Meta\Application\Custom_Meta_Collector
+         */
+        protected function getCustomMetaCollectorService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\User_Meta\User_Interface\Additional_Contactmethods_Integration' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\User_Meta\User_Interface\Additional_Contactmethods_Integration
+         */
+        protected function getAdditionalContactmethodsIntegrationService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\User_Meta\User_Interface\Cleanup_Integration' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\User_Meta\User_Interface\Cleanup_Integration
+         */
+        protected function getCleanupIntegration2Service()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\User_Meta\User_Interface\Custom_Meta_Integration' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\User_Meta\User_Interface\Custom_Meta_Integration
+         */
+        protected function getCustomMetaIntegrationService()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\User_Profiles_Additions\User_Interface\User_Profiles_Additions_Ui' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\User_Profiles_Additions\User_Interface\User_Profiles_Additions_Ui
+         */
+        protected function getUserProfilesAdditionsUiService()
+        {
+        }
+        /**
          * Gets the public 'Yoast\WP\SEO\Values\Images' shared autowired service.
          *
          * @return \Yoast\WP\SEO\Values\Images
@@ -34532,6 +41753,14 @@ namespace Yoast\WP\SEO\Generated {
          * @return \Yoast\WP\SEO\Values\Open_Graph\Images
          */
         protected function getImages2Service()
+        {
+        }
+        /**
+         * Gets the public 'Yoast\WP\SEO\Values\Twitter\Images' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Values\Twitter\Images
+         */
+        protected function getImages3Service()
         {
         }
         /**
@@ -34567,11 +41796,115 @@ namespace Yoast\WP\SEO\Generated {
         {
         }
         /**
-         * Gets the private 'wpdb' shared service.
+         * Gets the public 'wpdb' shared service.
          *
          * @return \wpdb
          */
         protected function getWpdbService()
+        {
+        }
+        /**
+         * Gets the private 'Yoast\WP\SEO\Content_Type_Visibility\Application\Content_Type_Visibility_Dismiss_Notifications' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Content_Type_Visibility\Application\Content_Type_Visibility_Dismiss_Notifications
+         */
+        protected function getContentTypeVisibilityDismissNotificationsService()
+        {
+        }
+        /**
+         * Gets the private 'Yoast\WP\SEO\Dashboard\Application\Score_Results\Current_Scores_Repository' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Dashboard\Application\Score_Results\Current_Scores_Repository
+         */
+        protected function getCurrentScoresRepositoryService()
+        {
+        }
+        /**
+         * Gets the private 'Yoast\WP\SEO\Dashboard\Application\Taxonomies\Taxonomies_Repository' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Dashboard\Application\Taxonomies\Taxonomies_Repository
+         */
+        protected function getTaxonomiesRepositoryService()
+        {
+        }
+        /**
+         * Gets the private 'Yoast\WP\SEO\Dashboard\Domain\Score_Groups\SEO_Score_Groups\Bad_SEO_Score_Group' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Dashboard\Domain\Score_Groups\SEO_Score_Groups\Bad_SEO_Score_Group
+         */
+        protected function getBadSEOScoreGroupService()
+        {
+        }
+        /**
+         * Gets the private 'Yoast\WP\SEO\Dashboard\Domain\Score_Groups\SEO_Score_Groups\Good_SEO_Score_Group' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Dashboard\Domain\Score_Groups\SEO_Score_Groups\Good_SEO_Score_Group
+         */
+        protected function getGoodSEOScoreGroupService()
+        {
+        }
+        /**
+         * Gets the private 'Yoast\WP\SEO\Dashboard\Domain\Score_Groups\SEO_Score_Groups\No_SEO_Score_Group' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Dashboard\Domain\Score_Groups\SEO_Score_Groups\No_SEO_Score_Group
+         */
+        protected function getNoSEOScoreGroupService()
+        {
+        }
+        /**
+         * Gets the private 'Yoast\WP\SEO\Dashboard\Domain\Score_Groups\SEO_Score_Groups\Ok_SEO_Score_Group' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Dashboard\Domain\Score_Groups\SEO_Score_Groups\Ok_SEO_Score_Group
+         */
+        protected function getOkSEOScoreGroupService()
+        {
+        }
+        /**
+         * Gets the private 'Yoast\WP\SEO\Dashboard\Infrastructure\Configuration\Permanently_Dismissed_Site_Kit_Configuration_Repository' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Dashboard\Infrastructure\Configuration\Permanently_Dismissed_Site_Kit_Configuration_Repository
+         */
+        protected function getPermanentlyDismissedSiteKitConfigurationRepositoryService()
+        {
+        }
+        /**
+         * Gets the private 'Yoast\WP\SEO\Dashboard\Infrastructure\Configuration\Site_Kit_Consent_Repository' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Dashboard\Infrastructure\Configuration\Site_Kit_Consent_Repository
+         */
+        protected function getSiteKitConsentRepositoryService()
+        {
+        }
+        /**
+         * Gets the private 'Yoast\WP\SEO\Dashboard\Infrastructure\Content_Types\Content_Types_Collector' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Dashboard\Infrastructure\Content_Types\Content_Types_Collector
+         */
+        protected function getContentTypesCollectorService()
+        {
+        }
+        /**
+         * Gets the private 'Yoast\WP\SEO\Dashboard\Infrastructure\Endpoints\Site_Kit_Consent_Management_Endpoint' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Dashboard\Infrastructure\Endpoints\Site_Kit_Consent_Management_Endpoint
+         */
+        protected function getSiteKitConsentManagementEndpointService()
+        {
+        }
+        /**
+         * Gets the private 'Yoast\WP\SEO\Dashboard\Infrastructure\Integrations\Site_Kit' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Dashboard\Infrastructure\Integrations\Site_Kit
+         */
+        protected function getSiteKitService()
+        {
+        }
+        /**
+         * Gets the private 'Yoast\WP\SEO\Introductions\Application\Introductions_Collector' shared autowired service.
+         *
+         * @return \Yoast\WP\SEO\Introductions\Application\Introductions_Collector
+         */
+        protected function getIntroductionsCollectorService()
         {
         }
     }
@@ -34647,7 +41980,7 @@ namespace Yoast\WP\SEO\Generators {
          *
          * @param Meta_Tags_Context $context The meta tags context.
          *
-         * @return array An array of associative arrays that each have a 'text' and a 'url'.
+         * @return array<array<int,string>> An array of associative arrays that each have a 'text' and a 'url'.
          */
         public function generate(\Yoast\WP\SEO\Context\Meta_Tags_Context $context)
         {
@@ -34655,21 +41988,31 @@ namespace Yoast\WP\SEO\Generators {
         /**
          * Returns the modified post crumb.
          *
-         * @param array     $crumb    The crumb.
+         * @param string[]  $crumb    The crumb.
          * @param Indexable $ancestor The indexable.
          *
-         * @return array The crumb.
+         * @return array<int,string> The crumb.
          */
         private function get_post_crumb($crumb, $ancestor)
         {
         }
         /**
+         * Adds the correct ID to the crumb array based on the ancestor provided.
+         *
+         * @param Indexable $ancestor The ancestor indexable.
+         *
+         * @return string[]
+         */
+        private function get_post_type_crumb(\Yoast\WP\SEO\Models\Indexable $ancestor)
+        {
+        }
+        /**
          * Returns the modified post type crumb.
          *
-         * @param array     $crumb    The crumb.
+         * @param string[]  $crumb    The crumb.
          * @param Indexable $ancestor The indexable.
          *
-         * @return array The crumb.
+         * @return string[] The crumb.
          */
         private function get_post_type_archive_crumb($crumb, $ancestor)
         {
@@ -34677,10 +42020,10 @@ namespace Yoast\WP\SEO\Generators {
         /**
          * Returns the modified term crumb.
          *
-         * @param array     $crumb    The crumb.
+         * @param string[]  $crumb    The crumb.
          * @param Indexable $ancestor The indexable.
          *
-         * @return array The crumb.
+         * @return array<int,string> The crumb.
          */
         private function get_term_crumb($crumb, $ancestor)
         {
@@ -34688,10 +42031,10 @@ namespace Yoast\WP\SEO\Generators {
         /**
          * Returns the modified system page crumb.
          *
-         * @param array     $crumb    The crumb.
+         * @param string[]  $crumb    The crumb.
          * @param Indexable $ancestor The indexable.
          *
-         * @return array The crumb.
+         * @return string[] The crumb.
          */
         private function get_system_page_crumb($crumb, $ancestor)
         {
@@ -34699,10 +42042,10 @@ namespace Yoast\WP\SEO\Generators {
         /**
          * Returns the modified user crumb.
          *
-         * @param array     $crumb    The crumb.
+         * @param string[]  $crumb    The crumb.
          * @param Indexable $ancestor The indexable.
          *
-         * @return array The crumb.
+         * @return string[] The crumb.
          */
         private function get_user_crumb($crumb, $ancestor)
         {
@@ -34710,9 +42053,9 @@ namespace Yoast\WP\SEO\Generators {
         /**
          * Returns the modified date archive crumb.
          *
-         * @param array $crumb The crumb.
+         * @param string[] $crumb The crumb.
          *
-         * @return array The crumb.
+         * @return string[] The crumb.
          */
         protected function get_date_archive_crumb($crumb)
         {
@@ -34741,10 +42084,10 @@ namespace Yoast\WP\SEO\Generators {
         /**
          * Adds a crumb for the current page, if we're on an archive page or paginated post.
          *
-         * @param array     $crumbs            The array of breadcrumbs.
+         * @param string[]  $crumbs            The array of breadcrumbs.
          * @param Indexable $current_indexable The current indexable.
          *
-         * @return array The breadcrumbs.
+         * @return string[] The breadcrumbs.
          */
         protected function add_paged_crumb(array $crumbs, $current_indexable)
         {
@@ -34823,6 +42166,8 @@ namespace Yoast\WP\SEO\Generators {
          *
          * @param Indexable $indexable       The indexable.
          * @param Images    $image_container The image container.
+         *
+         * @return void
          */
         protected function add_from_indexable(\Yoast\WP\SEO\Models\Indexable $indexable, \Yoast\WP\SEO\Values\Open_Graph\Images $image_container)
         {
@@ -34831,6 +42176,8 @@ namespace Yoast\WP\SEO\Generators {
          * Retrieves the default Open Graph image.
          *
          * @param Images $image_container The image container.
+         *
+         * @return void
          */
         protected function add_from_default(\Yoast\WP\SEO\Values\Open_Graph\Images $image_container)
         {
@@ -34840,6 +42187,8 @@ namespace Yoast\WP\SEO\Generators {
          *
          * @param Meta_Tags_Context $context         The context.
          * @param Images            $image_container The image container.
+         *
+         * @return void
          */
         protected function add_from_templates(\Yoast\WP\SEO\Context\Meta_Tags_Context $context, \Yoast\WP\SEO\Values\Open_Graph\Images $image_container)
         {
@@ -35183,7 +42532,7 @@ namespace Yoast\WP\SEO\Generators\Schema {
         /**
          * Returns Person Schema data.
          *
-         * @return bool|array Person data on success, false on failure.
+         * @return bool|array<string|string[]> Person data on success, false on failure.
          */
         public function generate()
         {
@@ -35199,8 +42548,8 @@ namespace Yoast\WP\SEO\Generators\Schema {
         /**
          * Retrieve a list of social profile URLs for Person.
          *
-         * @param array $same_as_urls Array of SameAs URLs.
-         * @param int   $user_id      User ID.
+         * @param string[] $same_as_urls Array of SameAs URLs.
+         * @param int      $user_id      User ID.
          *
          * @return string[] A list of SameAs URLs.
          */
@@ -35213,7 +42562,7 @@ namespace Yoast\WP\SEO\Generators\Schema {
          * @param int  $user_id  The user ID to use.
          * @param bool $add_hash Wether or not the person's image url hash should be added to the image id.
          *
-         * @return array An array of Schema Person data.
+         * @return array<string|string[]> An array of Schema Person data.
          */
         protected function build_person_data($user_id, $add_hash = false)
         {
@@ -35221,11 +42570,11 @@ namespace Yoast\WP\SEO\Generators\Schema {
         /**
          * Returns an ImageObject for the persons avatar.
          *
-         * @param array   $data      The Person schema.
-         * @param WP_User $user_data User data.
-         * @param bool    $add_hash  Wether or not the person's image url hash should be added to the image id.
+         * @param array<string|string[]> $data      The Person schema.
+         * @param WP_User                $user_data User data.
+         * @param bool                   $add_hash  Wether or not the person's image url hash should be added to the image id.
          *
-         * @return array The Person schema.
+         * @return array<string|string[]> The Person schema.
          */
         protected function add_image($data, $user_data, $add_hash = false)
         {
@@ -35233,12 +42582,12 @@ namespace Yoast\WP\SEO\Generators\Schema {
         /**
          * Generate the person image from our settings.
          *
-         * @param array   $data      The Person schema.
-         * @param string  $schema_id The string used in the `@id` for the schema.
-         * @param bool    $add_hash  Whether or not the person's image url hash should be added to the image id.
-         * @param WP_User $user_data User data.
+         * @param array<string|string[]> $data      The Person schema.
+         * @param string                 $schema_id The string used in the `@id` for the schema.
+         * @param bool                   $add_hash  Whether or not the person's image url hash should be added to the image id.
+         * @param WP_User                $user_data User data.
          *
-         * @return array The Person schema.
+         * @return array<string|string[]> The Person schema.
          */
         protected function set_image_from_options($data, $schema_id, $add_hash = false, $user_data = null)
         {
@@ -35246,12 +42595,12 @@ namespace Yoast\WP\SEO\Generators\Schema {
         /**
          * Generate the person logo from gravatar.
          *
-         * @param array   $data      The Person schema.
-         * @param WP_User $user_data User data.
-         * @param string  $schema_id The string used in the `@id` for the schema.
-         * @param bool    $add_hash  Wether or not the person's image url hash should be added to the image id.
+         * @param array<string|string[]> $data      The Person schema.
+         * @param WP_User                $user_data User data.
+         * @param string                 $schema_id The string used in the `@id` for the schema.
+         * @param bool                   $add_hash  Wether or not the person's image url hash should be added to the image id.
          *
-         * @return array The Person schema.
+         * @return array<string|string[]> The Person schema.
          */
         protected function set_image_from_avatar($data, $user_data, $schema_id, $add_hash = false)
         {
@@ -35259,8 +42608,8 @@ namespace Yoast\WP\SEO\Generators\Schema {
         /**
          * Returns an author's social site URL.
          *
-         * @param string $social_site The social site to retrieve the URL for.
-         * @param mixed  $user_id     The user ID to use function outside of the loop.
+         * @param string    $social_site The social site to retrieve the URL for.
+         * @param int|false $user_id     The user ID to use function outside of the loop.
          *
          * @return string
          */
@@ -35280,11 +42629,11 @@ namespace Yoast\WP\SEO\Generators\Schema {
         /**
          * Builds our SameAs array.
          *
-         * @param array   $data      The Person schema data.
-         * @param WP_User $user_data The user data object.
-         * @param int     $user_id   The user ID to use.
+         * @param array<string|string[]> $data      The Person schema data.
+         * @param WP_User                $user_data The user data object.
+         * @param int                    $user_id   The user ID to use.
          *
-         * @return array The Person schema data.
+         * @return array<string|string[]> The Person schema data.
          */
         protected function add_same_as_urls($data, $user_data, $user_id)
         {
@@ -35419,7 +42768,7 @@ namespace Yoast\WP\SEO\Generators\Schema {
     class FAQ extends \Yoast\WP\SEO\Generators\Schema\Abstract_Schema_Piece
     {
         /**
-         * Determines whether or not a piece should be added to the graph.
+         * Determines whether a piece should be added to the graph.
          *
          * @return bool
          */
@@ -35490,6 +42839,8 @@ namespace Yoast\WP\SEO\Generators\Schema {
          *
          * @param array $data       Our How-To schema data.
          * @param array $attributes The block data attributes.
+         *
+         * @return void
          */
         private function add_duration(&$data, $attributes)
         {
@@ -35499,6 +42850,8 @@ namespace Yoast\WP\SEO\Generators\Schema {
          *
          * @param array $data  Our How-To schema data.
          * @param array $steps Our How-To block's steps.
+         *
+         * @return void
          */
         private function add_steps(&$data, $steps)
         {
@@ -35508,6 +42861,8 @@ namespace Yoast\WP\SEO\Generators\Schema {
          *
          * @param array  $schema_step Our Schema output for the Step.
          * @param string $json_text   The step text.
+         *
+         * @return void
          */
         private function add_step_description(&$schema_step, $json_text)
         {
@@ -35517,6 +42872,8 @@ namespace Yoast\WP\SEO\Generators\Schema {
          *
          * @param array $schema_step Our Schema output for the Step.
          * @param array $step        The step block data.
+         *
+         * @return void
          */
         private function add_step_image(&$schema_step, $step)
         {
@@ -35527,6 +42884,8 @@ namespace Yoast\WP\SEO\Generators\Schema {
          * @param array $graph Our Schema data.
          * @param array $block The How-To block content.
          * @param int   $index The index of the current block.
+         *
+         * @return void
          */
         protected function add_how_to(&$graph, $block, $index)
         {
@@ -35612,7 +42971,7 @@ namespace Yoast\WP\SEO\Generators\Schema {
         /**
          * Returns WebPage schema data.
          *
-         * @return array WebPage schema data.
+         * @return array<string|array<string>> WebPage schema data.
          */
         public function generate()
         {
@@ -35620,10 +42979,10 @@ namespace Yoast\WP\SEO\Generators\Schema {
         /**
          * Adds an author property to the $data if the WebPage is not represented.
          *
-         * @param array   $data The WebPage schema.
-         * @param WP_Post $post The post the context is representing.
+         * @param array<string|array<string>> $data The WebPage schema.
+         * @param WP_Post                     $post The post the context is representing.
          *
-         * @return array The WebPage schema.
+         * @return array<string|array<string>> The WebPage schema.
          */
         public function add_author($data, $post)
         {
@@ -35631,9 +42990,11 @@ namespace Yoast\WP\SEO\Generators\Schema {
         /**
          * If we have an image, make it the primary image of the page.
          *
-         * @param array $data WebPage schema data.
+         * @param array<string|array<string>> $data WebPage schema data.
+         *
+         * @return array<string|array<string>>
          */
-        public function add_image(&$data)
+        public function add_image($data)
         {
         }
         /**
@@ -35647,9 +43008,9 @@ namespace Yoast\WP\SEO\Generators\Schema {
         /**
          * Adds the potential action property to the WebPage Schema piece.
          *
-         * @param array $data The WebPage data.
+         * @param array<string|array<string>> $data The WebPage data.
          *
-         * @return array The WebPage data with the potential action added.
+         * @return array<string|array<string>> The WebPage data with the potential action added.
          */
         private function add_potential_action($data)
         {
@@ -35715,6 +43076,12 @@ namespace Yoast\WP\SEO\Generators {
     class Twitter_Image_Generator implements \Yoast\WP\SEO\Generators\Generator_Interface
     {
         /**
+         * The Twitter image helper.
+         *
+         * @var Twitter_Image_Helper
+         */
+        protected $twitter_image;
+        /**
          * The image helper.
          *
          * @var Image_Helper
@@ -35726,12 +43093,6 @@ namespace Yoast\WP\SEO\Generators {
          * @var Url_Helper
          */
         protected $url;
-        /**
-         * The Twitter image helper.
-         *
-         * @var Twitter_Image_Helper
-         */
-        protected $twitter_image;
         /**
          * Twitter_Image_Generator constructor.
          *
@@ -35749,7 +43110,7 @@ namespace Yoast\WP\SEO\Generators {
          *
          * @param Meta_Tags_Context $context The context.
          *
-         * @return array The images.
+         * @return array<array<string,string|int>> The images.
          */
         public function generate(\Yoast\WP\SEO\Context\Meta_Tags_Context $context)
         {
@@ -35759,8 +43120,10 @@ namespace Yoast\WP\SEO\Generators {
          *
          * @param Indexable $indexable       The indexable.
          * @param Images    $image_container The image container.
+         *
+         * @return void
          */
-        protected function add_from_indexable(\Yoast\WP\SEO\Models\Indexable $indexable, \Yoast\WP\SEO\Values\Images $image_container)
+        protected function add_from_indexable(\Yoast\WP\SEO\Models\Indexable $indexable, \Yoast\WP\SEO\Values\Twitter\Images $image_container)
         {
         }
         /**
@@ -35847,7 +43210,7 @@ namespace Yoast\WP\SEO\Helpers {
          *
          * @param string $handle The handle.
          *
-         * @return string[]|bool All dependencies of the given handle.
+         * @return string[] All dependencies of the given handle.
          */
         public function get_dependency_handles($handle)
         {
@@ -36220,7 +43583,7 @@ namespace Yoast\WP\SEO\Helpers {
          * Redirects clean permalink.
          *
          * @param string $proper_url The proper URL.
-         * @return void.
+         * @return void
          */
         public function do_clean_redirect($proper_url)
         {
@@ -36965,8 +44328,8 @@ namespace Yoast\WP\SEO\Helpers {
         /**
          * Find an attachment ID for a given URL.
          *
-         * @param string $url             The URL to find the attachment for.
-         * @param bool   $use_link_table  Whether the SEO Links table will be used to retrieve the id.
+         * @param string $url            The URL to find the attachment for.
+         * @param bool   $use_link_table Whether the SEO Links table will be used to retrieve the id.
          *
          * @return int The found attachment ID, or 0 if none was found.
          */
@@ -36989,7 +44352,8 @@ namespace Yoast\WP\SEO\Helpers {
         {
         }
         /**
-         * Based on and image ID return array with the best variation of that image. If it's not saved to the DB,  save it to an option.
+         * Based on and image ID return array with the best variation of that image. If it's not saved to the DB,  save it
+         * to an option.
          *
          * @param string $setting The setting name. Should be company or person.
          *
@@ -37133,6 +44497,8 @@ namespace Yoast\WP\SEO\Helpers {
          * @required
          *
          * @param Indexable_Repository $repository The indexable repository.
+         *
+         * @return void
          */
         public function set_indexable_repository(\Yoast\WP\SEO\Repositories\Indexable_Repository $repository)
         {
@@ -37153,8 +44519,20 @@ namespace Yoast\WP\SEO\Helpers {
          * @param string|null $type    The type of the indexable.
          * @param string|null $subtype The subtype. Can be null.
          * @param string      $reason  The reason that the permalink has been changed.
+         *
+         * @return void
          */
         public function reset_permalink_indexables($type = null, $subtype = null, $reason = \Yoast\WP\SEO\Config\Indexing_Reasons::REASON_PERMALINK_SETTINGS)
+        {
+        }
+        /**
+         * Determines whether indexing the specific indexable is appropriate at this time.
+         *
+         * @param Indexable $indexable The indexable.
+         *
+         * @return bool Whether indexing the specific indexable is appropriate at this time.
+         */
+        public function should_index_indexable($indexable)
         {
         }
         /**
@@ -37201,6 +44579,19 @@ namespace Yoast\WP\SEO\Helpers {
          * @return bool True if default value.
          */
         public function check_if_default_field($indexable, $field)
+        {
+        }
+        /**
+         * Saves and returns an indexable (on production environments only).
+         *
+         * Moved from Yoast\WP\SEO\Builders\Indexable_Builder.
+         *
+         * @param Indexable      $indexable        The indexable.
+         * @param Indexable|null $indexable_before The indexable before possible changes.
+         *
+         * @return bool True if default value.
+         */
+        public function save_indexable($indexable, $indexable_before = null)
         {
         }
     }
@@ -37327,6 +44718,12 @@ namespace Yoast\WP\SEO\Helpers {
          */
         protected $indexing_actions;
         /**
+         * The indexation actions that can be done in the background.
+         *
+         * @var Indexation_Action_Interface[]|Limited_Indexing_Action_Interface[]
+         */
+        protected $background_indexing_actions;
+        /**
          * The indexable repository.
          *
          * @var Indexable_Repository
@@ -37353,6 +44750,8 @@ namespace Yoast\WP\SEO\Helpers {
          * @param Indexable_General_Indexation_Action           $general_indexation           The general indexing (homepage etc) action.
          * @param Post_Link_Indexing_Action                     $post_link_indexing_action    The post crosslink indexing action.
          * @param Term_Link_Indexing_Action                     $term_link_indexing_action    The term crossling indexing action.
+         *
+         * @return void
          */
         public function set_indexing_actions(\Yoast\WP\SEO\Actions\Indexing\Indexable_Post_Indexation_Action $post_indexation, \Yoast\WP\SEO\Actions\Indexing\Indexable_Term_Indexation_Action $term_indexation, \Yoast\WP\SEO\Actions\Indexing\Indexable_Post_Type_Archive_Indexation_Action $post_type_archive_indexation, \Yoast\WP\SEO\Actions\Indexing\Indexable_General_Indexation_Action $general_indexation, \Yoast\WP\SEO\Actions\Indexing\Post_Link_Indexing_Action $post_link_indexing_action, \Yoast\WP\SEO\Actions\Indexing\Term_Link_Indexing_Action $term_link_indexing_action)
         {
@@ -37363,6 +44762,8 @@ namespace Yoast\WP\SEO\Helpers {
          * @required
          *
          * @param Indexable_Repository $indexable_repository The indexable repository.
+         *
+         * @return void
          */
         public function set_indexable_repository(\Yoast\WP\SEO\Repositories\Indexable_Repository $indexable_repository)
         {
@@ -37403,6 +44804,8 @@ namespace Yoast\WP\SEO\Helpers {
         }
         /**
          * Removes any pre-existing notification, so that a new notification (with a possible new reason) can be added.
+         *
+         * @return void
          */
         protected function remove_indexing_notification()
         {
@@ -37504,11 +44907,12 @@ namespace Yoast\WP\SEO\Helpers {
         /**
          * Returns a limited number of unindexed objects.
          *
-         * @param int $limit Limit the number of unindexed objects that are counted.
+         * @param int                                                               $limit   Limit the number of unindexed objects that are counted.
+         * @param Indexation_Action_Interface[]|Limited_Indexing_Action_Interface[] $actions The actions whose counts will be calculated.
          *
          * @return int The total number of unindexed objects.
          */
-        public function get_limited_unindexed_count($limit)
+        public function get_limited_unindexed_count($limit, $actions = [])
         {
         }
         /**
@@ -37519,6 +44923,16 @@ namespace Yoast\WP\SEO\Helpers {
          * @return int The total number of unindexed objects.
          */
         public function get_limited_filtered_unindexed_count($limit)
+        {
+        }
+        /**
+         * Returns the total number of unindexed objects that can be indexed in the background and applies a filter for third party integrations.
+         *
+         * @param int $limit Limit the number of unindexed objects that are counted.
+         *
+         * @return int The total number of unindexed objects that can be indexed in the background.
+         */
+        public function get_limited_filtered_unindexed_count_background($limit)
         {
         }
     }
@@ -37669,6 +45083,37 @@ namespace Yoast\WP\SEO\Helpers {
         public function restore_notification(\Yoast_Notification $notification)
         {
         }
+        /**
+         * Return the notifications sorted on type and priority. (wrapper function)
+         *
+         * @codeCoverageIgnore
+         *
+         * @return array|Yoast_Notification[] Sorted Notifications
+         */
+        public function get_sorted_notifications()
+        {
+        }
+        /**
+         * Check if the user has dismissed a notification. (wrapper function)
+         *
+         * @param Yoast_Notification $notification The notification to check for dismissal.
+         * @param int|null           $user_id      User ID to check on.
+         *
+         * @codeCoverageIgnore
+         *
+         * @return bool
+         */
+        private function is_notification_dismissed(\Yoast_Notification $notification, $user_id = null)
+        {
+        }
+        /**
+         * Parses all the notifications to an array with just id, message, nonce, type and dismissed.
+         *
+         * @return array<string,string|bool>
+         */
+        public function get_alerts() : array
+        {
+        }
     }
 }
 namespace Yoast\WP\SEO\Helpers\Open_Graph {
@@ -37703,7 +45148,10 @@ namespace Yoast\WP\SEO\Helpers\Open_Graph {
         /**
          * Determines whether the passed URL is considered valid.
          *
-         * @param array $image The image array.
+         * @deprecated 22.4
+         * @codeCoverageIgnore
+         *
+         * @param array<array<string,string|int>> $image The image array.
          *
          * @return bool Whether or not the URL is a valid image.
          */
@@ -37723,7 +45171,7 @@ namespace Yoast\WP\SEO\Helpers\Open_Graph {
          *
          * @param int $attachment_id The attachment id.
          *
-         * @return array|false The image data when found, `false` when not.
+         * @return array<string,string|int>|false The image data when found, `false` when not.
          */
         public function get_image_by_id($attachment_id)
         {
@@ -37806,12 +45254,13 @@ namespace Yoast\WP\SEO\Helpers {
         /**
          * Sets a single field to the options.
          *
-         * @param string $key   The key to set.
-         * @param mixed  $value The value to set.
+         * @param string $key          The key to set.
+         * @param mixed  $value        The value to set.
+         * @param string $option_group The lookup table which represents the option_group where the key is stored.
          *
          * @return mixed|null Returns value if found.
          */
-        public function set($key, $value)
+        public function set($key, $value, $option_group = '')
         {
         }
         /**
@@ -37963,6 +45412,22 @@ namespace Yoast\WP\SEO\Helpers {
         public function get_current_page_number()
         {
         }
+        /**
+         * Returns the key of the query loop.
+         *
+         * @return string The key of the query loop.
+         */
+        public function get_key_query_loop()
+        {
+        }
+        /**
+         * Returns the page number from the query loop.
+         *
+         * @return string The page number from the query loop.
+         */
+        public function get_page_number_from_query_loop()
+        {
+        }
     }
     /**
      * A helper object for permalinks.
@@ -38020,6 +45485,8 @@ namespace Yoast\WP\SEO\Helpers {
          * @required
          *
          * @param Indexable_Repository $repository The indexable repository.
+         *
+         * @return void
          */
         public function set_indexable_repository(\Yoast\WP\SEO\Repositories\Indexable_Repository $repository)
         {
@@ -38227,6 +45694,14 @@ namespace Yoast\WP\SEO\Helpers {
         {
         }
         /**
+         * Returns all indexable post types with archive pages.
+         *
+         * @return array All post types which are indexable and have archive pages.
+         */
+        public function get_indexable_post_archives()
+        {
+        }
+        /**
          * Filters the post types that are included to be indexed.
          *
          * @param array $included_post_types The post types that are included to be indexed.
@@ -38234,6 +45709,26 @@ namespace Yoast\WP\SEO\Helpers {
          * @return array The filtered post types that are included to be indexed.
          */
         protected function filter_included_post_types($included_post_types)
+        {
+        }
+        /**
+         * Checks if the given post type should be indexed.
+         *
+         * @param string $post_type The post type that is checked.
+         *
+         * @return bool
+         */
+        public function is_of_indexable_post_type($post_type)
+        {
+        }
+        /**
+         * Checks if the archive of a post type is indexable.
+         *
+         * @param string $post_type The post type to check.
+         *
+         * @return bool if the archive is indexable.
+         */
+        public function is_post_type_archive_indexable($post_type)
         {
         }
         /**
@@ -38308,6 +45803,14 @@ namespace Yoast\WP\SEO\Helpers {
         public function get_premium_version()
         {
         }
+        /**
+         * Gets the version.
+         *
+         * @return string The version.
+         */
+        public function get_version()
+        {
+        }
     }
     /**
      * A helper object for redirects.
@@ -38322,6 +45825,8 @@ namespace Yoast\WP\SEO\Helpers {
          * @param string $location The path to redirect to.
          * @param int    $status   The status code to use.
          * @param string $reason   The reason for the redirect.
+         *
+         * @return void
          */
         public function do_unsafe_redirect($location, $status = 302, $reason = 'Yoast SEO')
         {
@@ -38334,6 +45839,8 @@ namespace Yoast\WP\SEO\Helpers {
          * @param string $location The path to redirect to.
          * @param int    $status   The status code to use.
          * @param string $reason   The reason for the redirect.
+         *
+         * @return void
          */
         public function do_safe_redirect($location, $status = 302, $reason = 'Yoast SEO')
         {
@@ -38345,6 +45852,8 @@ namespace Yoast\WP\SEO\Helpers {
          * @codeCoverageIgnore It only wraps a WordPress function.
          *
          * @param string $header The header to set.
+         *
+         * @return void
          */
         public function set_header($header)
         {
@@ -38356,22 +45865,10 @@ namespace Yoast\WP\SEO\Helpers {
          * @codeCoverageIgnore It only wraps a WordPress function.
          *
          * @param string $header The header to remove.
+         *
+         * @return void
          */
         public function remove_header($header)
-        {
-        }
-    }
-    /**
-     * A helper object for the request state.
-     */
-    class Request_Helper
-    {
-        /**
-         * Checks if the current request is a REST request.
-         *
-         * @return bool True when the current request is a REST request.
-         */
-        public function is_rest_request()
         {
         }
     }
@@ -38675,11 +46172,11 @@ namespace Yoast\WP\SEO\Helpers\Schema {
         /**
          * Find an image based on its URL and generate a Schema object for it.
          *
-         * @param string $schema_id       The `@id` to use for the returned image.
-         * @param string $url             The image URL to base our object on.
-         * @param string $caption         An optional caption.
-         * @param bool   $add_hash        Whether a hash will be added as a suffix in the @id.
-         * @param bool   $use_link_table  Whether the SEO Links table will be used to retrieve the id.
+         * @param string $schema_id      The `@id` to use for the returned image.
+         * @param string $url            The image URL to base our object on.
+         * @param string $caption        An optional caption.
+         * @param bool   $add_hash       Whether a hash will be added as a suffix in the @id.
+         * @param bool   $use_link_table Whether the SEO Links table will be used to retrieve the id.
          *
          * @return array Schema ImageObject array.
          */
@@ -38837,6 +46334,8 @@ namespace Yoast\WP\SEO\Helpers\Schema {
          *
          * @param string $variable The replace variable.
          * @param string $value    The value that the variable should be replaced with.
+         *
+         * @return void
          */
         protected function register_replacement($variable, $value)
         {
@@ -38882,6 +46381,17 @@ namespace Yoast\WP\SEO\Helpers {
          * @return Score_Icon_Presenter The Score_Icon_Presenter.
          */
         public function for_readability($score, $extra_class = '')
+        {
+        }
+        /**
+         * Creates a Score_Icon_Presenter for the inclusive language analysis.
+         *
+         * @param int    $score       The inclusive language analysis score.
+         * @param string $extra_class Optional. Any extra class.
+         *
+         * @return Score_Icon_Presenter The Score_Icon_Presenter.
+         */
+        public function for_inclusive_language($score, $extra_class = '')
         {
         }
         /**
@@ -38947,6 +46457,8 @@ namespace Yoast\WP\SEO\Helpers {
          * Echoes a version of the URL with a utm_content with the current version.
          *
          * @param string $url The URL to build upon.
+         *
+         * @return void
          */
         public function show($url)
         {
@@ -39083,7 +46595,7 @@ namespace Yoast\WP\SEO\Helpers {
         /**
          * Gets the organization social profiles stored in the database.
          *
-         * @return array The social profiles for the organization.
+         * @return array<string, string> The social profiles for the organization.
          */
         public function get_organization_social_profiles()
         {
@@ -39150,31 +46662,6 @@ namespace Yoast\WP\SEO\Helpers {
          * @return array An array with the setting that the non-valid twitter value is about to update.
          */
         protected function get_non_valid_twitter($twitter_site, $twitter_setting)
-        {
-        }
-        /*** DEPRECATED METHODS ***/
-        /**
-         * Gets the person social profile fields supported by us after WP filtering.
-         *
-         * @deprecated 20.1
-         * @codeCoverageIgnore
-         *
-         * @return array The supported social profile fields.
-         */
-        public function get_supported_person_social_profile_fields()
-        {
-        }
-        /**
-         * Checks if the current user has the capability to edit a specific user.
-         *
-         * @deprecated 20.2
-         * @codeCoverageIgnore
-         *
-         * @param int $person_id The id of the person to edit.
-         *
-         * @return bool
-         */
-        public function can_edit_profile($person_id)
         {
         }
     }
@@ -39380,11 +46867,9 @@ namespace Yoast\WP\SEO\Helpers\Twitter {
         /**
          * Retrieves an image url by its id.
          *
-         * @codeCoverageIgnore It is a wrapper method.
-         *
          * @param int $image_id The image id.
          *
-         * @return string The image url.
+         * @return string The image url. Empty string if the attachment is not valid.
          */
         public function get_by_id($image_id)
         {
@@ -39575,6 +47060,14 @@ namespace Yoast\WP\SEO\Helpers {
         {
         }
         /**
+         * Returns the current users display_name.
+         *
+         * @return string
+         */
+        public function get_current_user_display_name() : string
+        {
+        }
+        /**
          * Updates user meta field for a user.
          *
          * Use the $prev_value parameter to differentiate between meta fields with the
@@ -39715,74 +47208,6 @@ namespace Yoast\WP\SEO\Helpers {
         }
     }
     /**
-     * A helper object for WordProof integration.
-     */
-    class Wordproof_Helper
-    {
-        /**
-         * Holds the Current Page helper instance.
-         *
-         * @var Current_Page_Helper
-         */
-        protected $current_page;
-        /**
-         * Holds the WooCommerce helper instance.
-         *
-         * @var Woocommerce_Helper
-         */
-        protected $woocommerce;
-        /**
-         * Holds the Options Page helper instance.
-         *
-         * @var Options_Helper
-         */
-        protected $options;
-        /**
-         * WordProof_Helper constructor.
-         *
-         * @param Current_Page_Helper $current_page The current page helper.
-         * @param Woocommerce_Helper  $woocommerce  The woocommerce helper.
-         * @param Options_Helper      $options      The options helper.
-         */
-        public function __construct(\Yoast\WP\SEO\Helpers\Current_Page_Helper $current_page, \Yoast\WP\SEO\Helpers\Woocommerce_Helper $woocommerce, \Yoast\WP\SEO\Helpers\Options_Helper $options)
-        {
-        }
-        /**
-         * Remove site options after disabling the integration.
-         *
-         * @return bool Returns if the options are deleted
-         */
-        public function remove_site_options()
-        {
-        }
-        /**
-         * Returns if conditionals are met. If not, the integration should be disabled.
-         *
-         * @param bool $return_conditional If the conditional class name that was unmet should be returned.
-         *
-         * @return bool|string Returns if the integration should be disabled.
-         */
-        public function integration_is_disabled($return_conditional = false)
-        {
-        }
-        /**
-         * Returns if the WordProof integration toggle is turned on.
-         *
-         * @return bool Returns if the integration toggle is set to true if conditionals are met.
-         */
-        public function integration_is_active()
-        {
-        }
-        /**
-         * Return if WordProof should be active for this post editor page.
-         *
-         * @return bool Returns if WordProof should be active for this page.
-         */
-        public function is_active()
-        {
-        }
-    }
-    /**
      * A helper object for the wpdb.
      */
     class Wpdb_Helper
@@ -39811,20 +47236,6 @@ namespace Yoast\WP\SEO\Helpers {
         public function table_exists($table)
         {
         }
-    }
-}
-namespace Yoast\WP\SEO {
-    /**
-     * An interface for registering integrations with WordPress
-     */
-    interface Loadable_Interface
-    {
-        /**
-         * Returns the conditionals based on which this loadable should be active.
-         *
-         * @return array
-         */
-        public static function get_conditionals();
     }
 }
 namespace Yoast\WP\SEO\Initializers {
@@ -39874,9 +47285,9 @@ namespace Yoast\WP\SEO\Initializers {
         /**
          * Crawl Cleanup Basic integration constructor.
          *
-         * @param Options_Helper       $options_helper      The option helper.
-         * @param Url_Helper           $url_helper          The URL helper.
-         * @param Redirect_Helper      $redirect_helper     The Redirect Helper.
+         * @param Options_Helper       $options_helper       The option helper.
+         * @param Url_Helper           $url_helper           The URL helper.
+         * @param Redirect_Helper      $redirect_helper      The Redirect Helper.
          * @param Crawl_Cleanup_Helper $crawl_cleanup_helper The Crawl_Cleanup_Helper.
          */
         public function __construct(\Yoast\WP\SEO\Helpers\Options_Helper $options_helper, \Yoast\WP\SEO\Helpers\Url_Helper $url_helper, \Yoast\WP\SEO\Helpers\Redirect_Helper $redirect_helper, \Yoast\WP\SEO\Helpers\Crawl_Cleanup_Helper $crawl_cleanup_helper)
@@ -39910,6 +47321,8 @@ namespace Yoast\WP\SEO\Initializers {
         }
         /**
          * Redirect utm variables away.
+         *
+         * @return void
          */
         public function utm_redirect()
         {
@@ -39954,6 +47367,8 @@ namespace Yoast\WP\SEO\Initializers {
         }
         /**
          * Disable the WP core XML sitemaps.
+         *
+         * @return void
          */
         public function initialize()
         {
@@ -40075,6 +47490,31 @@ namespace Yoast\WP\SEO\Initializers {
         }
     }
     /**
+     * Adds custom headers to the list of plugin headers to read.
+     */
+    class Plugin_Headers implements \Yoast\WP\SEO\Initializers\Initializer_Interface
+    {
+        use \Yoast\WP\SEO\Conditionals\No_Conditionals;
+        /**
+         * Hooks into the list of the plugin headers.
+         *
+         * @return void
+         */
+        public function initialize()
+        {
+        }
+        /**
+         * Add the `Requires Yoast SEO` header to the list of headers.
+         *
+         * @param array<string> $headers The headers.
+         *
+         * @return array<string> The updated headers.
+         */
+        public function add_requires_yoast_seo_header($headers)
+        {
+        }
+    }
+    /**
      * Declares compatibility with the WooCommerce HPOS feature.
      */
     class Woocommerce implements \Yoast\WP\SEO\Initializers\Initializer_Interface
@@ -40082,12 +47522,16 @@ namespace Yoast\WP\SEO\Initializers {
         use \Yoast\WP\SEO\Conditionals\No_Conditionals;
         /**
          * Hooks into WooCommerce.
+         *
+         * @return void
          */
         public function initialize()
         {
         }
         /**
          * Declares compatibility with the WooCommerce HPOS feature.
+         *
+         * @return void
          */
         public function declare_custom_order_tables_compatibility()
         {
@@ -40096,28 +47540,14 @@ namespace Yoast\WP\SEO\Initializers {
 }
 namespace Yoast\WP\SEO\Integrations {
     /**
-     * An interface for registering integrations with WordPress.
-     *
-     * @codeCoverageIgnore It represents an interface.
-     */
-    interface Integration_Interface extends \Yoast\WP\SEO\Loadable_Interface
-    {
-        /**
-         * Initializes the integration.
-         *
-         * This is the place to register hooks and filters.
-         *
-         * @return void
-         */
-        public function register_hooks();
-    }
-    /**
      * Abstract class for excluding certain post types from being indexed.
      */
     abstract class Abstract_Exclude_Post_Type implements \Yoast\WP\SEO\Integrations\Integration_Interface
     {
         /**
          * Initializes the integration.
+         *
+         * @return void
          */
         public function register_hooks()
         {
@@ -40148,6 +47578,108 @@ namespace Yoast\WP\SEO\Integrations {
          */
         public abstract function get_post_type();
     }
+    /**
+     * Class Academy_Integration.
+     */
+    class Academy_Integration implements \Yoast\WP\SEO\Integrations\Integration_Interface
+    {
+        public const PAGE = 'wpseo_page_academy';
+        /**
+         * Holds the WPSEO_Admin_Asset_Manager.
+         *
+         * @var WPSEO_Admin_Asset_Manager
+         */
+        private $asset_manager;
+        /**
+         * Holds the Current_Page_Helper.
+         *
+         * @var Current_Page_Helper
+         */
+        private $current_page_helper;
+        /**
+         * Holds the Product_Helper.
+         *
+         * @var Product_Helper
+         */
+        private $product_helper;
+        /**
+         * Holds the Short_Link_Helper.
+         *
+         * @var Short_Link_Helper
+         */
+        private $shortlink_helper;
+        /**
+         * Constructs Academy_Integration.
+         *
+         * @param WPSEO_Admin_Asset_Manager $asset_manager       The WPSEO_Admin_Asset_Manager.
+         * @param Current_Page_Helper       $current_page_helper The Current_Page_Helper.
+         * @param Product_Helper            $product_helper      The Product_Helper.
+         * @param Short_Link_Helper         $shortlink_helper    The Short_Link_Helper.
+         */
+        public function __construct(\WPSEO_Admin_Asset_Manager $asset_manager, \Yoast\WP\SEO\Helpers\Current_Page_Helper $current_page_helper, \Yoast\WP\SEO\Helpers\Product_Helper $product_helper, \Yoast\WP\SEO\Helpers\Short_Link_Helper $shortlink_helper)
+        {
+        }
+        /**
+         * Returns the conditionals based on which this loadable should be active.
+         *
+         * @return array
+         */
+        public static function get_conditionals()
+        {
+        }
+        /**
+         * Initializes the integration.
+         *
+         * This is the place to register hooks and filters.
+         *
+         * @return void
+         */
+        public function register_hooks()
+        {
+        }
+        /**
+         * Adds the page.
+         *
+         * @param array $pages The pages.
+         *
+         * @return array The pages.
+         */
+        public function add_page($pages)
+        {
+        }
+        /**
+         * Displays the page.
+         *
+         * @return void
+         */
+        public function display_page()
+        {
+        }
+        /**
+         * Enqueues the assets.
+         *
+         * @return void
+         */
+        public function enqueue_assets()
+        {
+        }
+        /**
+         * Removes all current WP notices.
+         *
+         * @return void
+         */
+        public function remove_notices()
+        {
+        }
+        /**
+         * Creates the script data.
+         *
+         * @return array The script data.
+         */
+        public function get_script_data()
+        {
+        }
+    }
 }
 namespace Yoast\WP\SEO\Integrations\Admin {
     /**
@@ -40157,6 +47689,12 @@ namespace Yoast\WP\SEO\Integrations\Admin {
     {
         use \Yoast\WP\SEO\Conditionals\No_Conditionals;
         /**
+         * The indexable helper.
+         *
+         * @var Indexable_Helper
+         */
+        protected $indexable_helper;
+        /**
          * The options helper.
          *
          * @var Options_Helper
@@ -40165,9 +47703,10 @@ namespace Yoast\WP\SEO\Integrations\Admin {
         /**
          * Activation_Cleanup_Integration constructor.
          *
-         * @param Options_Helper $options_helper The options helper.
+         * @param Options_Helper   $options_helper   The options helper.
+         * @param Indexable_Helper $indexable_helper The indexable helper.
          */
-        public function __construct(\Yoast\WP\SEO\Helpers\Options_Helper $options_helper)
+        public function __construct(\Yoast\WP\SEO\Helpers\Options_Helper $options_helper, \Yoast\WP\SEO\Helpers\Indexable_Helper $indexable_helper)
         {
         }
         /**
@@ -40222,6 +47761,8 @@ namespace Yoast\WP\SEO\Integrations\Admin\Addon_Installation {
         }
         /**
          * Registers all hooks to WordPress.
+         *
+         * @return void
          */
         public function register_hooks()
         {
@@ -40308,6 +47849,8 @@ namespace Yoast\WP\SEO\Integrations\Admin\Addon_Installation {
         }
         /**
          * Registers all hooks to WordPress.
+         *
+         * @return void
          */
         public function register_hooks()
         {
@@ -40385,6 +47928,8 @@ namespace Yoast\WP\SEO\Integrations\Admin {
          *
          * This cache is used in showing the Yoast SEO columns on the posts overview
          * page (e.g. keyword score, incoming link count, etc.)
+         *
+         * @return void
          */
         public function register_hooks()
         {
@@ -40393,12 +47938,16 @@ namespace Yoast\WP\SEO\Integrations\Admin {
          * Makes sure we calculate all values in one query by filling our cache beforehand.
          *
          * @param string $target Extra table navigation location which is triggered.
+         *
+         * @return void
          */
         public function maybe_fill_cache($target)
         {
         }
         /**
          * Fills the cache of indexables for all known post IDs.
+         *
+         * @return void
          */
         public function fill_cache()
         {
@@ -40450,53 +47999,61 @@ namespace Yoast\WP\SEO\Integrations\Admin {
     class Background_Indexing_Integration implements \Yoast\WP\SEO\Integrations\Integration_Interface
     {
         /**
-         * The post indexing action.
-         *
-         * @var Indexable_Post_Indexation_Action
-         */
-        protected $post_indexation;
-        /**
-         * The term indexing action.
-         *
-         * @var Indexable_Term_Indexation_Action
-         */
-        protected $term_indexation;
-        /**
-         * The post type archive indexing action.
-         *
-         * @var Indexable_Post_Type_Archive_Indexation_Action
-         */
-        protected $post_type_archive_indexation;
-        /**
-         * Represents the general indexing.
-         *
-         * @var Indexable_General_Indexation_Action
-         */
-        protected $general_indexation;
-        /**
          * Represents the indexing completed action.
          *
          * @var Indexable_Indexing_Complete_Action
          */
         protected $complete_indexation_action;
         /**
-         * The post link indexing action.
-         *
-         * @var Post_Link_Indexing_Action
-         */
-        protected $post_link_indexing_action;
-        /**
-         * The term link indexing action.
-         *
-         * @var Term_Link_Indexing_Action
-         */
-        protected $term_link_indexing_action;
-        /**
          * Represents the indexing helper.
          *
          * @var Indexing_Helper
          */
         protected $indexing_helper;
+        /**
+         * An object that checks if we are on the Yoast admin or on the dashboard page.
+         *
+         * @var Yoast_Admin_And_Dashboard_Conditional
+         */
+        protected $yoast_admin_and_dashboard_conditional;
+        /**
+         * All available indexing actions.
+         *
+         * @var Indexation_Action_Interface[]
+         */
+        protected $indexing_actions;
+        /**
+         * An object that checks if we are handling a GET request.
+         *
+         * @var Get_Request_Conditional
+         */
+        private $get_request_conditional;
+        /**
+         * An object that checks if WP_CRON is enabled.
+         *
+         * @var WP_CRON_Enabled_Conditional
+         */
+        private $wp_cron_enabled_conditional;
+        /**
+         * The indexable helper
+         *
+         * @var Indexable_Helper
+         */
+        private $indexable_helper;
+        /**
+         * Shutdown_Indexing_Integration constructor.
+         *
+         * @param Indexable_Indexing_Complete_Action    $complete_indexation_action            The complete indexing action.
+         * @param Indexing_Helper                       $indexing_helper                       The indexing helper.
+         * @param Indexable_Helper                      $indexable_helper                      The indexable helper.
+         * @param Yoast_Admin_And_Dashboard_Conditional $yoast_admin_and_dashboard_conditional An object that checks if we are on the Yoast admin or on the dashboard page.
+         * @param Get_Request_Conditional               $get_request_conditional               An object that checks if we are handling a GET request.
+         * @param WP_CRON_Enabled_Conditional           $wp_cron_enabled_conditional           An object that checks if WP_CRON is enabled.
+         * @param Indexation_Action_Interface           ...$indexing_actions                   A list of all available indexing actions.
+         */
+        public function __construct(\Yoast\WP\SEO\Actions\Indexing\Indexable_Indexing_Complete_Action $complete_indexation_action, \Yoast\WP\SEO\Helpers\Indexing_Helper $indexing_helper, \Yoast\WP\SEO\Helpers\Indexable_Helper $indexable_helper, \Yoast\WP\SEO\Conditionals\Yoast_Admin_And_Dashboard_Conditional $yoast_admin_and_dashboard_conditional, \Yoast\WP\SEO\Conditionals\Get_Request_Conditional $get_request_conditional, \Yoast\WP\SEO\Conditionals\WP_CRON_Enabled_Conditional $wp_cron_enabled_conditional, \Yoast\WP\SEO\Actions\Indexing\Indexation_Action_Interface ...$indexing_actions)
+        {
+        }
         /**
          * Returns the conditionals based on which this integration should be active.
          *
@@ -40506,24 +48063,19 @@ namespace Yoast\WP\SEO\Integrations\Admin {
         {
         }
         /**
-         * Shutdown_Indexing_Integration constructor.
+         * Register hooks.
          *
-         * @param Indexable_Post_Indexation_Action              $post_indexation              The post indexing action.
-         * @param Indexable_Term_Indexation_Action              $term_indexation              The term indexing action.
-         * @param Indexable_Post_Type_Archive_Indexation_Action $post_type_archive_indexation The post type archive indexing action.
-         * @param Indexable_General_Indexation_Action           $general_indexation           The general indexing action.
-         * @param Indexable_Indexing_Complete_Action            $complete_indexation_action   The complete indexing action.
-         * @param Post_Link_Indexing_Action                     $post_link_indexing_action    The post indexing action.
-         * @param Term_Link_Indexing_Action                     $term_link_indexing_action    The term indexing action.
-         * @param Indexing_Helper                               $indexing_helper              The indexing helper.
+         * @return void
          */
-        public function __construct(\Yoast\WP\SEO\Actions\Indexing\Indexable_Post_Indexation_Action $post_indexation, \Yoast\WP\SEO\Actions\Indexing\Indexable_Term_Indexation_Action $term_indexation, \Yoast\WP\SEO\Actions\Indexing\Indexable_Post_Type_Archive_Indexation_Action $post_type_archive_indexation, \Yoast\WP\SEO\Actions\Indexing\Indexable_General_Indexation_Action $general_indexation, \Yoast\WP\SEO\Actions\Indexing\Indexable_Indexing_Complete_Action $complete_indexation_action, \Yoast\WP\SEO\Actions\Indexing\Post_Link_Indexing_Action $post_link_indexing_action, \Yoast\WP\SEO\Actions\Indexing\Term_Link_Indexing_Action $term_link_indexing_action, \Yoast\WP\SEO\Helpers\Indexing_Helper $indexing_helper)
+        public function register_hooks()
         {
         }
         /**
-         * Register hooks.
+         * Adds the filters that change the indexing limits.
+         *
+         * @return void.
          */
-        public function register_hooks()
+        public function add_limit_filters()
         {
         }
         /**
@@ -40543,11 +48095,49 @@ namespace Yoast\WP\SEO\Integrations\Admin {
         {
         }
         /**
-         * Retrieves the shutdown limit. This limit is the amount of indexables that is generated in the background.
+         * Adds the 'Every fifteen minutes' cron schedule to WP-Cron.
          *
-         * @return int The shutdown limit.
+         * @param array $schedules The existing schedules.
+         *
+         * @return array The schedules containing the fifteen_minutes schedule.
          */
-        protected function get_shutdown_limit()
+        public function add_cron_schedule($schedules)
+        {
+        }
+        /**
+         * Schedule background indexing every 15 minutes if the index isn't already up to date.
+         *
+         * @return void
+         */
+        public function schedule_cron_indexing()
+        {
+        }
+        /**
+         * Limit cron indexing to 15 indexables per batch instead of 25.
+         *
+         * @param int $indexation_limit The current limit (filter input).
+         *
+         * @return int The new batch limit.
+         */
+        public function throttle_cron_indexing($indexation_limit)
+        {
+        }
+        /**
+         * Limit cron indexing to 3 links per batch instead of 5.
+         *
+         * @param int $link_indexation_limit The current limit (filter input).
+         *
+         * @return int The new batch limit.
+         */
+        public function throttle_cron_link_indexing($link_indexation_limit)
+        {
+        }
+        /**
+         * Determine whether cron indexation should be performed.
+         *
+         * @return bool Should cron indexation be performed.
+         */
+        protected function should_index_on_cron()
         {
         }
         /**
@@ -40557,7 +48147,95 @@ namespace Yoast\WP\SEO\Integrations\Admin {
          *
          * @return bool Should background indexation be performed.
          */
-        public function should_index_on_shutdown($shutdown_limit)
+        protected function should_index_on_shutdown($shutdown_limit)
+        {
+        }
+        /**
+         * Retrieves the shutdown limit. This limit is the amount of indexables that is generated in the background.
+         *
+         * @return int The shutdown limit.
+         */
+        protected function get_shutdown_limit()
+        {
+        }
+        /**
+         * Removes the cron indexing job from the scheduled event queue.
+         *
+         * @return void
+         */
+        protected function unschedule_cron_indexing()
+        {
+        }
+        /**
+         * Registers a method to be executed on shutdown.
+         * This wrapper mostly exists for making this class more unittestable.
+         *
+         * @param string $method_name The name of the method on the current instance to register.
+         *
+         * @return void
+         */
+        protected function register_shutdown_function($method_name)
+        {
+        }
+    }
+    /**
+     * The Check_Required_Version class.
+     *
+     * This class checks if the required version of Yoast SEO is installed.
+     * It also adds the `Requires Yoast SEO` header to the list of headers and updates the comparison table for the plugin overwrite.
+     */
+    class Check_Required_Version implements \Yoast\WP\SEO\Integrations\Integration_Interface
+    {
+        /**
+         * Initializes the integration.
+         *
+         * @return void
+         */
+        public function register_hooks()
+        {
+        }
+        /**
+         * Returns the conditionals based on which this loadable should be active.
+         *
+         * @return string[] The conditionals based on which this loadable should be active.
+         */
+        public static function get_conditionals()
+        {
+        }
+        /**
+         * Checks if the required version of Yoast SEO is installed.
+         *
+         * The code is partly inspired by Plugin_Upgrader::check_package() in wp-admin/includes/class-plugin-upgrader.php.
+         *
+         * @param string      $source        File source location.
+         * @param string      $remote_source Remote file source location.
+         * @param WP_Upgrader $upgrader      WP_Upgrader instance.
+         *
+         * @return string|WP_Error The source location or a WP_Error object if the required version is not installed.
+         */
+        public function check_required_version($source, $remote_source = null, $upgrader = null)
+        {
+        }
+        /**
+         * Update the comparison table for the plugin installation when overwriting an existing plugin.
+         *
+         * @param string        $table               The output table with Name, Version, Author, RequiresWP, and RequiresPHP info.
+         * @param array<string> $current_plugin_data Array with current plugin data.
+         * @param array<string> $new_plugin_data     Array with uploaded plugin data.
+         *
+         * @return string The updated comparison table.
+         */
+        public function update_comparison_table($table, $current_plugin_data, $new_plugin_data)
+        {
+        }
+        /**
+         * Check whether the required Yoast SEO version is installed.
+         *
+         * @param string|bool $required_version The required version.
+         *
+         * @return bool Whether the required version is installed, or no version is required.
+         */
+        private function check_requirement($required_version)
         {
         }
     }
@@ -40612,6 +48290,8 @@ namespace Yoast\WP\SEO\Integrations\Admin {
          * Returns the conditionals based in which this loadable should be active.
          *
          * In this case: when on an admin page.
+         *
+         * @return array<string>
          */
         public static function get_conditionals()
         {
@@ -40627,12 +48307,16 @@ namespace Yoast\WP\SEO\Integrations\Admin {
         }
         /**
          * Registers an action to add a new tab to the General page.
+         *
+         * @return void
          */
         public function register_hooks()
         {
         }
         /**
          * Enqueue the workouts app.
+         *
+         * @return void
          */
         public function enqueue_assets()
         {
@@ -40646,20 +48330,11 @@ namespace Yoast\WP\SEO\Integrations\Admin {
         {
         }
         /**
-         * Adds content to the Crawl Cleanup tab.
-         *
-         * @deprecated 20.4
-         * @codeCoverageIgnore
-         *
-         * @param Yoast_Form $yform The yoast form object.
-         */
-        public function add_crawl_settings_tab_content($yform)
-        {
-        }
-        /**
          * Adds content to the Crawl Cleanup network tab.
          *
          * @param Yoast_Form $yform The yoast form object.
+         *
+         * @return void
          */
         public function add_crawl_settings_tab_content_network($yform)
         {
@@ -40667,7 +48342,7 @@ namespace Yoast\WP\SEO\Integrations\Admin {
         /**
          * Print the settings sections.
          *
-         * @param Yoast_Form $yform      The Yoast form class.
+         * @param Yoast_Form $yform The Yoast form class.
          *
          * @return void
          */
@@ -40677,11 +48352,11 @@ namespace Yoast\WP\SEO\Integrations\Admin {
         /**
          * Prints a list of toggles for an array of settings with labels.
          *
-         * @param array      $settings    The settings being displayed.
-         * @param Yoast_Form $yform       The Yoast form class.
-         * @param string     $title       Optional title for the settings being displayed.
-         * @param array      $toggles     Optional naming of the toggle buttons.
-         * @param string     $warning     Optional warning to be displayed above the toggles.
+         * @param array      $settings The settings being displayed.
+         * @param Yoast_Form $yform    The Yoast form class.
+         * @param string     $title    Optional title for the settings being displayed.
+         * @param array      $toggles  Optional naming of the toggle buttons.
+         * @param string     $warning  Optional warning to be displayed above the toggles.
          *
          * @return void
          */
@@ -40807,38 +48482,6 @@ namespace Yoast\WP\SEO\Integrations\Admin {
         }
     }
     /**
-     * Disable_Concatenate_Scripts_Integration class.
-     */
-    class Disable_Concatenate_Scripts_Integration implements \Yoast\WP\SEO\Integrations\Integration_Interface
-    {
-        /**
-         * Returns the conditionals based in which this loadable should be active.
-         *
-         * In this case: when on an admin page.
-         *
-         * @return array The conditionals.
-         */
-        public static function get_conditionals()
-        {
-        }
-        /**
-         * Registers an action to disable script concatenation.
-         */
-        public function register_hooks()
-        {
-        }
-        /**
-         * Due to bugs in the 5.5 core release concatenate scripts is causing errors.
-         *
-         * Because of this we disable it.
-         *
-         * @return void
-         */
-        public function disable_concatenate_scripts()
-        {
-        }
-    }
-    /**
      * First_Time_Configuration_Integration class
      */
     class First_Time_Configuration_Integration implements \Yoast\WP\SEO\Integrations\Integration_Interface
@@ -40915,12 +48558,16 @@ namespace Yoast\WP\SEO\Integrations\Admin {
          * Adds a dedicated tab in the General sub-page.
          *
          * @param WPSEO_Options_Tabs $dashboard_tabs Object representing the tabs of the General sub-page.
+         *
+         * @return void
          */
         public function add_first_time_configuration_tab($dashboard_tabs)
         {
         }
         /**
          * Adds the data for the first-time configuration to the wpseoFirstTimeConfigurationData object.
+         *
+         * @return void
          */
         public function enqueue_assets()
         {
@@ -41142,7 +48789,7 @@ namespace Yoast\WP\SEO\Integrations\Admin {
         /**
          * The first time configuration notice helper.
          *
-         * @var \Yoast\WP\SEO\Helpers\First_Time_Configuration_Notice_Helper
+         * @var First_Time_Configuration_Notice_Helper
          */
         private $first_time_configuration_notice_helper;
         /**
@@ -41154,9 +48801,9 @@ namespace Yoast\WP\SEO\Integrations\Admin {
         /**
          * First_Time_Configuration_Notice_Integration constructor.
          *
-         * @param Options_Helper                         $options_helper      The options helper.
-         * @param First_Time_Configuration_Notice_Helper $first_time_configuration_notice_helper      The first time configuration notice helper.
-         * @param WPSEO_Admin_Asset_Manager              $admin_asset_manager The admin asset manager.
+         * @param Options_Helper                         $options_helper                         The options helper.
+         * @param First_Time_Configuration_Notice_Helper $first_time_configuration_notice_helper The first time configuration notice helper.
+         * @param WPSEO_Admin_Asset_Manager              $admin_asset_manager                    The admin asset manager.
          */
         public function __construct(\Yoast\WP\SEO\Helpers\Options_Helper $options_helper, \Yoast\WP\SEO\Helpers\First_Time_Configuration_Notice_Helper $first_time_configuration_notice_helper, \WPSEO_Admin_Asset_Manager $admin_asset_manager)
         {
@@ -41209,6 +48856,8 @@ namespace Yoast\WP\SEO\Integrations\Admin {
         }
         /**
          * Registers an action to disable script concatenation.
+         *
+         * @return void
          */
         public function register_hooks()
         {
@@ -41333,7 +48982,7 @@ namespace Yoast\WP\SEO\Integrations\Admin {
          *
          * @var array
          */
-        protected $base_pages = ['wpseo_dashboard', \Yoast\WP\SEO\Integrations\Settings_Integration::PAGE, 'wpseo_search_console', 'wpseo_tools', 'wpseo_licenses', 'wpseo_workouts'];
+        protected $base_pages = ['wpseo_dashboard', \Yoast\WP\SEO\Integrations\Settings_Integration::PAGE, \Yoast\WP\SEO\Integrations\Academy_Integration::PAGE, \Yoast\WP\SEO\Integrations\Support_Integration::PAGE, 'wpseo_search_console', 'wpseo_tools', 'wpseo_licenses', 'wpseo_workouts', 'wpseo_integrations'];
         /**
          * The current admin page
          *
@@ -41370,12 +49019,16 @@ namespace Yoast\WP\SEO\Integrations\Admin {
         }
         /**
          * Enqueues the HelpScout script.
+         *
+         * @return void
          */
         public function enqueue_help_scout_script()
         {
         }
         /**
          * Outputs a small piece of javascript for the beacon.
+         *
+         * @return void
          */
         public function output_beacon_js()
         {
@@ -41472,6 +49125,8 @@ namespace Yoast\WP\SEO\Integrations\Admin {
         }
         /**
          * Allows filtering of the HelpScout settings. Hooked to admin_head to prevent timing issues, not too early, not too late.
+         *
+         * @return void
          */
         protected function filter_settings()
         {
@@ -41530,6 +49185,8 @@ namespace Yoast\WP\SEO\Integrations\Admin {
         }
         /**
          * Enqueues the Import script.
+         *
+         * @return void
          */
         public function enqueue_import_script()
         {
@@ -41610,7 +49267,7 @@ namespace Yoast\WP\SEO\Integrations\Admin {
          *
          * @param array $excluded_taxonomies The excluded taxonomies.
          *
-         * @return array The excluded post types, including the specific post type.
+         * @return array The excluded taxonomies, including specific taxonomies.
          */
         public function exclude_taxonomies_for_indexation($excluded_taxonomies)
         {
@@ -41626,7 +49283,7 @@ namespace Yoast\WP\SEO\Integrations\Admin {
         /**
          * The notification ID.
          */
-        const NOTIFICATION_ID = 'wpseo-reindex';
+        public const NOTIFICATION_ID = 'wpseo-reindex';
         /**
          * The Yoast notification center.
          *
@@ -41711,6 +49368,8 @@ namespace Yoast\WP\SEO\Integrations\Admin {
         /**
          * Checks whether the notification should be shown and adds
          * it to the notification center if this is the case.
+         *
+         * @return void
          */
         public function maybe_create_notification()
         {
@@ -41718,6 +49377,8 @@ namespace Yoast\WP\SEO\Integrations\Admin {
         /**
          * Checks whether the notification should not be shown anymore and removes
          * it from the notification center if this is the case.
+         *
+         * @return void
          */
         public function maybe_cleanup_notification()
         {
@@ -41829,6 +49490,8 @@ namespace Yoast\WP\SEO\Integrations\Admin {
         }
         /**
          * Register hooks.
+         *
+         * @return void
          */
         public function register_hooks()
         {
@@ -41940,18 +49603,24 @@ namespace Yoast\WP\SEO\Integrations\Admin {
         }
         /**
          * Enqueue assets on the Installation success page.
+         *
+         * @return void
          */
         public function enqueue_assets()
         {
         }
         /**
          * Renders the installation success page.
+         *
+         * @return void
          */
         public function render_page()
         {
         }
         /**
          * Wrap the `exit` function to make unit testing easier.
+         *
+         * @return void
          */
         public function terminate_execution()
         {
@@ -41962,6 +49631,12 @@ namespace Yoast\WP\SEO\Integrations\Admin {
      */
     class Integrations_Page implements \Yoast\WP\SEO\Integrations\Integration_Interface
     {
+        /**
+         * The Woocommerce helper.
+         *
+         * @var Woocommerce_Helper
+         */
+        private $woocommerce_helper;
         /**
          * The admin asset manager.
          *
@@ -41975,6 +49650,30 @@ namespace Yoast\WP\SEO\Integrations\Admin {
          */
         private $options_helper;
         /**
+         * The elementor conditional.
+         *
+         * @var Elementor_Activated_Conditional
+         */
+        private $elementor_conditional;
+        /**
+         * The jetpack conditional.
+         *
+         * @var Jetpack_Conditional
+         */
+        private $jetpack_conditional;
+        /**
+         * The site kit integration configuration data.
+         *
+         * @var Site_Kit
+         */
+        private $site_kit_integration_data;
+        /**
+         * The site kit consent management endpoint.
+         *
+         * @var Site_Kit_Consent_Management_Endpoint
+         */
+        private $site_kit_consent_management_endpoint;
+        /**
          * {@inheritDoc}
          */
         public static function get_conditionals()
@@ -41983,10 +49682,17 @@ namespace Yoast\WP\SEO\Integrations\Admin {
         /**
          * Workouts_Integration constructor.
          *
-         * @param WPSEO_Admin_Asset_Manager $admin_asset_manager The admin asset manager.
-         * @param Options_Helper            $options_helper      The options helper.
+         * @param WPSEO_Admin_Asset_Manager            $admin_asset_manager                  The admin asset manager.
+         * @param Options_Helper                       $options_helper                       The options helper.
+         * @param Woocommerce_Helper                   $woocommerce_helper                   The WooCommerce helper.
+         * @param Elementor_Activated_Conditional      $elementor_conditional                The elementor conditional.
+         * @param Jetpack_Conditional                  $jetpack_conditional                  The Jetpack conditional.
+         * @param Site_Kit                             $site_kit_integration_data            The site kit integration
+         *                                                                                   configuration data.
+         * @param Site_Kit_Consent_Management_Endpoint $site_kit_consent_management_endpoint The site kit consent
+         *                                                                                   management endpoint.
          */
-        public function __construct(\WPSEO_Admin_Asset_Manager $admin_asset_manager, \Yoast\WP\SEO\Helpers\Options_Helper $options_helper)
+        public function __construct(\WPSEO_Admin_Asset_Manager $admin_asset_manager, \Yoast\WP\SEO\Helpers\Options_Helper $options_helper, \Yoast\WP\SEO\Helpers\Woocommerce_Helper $woocommerce_helper, \Yoast\WP\SEO\Conditionals\Third_Party\Elementor_Activated_Conditional $elementor_conditional, \Yoast\WP\SEO\Conditionals\Jetpack_Conditional $jetpack_conditional, \Yoast\WP\SEO\Dashboard\Infrastructure\Integrations\Site_Kit $site_kit_integration_data, \Yoast\WP\SEO\Dashboard\Infrastructure\Endpoints\Site_Kit_Consent_Management_Endpoint $site_kit_consent_management_endpoint)
         {
         }
         /**
@@ -42007,12 +49713,16 @@ namespace Yoast\WP\SEO\Integrations\Admin {
         }
         /**
          * Enqueue the integrations app.
+         *
+         * @return void
          */
         public function enqueue_assets()
         {
         }
         /**
          * Renders the target for the React to mount to.
+         *
+         * @return void
          */
         public function render_target()
         {
@@ -42036,13 +49746,13 @@ namespace Yoast\WP\SEO\Integrations\Admin {
          *
          * @var string
          */
-        const COLUMN_LINKED = 'linked';
+        public const COLUMN_LINKED = 'linked';
         /**
          * Partial column name.
          *
          * @var string
          */
-        const COLUMN_LINKS = 'links';
+        public const COLUMN_LINKS = 'links';
         /**
          * The post type helper.
          *
@@ -42092,6 +49802,8 @@ namespace Yoast\WP\SEO\Integrations\Admin {
         }
         /**
          * Register hooks that need to be registered after `init` due to all post types not yet being registered.
+         *
+         * @return void
          */
         public function register_init_hooks()
         {
@@ -42145,6 +49857,8 @@ namespace Yoast\WP\SEO\Integrations\Admin {
          *
          * @param string $column_name Column to display the content for.
          * @param int    $post_id     Post to display the column content for.
+         *
+         * @return void
          */
         public function column_content($column_name, $post_id)
         {
@@ -42255,110 +49969,18 @@ namespace Yoast\WP\SEO\Integrations\Admin {
         }
         /**
          * Renders the old configuration page.
+         *
+         * @return void
          */
         public function render_page()
         {
         }
         /**
          * Redirects from the old configuration page to the new configuration page.
-         */
-        public function redirect_to_new_configuration()
-        {
-        }
-    }
-    /**
-     * Old_Premium_Integration class
-     */
-    class Old_Premium_Integration implements \Yoast\WP\SEO\Integrations\Integration_Interface
-    {
-        /**
-         * The minimum Premium version.
-         */
-        const MINIMUM_PREMIUM_VERSION = '20.1-RC0';
-        /**
-         * The options' helper.
-         *
-         * @var Options_Helper
-         */
-        private $options_helper;
-        /**
-         * The product helper.
-         *
-         * @var Product_Helper
-         */
-        private $product_helper;
-        /**
-         * The capability helper.
-         *
-         * @var Capability_Helper
-         */
-        private $capability_helper;
-        /**
-         * The admin asset manager.
-         *
-         * @var WPSEO_Admin_Asset_Manager
-         */
-        private $admin_asset_manager;
-        /**
-         * The Current_Page_Helper.
-         *
-         * @var Current_Page_Helper
-         */
-        private $current_page_helper;
-        /**
-         * {@inheritDoc}
-         */
-        public static function get_conditionals()
-        {
-        }
-        /**
-         * Old_Premium_Integration constructor.
-         *
-         * @param Options_Helper            $options_helper      The options helper.
-         * @param Product_Helper            $product_helper      The product helper.
-         * @param Capability_Helper         $capability_helper   The capability helper.
-         * @param WPSEO_Admin_Asset_Manager $admin_asset_manager The admin asset manager.
-         * @param Current_Page_Helper       $current_page_helper The Current_Page_Helper.
-         */
-        public function __construct(\Yoast\WP\SEO\Helpers\Options_Helper $options_helper, \Yoast\WP\SEO\Helpers\Product_Helper $product_helper, \Yoast\WP\SEO\Helpers\Capability_Helper $capability_helper, \WPSEO_Admin_Asset_Manager $admin_asset_manager, \Yoast\WP\SEO\Helpers\Current_Page_Helper $current_page_helper)
-        {
-        }
-        /**
-         * {@inheritDoc}
-         */
-        public function register_hooks()
-        {
-        }
-        /**
-         * Shows a notice if Premium is older than 20.0-RC1 so Settings might be missing from the UI.
          *
          * @return void
          */
-        public function old_premium_notice()
-        {
-        }
-        /**
-         * Dismisses the old premium notice.
-         *
-         * @return bool
-         */
-        public function dismiss_old_premium_notice()
-        {
-        }
-        /**
-         * Returns whether Premium is installed but older than the minimum premium version.
-         *
-         * @return bool Whether premium is installed but older than minimum premium version.
-         */
-        protected function premium_is_old()
-        {
-        }
-        /**
-         * Returns whether the notification was dismissed in a version later than the minimum premium version.
-         *
-         * @return bool Whether the notification was dismissed in a version later than the minimum premium version.
-         */
-        protected function notice_was_dismissed_after_current_min_premium_version()
+        public function redirect_to_new_configuration()
         {
         }
     }
@@ -42451,6 +50073,86 @@ namespace Yoast\WP\SEO\Integrations\Admin {
         }
     }
     /**
+     * Class Unsupported_PHP_Version_Notice.
+     *
+     * @package Yoast\WP\SEO\Integrations\Admin
+     */
+    class Unsupported_PHP_Version_Notice implements \Yoast\WP\SEO\Integrations\Integration_Interface, \Yoast\WHIPv2\Interfaces\Message
+    {
+        /**
+         * Returns the conditionals based on which this integration should be active.
+         *
+         * @return array<string> The array of conditionals.
+         */
+        public static function get_conditionals()
+        {
+        }
+        /**
+         * Register hooks.
+         *
+         * @return void
+         */
+        public function register_hooks()
+        {
+        }
+        /**
+         * Checks the current PHP version.
+         *
+         * @return void
+         */
+        public function check_php_version()
+        {
+        }
+        /**
+         * Composes the body of the message to display.
+         *
+         * @return string The message to display.
+         */
+        public function body()
+        {
+        }
+        /**
+         * Checks if the current user has the right capabilities.
+         *
+         * @return bool True when user has right capabilities.
+         */
+        protected function has_right_capabilities()
+        {
+        }
+        /**
+         * Whether we are on the admin dashboard page or in the Yoast dashboard page.
+         *
+         * We need to have the notice in the main admin otherwise the dismissal mechanism won't work.
+         *
+         * @param string $current_page The current page.
+         *
+         * @return bool True if current page is the index.php.
+         */
+        protected function on_dashboard_page($current_page)
+        {
+        }
+        /**
+         * Checks if the installed php version is supported.
+         *
+         * @codeCoverageIgnore
+         *
+         * @return bool True when the php version is support.
+         */
+        protected function is_supported_php_version_installed()
+        {
+        }
+        /**
+         * Creates a new message to display regarding the usage of PHP 7.3 (or lower).
+         *
+         * @codeCoverageIgnore
+         *
+         * @return void
+         */
+        protected function show_unsupported_php_message()
+        {
+        }
+    }
+    /**
      * WorkoutsIntegration class
      */
     class Workouts_Integration implements \Yoast\WP\SEO\Integrations\Integration_Interface
@@ -42524,12 +50226,16 @@ namespace Yoast\WP\SEO\Integrations\Admin {
         }
         /**
          * Enqueue the workouts app.
+         *
+         * @return void
          */
         public function enqueue_assets()
         {
         }
         /**
          * Renders the target for the React to mount to.
+         *
+         * @return void
          */
         public function render_target()
         {
@@ -42628,22 +50334,53 @@ namespace Yoast\WP\SEO\Integrations\Alerts {
         }
     }
     /**
-     * Jetpack_Boost_Pre_Publish class.
+     * Black_Friday_Product_Editor_Checklist_Notification class.
+     * @phpcs:disable Yoast.NamingConventions.ObjectNameDepth.MaxExceeded
      */
-    class Jetpack_Boost_Pre_Publish extends \Yoast\WP\SEO\Integrations\Alerts\Abstract_Dismissable_Alert
+    class Black_Friday_Product_Editor_Checklist_Notification extends \Yoast\WP\SEO\Integrations\Alerts\Abstract_Dismissable_Alert
     {
         /**
          * Holds the alert identifier.
          *
          * @var string
          */
-        protected $alert_identifier = 'get-jetpack-boost-pre-publish-notification';
+        protected $alert_identifier = 'black-friday-2023-product-editor-checklist';
+    }
+    /**
+     * Black_Friday_Promotion_Notification class.
+     */
+    class Black_Friday_Promotion_Notification extends \Yoast\WP\SEO\Integrations\Alerts\Abstract_Dismissable_Alert
+    {
         /**
-         * {@inheritDoc}
+         * Holds the alert identifier.
+         *
+         * @var string
          */
-        public static function get_conditionals()
-        {
-        }
+        protected $alert_identifier = 'black-friday-2024-promotion';
+    }
+    /**
+     * Black_Friday_Promo_Notification class.
+     */
+    class Black_Friday_Sidebar_Checklist_Notification extends \Yoast\WP\SEO\Integrations\Alerts\Abstract_Dismissable_Alert
+    {
+        /**
+         * Holds the alert identifier.
+         *
+         * @var string
+         */
+        protected $alert_identifier = 'black-friday-2023-sidebar-checklist';
+    }
+    /**
+     * Trustpilot_Review_Notification class.
+     */
+    class Trustpilot_Review_Notification extends \Yoast\WP\SEO\Integrations\Alerts\Abstract_Dismissable_Alert
+    {
+        /**
+         * Holds the alert identifier.
+         *
+         * @var string
+         */
+        protected $alert_identifier = 'trustpilot-review-notification';
     }
     /**
      * Webinar_Promo_Notification class.
@@ -42659,6 +50396,77 @@ namespace Yoast\WP\SEO\Integrations\Alerts {
     }
 }
 namespace Yoast\WP\SEO\Integrations\Blocks {
+    /**
+     * Dynamic_Block class.
+     */
+    abstract class Dynamic_Block_V3 implements \Yoast\WP\SEO\Integrations\Integration_Interface
+    {
+        /**
+         * The name of the block.
+         *
+         * @var string
+         */
+        protected $block_name;
+        /**
+         * The editor script for the block.
+         *
+         * @var string
+         */
+        protected $script;
+        /**
+         * The base path for the block.
+         *
+         * @var string
+         */
+        protected $base_path;
+        /**
+         *  Returns the conditionals based on which this loadable should be active.
+         *
+         * @return array<string>
+         */
+        public static function get_conditionals()
+        {
+        }
+        /**
+         * Initializes the integration.
+         *
+         * Integrations hooking on `init` need to have a priority of 11 or higher to
+         * ensure that they run, as priority 10 is used by the loader to load the integrations.
+         *
+         * @return void
+         */
+        public function register_hooks()
+        {
+        }
+        /**
+         * Registers the block.
+         *
+         * @return void
+         */
+        public function register_block()
+        {
+        }
+        /**
+         * Presents the block output. This is abstract because in the loop we need to be able to build the data for the
+         * presenter in the last moment.
+         *
+         * @param array<string, bool|string|int|array> $attributes The block attributes.
+         *
+         * @return string The block output.
+         */
+        public abstract function present($attributes);
+        /**
+         * Checks whether the links in the block should have target="blank".
+         *
+         * This is needed because when the editor is loaded in an Iframe the link needs to open in a different browser window.
+         * We don't want this behaviour in the front-end and the way to check this is to check if the block is rendered in a REST request with the `context` set as 'edit'. Thus being in the editor.
+         *
+         * @return bool returns if the block should be opened in another window.
+         */
+        protected function should_link_target_blank() : bool
+        {
+        }
+    }
     /**
      * Dynamic_Block class.
      */
@@ -42734,9 +50542,55 @@ namespace Yoast\WP\SEO\Integrations\Blocks {
         }
     }
     /**
+     * Block_Editor_Integration class to enqueue the block editor assets also for the iframe.
+     */
+    class Block_Editor_Integration implements \Yoast\WP\SEO\Integrations\Integration_Interface
+    {
+        /**
+         * Represents the admin asset manager.
+         *
+         * @var WPSEO_Admin_Asset_Manager
+         */
+        protected $asset_manager;
+        /**
+         * {@inheritDoc}
+         *
+         * @return array<Post_Conditional>
+         */
+        public static function get_conditionals()
+        {
+        }
+        /**
+         * Constructor.
+         *
+         * @param WPSEO_Admin_Asset_Manager $asset_manager The asset manager.
+         */
+        public function __construct(\WPSEO_Admin_Asset_Manager $asset_manager)
+        {
+        }
+        /**
+         * Initializes the integration.
+         *
+         * This is the place to register hooks and filters.
+         *
+         * @return void
+         */
+        public function register_hooks()
+        {
+        }
+        /**
+         * Enqueues the assets for the block editor.
+         *
+         * @return void
+         */
+        public function enqueue()
+        {
+        }
+    }
+    /**
      * Siblings block class
      */
-    class Breadcrumbs_Block extends \Yoast\WP\SEO\Integrations\Blocks\Dynamic_Block
+    class Breadcrumbs_Block extends \Yoast\WP\SEO\Integrations\Blocks\Dynamic_Block_V3
     {
         /**
          * The name of the block.
@@ -42775,27 +50629,20 @@ namespace Yoast\WP\SEO\Integrations\Blocks {
          */
         private $indexable_repository;
         /**
-         * The request helper.
-         *
-         * @var Request_Helper
-         */
-        private $request_helper;
-        /**
          * Siblings_Block constructor.
          *
          * @param Meta_Tags_Context_Memoizer $context_memoizer     The context.
          * @param WPSEO_Replace_Vars         $replace_vars         The replace variable helper.
          * @param Helpers_Surface            $helpers              The Helpers surface.
          * @param Indexable_Repository       $indexable_repository The indexable repository.
-         * @param Request_Helper             $request_helper       The request helper.
          */
-        public function __construct(\Yoast\WP\SEO\Memoizers\Meta_Tags_Context_Memoizer $context_memoizer, \WPSEO_Replace_Vars $replace_vars, \Yoast\WP\SEO\Surfaces\Helpers_Surface $helpers, \Yoast\WP\SEO\Repositories\Indexable_Repository $indexable_repository, \Yoast\WP\SEO\Helpers\Request_Helper $request_helper)
+        public function __construct(\Yoast\WP\SEO\Memoizers\Meta_Tags_Context_Memoizer $context_memoizer, \WPSEO_Replace_Vars $replace_vars, \Yoast\WP\SEO\Surfaces\Helpers_Surface $helpers, \Yoast\WP\SEO\Repositories\Indexable_Repository $indexable_repository)
         {
         }
         /**
          * Presents the breadcrumbs output for the current page or the available post_id.
          *
-         * @param array $attributes The block attributes.
+         * @param array<string, bool|string|int|array> $attributes The block attributes.
          *
          * @return string The block output.
          */
@@ -42850,6 +50697,8 @@ namespace Yoast\WP\SEO\Integrations\Blocks {
         }
         /**
          * Registers hooks for Structured Data Blocks with WordPress.
+         *
+         * @return void
          */
         public function register_hooks()
         {
@@ -42863,12 +50712,6 @@ namespace Yoast\WP\SEO\Integrations\Blocks {
         {
         }
         /**
-         * Enqueue Gutenberg block assets for backend editor.
-         */
-        public function enqueue_block_editor_assets()
-        {
-        }
-        /**
          * Optimizes images in the FAQ blocks.
          *
          * @param array  $attributes The attributes.
@@ -42877,6 +50720,39 @@ namespace Yoast\WP\SEO\Integrations\Blocks {
          * @return string The content with images optimized.
          */
         public function optimize_faq_images($attributes, $content)
+        {
+        }
+        /**
+         * Transforms the durations into a translated string containing the count, and either singular or plural unit.
+         * For example (in en-US): If 'days' is 1, it returns "1 day". If 'days' is 2, it returns "2 days".
+         * If a number value is 0, we don't output the string.
+         *
+         * @param number $days    Number of days.
+         * @param number $hours   Number of hours.
+         * @param number $minutes Number of minutes.
+         * @return array Array of pluralized durations.
+         */
+        private function transform_duration_to_string($days, $hours, $minutes)
+        {
+        }
+        /**
+         * Formats the durations into a translated string.
+         *
+         * @param array $attributes The attributes.
+         * @return string The formatted duration.
+         */
+        private function build_duration_string($attributes)
+        {
+        }
+        /**
+         * Presents the duration text of the How-To block in the site language.
+         *
+         * @param array  $attributes The attributes.
+         * @param string $content    The content.
+         *
+         * @return string The content with the duration text in the site language.
+         */
+        public function present_duration_text($attributes, $content)
         {
         }
         /**
@@ -42942,6 +50818,18 @@ namespace Yoast\WP\SEO\Integrations\Blocks {
         private function add_images_from_attributes_to_used_cache($post_id, $elements, $key)
         {
         }
+        /* DEPRECATED METHODS */
+        /**
+         * Enqueue Gutenberg block assets for backend editor.
+         *
+         * @deprecated 22.7
+         * @codeCoverageIgnore
+         *
+         * @return void
+         */
+        public function enqueue_block_editor_assets()
+        {
+        }
     }
 }
 namespace Yoast\WP\SEO\Integrations {
@@ -42984,6 +50872,8 @@ namespace Yoast\WP\SEO\Integrations {
          * Registers the `wpseo_breadcrumb` shortcode.
          *
          * @codeCoverageIgnore
+         *
+         * @return void
          */
         public function register_hooks()
         {
@@ -43005,48 +50895,34 @@ namespace Yoast\WP\SEO\Integrations {
         /**
          * Identifier used to determine the current task.
          */
-        const CURRENT_TASK_OPTION = 'wpseo-cleanup-current-task';
+        public const CURRENT_TASK_OPTION = 'wpseo-cleanup-current-task';
         /**
          * Identifier for the cron job.
          */
-        const CRON_HOOK = 'wpseo_cleanup_cron';
+        public const CRON_HOOK = 'wpseo_cleanup_cron';
         /**
          * Identifier for starting the cleanup.
          */
-        const START_HOOK = 'wpseo_start_cleanup_indexables';
+        public const START_HOOK = 'wpseo_start_cleanup_indexables';
         /**
-         * A helper for taxonomies.
+         * The indexable helper.
          *
-         * @var Taxonomy_Helper
+         * @var Indexable_Helper
          */
-        private $taxonomy;
+        private $indexable_helper;
         /**
-         * A helper for post types.
+         * The cleanup repository.
          *
-         * @var Post_Type_Helper
+         * @var Indexable_Cleanup_Repository
          */
-        private $post_type;
-        /**
-         * A helper for author archives.
-         *
-         * @var Author_Archive_Helper
-         */
-        private $author_archive;
-        /**
-         * The indexables repository.
-         *
-         * @var Indexable_Repository
-         */
-        private $indexable_repository;
+        private $cleanup_repository;
         /**
          * The constructor.
          *
-         * @param Taxonomy_Helper       $taxonomy       A helper for taxonomies.
-         * @param Post_Type_Helper      $post_type      A helper for post types.
-         * @param Author_Archive_Helper $author_archive A helper for author archives.
-         * @param Indexable_Repository  $indexable_repository The indexables repository.
+         * @param Indexable_Cleanup_Repository $cleanup_repository The cleanup repository.
+         * @param Indexable_Helper             $indexable_helper   The indexable helper.
          */
-        public function __construct(\Yoast\WP\SEO\Helpers\Taxonomy_Helper $taxonomy, \Yoast\WP\SEO\Helpers\Post_Type_Helper $post_type, \Yoast\WP\SEO\Helpers\Author_Archive_Helper $author_archive, \Yoast\WP\SEO\Repositories\Indexable_Repository $indexable_repository)
+        public function __construct(\Yoast\WP\SEO\Repositories\Indexable_Cleanup_Repository $cleanup_repository, \Yoast\WP\SEO\Helpers\Indexable_Helper $indexable_helper)
         {
         }
         /**
@@ -43062,7 +50938,7 @@ namespace Yoast\WP\SEO\Integrations {
         /**
          * Returns the conditionals based on which this loadable should be active.
          *
-         * @return array The array of conditionals.
+         * @return array<string> The array of conditionals.
          */
         public static function get_conditionals()
         {
@@ -43086,9 +50962,27 @@ namespace Yoast\WP\SEO\Integrations {
         /**
          * Gets additional tasks from the 'wpseo_cleanup_tasks' filter.
          *
-         * @return Closure[] Associative array of cleanup functions.
+         * @return Closure[] Associative array of indexable cleanup functions.
          */
-        private function get_additional_tasks()
+        private function get_additional_indexable_cleanups()
+        {
+        }
+        /**
+         * Gets additional tasks from the 'wpseo_misc_cleanup_tasks' filter.
+         *
+         * @return Closure[] Associative array of indexable cleanup functions.
+         */
+        private function get_additional_misc_cleanups()
+        {
+        }
+        /**
+         * Validates the additional tasks.
+         *
+         * @param Closure[] $additional_tasks The additional tasks to validate.
+         *
+         * @return Closure[] The validated additional tasks.
+         */
+        private function validate_additional_tasks($additional_tasks)
         {
         }
         /**
@@ -43110,11 +51004,12 @@ namespace Yoast\WP\SEO\Integrations {
         /**
          * Starts the cleanup cron job.
          *
-         * @param string $task_name The task name of the next cleanup task to run.
+         * @param string $task_name     The task name of the next cleanup task to run.
+         * @param int    $schedule_time The time in seconds to wait before running the first cron job. Default is 1 hour.
          *
          * @return void
          */
-        private function start_cron_job($task_name)
+        public function start_cron_job($task_name, $schedule_time = 3600)
         {
         }
         /**
@@ -43123,153 +51018,6 @@ namespace Yoast\WP\SEO\Integrations {
          * @return void
          */
         public function run_cleanup_cron()
-        {
-        }
-        /**
-         * Deletes rows from the indexable table depending on the object_type and object_sub_type.
-         *
-         * @param string $object_type     The object type to query.
-         * @param string $object_sub_type The object subtype to query.
-         * @param int    $limit           The limit we'll apply to the delete query.
-         *
-         * @return int|bool The number of rows that was deleted or false if the query failed.
-         */
-        protected function clean_indexables_with_object_type_and_object_sub_type($object_type, $object_sub_type, $limit)
-        {
-        }
-        /**
-         * Deletes rows from the indexable table depending on the post_status.
-         *
-         * @param string $post_status The post status to query.
-         * @param int    $limit       The limit we'll apply to the delete query.
-         *
-         * @return int|bool The number of rows that was deleted or false if the query failed.
-         */
-        protected function clean_indexables_with_post_status($post_status, $limit)
-        {
-        }
-        /**
-         * Cleans up any indexables that belong to post types that are not/no longer publicly viewable.
-         *
-         * @param int $limit The limit we'll apply to the queries.
-         *
-         * @return bool|int The number of deleted rows, false if the query fails.
-         */
-        protected function clean_indexables_for_non_publicly_viewable_post($limit)
-        {
-        }
-        /**
-         * Cleans up any indexables that belong to taxonomies that are not/no longer publicly viewable.
-         *
-         * @param int $limit The limit we'll apply to the queries.
-         *
-         * @return bool|int The number of deleted rows, false if the query fails.
-         */
-        protected function clean_indexables_for_non_publicly_viewable_taxonomies($limit)
-        {
-        }
-        /**
-         * Cleans up any user indexables when the author archives have been disabled.
-         *
-         * @param int $limit The limit we'll apply to the queries.
-         *
-         * @return bool|int The number of deleted rows, false if the query fails.
-         */
-        protected function clean_indexables_for_authors_archive_disabled($limit)
-        {
-        }
-        /**
-         * Cleans up any indexables that belong to users that have their author archives disabled.
-         *
-         * @param int $limit The limit we'll apply to the queries.
-         *
-         * @return bool|int The number of deleted rows, false if the query fails.
-         */
-        protected function clean_indexables_for_authors_without_archive($limit)
-        {
-        }
-        /**
-         * Cleans orphaned rows from a yoast table.
-         *
-         * @param string $table  The table to clean up.
-         * @param string $column The table column the cleanup will rely on.
-         * @param int    $limit  The limit we'll apply to the queries.
-         *
-         * @return int|bool The number of deleted rows, false if the query fails.
-         */
-        protected function cleanup_orphaned_from_table($table, $column, $limit)
-        {
-        }
-        /**
-         * Updates the author_id of indexables which author_id is not in the wp_users table with the id of the reassingned user.
-         *
-         * @param int $limit The limit we'll apply to the queries.
-         *
-         * @return int|bool The number of updated rows, false if query to get data fails.
-         */
-        protected function update_indexables_author_to_reassigned($limit)
-        {
-        }
-        /**
-         * Deletes rows from the indexable table where the source is no longer there.
-         *
-         * @param string $source_table The source table which we need to check the indexables against.
-         * @param string $source_identifier The identifier which the indexables are matched to.
-         * @param string $object_type The indexable object type.
-         * @param int    $limit The limit we'll apply to the delete query.
-         *
-         * @return int|bool The number of rows that was deleted or false if the query failed.
-         */
-        protected function clean_indexables_for_object_type_and_source_table($source_table, $source_identifier, $object_type, $limit)
-        {
-        }
-        /**
-         * Fetches pairs of old_id -> new_id indexed by old_id.
-         * By using the old_id (i.e. the id of the user that has been deleted) as key of the associative array, we can easily compose an array of unique pairs of old_id -> new_id.
-         *
-         * @param int $limit The limit we'll apply to the queries.
-         *
-         * @return int|bool The associative array with shape [ old_id => [ old_id, new_author ] ] or false if query to get data fails.
-         */
-        private function get_reassigned_authors($limit)
-        {
-        }
-        /**
-         * Updates the indexable's author_id referring to a deleted author with the id of the reassigned user.
-         *
-         * @param array $reassigned_authors_objs The array of objects with shape [ old_id => [ old_id, new_id ] ].
-         * @param int   $limit                   The limit we'll apply to the queries.
-         *
-         * @return int|bool The associative array with shape [ old_id => [ old_id, new_author ] ] or false if query to get data fails.
-         */
-        private function update_indexable_authors($reassigned_authors_objs, $limit)
-        {
-        }
-    }
-    /**
-     * Class to manage the integration with Yoast Duplicate Post.
-     */
-    class Duplicate_Post_Integration implements \Yoast\WP\SEO\Integrations\Integration_Interface
-    {
-        use \Yoast\WP\SEO\Conditionals\No_Conditionals;
-        /**
-         * Initializes the integration.
-         *
-         * This is the place to register hooks and filters.
-         *
-         * @return void
-         */
-        public function register_hooks()
-        {
-        }
-        /**
-         * Filters out the Zapier meta when you copy a post with Yoast Duplicate Post.
-         *
-         * @param array $meta_excludelist The current excludelist of meta fields.
-         *
-         * @return array The updated excludelist.
-         */
-        public function exclude_zapier_meta($meta_excludelist)
         {
         }
     }
@@ -43450,12 +51198,6 @@ namespace Yoast\WP\SEO\Integrations {
          */
         protected $options;
         /**
-         * Represents the request helper.
-         *
-         * @var Request_Helper
-         */
-        protected $request;
-        /**
          * The helpers surface.
          *
          * @var Helpers_Surface
@@ -43488,43 +51230,55 @@ namespace Yoast\WP\SEO\Integrations {
         /**
          * The Open Graph specific presenters that should be output on error pages.
          *
-         * @var array
+         * @var array<string>
          */
         protected $open_graph_error_presenters = ['Open_Graph\\Locale', 'Open_Graph\\Title', 'Open_Graph\\Site_Name'];
         /**
          * The Twitter card specific presenters.
          *
-         * @var string[]
+         * @var array<string>
          */
         protected $twitter_card_presenters = ['Twitter\\Card', 'Twitter\\Title', 'Twitter\\Description', 'Twitter\\Image', 'Twitter\\Creator', 'Twitter\\Site'];
         /**
          * The Slack specific presenters.
          *
-         * @var string[]
+         * @var array<string>
          */
         protected $slack_presenters = ['Slack\\Enhanced_Data'];
         /**
          * The Webmaster verification specific presenters.
          *
-         * @var string[]
+         * @var array<string>
          */
         protected $webmaster_verification_presenters = ['Webmaster\\Baidu', 'Webmaster\\Bing', 'Webmaster\\Google', 'Webmaster\\Pinterest', 'Webmaster\\Yandex'];
         /**
          * Presenters that are only needed on singular pages.
          *
-         * @var string[]
+         * @var array<string>
          */
         protected $singular_presenters = ['Meta_Author', 'Open_Graph\\Article_Author', 'Open_Graph\\Article_Publisher', 'Open_Graph\\Article_Published_Time', 'Open_Graph\\Article_Modified_Time', 'Twitter\\Creator', 'Slack\\Enhanced_Data'];
         /**
          * The presenters we want to be last in our output.
          *
-         * @var string[]
+         * @var array<string>
          */
         protected $closing_presenters = ['Schema'];
         /**
+         * The next output.
+         *
+         * @var string
+         */
+        protected $next;
+        /**
+         * The prev output.
+         *
+         * @var string
+         */
+        protected $prev;
+        /**
          * Returns the conditionals based on which this loadable should be active.
          *
-         * @return array The conditionals.
+         * @return array<string> The conditionals.
          */
         public static function get_conditionals()
         {
@@ -43537,11 +51291,10 @@ namespace Yoast\WP\SEO\Integrations {
          * @param Meta_Tags_Context_Memoizer $context_memoizer  The meta tags context memoizer.
          * @param ContainerInterface         $service_container The DI container.
          * @param Options_Helper             $options           The options helper.
-         * @param Request_Helper             $request           The request helper.
          * @param Helpers_Surface            $helpers           The helpers surface.
          * @param WPSEO_Replace_Vars         $replace_vars      The replace vars helper.
          */
-        public function __construct(\Yoast\WP\SEO\Memoizers\Meta_Tags_Context_Memoizer $context_memoizer, \YoastSEO_Vendor\Symfony\Component\DependencyInjection\ContainerInterface $service_container, \Yoast\WP\SEO\Helpers\Options_Helper $options, \Yoast\WP\SEO\Helpers\Request_Helper $request, \Yoast\WP\SEO\Surfaces\Helpers_Surface $helpers, \WPSEO_Replace_Vars $replace_vars)
+        public function __construct(\Yoast\WP\SEO\Memoizers\Meta_Tags_Context_Memoizer $context_memoizer, \YoastSEO_Vendor\Symfony\Component\DependencyInjection\ContainerInterface $service_container, \Yoast\WP\SEO\Helpers\Options_Helper $options, \Yoast\WP\SEO\Surfaces\Helpers_Surface $helpers, \WPSEO_Replace_Vars $replace_vars)
         {
         }
         /**
@@ -43549,6 +51302,8 @@ namespace Yoast\WP\SEO\Integrations {
          *
          * Removes some actions to remove metadata that WordPress shows on the frontend,
          * to avoid duplicate and/or mismatched metadata.
+         *
+         * @return void
          */
         public function register_hooks()
         {
@@ -43562,11 +51317,35 @@ namespace Yoast\WP\SEO\Integrations {
         {
         }
         /**
+         * Filters the next and prev links in the query loop block.
+         *
+         * @param string                   $html  The HTML output.
+         * @param array<string|array|null> $block The block.
+         * @return string The filtered HTML output.
+         */
+        public function query_loop_next_prev($html, $block)
+        {
+        }
+        /**
+         * Returns correct adjacent pages when Query loop block does not inherit query from template.
+         * Prioritizes existing prev and next links.
+         * Includes a safety check for full urls though it is not expected in the query pagination block.
+         *
+         * @param string                      $link         The current link.
+         * @param string                      $rel          Link relationship, prev or next.
+         * @param Indexable_Presentation|null $presentation The indexable presentation.
+         *
+         * @return string The correct link.
+         */
+        public function adjacent_rel_url($link, $rel, $presentation = null)
+        {
+        }
+        /**
          * Filters our robots presenter, but only when wp_robots is attached to the wp_head action.
          *
-         * @param array $presenters The presenters for current page.
+         * @param array<string> $presenters The presenters for current page.
          *
-         * @return array The filtered presenters.
+         * @return array<string> The filtered presenters.
          */
         public function filter_robots_presenter($presenters)
         {
@@ -43575,12 +51354,16 @@ namespace Yoast\WP\SEO\Integrations {
          * Presents the head in the front-end. Resets wp_query if it's not the main query.
          *
          * @codeCoverageIgnore It just calls a WordPress function.
+         *
+         * @return void
          */
         public function call_wpseo_head()
         {
         }
         /**
          * Echoes all applicable presenters for a page.
+         *
+         * @return void
          */
         public function present_head()
         {
@@ -43862,6 +51645,8 @@ namespace Yoast\WP\SEO\Integrations\Front_End {
         }
         /**
          * Removes X-Pingback and X-Powered-By headers as they're unneeded.
+         *
+         * @return void
          */
         public function clean_headers()
         {
@@ -43909,25 +51694,31 @@ namespace Yoast\WP\SEO\Integrations\Front_End {
         /**
          * Returns the conditionals based on which this loadable should be active.
          *
-         * @return array The conditionals.
+         * @return array<string> The conditionals.
          */
         public static function get_conditionals()
         {
         }
         /**
          * Register our RSS related hooks.
+         *
+         * @return void
          */
         public function register_hooks()
         {
         }
         /**
          * Disable feeds on selected cases.
+         *
+         * @return void
          */
         public function maybe_disable_feeds()
         {
         }
         /**
          * Redirect feeds we don't want away.
+         *
+         * @return void
          */
         public function maybe_redirect_feeds()
         {
@@ -43936,6 +51727,8 @@ namespace Yoast\WP\SEO\Integrations\Front_End {
          * Sends a cache control header.
          *
          * @param int $expiration The expiration time.
+         *
+         * @return void
          */
         public function cache_control_header($expiration)
         {
@@ -43945,6 +51738,8 @@ namespace Yoast\WP\SEO\Integrations\Front_End {
          *
          * @param string $url    The location we're redirecting to.
          * @param string $reason The reason we're redirecting.
+         *
+         * @return void
          */
         private function redirect_feed($url, $reason)
         {
@@ -44030,6 +51825,8 @@ namespace Yoast\WP\SEO\Integrations\Front_End {
         }
         /**
          * Redirect pretty search URLs to the "raw" equivalent
+         *
+         * @return void
          */
         public function maybe_redirect_searches()
         {
@@ -44244,6 +52041,8 @@ namespace Yoast\WP\SEO\Integrations\Front_End {
         }
         /**
          * Starts the output buffer so it can later be fixed by flush_cache().
+         *
+         * @return void
          */
         public function force_rewrite_output_buffer()
         {
@@ -44275,6 +52074,8 @@ namespace Yoast\WP\SEO\Integrations\Front_End {
          * Starts the output buffering.
          *
          * @codeCoverageIgnore
+         *
+         * @return void
          */
         protected function start_output_buffering()
         {
@@ -44349,6 +52150,8 @@ namespace Yoast\WP\SEO\Integrations\Front_End {
         }
         /**
          * Sets the 404 status code.
+         *
+         * @return void
          */
         protected function set_404()
         {
@@ -44357,6 +52160,8 @@ namespace Yoast\WP\SEO\Integrations\Front_End {
          * Sets the headers for http.
          *
          * @codeCoverageIgnore
+         *
+         * @return void
          */
         protected function set_headers()
         {
@@ -44506,18 +52311,24 @@ namespace Yoast\WP\SEO\Integrations\Front_End {
         }
         /**
          * Sets the OpenGraph title if configured.
+         *
+         * @return void
          */
         protected function set_title()
         {
         }
         /**
          * Sets the OpenGraph description if configured.
+         *
+         * @return void
          */
         protected function set_description()
         {
         }
         /**
          * Sets the image if it has been configured.
+         *
+         * @return void
          */
         protected function set_image()
         {
@@ -44606,18 +52417,24 @@ namespace Yoast\WP\SEO\Integrations\Front_End {
         }
         /**
          * When certain archives are disabled, this redirects those to the homepage.
+         *
+         * @return void
          */
         public function archive_redirect()
         {
         }
         /**
          * Based on the redirect meta value, this function determines whether it should redirect the current post / page.
+         *
+         * @return void
          */
         public function page_redirect()
         {
         }
         /**
          * If the option to disable attachment URLs is checked, this performs the redirect to the attachment.
+         *
+         * @return void
          */
         public function attachment_redirect()
         {
@@ -44655,6 +52472,8 @@ namespace Yoast\WP\SEO\Integrations\Front_End {
         }
         /**
          * Strips `cat=-1` from the URL and redirects to the resulting URL.
+         *
+         * @return void
          */
         public function category_redirect()
         {
@@ -44739,6 +52558,16 @@ namespace Yoast\WP\SEO\Integrations\Front_End {
          * @return void
          */
         public function add_disallow_wp_json_to_robots(\Yoast\WP\SEO\Helpers\Robots_Txt_Helper $robots_txt_helper)
+        {
+        }
+        /**
+         * Add a disallow rule for AdsBot agents to robots.txt.
+         *
+         * @param Robots_Txt_Helper $robots_txt_helper The robots txt helper.
+         *
+         * @return void
+         */
+        public function add_disallow_adsbot(\Yoast\WP\SEO\Helpers\Robots_Txt_Helper $robots_txt_helper)
         {
         }
         /**
@@ -45136,31 +52965,31 @@ namespace Yoast\WP\SEO\Integrations {
      */
     class Settings_Integration implements \Yoast\WP\SEO\Integrations\Integration_Interface
     {
-        const PAGE = 'wpseo_page_settings';
+        public const PAGE = 'wpseo_page_settings';
         /**
          * Holds the included WordPress options.
          *
          * @var string[]
          */
-        const WP_OPTIONS = ['blogdescription'];
+        public const WP_OPTIONS = ['blogdescription'];
         /**
          * Holds the allowed option groups.
          *
          * @var array
          */
-        const ALLOWED_OPTION_GROUPS = ['wpseo', 'wpseo_titles', 'wpseo_social'];
+        public const ALLOWED_OPTION_GROUPS = ['wpseo', 'wpseo_titles', 'wpseo_social'];
         /**
          * Holds the disallowed settings, per option group.
          *
          * @var array
          */
-        const DISALLOWED_SETTINGS = ['wpseo' => ['myyoast-oauth', 'semrush_tokens', 'custom_taxonomy_slugs', 'zapier_subscription', 'import_cursors', 'workouts_data', 'configuration_finished_steps', 'importing_completed', 'wincher_tokens', 'least_readability_ignore_list', 'least_seo_score_ignore_list', 'most_linked_ignore_list', 'least_linked_ignore_list', 'indexables_page_reading_list'], 'wpseo_titles' => ['company_logo_meta', 'person_logo_meta']];
+        public const DISALLOWED_SETTINGS = ['wpseo' => ['myyoast-oauth', 'semrush_tokens', 'custom_taxonomy_slugs', 'import_cursors', 'workouts_data', 'configuration_finished_steps', 'importing_completed', 'wincher_tokens', 'least_readability_ignore_list', 'least_seo_score_ignore_list', 'most_linked_ignore_list', 'least_linked_ignore_list', 'indexables_page_reading_list', 'show_new_content_type_notification', 'new_post_types', 'new_taxonomies'], 'wpseo_titles' => ['company_logo_meta', 'person_logo_meta']];
         /**
          * Holds the disabled on multisite settings, per option group.
          *
          * @var array
          */
-        const DISABLED_ON_MULTISITE_SETTINGS = ['wpseo' => ['deny_search_crawling', 'deny_wp_json_crawling']];
+        public const DISABLED_ON_MULTISITE_SETTINGS = ['wpseo' => ['deny_search_crawling', 'deny_wp_json_crawling', 'deny_adsbot_crawling', 'deny_ccbot_crawling', 'deny_google_extended_crawling', 'deny_gptbot_crawling']];
         /**
          * Holds the WPSEO_Admin_Asset_Manager.
          *
@@ -45228,28 +53057,35 @@ namespace Yoast\WP\SEO\Integrations {
          */
         protected $user_helper;
         /**
-         * Holds the Settings_Introduction_Action.
+         * Holds the Options_Helper instance.
          *
-         * @var Settings_Introduction_Action
+         * @var Options_Helper
          */
-        protected $settings_introduction_action;
+        protected $options;
+        /**
+         * Holds the Content_Type_Visibility_Dismiss_Notifications instance.
+         *
+         * @var Content_Type_Visibility_Dismiss_Notifications
+         */
+        protected $content_type_visibility;
         /**
          * Constructs Settings_Integration.
          *
-         * @param WPSEO_Admin_Asset_Manager    $asset_manager                The WPSEO_Admin_Asset_Manager.
-         * @param WPSEO_Replace_Vars           $replace_vars                 The WPSEO_Replace_Vars.
-         * @param Schema_Types                 $schema_types                 The Schema_Types.
-         * @param Current_Page_Helper          $current_page_helper          The Current_Page_Helper.
-         * @param Post_Type_Helper             $post_type_helper             The Post_Type_Helper.
-         * @param Language_Helper              $language_helper              The Language_Helper.
-         * @param Taxonomy_Helper              $taxonomy_helper              The Taxonomy_Helper.
-         * @param Product_Helper               $product_helper               The Product_Helper.
-         * @param Woocommerce_Helper           $woocommerce_helper           The Woocommerce_Helper.
-         * @param Article_Helper               $article_helper               The Article_Helper.
-         * @param User_Helper                  $user_helper                  The User_Helper.
-         * @param Settings_Introduction_Action $settings_introduction_action The Settings_Introduction_Action.
+         * @param WPSEO_Admin_Asset_Manager                     $asset_manager           The WPSEO_Admin_Asset_Manager.
+         * @param WPSEO_Replace_Vars                            $replace_vars            The WPSEO_Replace_Vars.
+         * @param Schema_Types                                  $schema_types            The Schema_Types.
+         * @param Current_Page_Helper                           $current_page_helper     The Current_Page_Helper.
+         * @param Post_Type_Helper                              $post_type_helper        The Post_Type_Helper.
+         * @param Language_Helper                               $language_helper         The Language_Helper.
+         * @param Taxonomy_Helper                               $taxonomy_helper         The Taxonomy_Helper.
+         * @param Product_Helper                                $product_helper          The Product_Helper.
+         * @param Woocommerce_Helper                            $woocommerce_helper      The Woocommerce_Helper.
+         * @param Article_Helper                                $article_helper          The Article_Helper.
+         * @param User_Helper                                   $user_helper             The User_Helper.
+         * @param Options_Helper                                $options                 The options helper.
+         * @param Content_Type_Visibility_Dismiss_Notifications $content_type_visibility The Content_Type_Visibility_Dismiss_Notifications instance.
          */
-        public function __construct(\WPSEO_Admin_Asset_Manager $asset_manager, \WPSEO_Replace_Vars $replace_vars, \Yoast\WP\SEO\Config\Schema_Types $schema_types, \Yoast\WP\SEO\Helpers\Current_Page_Helper $current_page_helper, \Yoast\WP\SEO\Helpers\Post_Type_Helper $post_type_helper, \Yoast\WP\SEO\Helpers\Language_Helper $language_helper, \Yoast\WP\SEO\Helpers\Taxonomy_Helper $taxonomy_helper, \Yoast\WP\SEO\Helpers\Product_Helper $product_helper, \Yoast\WP\SEO\Helpers\Woocommerce_Helper $woocommerce_helper, \Yoast\WP\SEO\Helpers\Schema\Article_Helper $article_helper, \Yoast\WP\SEO\Helpers\User_Helper $user_helper, \Yoast\WP\SEO\Actions\Settings_Introduction_Action $settings_introduction_action)
+        public function __construct(\WPSEO_Admin_Asset_Manager $asset_manager, \WPSEO_Replace_Vars $replace_vars, \Yoast\WP\SEO\Config\Schema_Types $schema_types, \Yoast\WP\SEO\Helpers\Current_Page_Helper $current_page_helper, \Yoast\WP\SEO\Helpers\Post_Type_Helper $post_type_helper, \Yoast\WP\SEO\Helpers\Language_Helper $language_helper, \Yoast\WP\SEO\Helpers\Taxonomy_Helper $taxonomy_helper, \Yoast\WP\SEO\Helpers\Product_Helper $product_helper, \Yoast\WP\SEO\Helpers\Woocommerce_Helper $woocommerce_helper, \Yoast\WP\SEO\Helpers\Schema\Article_Helper $article_helper, \Yoast\WP\SEO\Helpers\User_Helper $user_helper, \Yoast\WP\SEO\Helpers\Options_Helper $options, \Yoast\WP\SEO\Content_Type_Visibility\Application\Content_Type_Visibility_Dismiss_Notifications $content_type_visibility)
         {
         }
         /**
@@ -45302,6 +53138,8 @@ namespace Yoast\WP\SEO\Integrations {
         }
         /**
          * Displays the page.
+         *
+         * @return void
          */
         public function display_page()
         {
@@ -45341,14 +53179,6 @@ namespace Yoast\WP\SEO\Integrations {
         {
         }
         /**
-         * Retrieves the preferences.
-         *
-         * @return array The preferences.
-         */
-        protected function get_introduction_data()
-        {
-        }
-        /**
          * Retrieves the currently represented person.
          *
          * @param array $settings The settings.
@@ -45359,9 +53189,31 @@ namespace Yoast\WP\SEO\Integrations {
         {
         }
         /**
+         * Get site policy data.
+         *
+         * @param array $settings The settings.
+         *
+         * @return array The policy data.
+         */
+        private function get_site_basics_policies($settings)
+        {
+        }
+        /**
+         * Adds policy data if it is present.
+         *
+         * @param array  $policies The existing policy data.
+         * @param int    $policy   The policy id to check.
+         * @param string $key      The option key name.
+         *
+         * @return array<int,string> The policy data.
+         */
+        private function maybe_add_policy($policies, $policy, $key)
+        {
+        }
+        /**
          * Returns settings for the Call to Buy (CTB) buttons.
          *
-         * @return string[] The array of CTB settings.
+         * @return array<string> The array of CTB settings.
          */
         public function get_upsell_settings()
         {
@@ -45375,6 +53227,17 @@ namespace Yoast\WP\SEO\Integrations {
          * @return array The default setting values.
          */
         protected function get_default_setting_values()
+        {
+        }
+        /**
+         * Retrieves the organization schema values from Local SEO for defaults in Site representation fields.
+         * Specifically for the org-vat-id, org-tax-id, org-email and org-phone options.
+         *
+         * @param array<string|int|bool> $defaults The settings defaults.
+         *
+         * @return array<string|int|bool> The settings defaults with local seo overides.
+         */
+        protected function get_defaults_from_local_seo($defaults)
         {
         }
         /**
@@ -45477,20 +53340,107 @@ namespace Yoast\WP\SEO\Integrations {
         protected function get_fallbacks()
         {
         }
+    }
+    /**
+     * Class Support_Integration.
+     */
+    class Support_Integration implements \Yoast\WP\SEO\Integrations\Integration_Interface
+    {
+        public const PAGE = 'wpseo_page_support';
+        public const CAPABILITY = 'wpseo_manage_options';
         /**
-         * Removes the notification related to the post types which have been made public.
+         * Holds the WPSEO_Admin_Asset_Manager.
          *
-         * @return void
+         * @var WPSEO_Admin_Asset_Manager
          */
-        private function remove_post_types_made_public_notification()
+        private $asset_manager;
+        /**
+         * Holds the Current_Page_Helper.
+         *
+         * @var Current_Page_Helper
+         */
+        private $current_page_helper;
+        /**
+         * Holds the Product_Helper.
+         *
+         * @var Product_Helper
+         */
+        private $product_helper;
+        /**
+         * Holds the Short_Link_Helper.
+         *
+         * @var Short_Link_Helper
+         */
+        private $shortlink_helper;
+        /**
+         * Constructs Support_Integration.
+         *
+         * @param WPSEO_Admin_Asset_Manager $asset_manager       The WPSEO_Admin_Asset_Manager.
+         * @param Current_Page_Helper       $current_page_helper The Current_Page_Helper.
+         * @param Product_Helper            $product_helper      The Product_Helper.
+         * @param Short_Link_Helper         $shortlink_helper    The Short_Link_Helper.
+         */
+        public function __construct(\WPSEO_Admin_Asset_Manager $asset_manager, \Yoast\WP\SEO\Helpers\Current_Page_Helper $current_page_helper, \Yoast\WP\SEO\Helpers\Product_Helper $product_helper, \Yoast\WP\SEO\Helpers\Short_Link_Helper $shortlink_helper)
         {
         }
         /**
-         * Removes the notification related to the taxonomies which have been made public.
+         * Returns the conditionals based on which this loadable should be active.
+         *
+         * @return array
+         */
+        public static function get_conditionals()
+        {
+        }
+        /**
+         * Initializes the integration.
+         *
+         * This is the place to register hooks and filters.
          *
          * @return void
          */
-        private function remove_taxonomies_made_public_notification()
+        public function register_hooks()
+        {
+        }
+        /**
+         * Adds the page.
+         *
+         * @param array $pages The pages.
+         *
+         * @return array The pages.
+         */
+        public function add_page($pages)
+        {
+        }
+        /**
+         * Displays the page.
+         *
+         * @return void
+         */
+        public function display_page()
+        {
+        }
+        /**
+         * Enqueues the assets.
+         *
+         * @return void
+         */
+        public function enqueue_assets()
+        {
+        }
+        /**
+         * Removes all current WP notices.
+         *
+         * @return void
+         */
+        public function remove_notices()
+        {
+        }
+        /**
+         * Creates the script data.
+         *
+         * @return array The script data.
+         */
+        public function get_script_data()
         {
         }
     }
@@ -45588,10 +53538,6 @@ namespace Yoast\WP\SEO\Integrations\Third_Party {
     class Elementor implements \Yoast\WP\SEO\Integrations\Integration_Interface
     {
         /**
-         * The identifier for the elementor tab.
-         */
-        const YOAST_TAB = 'yoast-tab';
-        /**
          * Represents the post.
          *
          * @var WP_Post|null
@@ -45615,6 +53561,12 @@ namespace Yoast\WP\SEO\Integrations\Third_Party {
          * @var Capability_Helper
          */
         protected $capability;
+        /**
+         * Holds the Request_Post.
+         *
+         * @var Request_Post
+         */
+        private $request_post;
         /**
          * Holds whether the socials are enabled.
          *
@@ -45646,6 +53598,12 @@ namespace Yoast\WP\SEO\Integrations\Third_Party {
          */
         protected $inclusive_language_analysis;
         /**
+         * Holds the promotion manager.
+         *
+         * @var Promotion_Manager
+         */
+        protected $promotion_manager;
+        /**
          * Returns the conditionals based in which this loadable should be active.
          *
          * @return array
@@ -45656,11 +53614,12 @@ namespace Yoast\WP\SEO\Integrations\Third_Party {
         /**
          * Constructor.
          *
-         * @param WPSEO_Admin_Asset_Manager $asset_manager                      The asset manager.
-         * @param Options_Helper            $options                            The options helper.
-         * @param Capability_Helper         $capability                         The capability helper.
+         * @param WPSEO_Admin_Asset_Manager $asset_manager The asset manager.
+         * @param Options_Helper            $options       The options helper.
+         * @param Capability_Helper         $capability    The capability helper.
+         * @param Request_Post              $request_post  The Request_Post.
          */
-        public function __construct(\WPSEO_Admin_Asset_Manager $asset_manager, \Yoast\WP\SEO\Helpers\Options_Helper $options, \Yoast\WP\SEO\Helpers\Capability_Helper $capability)
+        public function __construct(\WPSEO_Admin_Asset_Manager $asset_manager, \Yoast\WP\SEO\Helpers\Options_Helper $options, \Yoast\WP\SEO\Helpers\Capability_Helper $capability, \Yoast\WP\SEO\Elementor\Infrastructure\Request_Post $request_post)
         {
         }
         /**
@@ -45675,6 +53634,9 @@ namespace Yoast\WP\SEO\Integrations\Third_Party {
         }
         /**
          * Registers our Elementor hooks.
+         * This is done for pages with metabox on page load and not on ajax request.
+         *
+         * @return void
          */
         public function register_elementor_hooks()
         {
@@ -45685,20 +53647,6 @@ namespace Yoast\WP\SEO\Integrations\Third_Party {
          * @return void
          */
         public function init()
-        {
-        }
-        /**
-         * Register a panel tab slug, in order to allow adding controls to this tab.
-         */
-        public function add_yoast_panel_tab()
-        {
-        }
-        /**
-         * Register additional document controls.
-         *
-         * @param PageBase $document The PageBase document.
-         */
-        public function register_document_controls($document)
         {
         }
         // Below is mostly copied from `class-metabox.php`. That constructor has side-effects we do not need.
@@ -45754,14 +53702,6 @@ namespace Yoast\WP\SEO\Integrations\Third_Party {
         {
         }
         /**
-         * Returns the slug for the post being edited.
-         *
-         * @return string
-         */
-        protected function get_post_slug()
-        {
-        }
-        /**
          * Returns post in metabox context.
          *
          * @return WP_Post|null
@@ -45772,9 +53712,29 @@ namespace Yoast\WP\SEO\Integrations\Third_Party {
         /**
          * Passes variables to js for use with the post-scraper.
          *
+         * @param string $permalink The permalink.
+         *
          * @return array
          */
-        protected function get_metabox_script_data()
+        protected function get_metabox_script_data($permalink)
+        {
+        }
+        /**
+         * Gets the permalink.
+         *
+         * @return string
+         */
+        protected function get_permalink() : string
+        {
+        }
+        /**
+         * Checks whether the highlighting functionality is available for Elementor:
+         * - in Free it's always available (as an upsell).
+         * - in Premium it's available as long as the version is 21.8-RC0 or above.
+         *
+         * @return bool Whether the highlighting functionality is available.
+         */
+        private function is_highlighting_available()
         {
         }
         /**
@@ -46129,6 +54089,9 @@ namespace Yoast\WP\SEO\Integrations\Third_Party {
          * Determines whether the current request is a REST request.
          *
          * @return bool Whether the request is a REST request.
+         *
+         * @deprecated 23.6
+         * @codeCoverageIgnore
          */
         public function is_rest_request()
         {
@@ -46169,81 +54132,6 @@ namespace Yoast\WP\SEO\Integrations\Third_Party {
         }
     }
     /**
-     * Adds the Wincher integration.
-     */
-    class Wincher implements \Yoast\WP\SEO\Integrations\Integration_Interface
-    {
-        /**
-         * The Wincher helper instance.
-         *
-         * @var Wincher_Helper
-         */
-        protected $wincher;
-        /**
-         * The Wincher integration toggle constructor.
-         *
-         * @param Wincher_Helper $wincher The Wincher helper instance.
-         */
-        public function __construct(\Yoast\WP\SEO\Helpers\Wincher_Helper $wincher)
-        {
-        }
-        /**
-         * Initializes the integration.
-         *
-         * @return void
-         */
-        public function register_hooks()
-        {
-        }
-        /**
-         * Returns the conditionals based in which this loadable should be active.
-         *
-         * @return array The conditionals.
-         */
-        public static function get_conditionals()
-        {
-        }
-        /**
-         * Adds the Wincher integration toggle to the $integration_toggles array.
-         *
-         * @param array $integration_toggles The integration toggles array.
-         *
-         * @return array The updated integration toggles array.
-         */
-        public function add_integration_toggle($integration_toggles)
-        {
-        }
-        /**
-         * Adds the disabled note when the integration toggle is disabled.
-         *
-         * @deprecated 20.3
-         * @codeCoverageIgnore
-         *
-         * @param Yoast_Feature_Toggle $integration The integration toggle class.
-         */
-        public function after_integration_toggle($integration)
-        {
-        }
-        /**
-         * Adds the disabled note to the network integration toggle.
-         *
-         * @param Yoast_Feature_Toggle $integration The integration toggle class.
-         */
-        public function after_network_integration_toggle($integration)
-        {
-        }
-        /**
-         * Outputs the disabled note.
-         *
-         * @codeCoverageIgnore
-         *
-         * @return void
-         */
-        protected function get_disabled_note()
-        {
-        }
-    }
-    /**
      * The permalink watcher.
      */
     class Woocommerce_Permalinks implements \Yoast\WP\SEO\Integrations\Integration_Interface
@@ -46274,6 +54162,8 @@ namespace Yoast\WP\SEO\Integrations\Third_Party {
          * Registers the hooks.
          *
          * @codeCoverageIgnore
+         *
+         * @return void
          */
         public function register_hooks()
         {
@@ -46293,6 +54183,8 @@ namespace Yoast\WP\SEO\Integrations\Third_Party {
          *
          * @param array $old_value The old value.
          * @param array $new_value The new value.
+         *
+         * @return void
          */
         public function reset_woocommerce_permalinks($old_value, $new_value)
         {
@@ -46511,213 +54403,6 @@ namespace Yoast\WP\SEO\Integrations\Third_Party {
         }
     }
     /**
-     * Class WordProofIntegrationToggle.
-     *
-     * @package Yoast\WP\SEO\Integrations\Third_Party
-     */
-    class Wordproof_Integration_Toggle implements \Yoast\WP\SEO\Integrations\Integration_Interface
-    {
-        /**
-         * The WordProof helper instance.
-         *
-         * @var Wordproof_Helper
-         */
-        protected $wordproof;
-        /**
-         * The WordProof integration toggle constructor.
-         *
-         * @param Wordproof_Helper $wordproof The WordProof helper instance.
-         */
-        public function __construct(\Yoast\WP\SEO\Helpers\Wordproof_Helper $wordproof)
-        {
-        }
-        /**
-         * Returns the conditionals based in which this loadable should be active.
-         *
-         * @return array
-         */
-        public static function get_conditionals()
-        {
-        }
-        /**
-         * Initializes the integration.
-         *
-         * This is the place to register hooks and filters.
-         *
-         * @return void
-         */
-        public function register_hooks()
-        {
-        }
-        /**
-         * Adds the WordProof integration toggle to the array.
-         *
-         * @param array $integration_toggles The integration toggles array.
-         *
-         * @return array The updated integration toggles array.
-         */
-        public function add_integration_toggle($integration_toggles)
-        {
-        }
-        /**
-         * Set the default WordProof integration option value depending if the integration is disabled or not.
-         *
-         * @param array $defaults Array containing default wpseo options.
-         *
-         * @return array
-         */
-        public function default_values($defaults)
-        {
-        }
-        /**
-         * Add an explainer when the integration toggle is disabled.
-         *
-         * @deprecated 20.3
-         * @codeCoverageIgnore
-         *
-         * @param Yoast_Feature_Toggle $integration The integration toggle class.
-         */
-        public function after_integration_toggle($integration)
-        {
-        }
-        /**
-         * Add an explainer when the network integration toggle is disabled.
-         *
-         * @param Yoast_Feature_Toggle $integration The integration toggle class.
-         */
-        public function after_network_integration_toggle($integration)
-        {
-        }
-    }
-    /**
-     * Class WordProof
-     *
-     * @package Yoast\WP\SEO\Integrations\Third_Party
-     */
-    class Wordproof implements \Yoast\WP\SEO\Integrations\Integration_Interface
-    {
-        /**
-         * The Yoast meta key used to save if a post shiould be timestamped.
-         *
-         * @var string
-         */
-        protected $post_meta_key = '_yoast_wpseo_wordproof_timestamp';
-        /**
-         * The WordProof helper instance.
-         *
-         * @var Wordproof_Helper
-         */
-        protected $wordproof;
-        /**
-         * Asset manager instance.
-         *
-         * @var WPSEO_Admin_Asset_Manager
-         */
-        protected $asset_manager;
-        /**
-         * The WordProof integration constructor.
-         *
-         * @param Wordproof_Helper          $wordproof     The WordProof helper instance.
-         * @param WPSEO_Admin_Asset_Manager $asset_manager The WPSEO admin asset manager instance.
-         */
-        public function __construct(\Yoast\WP\SEO\Helpers\Wordproof_Helper $wordproof, \WPSEO_Admin_Asset_Manager $asset_manager = null)
-        {
-        }
-        /**
-         * Returns the conditionals based in which this loadable should be active.
-         *
-         * @return array
-         */
-        public static function get_conditionals()
-        {
-        }
-        /**
-         * Initializes the integration.
-         *
-         * This is the place to register hooks and filters.
-         *
-         * @return void
-         */
-        public function register_hooks()
-        {
-        }
-        /**
-         * Initializes the WordProof WordPress SDK.
-         */
-        public function sdk_setup()
-        {
-        }
-        /**
-         * Removes the WordProof timestamp post meta if a legal page is changed.
-         *
-         * @param int $old_post_id The old post id.
-         * @param int $new_post_id The new post id.
-         */
-        public function disable_timestamp_for_previous_legal_page($old_post_id, $new_post_id)
-        {
-        }
-        /**
-         * Return the Yoast post meta key for the SDK to determine if the post should be timestamped.
-         *
-         * @param array $meta_keys The array containing meta keys that should be used.
-         * @return array
-         */
-        public function add_post_meta_key($meta_keys)
-        {
-        }
-        /**
-         * Return an empty array to disable automatically timestamping selected post types.
-         *
-         * @param array $post_types The array containing post types that should be automatically timestamped.
-         * @return array
-         */
-        public function wordproof_timestamp_post_types($post_types)
-        {
-        }
-        /**
-         * This filters hides the certificate if the Yoast post meta key is not set to true.
-         *
-         * @param bool    $value If the certificate should be shown.
-         * @param WP_Post $post  The post object of the post for which to determine the certificate should be shown.
-         * @return bool|null
-         */
-        public function show_certificate($value, $post)
-        {
-        }
-        /**
-         * Adds the WordProof integration toggle to the array.
-         *
-         * @param array $fields The currently registered meta fields.
-         *
-         * @return array A new array with meta fields.
-         */
-        public function add_meta_field($fields)
-        {
-        }
-        /**
-         * Enqueue the uikit script.
-         *
-         * @return void
-         */
-        public function enqueue_assets()
-        {
-        }
-        /**
-         * Adds async to the wordproof-uikit script.
-         *
-         * @param string $tag    The script tag for the enqueued script.
-         * @param string $handle The script's registered handle.
-         * @param string $src    The script's source URL.
-         *
-         * @return string The script's tag.
-         *
-         * @phpcs:disable WordPress.WP.EnqueuedResources.NonEnqueuedScript
-         */
-        public function add_async_to_script($tag, $handle, $src)
-        {
-        }
-    }
-    /**
      * Adds a notification to the dashboard if the WPML plugin is installed,
      * but the Yoast SEO Multilingual plugin (a glue plugin to make Yoast SEO and WPML work nicely together)
      * is not.
@@ -46729,7 +54414,7 @@ namespace Yoast\WP\SEO\Integrations\Third_Party {
          *
          * @internal
          */
-        const NOTIFICATION_ID = 'wpml-wpseo-not-installed';
+        public const NOTIFICATION_ID = 'wpml-wpseo-not-installed';
         /**
          * The short link helper.
          *
@@ -46824,6 +54509,8 @@ namespace Yoast\WP\SEO\Integrations\Third_Party {
         }
         /**
          * Adds a filter to WPML's wpml_get_home_url filter to ensure we get the unmanipulated home URL.
+         *
+         * @return void
          */
         public function filter_home_url_before()
         {
@@ -46900,13 +54587,13 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          *
          * @var string
          */
-        const WPSEO_FREE_PLUGIN_ID = 'wordpress-seo/wp-seo.php';
+        public const WPSEO_FREE_PLUGIN_ID = 'wordpress-seo/wp-seo.php';
         /**
          * A list of Yoast add-on identifiers.
          *
          * @var string[]
          */
-        const ADD_ON_PLUGIN_FILES = [
+        public const ADD_ON_PLUGIN_FILES = [
             'wordpress-seo-premium/wp-seo-premium.php',
             'wpseo-video/video-seo.php',
             'wpseo-local/local-seo.php',
@@ -46917,6 +54604,8 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
         ];
         /**
          * Registers the hooks.
+         *
+         * @return void
          */
         public function register_hooks()
         {
@@ -46947,6 +54636,8 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          *
          * @param string      $option The name of the option that is being created.
          * @param array|mixed $value  The new (and first) value of the option that is being created.
+         *
+         * @return void
          */
         public function call_toggle_auto_updates_with_empty_array($option, $value)
         {
@@ -46977,6 +54668,8 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          * Enables auto-updates for all addons.
          *
          * @param string[] $auto_updated_plugins The current list of auto-updated plugins.
+         *
+         * @return void
          */
         protected function enable_auto_updates_for_addons($auto_updated_plugins)
         {
@@ -46985,6 +54678,8 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          * Disables auto-updates for all addons.
          *
          * @param string[] $auto_updated_plugins The current list of auto-updated plugins.
+         *
+         * @return void
          */
         protected function disable_auto_updates_for_addons($auto_updated_plugins)
         {
@@ -47010,7 +54705,7 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
         /**
          * The notification ID.
          */
-        const NOTIFICATION_ID = 'wpseo-auto-update';
+        public const NOTIFICATION_ID = 'wpseo-auto-update';
         /**
          * The Yoast notification center.
          *
@@ -47072,11 +54767,11 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          */
         protected $indexable_hierarchy_repository;
         /**
-         * Represents the WordPress database object.
+         * The indexable helper.
          *
-         * @var wpdb
+         * @var Indexable_Helper
          */
-        protected $wpdb;
+        private $indexable_helper;
         /**
          * Represents the permalink helper.
          *
@@ -47095,15 +54790,17 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          * @param Indexable_Repository           $indexable_repository           The indexable repository.
          * @param Indexable_Hierarchy_Builder    $indexable_hierarchy_builder    The indexable hierarchy builder.
          * @param Indexable_Hierarchy_Repository $indexable_hierarchy_repository The indexable hierarchy repository.
-         * @param wpdb                           $wpdb                           The wpdb object.
+         * @param Indexable_Helper               $indexable_helper               The indexable helper.
          * @param Permalink_Helper               $permalink_helper               The permalink helper.
          * @param Post_Type_Helper               $post_type_helper               The post type helper.
          */
-        public function __construct(\Yoast\WP\SEO\Repositories\Indexable_Repository $indexable_repository, \Yoast\WP\SEO\Builders\Indexable_Hierarchy_Builder $indexable_hierarchy_builder, \Yoast\WP\SEO\Repositories\Indexable_Hierarchy_Repository $indexable_hierarchy_repository, \wpdb $wpdb, \Yoast\WP\SEO\Helpers\Permalink_Helper $permalink_helper, \Yoast\WP\SEO\Helpers\Post_Type_Helper $post_type_helper)
+        public function __construct(\Yoast\WP\SEO\Repositories\Indexable_Repository $indexable_repository, \Yoast\WP\SEO\Builders\Indexable_Hierarchy_Builder $indexable_hierarchy_builder, \Yoast\WP\SEO\Repositories\Indexable_Hierarchy_Repository $indexable_hierarchy_repository, \Yoast\WP\SEO\Helpers\Indexable_Helper $indexable_helper, \Yoast\WP\SEO\Helpers\Permalink_Helper $permalink_helper, \Yoast\WP\SEO\Helpers\Post_Type_Helper $post_type_helper)
         {
         }
         /**
          * Registers the appropriate hooks.
+         *
+         * @return void
          */
         public function register_hooks()
         {
@@ -47111,7 +54808,7 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
         /**
          * Returns the conditionals based on which this loadable should be active.
          *
-         * @return array
+         * @return array<Migrations_Conditional>
          */
         public static function get_conditionals()
         {
@@ -47130,10 +54827,10 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
         /**
          * Finds all child indexables for the given term.
          *
-         * @param int         $term_id          Term to fetch the indexable for.
-         * @param Indexable[] $child_indexables The already known child indexables.
+         * @param int              $term_id          Term to fetch the indexable for.
+         * @param array<Indexable> $child_indexables The already known child indexables.
          *
-         * @return array The list of additional child indexables for a given term.
+         * @return array<Indexable> The list of additional child indexables for a given term.
          */
         public function get_children_for_term($term_id, array $child_indexables)
         {
@@ -47142,6 +54839,8 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          * Updates the indexable hierarchy and indexable permalink.
          *
          * @param Indexable $indexable The indexable to update the hierarchy and permalink for.
+         *
+         * @return void
          */
         protected function update_hierarchy_and_permalink($indexable)
         {
@@ -47149,10 +54848,10 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
         /**
          * Retrieves the object id's for a term based on the term-post relationship.
          *
-         * @param int         $term_id          The term to get the object id's for.
-         * @param Indexable[] $child_indexables The child indexables.
+         * @param int              $term_id          The term to get the object id's for.
+         * @param array<Indexable> $child_indexables The child indexables.
          *
-         * @return array List with object ids for the term.
+         * @return array<int> List with object ids for the term.
          */
         protected function get_object_ids_for_term($term_id, $child_indexables)
         {
@@ -47176,6 +54875,12 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          */
         protected $attachment_cleanup;
         /**
+         * The indexable helper.
+         *
+         * @var Indexable_Helper
+         */
+        protected $indexable_helper;
+        /**
          * The notifications center.
          *
          * @var Yoast_Notification_Center
@@ -47184,7 +54889,7 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
         /**
          * Returns the conditionals based on which this loadable should be active.
          *
-         * @return array
+         * @return array<string> The conditionals.
          */
         public static function get_conditionals()
         {
@@ -47195,8 +54900,9 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          * @param Indexing_Helper           $indexing_helper     The indexing helper.
          * @param Attachment_Cleanup_Helper $attachment_cleanup  The attachment cleanup helper.
          * @param Yoast_Notification_Center $notification_center The notification center.
+         * @param Indexable_Helper          $indexable_helper    The indexable helper.
          */
-        public function __construct(\Yoast\WP\SEO\Helpers\Indexing_Helper $indexing_helper, \Yoast\WP\SEO\Helpers\Attachment_Cleanup_Helper $attachment_cleanup, \Yoast_Notification_Center $notification_center)
+        public function __construct(\Yoast\WP\SEO\Helpers\Indexing_Helper $indexing_helper, \Yoast\WP\SEO\Helpers\Attachment_Cleanup_Helper $attachment_cleanup, \Yoast_Notification_Center $notification_center, \Yoast\WP\SEO\Helpers\Indexable_Helper $indexable_helper)
         {
         }
         /**
@@ -47214,9 +54920,12 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          * either it cleans up attachment indexables when it has been toggled to true,
          * or it starts displaying a notification for the user to start a new SEO optimization.
          *
+         * @phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+         *
          * @param array $old_value The old value of the wpseo_titles option.
          * @param array $new_value The new value of the wpseo_titles option.
          *
+         * @phpcs:enable
          * @return void
          */
         public function check_option($old_value, $new_value)
@@ -47228,6 +54937,20 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
      */
     class Indexable_Author_Archive_Watcher implements \Yoast\WP\SEO\Integrations\Integration_Interface
     {
+        /**
+         * The indexable helper.
+         *
+         * @var Indexable_Helper
+         */
+        protected $indexable_helper;
+        /**
+         * Indexable_Author_Archive_Watcher constructor.
+         *
+         * @param Indexable_Helper $indexable_helper The indexable helper.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\Indexable_Helper $indexable_helper)
+        {
+        }
         /**
          * Check if the author archives are disabled whenever the `wpseo_titles` option
          * changes.
@@ -47252,9 +54975,12 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          *
          * When author archives are disabled, they can never be indexed.
          *
+         * @phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+         *
          * @param array $old_value The old `wpseo_titles` option value.
          * @param array $new_value The new `wpseo_titles` option value.
          *
+         * @phpcs:enable
          * @return void
          */
         public function reschedule_indexable_cleanup_when_author_archives_are_disabled($old_value, $new_value)
@@ -47279,6 +55005,12 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          */
         protected $builder;
         /**
+         * The indexable helper.
+         *
+         * @var Indexable_Helper
+         */
+        private $indexable_helper;
+        /**
          * Returns the conditionals based on which this loadable should be active.
          *
          * @return array
@@ -47289,16 +55021,19 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
         /**
          * Indexable_Author_Watcher constructor.
          *
-         * @param Indexable_Repository $repository The repository to use.
-         * @param Indexable_Builder    $builder    The builder to use.
+         * @param Indexable_Repository $repository       The repository to use.
+         * @param Indexable_Helper     $indexable_helper The indexable helper.
+         * @param Indexable_Builder    $builder          The builder to use.
          */
-        public function __construct(\Yoast\WP\SEO\Repositories\Indexable_Repository $repository, \Yoast\WP\SEO\Builders\Indexable_Builder $builder)
+        public function __construct(\Yoast\WP\SEO\Repositories\Indexable_Repository $repository, \Yoast\WP\SEO\Helpers\Indexable_Helper $indexable_helper, \Yoast\WP\SEO\Builders\Indexable_Builder $builder)
         {
         }
         /**
          * Initializes the integration.
          *
          * This is the place to register hooks and filters.
+         *
+         * @return void
          */
         public function register_hooks()
         {
@@ -47406,6 +55141,8 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
         }
         /**
          * Resets the permalinks for everything that is related to the permalink structure.
+         *
+         * @return void
          */
         public function reset_permalinks()
         {
@@ -47414,6 +55151,8 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          * Resets the permalink for the given post type.
          *
          * @param string $post_type The post type to reset.
+         *
+         * @return void
          */
         public function reset_permalinks_post_type($post_type)
         {
@@ -47424,6 +55163,8 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          * @param string $old_value Unused. The old option value.
          * @param string $new_value Unused. The new option value.
          * @param string $type      The option name.
+         *
+         * @return void
          */
         public function reset_permalinks_term($old_value, $new_value, $type)
         {
@@ -47555,6 +55296,8 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          * Initializes the integration.
          *
          * This is the place to register hooks and filters.
+         *
+         * @return void
          */
         public function register_hooks()
         {
@@ -47593,6 +55336,12 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          */
         protected $repository;
         /**
+         * The indexable helper.
+         *
+         * @var Indexable_Helper
+         */
+        protected $indexable_helper;
+        /**
          * The indexable builder.
          *
          * @var Indexable_Builder
@@ -47609,16 +55358,19 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
         /**
          * Indexable_Home_Page_Watcher constructor.
          *
-         * @param Indexable_Repository $repository The repository to use.
-         * @param Indexable_Builder    $builder    The post builder to use.
+         * @param Indexable_Repository $repository       The repository to use.
+         * @param Indexable_Helper     $indexable_helper The indexable helper.
+         * @param Indexable_Builder    $builder          The post builder to use.
          */
-        public function __construct(\Yoast\WP\SEO\Repositories\Indexable_Repository $repository, \Yoast\WP\SEO\Builders\Indexable_Builder $builder)
+        public function __construct(\Yoast\WP\SEO\Repositories\Indexable_Repository $repository, \Yoast\WP\SEO\Helpers\Indexable_Helper $indexable_helper, \Yoast\WP\SEO\Builders\Indexable_Builder $builder)
         {
         }
         /**
          * Initializes the integration.
          *
          * This is the place to register hooks and filters.
+         *
+         * @return void
          */
         public function register_hooks()
         {
@@ -47736,13 +55488,13 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
         /**
          * An array of post IDs that need to be updated.
          *
-         * @var array
+         * @var array<int>
          */
         protected $post_ids_to_update = [];
         /**
          * Returns the conditionals based on which this loadable should be active.
          *
-         * @return array
+         * @return string[]
          */
         public static function get_conditionals()
         {
@@ -47759,6 +55511,8 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          * Initializes the integration.
          *
          * This is the place to register hooks and filters.
+         *
+         * @return void
          */
         public function register_hooks()
         {
@@ -47808,6 +55562,12 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          */
         protected $repository;
         /**
+         * The indexable helper.
+         *
+         * @var Indexable_Helper
+         */
+        private $indexable_helper;
+        /**
          * The indexable builder.
          *
          * @var Indexable_Builder
@@ -47824,16 +55584,19 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
         /**
          * Indexable_Post_Type_Archive_Watcher constructor.
          *
-         * @param Indexable_Repository $repository The repository to use.
-         * @param Indexable_Builder    $builder    The post builder to use.
+         * @param Indexable_Repository $repository       The repository to use.
+         * @param Indexable_Helper     $indexable_helper The indexable helper.
+         * @param Indexable_Builder    $builder          The post builder to use.
          */
-        public function __construct(\Yoast\WP\SEO\Repositories\Indexable_Repository $repository, \Yoast\WP\SEO\Builders\Indexable_Builder $builder)
+        public function __construct(\Yoast\WP\SEO\Repositories\Indexable_Repository $repository, \Yoast\WP\SEO\Helpers\Indexable_Helper $indexable_helper, \Yoast\WP\SEO\Builders\Indexable_Builder $builder)
         {
         }
         /**
          * Initializes the integration.
          *
          * This is the place to register hooks and filters.
+         *
+         * @return void
          */
         public function register_hooks()
         {
@@ -47872,6 +55635,12 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          */
         protected $indexing_helper;
         /**
+         * The indexable helper.
+         *
+         * @var Indexable_Helper
+         */
+        private $indexable_helper;
+        /**
          * Holds the Options_Helper instance.
          *
          * @var Options_Helper
@@ -47892,7 +55661,7 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
         /**
          * Returns the conditionals based on which this loadable should be active.
          *
-         * @return array
+         * @return array<string> The conditionals.
          */
         public static function get_conditionals()
         {
@@ -47904,8 +55673,9 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          * @param Indexing_Helper           $indexing_helper     The indexing helper.
          * @param Post_Type_Helper          $post_type_helper    The post_typehelper.
          * @param Yoast_Notification_Center $notification_center The notification center.
+         * @param Indexable_Helper          $indexable_helper    The indexable helper.
          */
-        public function __construct(\Yoast\WP\SEO\Helpers\Options_Helper $options, \Yoast\WP\SEO\Helpers\Indexing_Helper $indexing_helper, \Yoast\WP\SEO\Helpers\Post_Type_Helper $post_type_helper, \Yoast_Notification_Center $notification_center)
+        public function __construct(\Yoast\WP\SEO\Helpers\Options_Helper $options, \Yoast\WP\SEO\Helpers\Indexing_Helper $indexing_helper, \Yoast\WP\SEO\Helpers\Post_Type_Helper $post_type_helper, \Yoast_Notification_Center $notification_center, \Yoast\WP\SEO\Helpers\Indexable_Helper $indexable_helper)
         {
         }
         /**
@@ -47924,22 +55694,6 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          * @return void
          */
         public function check_post_types_public_availability()
-        {
-        }
-        /**
-         * Decides if a notification should be added in the notification center.
-         *
-         * @return void
-         */
-        private function maybe_add_notification()
-        {
-        }
-        /**
-         * Adds a notification to be shown on the next page request since posts are updated in an ajax request.
-         *
-         * @return void
-         */
-        private function add_notification()
         {
         }
     }
@@ -47981,6 +55735,12 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          */
         private $author_archive;
         /**
+         * The indexable helper.
+         *
+         * @var Indexable_Helper
+         */
+        private $indexable_helper;
+        /**
          * Holds the Post_Helper instance.
          *
          * @var Post_Helper
@@ -47995,7 +55755,7 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
         /**
          * Returns the conditionals based on which this loadable should be active.
          *
-         * @return array
+         * @return array<string> The conditionals.
          */
         public static function get_conditionals()
         {
@@ -48008,10 +55768,11 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          * @param Indexable_Hierarchy_Repository $hierarchy_repository The hierarchy repository to use.
          * @param Indexable_Link_Builder         $link_builder         The link builder.
          * @param Author_Archive_Helper          $author_archive       The author archive helper.
+         * @param Indexable_Helper               $indexable_helper     The indexable helper.
          * @param Post_Helper                    $post                 The post helper.
          * @param Logger                         $logger               The logger.
          */
-        public function __construct(\Yoast\WP\SEO\Repositories\Indexable_Repository $repository, \Yoast\WP\SEO\Builders\Indexable_Builder $builder, \Yoast\WP\SEO\Repositories\Indexable_Hierarchy_Repository $hierarchy_repository, \Yoast\WP\SEO\Builders\Indexable_Link_Builder $link_builder, \Yoast\WP\SEO\Helpers\Author_Archive_Helper $author_archive, \Yoast\WP\SEO\Helpers\Post_Helper $post, \Yoast\WP\SEO\Loggers\Logger $logger)
+        public function __construct(\Yoast\WP\SEO\Repositories\Indexable_Repository $repository, \Yoast\WP\SEO\Builders\Indexable_Builder $builder, \Yoast\WP\SEO\Repositories\Indexable_Hierarchy_Repository $hierarchy_repository, \Yoast\WP\SEO\Builders\Indexable_Link_Builder $link_builder, \Yoast\WP\SEO\Helpers\Author_Archive_Helper $author_archive, \Yoast\WP\SEO\Helpers\Indexable_Helper $indexable_helper, \Yoast\WP\SEO\Helpers\Post_Helper $post, \Yoast\WP\SEO\Loggers\Logger $logger)
         {
         }
         /**
@@ -48039,6 +55800,8 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          *
          * @param Indexable $indexable The indexable.
          * @param WP_Post   $post      The post.
+         *
+         * @return void
          */
         public function updated_indexable($indexable, $post)
         {
@@ -48057,6 +55820,8 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          * Updates the has_public_posts when the post indexable is built.
          *
          * @param Indexable $indexable The indexable to check.
+         *
+         * @return void
          */
         protected function update_has_public_posts($indexable)
         {
@@ -48077,6 +55842,8 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          * Updates the relations on post save or post status change.
          *
          * @param WP_Post $post The post that has been updated.
+         *
+         * @return void
          */
         protected function update_relations($post)
         {
@@ -48135,6 +55902,8 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          * Initializes the integration.
          *
          * This is the place to register hooks and filters.
+         *
+         * @return void
          */
         public function register_hooks()
         {
@@ -48144,6 +55913,8 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          *
          * @param string $old_value The previous homepage's ID.
          * @param int    $value     The new homepage's ID.
+         *
+         * @return void
          */
         public function update_static_homepage_permalink($old_value, $value)
         {
@@ -48152,6 +55923,8 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          * Updates the permalink based on the selected homepage settings.
          *
          * @param int $page_id The page's id.
+         *
+         * @return void
          */
         private function update_permalink_for_page($page_id)
         {
@@ -48197,6 +55970,8 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          * Initializes the integration.
          *
          * This is the place to register hooks and filters.
+         *
+         * @return void
          */
         public function register_hooks()
         {
@@ -48237,6 +56012,12 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          */
         protected $indexing_helper;
         /**
+         * The indexable helper.
+         *
+         * @var Indexable_Helper
+         */
+        protected $indexable_helper;
+        /**
          * Holds the Options_Helper instance.
          *
          * @var Options_Helper
@@ -48257,7 +56038,7 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
         /**
          * Returns the conditionals based on which this loadable should be active.
          *
-         * @return array
+         * @return array<string> The conditionals.
          */
         public static function get_conditionals()
         {
@@ -48269,8 +56050,9 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          * @param Options_Helper            $options             The options helper.
          * @param Taxonomy_Helper           $taxonomy_helper     The taxonomy helper.
          * @param Yoast_Notification_Center $notification_center The notification center.
+         * @param Indexable_Helper          $indexable_helper    The indexable helper.
          */
-        public function __construct(\Yoast\WP\SEO\Helpers\Indexing_Helper $indexing_helper, \Yoast\WP\SEO\Helpers\Options_Helper $options, \Yoast\WP\SEO\Helpers\Taxonomy_Helper $taxonomy_helper, \Yoast_Notification_Center $notification_center)
+        public function __construct(\Yoast\WP\SEO\Helpers\Indexing_Helper $indexing_helper, \Yoast\WP\SEO\Helpers\Options_Helper $options, \Yoast\WP\SEO\Helpers\Taxonomy_Helper $taxonomy_helper, \Yoast_Notification_Center $notification_center, \Yoast\WP\SEO\Helpers\Indexable_Helper $indexable_helper)
         {
         }
         /**
@@ -48289,22 +56071,6 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          * @return void
          */
         public function check_taxonomy_public_availability()
-        {
-        }
-        /**
-         * Decides if a notification should be added in the notification center.
-         *
-         * @return void
-         */
-        private function maybe_add_notification()
-        {
-        }
-        /**
-         * Adds a notification to be shown on the next page request since posts are updated in an ajax request.
-         *
-         * @return void
-         */
-        private function add_notification()
         {
         }
     }
@@ -48332,6 +56098,12 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          */
         protected $link_builder;
         /**
+         * The indexable helper.
+         *
+         * @var Indexable_Helper
+         */
+        private $indexable_helper;
+        /**
          * Represents the site helper.
          *
          * @var Site_Helper
@@ -48348,12 +56120,13 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
         /**
          * Indexable_Term_Watcher constructor.
          *
-         * @param Indexable_Repository   $repository   The repository to use.
-         * @param Indexable_Builder      $builder      The post builder to use.
-         * @param Indexable_Link_Builder $link_builder The lint builder to use.
-         * @param Site_Helper            $site         The site helper.
+         * @param Indexable_Repository   $repository       The repository to use.
+         * @param Indexable_Builder      $builder          The post builder to use.
+         * @param Indexable_Link_Builder $link_builder     The lint builder to use.
+         * @param Indexable_Helper       $indexable_helper The indexable helper.
+         * @param Site_Helper            $site             The site helper.
          */
-        public function __construct(\Yoast\WP\SEO\Repositories\Indexable_Repository $repository, \Yoast\WP\SEO\Builders\Indexable_Builder $builder, \Yoast\WP\SEO\Builders\Indexable_Link_Builder $link_builder, \Yoast\WP\SEO\Helpers\Site_Helper $site)
+        public function __construct(\Yoast\WP\SEO\Repositories\Indexable_Repository $repository, \Yoast\WP\SEO\Builders\Indexable_Builder $builder, \Yoast\WP\SEO\Builders\Indexable_Link_Builder $link_builder, \Yoast\WP\SEO\Helpers\Indexable_Helper $indexable_helper, \Yoast\WP\SEO\Helpers\Site_Helper $site)
         {
         }
         /**
@@ -48405,7 +56178,7 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
         /**
          * Returns the conditionals based on which this loadable should be active.
          *
-         * @return array
+         * @return array<Migrations_Conditional>
          */
         public static function get_conditionals()
         {
@@ -48413,8 +56186,8 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
         /**
          * Checks if one of the relevant options has been changed.
          *
-         * @param array $old_value The old value of the option.
-         * @param array $new_value The new value of the option.
+         * @param array<string,int,bool> $old_value The old value of the option.
+         * @param array<string,int,bool> $new_value The new value of the option.
          *
          * @return bool Whether or not the ancestors are removed.
          */
@@ -48424,7 +56197,7 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
         /**
          * Retrieves the relevant keys.
          *
-         * @return array Array with the relevant keys.
+         * @return array<string> Array with the relevant keys.
          */
         protected function get_relevant_keys()
         {
@@ -48432,7 +56205,7 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
         /**
          * Removes the ancestors for given post types.
          *
-         * @param array $post_types The post types to remove hierarchy for.
+         * @param array<string> $post_types The post types to remove hierarchy for.
          *
          * @return bool True when delete query was successful.
          */
@@ -48448,20 +56221,6 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
     class Option_Wpseo_Watcher implements \Yoast\WP\SEO\Integrations\Integration_Interface
     {
         use \Yoast\WP\SEO\Conditionals\No_Conditionals;
-        /**
-         * Holds the WordProof helper instance.
-         *
-         * @var Wordproof_Helper
-         */
-        protected $wordproof;
-        /**
-         * The constructor for a watcher of WPSEO options.
-         *
-         * @param Wordproof_Helper $wordproof The WordProof helper instance.
-         */
-        public function __construct(\Yoast\WP\SEO\Helpers\Wordproof_Helper $wordproof)
-        {
-        }
         /**
          * Initializes the integration.
          *
@@ -48506,6 +56265,9 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          *
          * We delete them if the WordProof integration is disabled, no matter if the
          * value has actually changed or not.
+         *
+         * @deprecated 22.10
+         * @codeCoverageIgnore
          *
          * @param array $old_value The old value of the option.
          * @param array $new_value The new value of the option.
@@ -48614,6 +56376,8 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          * @param array  $terms     Unused. An array of object terms.
          * @param array  $tt_ids    An array of term taxonomy IDs.
          * @param string $taxonomy  Taxonomy slug.
+         *
+         * @return void
          */
         public function validate_primary_category($object_id, $terms, $tt_ids, $taxonomy)
         {
@@ -48634,6 +56398,8 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          *
          * @param int    $post_id       The post id to set primary taxonomy for.
          * @param string $main_taxonomy Name of the taxonomy that is set to be the primary one.
+         *
+         * @return void
          */
         private function remove_primary_term($post_id, $main_taxonomy)
         {
@@ -48642,6 +56408,8 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          * Builds the hierarchy for a post.
          *
          * @param WP_Post $post The post.
+         *
+         * @return void
          */
         public function build_post_hierarchy($post)
         {
@@ -48703,6 +56471,8 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          * Initializes the integration.
          *
          * This is the place to register hooks and filters.
+         *
+         * @return void
          */
         public function register_hooks()
         {
@@ -48711,6 +56481,8 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          * Saves all selected primary terms.
          *
          * @param int $post_id Post ID to save primary terms for.
+         *
+         * @return void
          */
         public function save_primary_terms($post_id)
         {
@@ -48720,6 +56492,8 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
          *
          * @param int     $post_id  Post ID to save primary term for.
          * @param WP_Term $taxonomy Taxonomy to save primary term for.
+         *
+         * @return void
          */
         protected function save_primary_term($post_id, $taxonomy)
         {
@@ -48737,8 +56511,6 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
     }
     /**
      * Shows a notification for users who have access for robots disabled.
-     *
-     * @class Search_Engines_Discouraged_Watcher
      */
     class Search_Engines_Discouraged_Watcher implements \Yoast\WP\SEO\Integrations\Integration_Interface
     {
@@ -48746,7 +56518,7 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
         /**
          * The notification ID.
          */
-        const NOTIFICATION_ID = 'wpseo-search-engines-discouraged';
+        public const NOTIFICATION_ID = 'wpseo-search-engines-discouraged';
         /**
          * The Yoast notification center.
          *
@@ -48880,6 +56652,109 @@ namespace Yoast\WP\SEO\Integrations\Watchers {
         protected function notification()
         {
         }
+        /**
+         * Should restore the ignore option for the search engines discouraged notice.
+         *
+         * @return void
+         */
+        public function restore_ignore_option()
+        {
+        }
+    }
+    /**
+     * Shows a notification for users who have Woocommerce product beta editor enabled.
+     */
+    class Woocommerce_Beta_Editor_Watcher implements \Yoast\WP\SEO\Integrations\Integration_Interface
+    {
+        /**
+         * The notification ID.
+         */
+        public const NOTIFICATION_ID = 'wpseo-woocommerce-beta-editor-warning';
+        /**
+         * The short link helper.
+         *
+         * @var Short_Link_Helper
+         */
+        protected $short_link_helper;
+        /**
+         * The Yoast notification center.
+         *
+         * @var Yoast_Notification_Center
+         */
+        protected $notification_center;
+        /**
+         * The notification helper.
+         *
+         * @var Notification_Helper
+         */
+        protected $notification_helper;
+        /**
+         * The WooCommerce conditional.
+         *
+         * @var WooCommerce_Conditional
+         */
+        protected $woocommerce_conditional;
+        /**
+         * The Woocommerce beta editor presenter.
+         *
+         * @var Woocommerce_Beta_Editor_Presenter
+         */
+        protected $presenter;
+        /**
+         * Woocommerce_Beta_Editor_Watcher constructor.
+         *
+         * @param Yoast_Notification_Center $notification_center     The notification center.
+         * @param Notification_Helper       $notification_helper     The notification helper.
+         * @param Short_Link_Helper         $short_link_helper       The short link helper.
+         * @param WooCommerce_Conditional   $woocommerce_conditional The WooCommerce conditional.
+         */
+        public function __construct(\Yoast_Notification_Center $notification_center, \Yoast\WP\SEO\Helpers\Notification_Helper $notification_helper, \Yoast\WP\SEO\Helpers\Short_Link_Helper $short_link_helper, \Yoast\WP\SEO\Conditionals\WooCommerce_Conditional $woocommerce_conditional)
+        {
+        }
+        /**
+         * Returns the conditionals based on which this loadable should be active.
+         *
+         * @return string[] The conditionals.
+         */
+        public static function get_conditionals()
+        {
+        }
+        /**
+         * Initializes the integration.
+         *
+         * On admin_init, it is checked whether the notification about Woocommerce product beta editor enabled should be shown.
+         *
+         * @return void
+         */
+        public function register_hooks()
+        {
+        }
+        /**
+         * Manage the Woocommerce product beta editor notification.
+         *
+         * Shows the notification if needed and deletes it if needed.
+         *
+         * @return void
+         */
+        public function manage_woocommerce_beta_editor_notification()
+        {
+        }
+        /**
+         * Add the Woocommerce product beta editor enabled notification if it does not exist yet.
+         *
+         * @return void
+         */
+        public function maybe_add_woocommerce_beta_editor_notification()
+        {
+        }
+        /**
+         * Returns an instance of the notification.
+         *
+         * @return Yoast_Notification The notification to show.
+         */
+        protected function notification()
+        {
+        }
     }
 }
 namespace Yoast\WP\SEO\Integrations {
@@ -48918,6 +56793,703 @@ namespace Yoast\WP\SEO\Integrations {
          * @return array The methods.
          */
         public function robots_header($methods)
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Introductions\Domain {
+    /**
+     * Represents an introduction.
+     */
+    interface Introduction_Interface
+    {
+        /**
+         * Returns the ID.
+         *
+         * @return string
+         */
+        public function get_id();
+        /**
+         * Returns the unique name.
+         *
+         * @deprecated 21.6
+         * @codeCoverageIgnore
+         *
+         * @return string
+         */
+        public function get_name();
+        /**
+         * Returns the requested pagination priority. Lower means earlier.
+         *
+         * @return int
+         */
+        public function get_priority();
+        /**
+         * Returns whether this introduction should show.
+         *
+         * @return bool
+         */
+        public function should_show();
+    }
+}
+namespace Yoast\WP\SEO\Introductions\Application {
+    trait User_Allowed_Trait
+    {
+        /**
+         * Determines whether the user has the required capabilities.
+         *
+         * @param string[] $capabilities The required capabilities.
+         *
+         * @return bool Whether the user has the required capabilities.
+         */
+        private function is_user_allowed($capabilities)
+        {
+        }
+    }
+    /**
+     * Represents the introduction for the AI fix assessments feature.
+     */
+    class Ai_Fix_Assessments_Upsell implements \Yoast\WP\SEO\Introductions\Domain\Introduction_Interface
+    {
+        use \Yoast\WP\SEO\Introductions\Application\User_Allowed_Trait;
+        public const ID = 'ai-fix-assessments-upsell';
+        /**
+         * Holds the user helper.
+         *
+         * @var User_Helper
+         */
+        private $user_helper;
+        /**
+         * Holds the product helper.
+         *
+         * @var Product_Helper
+         */
+        private $product_helper;
+        /**
+         * Constructs the introduction.
+         *
+         * @param User_Helper    $user_helper    The user helper.
+         * @param Product_Helper $product_helper The product helper.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\User_Helper $user_helper, \Yoast\WP\SEO\Helpers\Product_Helper $product_helper)
+        {
+        }
+        /**
+         * Returns the ID.
+         *
+         * @return string The ID.
+         */
+        public function get_id()
+        {
+        }
+        /**
+         * Returns the name of the introdyction.
+         *
+         * @return string The name.
+         */
+        public function get_name()
+        {
+        }
+        /**
+         * Returns the requested pagination priority. Lower means earlier.
+         *
+         * @return int The priority.
+         */
+        public function get_priority()
+        {
+        }
+        /**
+         * Returns whether this introduction should show.
+         *
+         * @return bool Whether this introduction should show.
+         */
+        public function should_show()
+        {
+        }
+    }
+    trait Current_Page_Trait
+    {
+        /**
+         * Determines whether the current page is applicable.
+         *
+         * @param string[] $pages The applicable pages.
+         *
+         * @return bool Whether the current page is applicable.
+         */
+        private function is_on_yoast_page($pages)
+        {
+        }
+        /**
+         * Determines whether the current page is one of our installation pages.
+         *
+         * @return bool Whether the current page is one of our installation pages.
+         */
+        private function is_on_installation_page()
+        {
+        }
+        /**
+         * Retrieve the page variable.
+         *
+         * Note: the result is not safe to use in anything than strict comparisons!
+         *
+         * @return string The page variable.
+         */
+        private function get_page()
+        {
+        }
+    }
+    /**
+     * Manages the collection of introductions.
+     */
+    class Introductions_Collector
+    {
+        /**
+         * Holds all the introductions.
+         *
+         * @var Introduction_Interface[]
+         */
+        private $introductions;
+        /**
+         * Constructs the collector.
+         *
+         * @param Introduction_Interface ...$introductions All the introductions.
+         */
+        public function __construct(\Yoast\WP\SEO\Introductions\Domain\Introduction_Interface ...$introductions)
+        {
+        }
+        /**
+         * Gets the data for the introductions.
+         *
+         * @param int $user_id The user ID.
+         *
+         * @return array The list of introductions.
+         */
+        public function get_for($user_id)
+        {
+        }
+        /**
+         * Filters introductions with the 'wpseo_introductions' filter.
+         *
+         * @param Introduction_Interface ...$introductions The introductions.
+         *
+         * @return Introduction_Interface[]
+         */
+        private function add_introductions(\Yoast\WP\SEO\Introductions\Domain\Introduction_Interface ...$introductions)
+        {
+        }
+        /**
+         * Retrieves the introductions metadata for the user.
+         *
+         * @param int $user_id The user ID.
+         *
+         * @return array The introductions' metadata.
+         */
+        private function get_metadata($user_id)
+        {
+        }
+        /**
+         * Determines whether the user has seen the introduction.
+         *
+         * @param string   $name     The name.
+         * @param string[] $metadata The metadata.
+         *
+         * @return bool Whether the user has seen the introduction.
+         */
+        private function is_seen($name, $metadata)
+        {
+        }
+        /**
+         * Checks if the given introduction ID is a known ID to the system.
+         *
+         * @param string $introduction_id The introduction ID to check.
+         *
+         * @return bool
+         */
+        public function is_available_introduction(string $introduction_id) : bool
+        {
+        }
+    }
+    trait Version_Trait
+    {
+        /**
+         * Determines whether the version is between a min (inclusive) and max (exclusive).
+         *
+         * @param string $version     The version to compare.
+         * @param string $min_version The minimum version.
+         * @param string $max_version The maximum version.
+         *
+         * @return bool Whether the version is between a min and max.
+         */
+        private function is_version_between($version, $min_version, $max_version)
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Introductions\Domain {
+    /**
+     * Domain object that holds introduction information.
+     */
+    class Introduction_Item
+    {
+        /**
+         * The ID.
+         *
+         * @var string
+         */
+        private $id;
+        /**
+         * The priority.
+         *
+         * @var int
+         */
+        private $priority;
+        /**
+         * Constructs the instance.
+         *
+         * @param string $id       The ID.
+         * @param int    $priority The priority.
+         */
+        public function __construct($id, $priority)
+        {
+        }
+        /**
+         * Returns an array representation of the data.
+         *
+         * @return array Returns in an array format.
+         */
+        public function to_array()
+        {
+        }
+        /**
+         * Returns the ID.
+         *
+         * @return string
+         */
+        public function get_id()
+        {
+        }
+        /**
+         * Returns the requested pagination priority. Higher means earlier.
+         *
+         * @return int
+         */
+        public function get_priority()
+        {
+        }
+    }
+    /**
+     * A collection domain object.
+     */
+    class Introductions_Bucket
+    {
+        /**
+         * Holds the introductions.
+         *
+         * @var Introduction_Item[]
+         */
+        private $introductions;
+        /**
+         * The constructor.
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Adds an introduction to this bucket.
+         *
+         * @param Introduction_Item $introduction The introduction.
+         *
+         * @return void
+         */
+        public function add_introduction(\Yoast\WP\SEO\Introductions\Domain\Introduction_Item $introduction)
+        {
+        }
+        /**
+         * Returns the array representation of the introductions.
+         *
+         * @return array
+         */
+        public function to_array()
+        {
+        }
+    }
+    /**
+     * Invalid user ID.
+     */
+    class Invalid_User_Id_Exception extends \InvalidArgumentException
+    {
+        /**
+         * Constructs the exception.
+         *
+         * @link https://php.net/manual/en/exception.construct.php
+         *
+         * @param string         $message  Optional. The Exception message to throw.
+         * @param int            $code     Optional. The Exception code.
+         * @param Throwable|null $previous Optional. The previous throwable used for the exception chaining.
+         */
+        public function __construct(
+            // phpcs:ignore Generic.CodeAnalysis.UselessOverridingMethod.Found -- Reason: A default message is used.
+            $message = 'Invalid User ID',
+            $code = 0,
+            $previous = null
+        )
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Introductions\Infrastructure {
+    /**
+     * Stores and retrieves whether the user has seen certain introductions.
+     */
+    class Introductions_Seen_Repository
+    {
+        public const USER_META_KEY = '_yoast_wpseo_introductions';
+        public const DEFAULT_VALUE = [];
+        /**
+         * Holds the User_Helper instance.
+         *
+         * @var User_Helper
+         */
+        private $user_helper;
+        /**
+         * Constructs the class.
+         *
+         * @param User_Helper $user_helper The User_Helper.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\User_Helper $user_helper)
+        {
+        }
+        /**
+         * Retrieves the introductions.
+         *
+         * @param int $user_id User ID.
+         *
+         * @return array The introductions.
+         *
+         * @throws Invalid_User_Id_Exception If an invalid user ID is supplied.
+         */
+        public function get_all_introductions($user_id) : array
+        {
+        }
+        /**
+         * Sets the introductions.
+         *
+         * @param int   $user_id       The user ID.
+         * @param array $introductions The introductions.
+         *
+         * @return bool True on successful update, false on failure or if the value passed to the function is the same as
+         *              the one that is already in the database.
+         */
+        public function set_all_introductions($user_id, array $introductions) : bool
+        {
+        }
+        /**
+         * Retrieves whether an introduction is seen.
+         *
+         * @param int    $user_id         User ID.
+         * @param string $introduction_id The introduction ID.
+         *
+         * @return bool Whether the introduction is seen.
+         *
+         * @throws Invalid_User_Id_Exception If an invalid user ID is supplied.
+         */
+        public function is_introduction_seen($user_id, string $introduction_id) : bool
+        {
+        }
+        /**
+         * Sets the introduction as seen.
+         *
+         * @param int    $user_id         The user ID.
+         * @param string $introduction_id The introduction ID.
+         * @param bool   $is_seen         Whether the introduction is seen. Defaults to true.
+         *
+         * @return bool False on failure. Not having to update is a success.
+         *
+         * @throws Invalid_User_Id_Exception If an invalid user ID is supplied.
+         */
+        public function set_introduction($user_id, string $introduction_id, bool $is_seen = true) : bool
+        {
+        }
+    }
+    /**
+     * Takes care of the get/set in the WP user meta.
+     *
+     * @makePublic
+     */
+    class Wistia_Embed_Permission_Repository
+    {
+        public const USER_META_KEY = '_yoast_wpseo_wistia_embed_permission';
+        public const DEFAULT_VALUE = false;
+        /**
+         * Holds the User_Helper instance.
+         *
+         * @var User_Helper
+         */
+        private $user_helper;
+        /**
+         * Constructs the class.
+         *
+         * @param User_Helper $user_helper The User_Helper.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\User_Helper $user_helper)
+        {
+        }
+        /**
+         * Retrieves the current value for a user.
+         *
+         * @param int $user_id User ID.
+         *
+         * @return bool The current value.
+         *
+         * @throws Exception If an invalid user ID is supplied.
+         */
+        public function get_value_for_user($user_id)
+        {
+        }
+        /**
+         * Sets the Wistia embed permission value for the current user.
+         *
+         * @param int  $user_id The user ID.
+         * @param bool $value   The value.
+         *
+         * @return bool Whether the update was successful.
+         *
+         * @throws Exception If an invalid user ID is supplied.
+         */
+        public function set_value_for_user($user_id, $value)
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Introductions\User_Interface {
+    /**
+     * Loads introduction modal scripts, when there are applicable introductions.
+     */
+    class Introductions_Integration implements \Yoast\WP\SEO\Integrations\Integration_Interface
+    {
+        use \Yoast\WP\SEO\Introductions\Application\Current_Page_Trait;
+        public const SCRIPT_HANDLE = 'introductions';
+        /**
+         * Holds the admin asset manager.
+         *
+         * @var WPSEO_Admin_Asset_Manager
+         */
+        private $admin_asset_manager;
+        /**
+         * Holds the introduction collector.
+         *
+         * @var Introductions_Collector
+         */
+        private $introductions_collector;
+        /**
+         * Holds the product helper.
+         *
+         * @var Product_Helper
+         */
+        private $product_helper;
+        /**
+         * Holds the user helper.
+         *
+         * @var User_Helper
+         */
+        private $user_helper;
+        /**
+         * Holds the short link helper.
+         *
+         * @var Short_Link_Helper
+         */
+        private $short_link_helper;
+        /**
+         * Holds the repository.
+         *
+         * @var Wistia_Embed_Permission_Repository
+         */
+        private $wistia_embed_permission_repository;
+        /**
+         * Returns the conditionals based in which this loadable should be active.
+         *
+         * In this case: when on an admin page.
+         *
+         * @return array<string>
+         */
+        public static function get_conditionals()
+        {
+        }
+        /**
+         * Constructs the integration.
+         *
+         * @param WPSEO_Admin_Asset_Manager          $admin_asset_manager                The admin asset manager.
+         * @param Introductions_Collector            $introductions_collector            The introductions' collector.
+         * @param Product_Helper                     $product_helper                     The product helper.
+         * @param User_Helper                        $user_helper                        The user helper.
+         * @param Short_Link_Helper                  $short_link_helper                  The short link helper.
+         * @param Wistia_Embed_Permission_Repository $wistia_embed_permission_repository The repository.
+         */
+        public function __construct(\WPSEO_Admin_Asset_Manager $admin_asset_manager, \Yoast\WP\SEO\Introductions\Application\Introductions_Collector $introductions_collector, \Yoast\WP\SEO\Helpers\Product_Helper $product_helper, \Yoast\WP\SEO\Helpers\User_Helper $user_helper, \Yoast\WP\SEO\Helpers\Short_Link_Helper $short_link_helper, \Yoast\WP\SEO\Introductions\Infrastructure\Wistia_Embed_Permission_Repository $wistia_embed_permission_repository)
+        {
+        }
+        /**
+         * Registers the action to enqueue the needed script(s).
+         *
+         * @return void
+         */
+        public function register_hooks()
+        {
+        }
+        /**
+         * Enqueue the new features assets.
+         *
+         * @return void
+         */
+        public function enqueue_assets()
+        {
+        }
+        /**
+         * Updates the user metadata to have "seen" the introductions.
+         *
+         * @param int   $user_id       The user ID.
+         * @param array $introductions The introductions.
+         *
+         * @return void
+         */
+        private function update_user_introductions($user_id, $introductions)
+        {
+        }
+    }
+    /**
+     * Registers a route to set whether the user has seen an introduction.
+     *
+     * @makePublic
+     */
+    class Introductions_Seen_Route implements \Yoast\WP\SEO\Routes\Route_Interface
+    {
+        use \Yoast\WP\SEO\Conditionals\No_Conditionals;
+        /**
+         * Represents the prefix.
+         *
+         * @var string
+         */
+        public const ROUTE_PREFIX = '/introductions/(?P<introduction_id>[\\w-]+)/seen';
+        /**
+         * Holds the introductions collector instance.
+         *
+         * @var Introductions_Collector
+         */
+        private $introductions_collector;
+        /**
+         * Holds the repository.
+         *
+         * @var Introductions_Seen_Repository
+         */
+        private $introductions_seen_repository;
+        /**
+         * Holds the user helper.
+         *
+         * @var User_Helper
+         */
+        private $user_helper;
+        /**
+         * Constructs the class.
+         *
+         * @param Introductions_Seen_Repository $introductions_seen_repository The repository.
+         * @param User_Helper                   $user_helper                   The user helper.
+         * @param Introductions_Collector       $introductions_collector       The introduction collector.
+         */
+        public function __construct(\Yoast\WP\SEO\Introductions\Infrastructure\Introductions_Seen_Repository $introductions_seen_repository, \Yoast\WP\SEO\Helpers\User_Helper $user_helper, \Yoast\WP\SEO\Introductions\Application\Introductions_Collector $introductions_collector)
+        {
+        }
+        /**
+         * Registers routes with WordPress.
+         *
+         * @return void
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Sets whether the introduction is seen.
+         *
+         * @param WP_REST_Request $request The request object.
+         *
+         * @return WP_REST_Response|WP_Error The success or failure response.
+         */
+        public function set_introduction_seen(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Permission callback.
+         *
+         * @return bool True when user has 'edit_posts' permission.
+         */
+        public function permission_edit_posts()
+        {
+        }
+    }
+    /**
+     * Registers a route to offer get/set of the wistia embed permission for a user.
+     */
+    class Wistia_Embed_Permission_Route implements \Yoast\WP\SEO\Routes\Route_Interface
+    {
+        use \Yoast\WP\SEO\Conditionals\No_Conditionals;
+        /**
+         * Represents the prefix.
+         *
+         * @var string
+         */
+        public const ROUTE_PREFIX = '/wistia_embed_permission';
+        /**
+         * Holds the repository.
+         *
+         * @var Wistia_Embed_Permission_Repository
+         */
+        private $wistia_embed_permission_repository;
+        /**
+         * Holds the user helper.
+         *
+         * @var User_Helper
+         */
+        private $user_helper;
+        /**
+         * Constructs the class.
+         *
+         * @param Wistia_Embed_Permission_Repository $wistia_embed_permission_repository The repository.
+         * @param User_Helper                        $user_helper                        The user helper.
+         */
+        public function __construct(\Yoast\WP\SEO\Introductions\Infrastructure\Wistia_Embed_Permission_Repository $wistia_embed_permission_repository, \Yoast\WP\SEO\Helpers\User_Helper $user_helper)
+        {
+        }
+        /**
+         * Registers routes with WordPress.
+         *
+         * @return void
+         */
+        public function register_routes()
+        {
+        }
+        /**
+         * Gets the value of the wistia embed permission.
+         *
+         * @return WP_REST_Response|WP_Error The response, or an error.
+         */
+        public function get_wistia_embed_permission()
+        {
+        }
+        /**
+         * Sets the value of the wistia embed permission.
+         *
+         * @param WP_REST_Request $request The request object.
+         *
+         * @return WP_REST_Response|WP_Error The success or failure response.
+         */
+        public function set_wistia_embed_permission(\WP_REST_Request $request)
+        {
+        }
+        /**
+         * Permission callback.
+         *
+         * @return bool True when user has 'edit_posts' permission.
+         */
+        public function permission_edit_posts()
         {
         }
     }
@@ -49087,14 +57659,13 @@ namespace Yoast\WP\SEO {
         /**
          * Gets a class from the container.
          *
-         * @param string $class The class name.
+         * @param string $class_name The class name.
          *
          * @return object|null The class or, in production environments, null if it does not exist.
          *
          * @throws Throwable If the class does not exist in development environments.
-         * @throws Exception If the class does not exist in development environments.
          */
-        protected function get_class($class)
+        protected function get_class($class_name)
         {
         }
     }
@@ -49120,8 +57691,8 @@ namespace YoastSEO_Vendor\Psr\Log {
         /**
          * System is unusable.
          *
-         * @param string $message
-         * @param array  $context
+         * @param string  $message
+         * @param mixed[] $context
          *
          * @return void
          */
@@ -49132,8 +57703,8 @@ namespace YoastSEO_Vendor\Psr\Log {
          * Example: Entire website down, database unavailable, etc. This should
          * trigger the SMS alerts and wake you up.
          *
-         * @param string $message
-         * @param array  $context
+         * @param string  $message
+         * @param mixed[] $context
          *
          * @return void
          */
@@ -49143,8 +57714,8 @@ namespace YoastSEO_Vendor\Psr\Log {
          *
          * Example: Application component unavailable, unexpected exception.
          *
-         * @param string $message
-         * @param array  $context
+         * @param string  $message
+         * @param mixed[] $context
          *
          * @return void
          */
@@ -49153,8 +57724,8 @@ namespace YoastSEO_Vendor\Psr\Log {
          * Runtime errors that do not require immediate action but should typically
          * be logged and monitored.
          *
-         * @param string $message
-         * @param array  $context
+         * @param string  $message
+         * @param mixed[] $context
          *
          * @return void
          */
@@ -49165,8 +57736,8 @@ namespace YoastSEO_Vendor\Psr\Log {
          * Example: Use of deprecated APIs, poor use of an API, undesirable things
          * that are not necessarily wrong.
          *
-         * @param string $message
-         * @param array  $context
+         * @param string  $message
+         * @param mixed[] $context
          *
          * @return void
          */
@@ -49174,8 +57745,8 @@ namespace YoastSEO_Vendor\Psr\Log {
         /**
          * Normal but significant events.
          *
-         * @param string $message
-         * @param array  $context
+         * @param string  $message
+         * @param mixed[] $context
          *
          * @return void
          */
@@ -49185,8 +57756,8 @@ namespace YoastSEO_Vendor\Psr\Log {
          *
          * Example: User logs in, SQL logs.
          *
-         * @param string $message
-         * @param array  $context
+         * @param string  $message
+         * @param mixed[] $context
          *
          * @return void
          */
@@ -49194,8 +57765,8 @@ namespace YoastSEO_Vendor\Psr\Log {
         /**
          * Detailed debug information.
          *
-         * @param string $message
-         * @param array  $context
+         * @param string  $message
+         * @param mixed[] $context
          *
          * @return void
          */
@@ -49203,11 +57774,13 @@ namespace YoastSEO_Vendor\Psr\Log {
         /**
          * Logs with an arbitrary level.
          *
-         * @param mixed  $level
-         * @param string $message
-         * @param array  $context
+         * @param mixed   $level
+         * @param string  $message
+         * @param mixed[] $context
          *
          * @return void
+         *
+         * @throws \Psr\Log\InvalidArgumentException
          */
         public function log($level, $message, array $context = array());
     }
@@ -49328,6 +57901,8 @@ namespace YoastSEO_Vendor\Psr\Log {
          * @param array  $context
          *
          * @return void
+         *
+         * @throws \Psr\Log\InvalidArgumentException
          */
         public abstract function log($level, $message, array $context = array());
     }
@@ -49380,13 +57955,13 @@ namespace Yoast\WP\SEO {
          *
          * @var string
          */
-        const API_V1_NAMESPACE = 'yoast/v1';
+        public const API_V1_NAMESPACE = 'yoast/v1';
         /**
          * The WP CLI namespace constant.
          *
          * @var string
          */
-        const WP_CLI_NAMESPACE = 'yoast';
+        public const WP_CLI_NAMESPACE = 'yoast';
         /**
          * {@inheritDoc}
          */
@@ -49486,6 +58061,8 @@ namespace Yoast\WP\SEO\Memoizers {
          * Clears the memoization of either a specific indexable or all indexables.
          *
          * @param Indexable|int|string|null $indexable Optional. The indexable or indexable id to clear the memoization of.
+         *
+         * @return void
          */
         public function clear($indexable = null)
         {
@@ -49533,6 +58110,8 @@ namespace Yoast\WP\SEO\Memoizers {
          * Clears the memoization of either a specific indexable or all indexables.
          *
          * @param Indexable|int|null $indexable Optional. The indexable or indexable id to clear the memoization of.
+         *
+         * @return void
          */
         public function clear($indexable = null)
         {
@@ -49612,6 +58191,8 @@ namespace Yoast\WP\SEO\Models {
      *
      * @property int    $readability_score
      *
+     * @property int    $inclusive_language_score
+     *
      * @property int    $link_count
      * @property int    $incoming_link_count
      * @property int    $number_of_pages
@@ -49679,7 +58260,7 @@ namespace Yoast\WP\SEO\Models {
          *
          * @var array
          */
-        protected $int_columns = ['id', 'object_id', 'author_id', 'post_parent', 'primary_focus_keyword_score', 'readability_score', 'link_count', 'incoming_link_count', 'number_of_pages', 'prominent_words_version', 'blog_id', 'estimated_reading_time_minutes', 'version'];
+        protected $int_columns = ['id', 'object_id', 'author_id', 'post_parent', 'primary_focus_keyword_score', 'readability_score', 'inclusive_language_score', 'link_count', 'incoming_link_count', 'number_of_pages', 'prominent_words_version', 'blog_id', 'estimated_reading_time_minutes', 'version'];
         /**
          * The loaded indexable extensions.
          *
@@ -49763,25 +58344,25 @@ namespace Yoast\WP\SEO\Models {
          *
          * @var string
          */
-        const TYPE_INTERNAL = 'internal';
+        public const TYPE_INTERNAL = 'internal';
         /**
          * Indicates that the link is internal.
          *
          * @var string
          */
-        const TYPE_EXTERNAL = 'external';
+        public const TYPE_EXTERNAL = 'external';
         /**
          * Indicates the link is an internal image.
          *
          * @var string
          */
-        const TYPE_INTERNAL_IMAGE = 'image-in';
+        public const TYPE_INTERNAL_IMAGE = 'image-in';
         /**
          * Indicates the link is an external image.
          *
          * @var string
          */
-        const TYPE_EXTERNAL_IMAGE = 'image-ex';
+        public const TYPE_EXTERNAL_IMAGE = 'image-ex';
         /**
          * Holds the parsed URL. May not be set.
          *
@@ -49824,14 +58405,16 @@ namespace Yoast\WP\SEO\Presentations {
      *
      * Presentation object for indexables.
      *
-     * @property Indexable         $model      The indexable.
-     * @property Pagination_Helper $pagination The pagination helper. Should be defined in the parent
-     *                                         class because of trait issues in PHP 5.6.
-     *                                         For a detailed explanation of the issue, see
-     *                                         {@link https://github.com/Yoast/wordpress-seo/pull/18820}.
+     * @property Indexable $model The indexable.
      */
     trait Archive_Adjacent
     {
+        /**
+         * Holds the Pagination_Helper instance.
+         *
+         * @var Pagination_Helper
+         */
+        protected $pagination;
         /**
          * Sets the helpers for the trait.
          *
@@ -49840,6 +58423,8 @@ namespace Yoast\WP\SEO\Presentations {
          * @codeCoverageIgnore
          *
          * @param Pagination_Helper $pagination The pagination helper.
+         *
+         * @return void
          */
         public function set_archive_adjacent_helpers(\Yoast\WP\SEO\Helpers\Pagination_Helper $pagination)
         {
@@ -50002,6 +58587,8 @@ namespace Yoast\WP\SEO\Presentations {
          * @param Open_Graph_Image_Generator  $open_graph_image_generator  The Open Graph image generator.
          * @param Twitter_Image_Generator     $twitter_image_generator     The Twitter image generator.
          * @param Breadcrumbs_Generator       $breadcrumbs_generator       The breadcrumbs generator.
+         *
+         * @return void
          */
         public function set_generators(\Yoast\WP\SEO\Generators\Schema_Generator $schema_generator, \Yoast\WP\SEO\Generators\Open_Graph_Locale_Generator $open_graph_locale_generator, \Yoast\WP\SEO\Generators\Open_Graph_Image_Generator $open_graph_image_generator, \Yoast\WP\SEO\Generators\Twitter_Image_Generator $twitter_image_generator, \Yoast\WP\SEO\Generators\Breadcrumbs_Generator $breadcrumbs_generator)
         {
@@ -50019,6 +58606,8 @@ namespace Yoast\WP\SEO\Presentations {
          * @param Indexable_Helper    $indexable    The indexable helper.
          * @param Permalink_Helper    $permalink    The permalink helper.
          * @param Values_Helper       $values       The values helper.
+         *
+         * @return void
          */
         public function set_helpers(\Yoast\WP\SEO\Helpers\Image_Helper $image, \Yoast\WP\SEO\Helpers\Options_Helper $options, \Yoast\WP\SEO\Helpers\Current_Page_Helper $current_page, \Yoast\WP\SEO\Helpers\Url_Helper $url, \Yoast\WP\SEO\Helpers\User_Helper $user, \Yoast\WP\SEO\Helpers\Indexable_Helper $indexable, \Yoast\WP\SEO\Helpers\Permalink_Helper $permalink, \Yoast\WP\SEO\Helpers\Open_Graph\Values_Helper $values)
         {
@@ -50317,12 +58906,6 @@ namespace Yoast\WP\SEO\Presentations {
          */
         protected $author_archive;
         /**
-         * Holds the Pagination_Helper instance.
-         *
-         * @var Pagination_Helper
-         */
-        protected $pagination;
-        /**
          * Indexable_Author_Archive_Presentation constructor.
          *
          * @codeCoverageIgnore
@@ -50493,12 +59076,6 @@ namespace Yoast\WP\SEO\Presentations {
     {
         use \Yoast\WP\SEO\Presentations\Archive_Adjacent;
         /**
-         * Holds the Pagination_Helper instance.
-         *
-         * @var Pagination_Helper
-         */
-        protected $pagination;
-        /**
          * Generates the canonical.
          *
          * @return string The canonical.
@@ -50531,12 +59108,6 @@ namespace Yoast\WP\SEO\Presentations {
     class Indexable_Post_Type_Archive_Presentation extends \Yoast\WP\SEO\Presentations\Indexable_Presentation
     {
         use \Yoast\WP\SEO\Presentations\Archive_Adjacent;
-        /**
-         * Holds the Pagination_Helper instance.
-         *
-         * @var Pagination_Helper
-         */
-        protected $pagination;
         /**
          * Generates the canonical.
          *
@@ -50881,12 +59452,6 @@ namespace Yoast\WP\SEO\Presentations {
     {
         use \Yoast\WP\SEO\Presentations\Archive_Adjacent;
         /**
-         * Holds the Pagination_Helper instance.
-         *
-         * @var Pagination_Helper
-         */
-        protected $pagination;
-        /**
          * Holds the WP query wrapper instance.
          *
          * @var WP_Query_Wrapper
@@ -51073,10 +59638,10 @@ namespace Yoast\WP\SEO\Presenters {
      */
     abstract class Abstract_Indexable_Tag_Presenter extends \Yoast\WP\SEO\Presenters\Abstract_Indexable_Presenter
     {
-        const META_PROPERTY_CONTENT = '<meta property="%2$s" content="%1$s"%3$s />';
-        const META_NAME_CONTENT = '<meta name="%2$s" content="%1$s"%3$s />';
-        const LINK_REL_HREF = '<link rel="%2$s" href="%1$s"%3$s />';
-        const DEFAULT_TAG_FORMAT = self::META_NAME_CONTENT;
+        public const META_PROPERTY_CONTENT = '<meta property="%2$s" content="%1$s"%3$s />';
+        public const META_NAME_CONTENT = '<meta name="%2$s" content="%1$s"%3$s />';
+        public const LINK_REL_HREF = '<link rel="%2$s" href="%1$s"%3$s />';
+        public const DEFAULT_TAG_FORMAT = self::META_NAME_CONTENT;
         /**
          * The tag format including placeholders.
          *
@@ -51817,6 +60382,42 @@ namespace Yoast\WP\SEO\Presenters\Admin {
         {
         }
     }
+    /**
+     * Class Woocommerce_Beta_Editor_Presenter.
+     */
+    class Woocommerce_Beta_Editor_Presenter extends \Yoast\WP\SEO\Presenters\Abstract_Presenter
+    {
+        /**
+         * The short link helper.
+         *
+         * @var Short_Link_Helper
+         */
+        protected $short_link_helper;
+        /**
+         * Woocommerce_Beta_Editor_Presenter constructor.
+         *
+         * @param Short_Link_Helper $short_link_helper The short link helper.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\Short_Link_Helper $short_link_helper)
+        {
+        }
+        /**
+         * Returns the notification as an HTML string.
+         *
+         * @return string The notification in an HTML string representation.
+         */
+        public function present()
+        {
+        }
+        /**
+         * Returns the message to show.
+         *
+         * @return string The message.
+         */
+        protected function get_message()
+        {
+        }
+    }
 }
 namespace Yoast\WP\SEO\Presenters {
     /**
@@ -51933,6 +60534,15 @@ namespace Yoast\WP\SEO\Presenters {
          * @return string The element to use.
          */
         protected function get_element()
+        {
+        }
+        /**
+         * This is needed because when the editor is loaded in an Iframe the link needs to open in a different browser window.
+         * We don't want this behaviour in the front-end and the way to check this is to check if the block is rendered in a REST request with the `context` set as 'edit'. Thus being in the editor.
+         *
+         * @return bool returns if the breadcrumb should be opened in another window.
+         */
+        private function should_link_target_blank() : bool
         {
         }
     }
@@ -52226,7 +60836,7 @@ namespace Yoast\WP\SEO\Presenters\Open_Graph {
         /**
          * Image tags that we output for each image.
          *
-         * @var array
+         * @var array<string>
          */
         protected static $image_tags = ['width' => 'width', 'height' => 'height', 'type' => 'type'];
         /**
@@ -52240,7 +60850,7 @@ namespace Yoast\WP\SEO\Presenters\Open_Graph {
         /**
          * Gets the raw value of a presentation.
          *
-         * @return array The raw value.
+         * @return array<string,int> The raw value.
          */
         public function get()
         {
@@ -52248,9 +60858,9 @@ namespace Yoast\WP\SEO\Presenters\Open_Graph {
         /**
          * Run the image content through the `wpseo_opengraph_image` filter.
          *
-         * @param array $image The image.
+         * @param array<string,int> $image The image.
          *
-         * @return array The filtered image.
+         * @return array<string,int> The filtered image.
          */
         protected function filter($image)
         {
@@ -52509,32 +61119,32 @@ namespace Yoast\WP\SEO\Presenters {
      */
     class Robots_Txt_Presenter extends \Yoast\WP\SEO\Presenters\Abstract_Presenter
     {
-        const YOAST_OUTPUT_BEFORE_COMMENT = '# START YOAST BLOCK' . \PHP_EOL . '# ---------------------------' . \PHP_EOL;
-        const YOAST_OUTPUT_AFTER_COMMENT = '# ---------------------------' . \PHP_EOL . '# END YOAST BLOCK';
+        public const YOAST_OUTPUT_BEFORE_COMMENT = '# START YOAST BLOCK' . \PHP_EOL . '# ---------------------------' . \PHP_EOL;
+        public const YOAST_OUTPUT_AFTER_COMMENT = '# ---------------------------' . \PHP_EOL . '# END YOAST BLOCK';
         /**
          * Text to be outputted for the allow directive.
          *
          * @var string
          */
-        const ALLOW_DIRECTIVE = 'Allow';
+        public const ALLOW_DIRECTIVE = 'Allow';
         /**
          * Text to be outputted for the disallow directive.
          *
          * @var string
          */
-        const DISALLOW_DIRECTIVE = 'Disallow';
+        public const DISALLOW_DIRECTIVE = 'Disallow';
         /**
          * Text to be outputted for the user-agent rule.
          *
          * @var string
          */
-        const USER_AGENT_FIELD = 'User-agent';
+        public const USER_AGENT_FIELD = 'User-agent';
         /**
          * Text to be outputted for the sitemap rule.
          *
          * @var string
          */
-        const SITEMAP_FIELD = 'Sitemap';
+        public const SITEMAP_FIELD = 'Sitemap';
         /**
          * Holds the Robots_Txt_Helper.
          *
@@ -52893,6 +61503,12 @@ namespace Yoast\WP\SEO\Presenters {
     class Url_List_Presenter extends \Yoast\WP\SEO\Presenters\Abstract_Presenter
     {
         /**
+         * If the url should be target blank.
+         *
+         * @var bool
+         */
+        private $target_blank;
+        /**
          * A list of arrays containing titles and URLs.
          *
          * @var array
@@ -52907,10 +61523,11 @@ namespace Yoast\WP\SEO\Presenters {
         /**
          * Url_List_Presenter constructor.
          *
-         * @param array  $links      A list of arrays containing titles and urls.
-         * @param string $class_name Classname for the url list.
+         * @param array  $links        A list of arrays containing titles and urls.
+         * @param string $class_name   Classname for the url list.
+         * @param bool   $target_blank If the url should be target blank.
          */
-        public function __construct($links, $class_name = 'yoast-url-list')
+        public function __construct($links, $class_name = 'yoast-url-list', $target_blank = false)
         {
         }
         /**
@@ -53025,7 +61642,491 @@ namespace Yoast\WP\SEO\Presenters\Webmaster {
         }
     }
 }
+namespace Yoast\WP\SEO\Promotions\Application {
+    /**
+     * Interface for the promotion manager.
+     */
+    interface Promotion_Manager_Interface
+    {
+        /**
+         * Whether the promotion is effective.
+         *
+         * @param string $promotion_name The name of the promotion.
+         *
+         * @return bool Whether the promotion is effective.
+         */
+        public function is(string $promotion_name) : bool;
+        /**
+         * Get the list of promotions.
+         *
+         * @return array The list of promotions.
+         */
+        public function get_promotions_list() : array;
+    }
+    /**
+     * Class to manage promotional promotions.
+     *
+     * @makePublic
+     */
+    class Promotion_Manager implements \Yoast\WP\SEO\Promotions\Application\Promotion_Manager_Interface
+    {
+        /**
+         * The centralized list of promotions: all promotions should be passed to the constructor.
+         *
+         * @var array<Abstract_Promotion>
+         */
+        private $promotions_list = [];
+        /**
+         * Class constructor.
+         *
+         * @param Promotion_Interface ...$promotions List of promotions.
+         */
+        public function __construct(\Yoast\WP\SEO\Promotions\Domain\Promotion_Interface ...$promotions)
+        {
+        }
+        /**
+         * Whether the promotion is effective.
+         *
+         * @param string $promotion_name The name of the promotion.
+         *
+         * @return bool Whether the promotion is effective.
+         */
+        public function is(string $promotion_name) : bool
+        {
+        }
+        /**
+         * Get the list of promotions.
+         *
+         * @return array<Abstract_Promotion> The list of promotions.
+         */
+        public function get_promotions_list() : array
+        {
+        }
+        /**
+         * Get the names of currently active promotions.
+         *
+         * @return array<string> The list of promotions.
+         */
+        public function get_current_promotions() : array
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\Promotions\Domain {
+    /**
+     * Interface for a Promotion.
+     */
+    interface Promotion_Interface
+    {
+    }
+    /**
+     * Abstract class for a promotion.
+     */
+    abstract class Abstract_Promotion implements \Yoast\WP\SEO\Promotions\Domain\Promotion_Interface
+    {
+        /**
+         * The promotion name.
+         *
+         * @var string
+         */
+        private $promotion_name;
+        /**
+         * The time interval in which the promotion is active.
+         *
+         * @var Time_Interval
+         */
+        private $time_interval;
+        /**
+         * Class constructor.
+         *
+         * @param string        $promotion_name The promotion name.
+         * @param Time_Interval $time_interval  The time interval in which the promotion is active.
+         */
+        public function __construct(string $promotion_name, \Yoast\WP\SEO\Promotions\Domain\Time_Interval $time_interval)
+        {
+        }
+        /**
+         * Returns the promotion name.
+         *
+         * @return string
+         */
+        public function get_promotion_name()
+        {
+        }
+        /**
+         * Returns the time interval in which the promotion is active.
+         *
+         * @return Time_Interval
+         */
+        public function get_time_interval()
+        {
+        }
+    }
+    /**
+     * Class to manage the Black Friday checklist promotion.
+     */
+    class Black_Friday_Checklist_Promotion extends \Yoast\WP\SEO\Promotions\Domain\Abstract_Promotion implements \Yoast\WP\SEO\Promotions\Domain\Promotion_Interface
+    {
+        /**
+         * Class constructor.
+         */
+        public function __construct()
+        {
+        }
+    }
+    /**
+     * Class to manage the Black Friday promotion.
+     */
+    class Black_Friday_Promotion extends \Yoast\WP\SEO\Promotions\Domain\Abstract_Promotion implements \Yoast\WP\SEO\Promotions\Domain\Promotion_Interface
+    {
+        /**
+         * Class constructor.
+         */
+        public function __construct()
+        {
+        }
+    }
+    /**
+     * Class Time_Interval
+     *
+     * Value object for a time interval.
+     */
+    class Time_Interval
+    {
+        /**
+         * The starting time of the interval as a Unix timestamp.
+         *
+         * @var int
+         */
+        public $time_start;
+        /**
+         * The ending time of the interval as a Unix timestamp.
+         *
+         * @var int
+         */
+        public $time_end;
+        /**
+         * Time_Interval constructor.
+         *
+         * @codeCoverageIgnore
+         *
+         * @param int $time_start Interval start time.
+         * @param int $time_end   Interval end time.
+         */
+        public function __construct(int $time_start, int $time_end)
+        {
+        }
+        /**
+         * Checks if the given time is within the interval.
+         *
+         * @param int $time The time to check.
+         *
+         * @return bool Whether the given time is within the interval.
+         */
+        public function contains(int $time) : bool
+        {
+        }
+        /**
+         * Sets the interval astarting date.
+         *
+         * @param int $time_start The interval start time.
+         *
+         * @return void
+         */
+        public function set_start_date(int $time_start)
+        {
+        }
+        /**
+         * Sets the interval ending date.
+         *
+         * @param int $time_end The interval end time.
+         *
+         * @return void
+         */
+        public function set_end_date(int $time_end)
+        {
+        }
+    }
+}
 namespace Yoast\WP\SEO\Repositories {
+    /**
+     * Repository containing all cleanup queries.
+     */
+    class Indexable_Cleanup_Repository
+    {
+        /**
+         * A helper for taxonomies.
+         *
+         * @var Taxonomy_Helper
+         */
+        private $taxonomy;
+        /**
+         * A helper for post types.
+         *
+         * @var Post_Type_Helper
+         */
+        private $post_type;
+        /**
+         * A helper for author archives.
+         *
+         * @var Author_Archive_Helper
+         */
+        private $author_archive;
+        /**
+         * The constructor.
+         *
+         * @param Taxonomy_Helper       $taxonomy       A helper for taxonomies.
+         * @param Post_Type_Helper      $post_type      A helper for post types.
+         * @param Author_Archive_Helper $author_archive A helper for author archives.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\Taxonomy_Helper $taxonomy, \Yoast\WP\SEO\Helpers\Post_Type_Helper $post_type, \Yoast\WP\SEO\Helpers\Author_Archive_Helper $author_archive)
+        {
+        }
+        /**
+         * Starts a query for this repository.
+         *
+         * @return ORM
+         */
+        public function query()
+        {
+        }
+        /**
+         * Deletes rows from the indexable table depending on the object_type and object_sub_type.
+         *
+         * @param string $object_type     The object type to query.
+         * @param string $object_sub_type The object subtype to query.
+         * @param int    $limit           The limit we'll apply to the delete query.
+         *
+         * @return int|bool The number of rows that was deleted or false if the query failed.
+         */
+        public function clean_indexables_with_object_type_and_object_sub_type(string $object_type, string $object_sub_type, int $limit)
+        {
+        }
+        /**
+         * Counts amount of indexables by object type and object sub type.
+         *
+         * @param string $object_type     The object type to check.
+         * @param string $object_sub_type The object sub type to check.
+         *
+         * @return float|int
+         */
+        public function count_indexables_with_object_type_and_object_sub_type(string $object_type, string $object_sub_type)
+        {
+        }
+        /**
+         * Deletes rows from the indexable table depending on the post_status.
+         *
+         * @param string $post_status The post status to query.
+         * @param int    $limit       The limit we'll apply to the delete query.
+         *
+         * @return int|bool The number of rows that was deleted or false if the query failed.
+         */
+        public function clean_indexables_with_post_status($post_status, $limit)
+        {
+        }
+        /**
+         * Counts indexables with a certain post status.
+         *
+         * @param string $post_status The post status to count.
+         *
+         * @return float|int
+         */
+        public function count_indexables_with_post_status(string $post_status)
+        {
+        }
+        /**
+         * Cleans up any indexables that belong to post types that are not/no longer publicly viewable.
+         *
+         * @param int $limit The limit we'll apply to the queries.
+         *
+         * @return bool|int The number of deleted rows, false if the query fails.
+         */
+        public function clean_indexables_for_non_publicly_viewable_post($limit)
+        {
+        }
+        /**
+         * Counts all indexables for non public post types.
+         *
+         * @return float|int
+         */
+        public function count_indexables_for_non_publicly_viewable_post()
+        {
+        }
+        /**
+         * Cleans up any indexables that belong to taxonomies that are not/no longer publicly viewable.
+         *
+         * @param int $limit The limit we'll apply to the queries.
+         *
+         * @return bool|int The number of deleted rows, false if the query fails.
+         */
+        public function clean_indexables_for_non_publicly_viewable_taxonomies($limit)
+        {
+        }
+        /**
+         * Cleans up any indexables that belong to post type archive page that are not/no longer publicly viewable.
+         *
+         * @param int $limit The limit we'll apply to the queries.
+         *
+         * @return bool|int The number of deleted rows, false if the query fails.
+         */
+        public function clean_indexables_for_non_publicly_viewable_post_type_archive_pages($limit)
+        {
+        }
+        /**
+         * Counts indexables for non publicly viewable taxonomies.
+         *
+         * @return float|int
+         */
+        public function count_indexables_for_non_publicly_viewable_taxonomies()
+        {
+        }
+        /**
+         * Counts indexables for non publicly viewable taxonomies.
+         *
+         * @return float|int
+         */
+        public function count_indexables_for_non_publicly_post_type_archive_pages()
+        {
+        }
+        /**
+         * Cleans up any user indexables when the author archives have been disabled.
+         *
+         * @param int $limit The limit we'll apply to the queries.
+         *
+         * @return bool|int The number of deleted rows, false if the query fails.
+         */
+        public function clean_indexables_for_authors_archive_disabled($limit)
+        {
+        }
+        /**
+         * Counts the amount of author archive indexables if they are not disabled.
+         *
+         * @return float|int
+         */
+        public function count_indexables_for_authors_archive_disabled()
+        {
+        }
+        /**
+         * Cleans up any indexables that belong to users that have their author archives disabled.
+         *
+         * @param int $limit The limit we'll apply to the queries.
+         *
+         * @return bool|int The number of deleted rows, false if the query fails.
+         */
+        public function clean_indexables_for_authors_without_archive($limit)
+        {
+        }
+        /**
+         * Counts total amount of indexables for authors without archives.
+         *
+         * @return bool|int|mysqli_result|resource|null
+         */
+        public function count_indexables_for_authors_without_archive()
+        {
+        }
+        /**
+         * Deletes rows from the indexable table where the source is no longer there.
+         *
+         * @param string $source_table      The source table which we need to check the indexables against.
+         * @param string $source_identifier The identifier which the indexables are matched to.
+         * @param string $object_type       The indexable object type.
+         * @param int    $limit             The limit we'll apply to the delete query.
+         *
+         * @return int|bool The number of rows that was deleted or false if the query failed.
+         */
+        public function clean_indexables_for_object_type_and_source_table($source_table, $source_identifier, $object_type, $limit)
+        {
+        }
+        /**
+         * Deletes rows from the indexable table where the source is no longer there.
+         *
+         * @param int $limit The limit we'll apply to the delete query.
+         *
+         * @return int|bool The number of rows that was deleted or false if the query failed.
+         */
+        public function clean_indexables_for_orphaned_users($limit)
+        {
+        }
+        /**
+         * Counts indexables for given source table + source identifier + object type.
+         *
+         * @param string $source_table      The source table.
+         * @param string $source_identifier The source identifier.
+         * @param string $object_type       The object type.
+         *
+         * @return mixed
+         */
+        public function count_indexables_for_object_type_and_source_table(string $source_table, string $source_identifier, string $object_type)
+        {
+        }
+        /**
+         * Counts indexables for orphaned users.
+         *
+         * @return mixed
+         */
+        public function count_indexables_for_orphaned_users()
+        {
+        }
+        /**
+         * Cleans orphaned rows from a yoast table.
+         *
+         * @param string $table  The table to clean up.
+         * @param string $column The table column the cleanup will rely on.
+         * @param int    $limit  The limit we'll apply to the queries.
+         *
+         * @return int|bool The number of deleted rows, false if the query fails.
+         */
+        public function cleanup_orphaned_from_table($table, $column, $limit)
+        {
+        }
+        /**
+         * Counts orphaned rows from a yoast table.
+         *
+         * @param string $table  The table to clean up.
+         * @param string $column The table column the cleanup will rely on.
+         *
+         * @return int|bool The number of deleted rows, false if the query fails.
+         */
+        public function count_orphaned_from_table(string $table, string $column)
+        {
+        }
+        /**
+         * Updates the author_id of indexables which author_id is not in the wp_users table with the id of the reassingned
+         * user.
+         *
+         * @param int $limit The limit we'll apply to the queries.
+         *
+         * @return int|bool The number of updated rows, false if query to get data fails.
+         */
+        public function update_indexables_author_to_reassigned($limit)
+        {
+        }
+        /**
+         * Fetches pairs of old_id -> new_id indexed by old_id.
+         * By using the old_id (i.e. the id of the user that has been deleted) as key of the associative array, we can
+         * easily compose an array of unique pairs of old_id -> new_id.
+         *
+         * @param int $limit The limit we'll apply to the queries.
+         *
+         * @return int|bool The associative array with shape [ old_id => [ old_id, new_author ] ] or false if query to get
+         *                  data fails.
+         */
+        private function get_reassigned_authors($limit)
+        {
+        }
+        /**
+         * Updates the indexable's author_id referring to a deleted author with the id of the reassigned user.
+         *
+         * @param array $reassigned_authors_objs The array of objects with shape [ old_id => [ old_id, new_id ] ].
+         * @param int   $limit                   The limit we'll apply to the queries.
+         *
+         * @return int|bool The associative array with shape [ old_id => [ old_id, new_author ] ] or false if query to get
+         *                  data fails.
+         */
+        private function update_indexable_authors($reassigned_authors_objs, $limit)
+        {
+        }
+    }
     /**
      * Class Indexable_Hierarchy_Repository.
      */
@@ -53038,13 +62139,33 @@ namespace Yoast\WP\SEO\Repositories {
          */
         protected $builder;
         /**
+         * Represents the indexable helper.
+         *
+         * @var Indexable_Helper
+         */
+        protected $indexable_helper;
+        /**
          * Sets the hierarchy builder.
          *
          * @required
          *
          * @param Indexable_Hierarchy_Builder $builder The indexable hierarchy builder.
+         *
+         * @return void
          */
         public function set_builder(\Yoast\WP\SEO\Builders\Indexable_Hierarchy_Builder $builder)
+        {
+        }
+        /**
+         * Sets the indexable helper.
+         *
+         * @required
+         *
+         * @param Indexable_Helper $indexable_helper The indexable helper.
+         *
+         * @return void
+         */
+        public function set_helper(\Yoast\WP\SEO\Helpers\Indexable_Helper $indexable_helper)
         {
         }
         /**
@@ -53533,18 +62654,6 @@ namespace Yoast\WP\SEO\Repositories {
 }
 namespace Yoast\WP\SEO\Routes {
     /**
-     * Route interface.
-     */
-    interface Route_Interface extends \Yoast\WP\SEO\Loadable_Interface
-    {
-        /**
-         * Registers routes with WordPress.
-         *
-         * @return void
-         */
-        public function register_routes();
-    }
-    /**
      * Abstract_Action_Route class.
      *
      * Abstract class for action routes.
@@ -53593,19 +62702,19 @@ namespace Yoast\WP\SEO\Routes {
          *
          * @var string
          */
-        const ROUTE_PREFIX = 'alerts';
+        public const ROUTE_PREFIX = 'alerts';
         /**
          * Represents the dismiss route.
          *
          * @var string
          */
-        const DISMISS_ROUTE = self::ROUTE_PREFIX . '/dismiss';
+        public const DISMISS_ROUTE = self::ROUTE_PREFIX . '/dismiss';
         /**
          * Represents the full dismiss route.
          *
          * @var string
          */
-        const FULL_DISMISS_ROUTE = \Yoast\WP\SEO\Main::API_V1_NAMESPACE . '/' . self::DISMISS_ROUTE;
+        public const FULL_DISMISS_ROUTE = \Yoast\WP\SEO\Main::API_V1_NAMESPACE . '/' . self::DISMISS_ROUTE;
         /**
          * Represents the alert dismissal action.
          *
@@ -53658,50 +62767,43 @@ namespace Yoast\WP\SEO\Routes {
          *
          * @var string
          */
-        const CONFIGURATION_ROUTE = '/configuration';
+        public const CONFIGURATION_ROUTE = '/configuration';
         /**
          * Represents a site representation route.
          *
          * @var string
          */
-        const SITE_REPRESENTATION_ROUTE = '/site_representation';
+        public const SITE_REPRESENTATION_ROUTE = '/site_representation';
         /**
          * Represents a social profiles route.
          *
          * @var string
          */
-        const SOCIAL_PROFILES_ROUTE = '/social_profiles';
-        /**
-         * Represents a person's social profiles route.
-         *
-         * @deprecated 20.2
-         * @var string
-         */
-        const PERSON_SOCIAL_PROFILES_ROUTE = '/person_social_profiles';
+        public const SOCIAL_PROFILES_ROUTE = '/social_profiles';
         /**
          * Represents a route to enable/disable tracking.
          *
          * @var string
          */
-        const ENABLE_TRACKING_ROUTE = '/enable_tracking';
+        public const ENABLE_TRACKING_ROUTE = '/enable_tracking';
         /**
          * Represents a route to check if current user has the correct capabilities to edit another user's profile.
          *
          * @var string
          */
-        const CHECK_CAPABILITY_ROUTE = '/check_capability';
+        public const CHECK_CAPABILITY_ROUTE = '/check_capability';
         /**
          * Represents a route to save the first time configuration state.
          *
          * @var string
          */
-        const SAVE_CONFIGURATION_STATE_ROUTE = '/save_configuration_state';
+        public const SAVE_CONFIGURATION_STATE_ROUTE = '/save_configuration_state';
         /**
          * Represents a route to save the first time configuration state.
          *
          * @var string
          */
-        const GET_CONFIGURATION_STATE_ROUTE = '/get_configuration_state';
+        public const GET_CONFIGURATION_STATE_ROUTE = '/get_configuration_state';
         /**
          *  The first tinme configuration action.
          *
@@ -53808,33 +62910,6 @@ namespace Yoast\WP\SEO\Routes {
         public function get_configuration_state()
         {
         }
-        /*** DEPRECATED METHODS ***/
-        /**
-         * Gets a person's social profiles values.
-         *
-         * @deprecated 20.2
-         * @codeCoverageIgnore
-         *
-         * @param WP_REST_Request $request The request.
-         *
-         * @return WP_REST_Response
-         */
-        public function get_person_social_profiles(\WP_REST_Request $request)
-        {
-        }
-        /**
-         * Sets a person's social profiles values.
-         *
-         * @deprecated 20.2
-         * @codeCoverageIgnore
-         *
-         * @param WP_REST_Request $request The request.
-         *
-         * @return WP_REST_Response
-         */
-        public function set_person_social_profiles(\WP_REST_Request $request)
-        {
-        }
     }
     /**
      * Importing_Route class.
@@ -53849,7 +62924,7 @@ namespace Yoast\WP\SEO\Routes {
          *
          * @var string
          */
-        const ROUTE = '/import/(?P<plugin>[\\w-]+)/(?P<type>[\\w-]+)';
+        public const ROUTE = '/import/(?P<plugin>[\\w-]+)/(?P<type>[\\w-]+)';
         /**
          * List of available importers.
          *
@@ -53930,13 +63005,13 @@ namespace Yoast\WP\SEO\Routes {
          *
          * @var string
          */
-        const HEAD_FOR_URL_ROUTE = 'get_head';
+        public const HEAD_FOR_URL_ROUTE = 'get_head';
         /**
          * The full posts route constant.
          *
          * @var string
          */
-        const FULL_HEAD_FOR_URL_ROUTE = \Yoast\WP\SEO\Main::API_V1_NAMESPACE . '/' . self::HEAD_FOR_URL_ROUTE;
+        public const FULL_HEAD_FOR_URL_ROUTE = \Yoast\WP\SEO\Main::API_V1_NAMESPACE . '/' . self::HEAD_FOR_URL_ROUTE;
         /**
          * The head action.
          *
@@ -53954,7 +63029,7 @@ namespace Yoast\WP\SEO\Routes {
         /**
          * Returns the conditionals based in which this loadable should be active.
          *
-         * @return array
+         * @return array<string>
          */
         public static function get_conditionals()
         {
@@ -54001,109 +63076,109 @@ namespace Yoast\WP\SEO\Routes {
          *
          * @var string
          */
-        const COMPLETE_ROUTE = 'indexing/complete';
+        public const COMPLETE_ROUTE = 'indexing/complete';
         /**
          * The full indexing complete route constant.
          *
          * @var string
          */
-        const FULL_COMPLETE_ROUTE = \Yoast\WP\SEO\Main::API_V1_NAMESPACE . '/' . self::COMPLETE_ROUTE;
+        public const FULL_COMPLETE_ROUTE = \Yoast\WP\SEO\Main::API_V1_NAMESPACE . '/' . self::COMPLETE_ROUTE;
         /**
          * The indexables complete route constant.
          *
          * @var string
          */
-        const INDEXABLES_COMPLETE_ROUTE = 'indexing/indexables-complete';
+        public const INDEXABLES_COMPLETE_ROUTE = 'indexing/indexables-complete';
         /**
          * The full indexing complete route constant.
          *
          * @var string
          */
-        const FULL_INDEXABLES_COMPLETE_ROUTE = \Yoast\WP\SEO\Main::API_V1_NAMESPACE . '/' . self::INDEXABLES_COMPLETE_ROUTE;
+        public const FULL_INDEXABLES_COMPLETE_ROUTE = \Yoast\WP\SEO\Main::API_V1_NAMESPACE . '/' . self::INDEXABLES_COMPLETE_ROUTE;
         /**
          * The indexing prepare route constant.
          *
          * @var string
          */
-        const PREPARE_ROUTE = 'indexing/prepare';
+        public const PREPARE_ROUTE = 'indexing/prepare';
         /**
          * The full indexing prepare route constant.
          *
          * @var string
          */
-        const FULL_PREPARE_ROUTE = \Yoast\WP\SEO\Main::API_V1_NAMESPACE . '/' . self::PREPARE_ROUTE;
+        public const FULL_PREPARE_ROUTE = \Yoast\WP\SEO\Main::API_V1_NAMESPACE . '/' . self::PREPARE_ROUTE;
         /**
          * The posts route constant.
          *
          * @var string
          */
-        const POSTS_ROUTE = 'indexing/posts';
+        public const POSTS_ROUTE = 'indexing/posts';
         /**
          * The full posts route constant.
          *
          * @var string
          */
-        const FULL_POSTS_ROUTE = \Yoast\WP\SEO\Main::API_V1_NAMESPACE . '/' . self::POSTS_ROUTE;
+        public const FULL_POSTS_ROUTE = \Yoast\WP\SEO\Main::API_V1_NAMESPACE . '/' . self::POSTS_ROUTE;
         /**
          * The terms route constant.
          *
          * @var string
          */
-        const TERMS_ROUTE = 'indexing/terms';
+        public const TERMS_ROUTE = 'indexing/terms';
         /**
          * The full terms route constant.
          *
          * @var string
          */
-        const FULL_TERMS_ROUTE = \Yoast\WP\SEO\Main::API_V1_NAMESPACE . '/' . self::TERMS_ROUTE;
+        public const FULL_TERMS_ROUTE = \Yoast\WP\SEO\Main::API_V1_NAMESPACE . '/' . self::TERMS_ROUTE;
         /**
          * The terms route constant.
          *
          * @var string
          */
-        const POST_TYPE_ARCHIVES_ROUTE = 'indexing/post-type-archives';
+        public const POST_TYPE_ARCHIVES_ROUTE = 'indexing/post-type-archives';
         /**
          * The full terms route constant.
          *
          * @var string
          */
-        const FULL_POST_TYPE_ARCHIVES_ROUTE = \Yoast\WP\SEO\Main::API_V1_NAMESPACE . '/' . self::POST_TYPE_ARCHIVES_ROUTE;
+        public const FULL_POST_TYPE_ARCHIVES_ROUTE = \Yoast\WP\SEO\Main::API_V1_NAMESPACE . '/' . self::POST_TYPE_ARCHIVES_ROUTE;
         /**
          * The general route constant.
          *
          * @var string
          */
-        const GENERAL_ROUTE = 'indexing/general';
+        public const GENERAL_ROUTE = 'indexing/general';
         /**
          * The full general route constant.
          *
          * @var string
          */
-        const FULL_GENERAL_ROUTE = \Yoast\WP\SEO\Main::API_V1_NAMESPACE . '/' . self::GENERAL_ROUTE;
+        public const FULL_GENERAL_ROUTE = \Yoast\WP\SEO\Main::API_V1_NAMESPACE . '/' . self::GENERAL_ROUTE;
         /**
          * The posts route constant.
          *
          * @var string
          */
-        const POST_LINKS_INDEXING_ROUTE = 'link-indexing/posts';
+        public const POST_LINKS_INDEXING_ROUTE = 'link-indexing/posts';
         /**
          * The full posts route constant.
          *
          * @var string
          */
-        const FULL_POST_LINKS_INDEXING_ROUTE = \Yoast\WP\SEO\Main::API_V1_NAMESPACE . '/' . self::POST_LINKS_INDEXING_ROUTE;
+        public const FULL_POST_LINKS_INDEXING_ROUTE = \Yoast\WP\SEO\Main::API_V1_NAMESPACE . '/' . self::POST_LINKS_INDEXING_ROUTE;
         /**
          * The terms route constant.
          *
          * @var string
          */
-        const TERM_LINKS_INDEXING_ROUTE = 'link-indexing/terms';
+        public const TERM_LINKS_INDEXING_ROUTE = 'link-indexing/terms';
         /**
          * The full terms route constant.
          *
          * @var string
          */
-        const FULL_TERM_LINKS_INDEXING_ROUTE = \Yoast\WP\SEO\Main::API_V1_NAMESPACE . '/' . self::TERM_LINKS_INDEXING_ROUTE;
+        public const FULL_TERM_LINKS_INDEXING_ROUTE = \Yoast\WP\SEO\Main::API_V1_NAMESPACE . '/' . self::TERM_LINKS_INDEXING_ROUTE;
         /**
          * The post indexing action.
          *
@@ -54190,6 +63265,8 @@ namespace Yoast\WP\SEO\Routes {
         }
         /**
          * Registers the routes used to index indexables.
+         *
+         * @return void
          */
         public function register_routes()
         {
@@ -54297,13 +63374,13 @@ namespace Yoast\WP\SEO\Routes {
          *
          * @var string
          */
-        const INTEGRATIONS_ROUTE = '/integrations';
+        public const INTEGRATIONS_ROUTE = '/integrations';
         /**
          * Represents a route to set the state of an integration.
          *
          * @var string
          */
-        const SET_ACTIVE_ROUTE = '/set_active';
+        public const SET_ACTIVE_ROUTE = '/set_active';
         /**
          *  The integrations action.
          *
@@ -54356,7 +63433,7 @@ namespace Yoast\WP\SEO\Routes {
          *
          * @var string
          */
-        const META_SEARCH_ROUTE = '/meta/search';
+        public const META_SEARCH_ROUTE = '/meta/search';
         /**
          * Registers routes with WordPress.
          *
@@ -54396,37 +63473,37 @@ namespace Yoast\WP\SEO\Routes {
          *
          * @var string
          */
-        const ROUTE_PREFIX = 'semrush';
+        public const ROUTE_PREFIX = 'semrush';
         /**
          * The authenticate route constant.
          *
          * @var string
          */
-        const AUTHENTICATION_ROUTE = self::ROUTE_PREFIX . '/authenticate';
+        public const AUTHENTICATION_ROUTE = self::ROUTE_PREFIX . '/authenticate';
         /**
          * The country code option route constant.
          *
          * @var string
          */
-        const COUNTRY_CODE_OPTION_ROUTE = self::ROUTE_PREFIX . '/country_code';
+        public const COUNTRY_CODE_OPTION_ROUTE = self::ROUTE_PREFIX . '/country_code';
         /**
          * The request related keyphrases route constant.
          *
          * @var string
          */
-        const RELATED_KEYPHRASES_ROUTE = self::ROUTE_PREFIX . '/related_keyphrases';
+        public const RELATED_KEYPHRASES_ROUTE = self::ROUTE_PREFIX . '/related_keyphrases';
         /**
          * The full login route constant.
          *
          * @var string
          */
-        const FULL_AUTHENTICATION_ROUTE = \Yoast\WP\SEO\Main::API_V1_NAMESPACE . '/' . self::AUTHENTICATION_ROUTE;
+        public const FULL_AUTHENTICATION_ROUTE = \Yoast\WP\SEO\Main::API_V1_NAMESPACE . '/' . self::AUTHENTICATION_ROUTE;
         /**
          * The full country code option route constant.
          *
          * @var string
          */
-        const FULL_COUNTRY_CODE_OPTION_ROUTE = \Yoast\WP\SEO\Main::API_V1_NAMESPACE . '/' . self::COUNTRY_CODE_OPTION_ROUTE;
+        public const FULL_COUNTRY_CODE_OPTION_ROUTE = \Yoast\WP\SEO\Main::API_V1_NAMESPACE . '/' . self::COUNTRY_CODE_OPTION_ROUTE;
         /**
          * The login action.
          *
@@ -54541,102 +63618,6 @@ namespace Yoast\WP\SEO\Routes {
         }
     }
     /**
-     * Settings_Introduction_Route class.
-     */
-    class Settings_Introduction_Route implements \Yoast\WP\SEO\Routes\Route_Interface
-    {
-        /**
-         * Represents the Settings_Introduction_Route prefix.
-         *
-         * @var string
-         */
-        const ROUTE_PREFIX = '/settings_introduction';
-        /**
-         * Represents the Wistia embed permission.
-         *
-         * @var string
-         */
-        const WISTIA_EMBED_PERMISSION = self::ROUTE_PREFIX . '/wistia_embed_permission';
-        /**
-         * Represents showing the introduction.
-         *
-         * @var string
-         */
-        const SHOW = self::ROUTE_PREFIX . '/show';
-        /**
-         * Holds the Settings_Introduction_Action.
-         *
-         * @var Settings_Introduction_Action
-         */
-        private $settings_introduction_action;
-        /**
-         * Constructs Settings_Introduction_Route.
-         *
-         * @param Settings_Introduction_Action $settings_introduction_action The $settings_introduction_action.
-         */
-        public function __construct(\Yoast\WP\SEO\Actions\Settings_Introduction_Action $settings_introduction_action)
-        {
-        }
-        /**
-         * {@inheritDoc}
-         */
-        public static function get_conditionals()
-        {
-        }
-        /**
-         * Permission callback.
-         *
-         * @return bool True when user has 'wpseo_manage_options' permission.
-         */
-        public static function permission_manage_options()
-        {
-        }
-        /**
-         * Registers routes with WordPress.
-         *
-         * @return void
-         */
-        public function register_routes()
-        {
-        }
-        /**
-         * Gets the value of the wistia embed permission.
-         *
-         * @return WP_REST_Response|WP_Error The response, or an error.
-         */
-        public function get_wistia_embed_permission()
-        {
-        }
-        /**
-         * Sets the value of the wistia embed permission.
-         *
-         * @param WP_REST_Request $request The request object.
-         *
-         * @return WP_REST_Response|WP_Error The success or failure response.
-         */
-        public function set_wistia_embed_permission(\WP_REST_Request $request)
-        {
-        }
-        /**
-         * Gets the value of show.
-         *
-         * @return WP_REST_Response|WP_Error The response, or an error.
-         */
-        public function get_show()
-        {
-        }
-        /**
-         * Sets the value of show.
-         *
-         * @param WP_REST_Request $request The request object.
-         *
-         * @return WP_REST_Response|WP_Error The success or failure response.
-         */
-        public function set_show(\WP_REST_Request $request)
-        {
-        }
-    }
-    /**
      * Supported_Features_Route class.
      */
     class Supported_Features_Route implements \Yoast\WP\SEO\Routes\Route_Interface
@@ -54646,7 +63627,7 @@ namespace Yoast\WP\SEO\Routes {
          *
          * @var string
          */
-        const SUPPORTED_FEATURES_ROUTE = '/supported-features';
+        public const SUPPORTED_FEATURES_ROUTE = '/supported-features';
         /**
          * Returns the conditionals based in which this loadable should be active.
          *
@@ -54682,37 +63663,49 @@ namespace Yoast\WP\SEO\Routes {
          *
          * @var string
          */
-        const ROUTE_PREFIX = 'wincher';
+        public const ROUTE_PREFIX = 'wincher';
         /**
          * The authorize route constant.
          *
          * @var string
          */
-        const AUTHORIZATION_URL_ROUTE = self::ROUTE_PREFIX . '/authorization-url';
+        public const AUTHORIZATION_URL_ROUTE = self::ROUTE_PREFIX . '/authorization-url';
         /**
          * The authenticate route constant.
          *
          * @var string
          */
-        const AUTHENTICATION_ROUTE = self::ROUTE_PREFIX . '/authenticate';
+        public const AUTHENTICATION_ROUTE = self::ROUTE_PREFIX . '/authenticate';
         /**
          * The track bulk keyphrases route constant.
          *
          * @var string
          */
-        const KEYPHRASES_TRACK_ROUTE = self::ROUTE_PREFIX . '/keyphrases/track';
+        public const KEYPHRASES_TRACK_ROUTE = self::ROUTE_PREFIX . '/keyphrases/track';
         /**
          * The keyphrases route constant.
          *
          * @var string
          */
-        const TRACKED_KEYPHRASES_ROUTE = self::ROUTE_PREFIX . '/keyphrases';
+        public const TRACKED_KEYPHRASES_ROUTE = self::ROUTE_PREFIX . '/keyphrases';
         /**
          * The untrack keyphrase route constant.
          *
          * @var string
          */
-        const UNTRACK_KEYPHRASE_ROUTE = self::ROUTE_PREFIX . '/keyphrases/untrack';
+        public const UNTRACK_KEYPHRASE_ROUTE = self::ROUTE_PREFIX . '/keyphrases/untrack';
+        /**
+         * The check limit route constant.
+         *
+         * @var string
+         */
+        public const CHECK_LIMIT_ROUTE = self::ROUTE_PREFIX . '/account/limit';
+        /**
+         * The upgrade campaign route constant.
+         *
+         * @var string
+         */
+        public const UPGRADE_CAMPAIGN_ROUTE = self::ROUTE_PREFIX . '/account/upgrade-campaign';
         /**
          * The login action.
          *
@@ -54807,6 +63800,23 @@ namespace Yoast\WP\SEO\Routes {
         {
         }
         /**
+         * Checks the account limit.
+         *
+         * @return WP_REST_Response The response.
+         */
+        public function check_limit()
+        {
+        }
+        /**
+         * Gets the upgrade campaign.
+         * If it's not a free user, no campaign is returned.
+         *
+         * @return WP_REST_Response The response.
+         */
+        public function get_upgrade_campaign()
+        {
+        }
+        /**
          * Checks if a valid code was returned.
          *
          * @param string $code The code to check.
@@ -54846,7 +63856,7 @@ namespace Yoast\WP\SEO\Routes {
          *
          * @var string
          */
-        const WORKOUTS_ROUTE = '/workouts';
+        public const WORKOUTS_ROUTE = '/workouts';
         /**
          * The Options helper.
          *
@@ -54909,13 +63919,13 @@ namespace Yoast\WP\SEO\Routes {
          *
          * @var string
          */
-        const YOAST_HEAD_ATTRIBUTE_NAME = 'yoast_head';
+        public const YOAST_HEAD_ATTRIBUTE_NAME = 'yoast_head';
         /**
          * The name of the Yoast head JSON field.
          *
          * @var string
          */
-        const YOAST_JSON_HEAD_ATTRIBUTE_NAME = 'yoast_head_json';
+        public const YOAST_JSON_HEAD_ATTRIBUTE_NAME = 'yoast_head_json';
         /**
          * The post type helper.
          *
@@ -55044,7 +64054,7 @@ namespace Yoast\WP\SEO\Services\Health_Check {
         /**
          * The prefix to add to the test identifier. Used to differentiate between Yoast's health checks, and other health checks.
          */
-        const TEST_IDENTIFIER_PREFIX = 'yoast-';
+        public const TEST_IDENTIFIER_PREFIX = 'yoast-';
         /**
          * The object that runs the actual health check.
          *
@@ -55228,7 +64238,7 @@ namespace Yoast\WP\SEO\Services\Health_Check {
         /**
          * The default WordPress tagline.
          */
-        const DEFAULT_BLOG_DESCRIPTION = 'Just another WordPress site';
+        public const DEFAULT_BLOG_DESCRIPTION = 'Just another WordPress site';
         /**
          * Is set to true when the default tagline is set.
          *
@@ -55699,15 +64709,15 @@ namespace Yoast\WP\SEO\Services\Health_Check {
         /**
          * Passed health check.
          */
-        const STATUS_GOOD = 'good';
+        public const STATUS_GOOD = 'good';
         /**
          * Changes are recommended but not necessary.
          */
-        const STATUS_RECOMMENDED = 'recommended';
+        public const STATUS_RECOMMENDED = 'recommended';
         /**
          * Significant issues that the user should consider fixing.
          */
-        const STATUS_CRITICAL = 'critical';
+        public const STATUS_CRITICAL = 'critical';
         /**
          * The user-facing label.
          *
@@ -56008,6 +65018,8 @@ namespace Yoast\WP\SEO\Services\Importing {
          * Deactivates the specified plugin(s) if any, or the entire list of known conflicting plugins.
          *
          * @param string|array|false $plugins Optional. The plugin filename, or array of plugin filenames, to deactivate.
+         *
+         * @return void
          */
         public function deactivate_conflicting_plugins($plugins = false)
         {
@@ -56210,7 +65222,6 @@ namespace Yoast\WP\SEO\Surfaces {
      * @property Helpers\Primary_Term_Helper                    $primary_term
      * @property Helpers\Product_Helper                         $product
      * @property Helpers\Redirect_Helper                        $redirect
-     * @property Helpers\Request_Helper                         $request
      * @property Helpers\Require_File_Helper                    $require_file
      * @property Helpers\Robots_Helper                          $robots
      * @property Helpers\Short_Link_Helper                      $short_link
@@ -56951,13 +65962,1170 @@ namespace Yoast\WP\SEO\Surfaces\Values {
         }
     }
 }
+namespace Yoast\WP\SEO\User_Meta\Application {
+    /**
+     * The collector to get additional contactmethods.
+     *
+     * @makePublic
+     */
+    class Additional_Contactmethods_Collector
+    {
+        /**
+         * All additional contactmethods.
+         *
+         * @var array<Additional_Contactmethod_Interface> $additional_contactmethods
+         */
+        private $additional_contactmethods;
+        /**
+         * The constructor.
+         *
+         * @param Additional_Contactmethod_Interface ...$additional_contactmethods All additional contactmethods.
+         */
+        public function __construct(\Yoast\WP\SEO\User_Meta\Domain\Additional_Contactmethod_Interface ...$additional_contactmethods)
+        {
+        }
+        /**
+         * Returns all the additional contactmethods.
+         *
+         * @return array<Additional_Contactmethod_Interface> All the additional contactmethods.
+         */
+        public function get_additional_contactmethods() : array
+        {
+        }
+        /**
+         * Returns the additional contactmethods key/value pairs.
+         *
+         * @return array<string, string> The additional contactmethods key/value pairs.
+         */
+        public function get_additional_contactmethods_objects() : array
+        {
+        }
+        /**
+         * Returns the additional contactmethods keys.
+         *
+         * @return array<string> The additional contactmethods keys.
+         */
+        public function get_additional_contactmethods_keys() : array
+        {
+        }
+    }
+    /**
+     * Service with all usermeta cleanup queries.
+     */
+    class Cleanup_Service
+    {
+        /**
+         * The additional contactmethods collector.
+         *
+         * @var Additional_Contactmethods_Collector $additional_contactmethods_collector The additional contactmethods collector.
+         */
+        private $additional_contactmethods_collector;
+        /**
+         * The custom meta collector.
+         *
+         * @var Custom_Meta_Collector $custom_meta_collector The custom meta collector.
+         */
+        private $custom_meta_collector;
+        /**
+         * The cleanup repository.
+         *
+         * @var Cleanup_Repository $custom_meta_collector The custom meta repository.
+         */
+        private $cleanup_repository;
+        /**
+         * The constructor.
+         *
+         * @param Additional_Contactmethods_Collector $additional_contactmethods_collector The additional contactmethods collector.
+         * @param Custom_Meta_Collector               $custom_meta_collector               The custom meta collector.
+         * @param Cleanup_Repository                  $cleanup_repository                  The cleanup repository.
+         */
+        public function __construct(\Yoast\WP\SEO\User_Meta\Application\Additional_Contactmethods_Collector $additional_contactmethods_collector, \Yoast\WP\SEO\User_Meta\Application\Custom_Meta_Collector $custom_meta_collector, \Yoast\WP\SEO\User_Meta\Infrastructure\Cleanup_Repository $cleanup_repository)
+        {
+        }
+        /**
+         * Deletes selected empty usermeta.
+         *
+         * @param int $limit The limit we'll apply to the cleanups.
+         *
+         * @return int|bool The number of rows that was deleted or false if the query failed.
+         */
+        public function cleanup_selected_empty_usermeta(int $limit)
+        {
+        }
+        /**
+         * Gets which meta are going to be checked for emptiness.
+         *
+         * @return array<string> The meta to be checked for emptiness.
+         */
+        private function get_meta_to_check()
+        {
+        }
+    }
+    /**
+     * The collector to get custom user meta.
+     *
+     * @makePublic
+     */
+    class Custom_Meta_Collector
+    {
+        /**
+         * All custom meta.
+         *
+         * @var array<Custom_Meta_Interface> $custom_meta
+         */
+        private $custom_meta;
+        /**
+         * The constructor.
+         *
+         * @param Custom_Meta_Interface ...$custom_meta All custom meta.
+         */
+        public function __construct(\Yoast\WP\SEO\User_Meta\Domain\Custom_Meta_Interface ...$custom_meta)
+        {
+        }
+        /**
+         * Returns all the custom meta.
+         *
+         * @return array<Custom_Meta_Interface> All the custom meta.
+         */
+        public function get_custom_meta() : array
+        {
+        }
+        /**
+         * Returns all the custom meta, sorted by rendering priority.
+         *
+         * @return array<Custom_Meta_Interface> All the custom meta, sorted by rendering priority.
+         */
+        public function get_sorted_custom_meta() : array
+        {
+        }
+        /**
+         * Returns the custom meta that can't be empty.
+         *
+         * @return array<string> The custom meta that can't be empty.
+         */
+        public function get_non_empty_custom_meta() : array
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\User_Meta\Domain {
+    /**
+     * This interface describes an additional contactmethod.
+     */
+    interface Additional_Contactmethod_Interface
+    {
+        /**
+         * Returns the key of the contactmethod.
+         *
+         * @return string
+         */
+        public function get_key() : string;
+        /**
+         * Returns the label of the contactmethod field.
+         *
+         * @return string
+         */
+        public function get_label() : string;
+    }
+    /**
+     * This interface describes a custom meta.
+     */
+    interface Custom_Meta_Interface
+    {
+        /**
+         * Returns the priority which the custom meta's form field should be rendered with.
+         *
+         * @return int.
+         */
+        public function get_render_priority() : int;
+        /**
+         * Returns the db key of the custom meta.
+         *
+         * @return string
+         */
+        public function get_key() : string;
+        /**
+         * Returns the id of the custom meta's form field.
+         *
+         * @return string
+         */
+        public function get_field_id() : string;
+        /**
+         * Returns the meta value.
+         *
+         * @param int $user_id The user ID.
+         *
+         * @return string
+         */
+        public function get_value($user_id) : string;
+        /**
+         * Returns whether the respective global setting is enabled.
+         *
+         * @return string
+         */
+        public function is_setting_enabled() : bool;
+        /**
+         * Returns whether the custom meta is allowed to be empty.
+         *
+         * @return bool
+         */
+        public function is_empty_allowed() : bool;
+        /**
+         * Renders the custom meta's field in the user form.
+         *
+         * @param int $user_id The user ID.
+         *
+         * @return void
+         */
+        public function render_field($user_id) : void;
+    }
+}
+namespace Yoast\WP\SEO\User_Meta\Framework\Additional_Contactmethods {
+    /**
+     * The Facebook contactmethod.
+     */
+    class Facebook implements \Yoast\WP\SEO\User_Meta\Domain\Additional_Contactmethod_Interface
+    {
+        /**
+         * Returns the key of the Facebook contactmethod.
+         *
+         * @return string The key of the Facebook contactmethod.
+         */
+        public function get_key() : string
+        {
+        }
+        /**
+         * Returns the label of the Facebook field.
+         *
+         * @return string The label of the Facebook field.
+         */
+        public function get_label() : string
+        {
+        }
+    }
+    /**
+     * The Instagram contactmethod.
+     */
+    class Instagram implements \Yoast\WP\SEO\User_Meta\Domain\Additional_Contactmethod_Interface
+    {
+        /**
+         * Returns the key of the Instagram contactmethod.
+         *
+         * @return string The key of the Instagram contactmethod.
+         */
+        public function get_key() : string
+        {
+        }
+        /**
+         * Returns the label of the Instagram field.
+         *
+         * @return string The label of the Instagram field.
+         */
+        public function get_label() : string
+        {
+        }
+    }
+    /**
+     * The Linkedin contactmethod.
+     */
+    class Linkedin implements \Yoast\WP\SEO\User_Meta\Domain\Additional_Contactmethod_Interface
+    {
+        /**
+         * Returns the key of the Linkedin contactmethod.
+         *
+         * @return string The key of the Linkedin contactmethod.
+         */
+        public function get_key() : string
+        {
+        }
+        /**
+         * Returns the label of the Linkedin field.
+         *
+         * @return string The label of the Linkedin field.
+         */
+        public function get_label() : string
+        {
+        }
+    }
+    /**
+     * The Myspace contactmethod.
+     */
+    class Myspace implements \Yoast\WP\SEO\User_Meta\Domain\Additional_Contactmethod_Interface
+    {
+        /**
+         * Returns the key of the MySpace contactmethod.
+         *
+         * @return string The key of the MySpace contactmethod.
+         */
+        public function get_key() : string
+        {
+        }
+        /**
+         * Returns the label of the MySpace field.
+         *
+         * @return string The label of the MySpace field.
+         */
+        public function get_label() : string
+        {
+        }
+    }
+    /**
+     * The Pinterest contactmethod.
+     */
+    class Pinterest implements \Yoast\WP\SEO\User_Meta\Domain\Additional_Contactmethod_Interface
+    {
+        /**
+         * Returns the key of the Pinterest contactmethod.
+         *
+         * @return string The key of the Pinterest contactmethod.
+         */
+        public function get_key() : string
+        {
+        }
+        /**
+         * Returns the label of the Pinterest field.
+         *
+         * @return string The label of the Pinterest field.
+         */
+        public function get_label() : string
+        {
+        }
+    }
+    /**
+     * The Soundcloud contactmethod.
+     */
+    class Soundcloud implements \Yoast\WP\SEO\User_Meta\Domain\Additional_Contactmethod_Interface
+    {
+        /**
+         * Returns the key of the SoundCloud contactmethod.
+         *
+         * @return string The key of the SoundCloud contactmethod.
+         */
+        public function get_key() : string
+        {
+        }
+        /**
+         * Returns the label of the SoundCloud field.
+         *
+         * @return string The label of the SoundCloud field.
+         */
+        public function get_label() : string
+        {
+        }
+    }
+    /**
+     * The Tumblr contactmethod.
+     */
+    class Tumblr implements \Yoast\WP\SEO\User_Meta\Domain\Additional_Contactmethod_Interface
+    {
+        /**
+         * Returns the key of the Tumblr contactmethod.
+         *
+         * @return string The key of the Tumblr contactmethod.
+         */
+        public function get_key() : string
+        {
+        }
+        /**
+         * Returns the label of the Tumblr field.
+         *
+         * @return string The label of the Tumblr field.
+         */
+        public function get_label() : string
+        {
+        }
+    }
+    /**
+     * The Wikipedia contactmethod.
+     */
+    class Wikipedia implements \Yoast\WP\SEO\User_Meta\Domain\Additional_Contactmethod_Interface
+    {
+        /**
+         * Returns the key of the Wikipedia contactmethod.
+         *
+         * @return string The key of the Wikipedia contactmethod.
+         */
+        public function get_key() : string
+        {
+        }
+        /**
+         * Returns the label of the Wikipedia field.
+         *
+         * @return string The label of the Wikipedia field.
+         */
+        public function get_label() : string
+        {
+        }
+    }
+    /**
+     * The X contactmethod.
+     */
+    class X implements \Yoast\WP\SEO\User_Meta\Domain\Additional_Contactmethod_Interface
+    {
+        /**
+         * Returns the key of the X contactmethod.
+         *
+         * @return string The key of the X contactmethod.
+         */
+        public function get_key() : string
+        {
+        }
+        /**
+         * Returns the label of the X field.
+         *
+         * @return string The label of the X field.
+         */
+        public function get_label() : string
+        {
+        }
+    }
+    /**
+     * The Youtube contactmethod.
+     */
+    class Youtube implements \Yoast\WP\SEO\User_Meta\Domain\Additional_Contactmethod_Interface
+    {
+        /**
+         * Returns the key of the YouTube contactmethod.
+         *
+         * @return string The key of the YouTube contactmethod.
+         */
+        public function get_key() : string
+        {
+        }
+        /**
+         * Returns the label of the YouTube field.
+         *
+         * @return string The label of the YouTube field.
+         */
+        public function get_label() : string
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\User_Meta\Framework\Custom_Meta {
+    /**
+     * The Author_Metadesc custom meta.
+     */
+    class Author_Metadesc implements \Yoast\WP\SEO\User_Meta\Domain\Custom_Meta_Interface
+    {
+        /**
+         * The options helper.
+         *
+         * @var Options_Helper
+         */
+        private $options_helper;
+        /**
+         * The constructor.
+         *
+         * @param Options_Helper $options_helper The options helper.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\Options_Helper $options_helper)
+        {
+        }
+        /**
+         * Returns the priority which the custom meta's form field should be rendered with.
+         *
+         * @return int The priority which the custom meta's form field should be rendered with.
+         */
+        public function get_render_priority() : int
+        {
+        }
+        /**
+         * Returns the db key of the Author_Metadesc custom meta.
+         *
+         * @return string The db key of the Author_Metadesc custom meta.
+         */
+        public function get_key() : string
+        {
+        }
+        /**
+         * Returns the id of the custom meta's form field.
+         *
+         * @return string The id of the custom meta's form field.
+         */
+        public function get_field_id() : string
+        {
+        }
+        /**
+         * Returns the meta value.
+         *
+         * @param int $user_id The user ID.
+         *
+         * @return string The meta value.
+         */
+        public function get_value($user_id) : string
+        {
+        }
+        /**
+         * Returns whether the respective global setting is enabled.
+         *
+         * @return bool Whether the respective global setting is enabled.
+         */
+        public function is_setting_enabled() : bool
+        {
+        }
+        /**
+         * Returns whether the custom meta is allowed to be empty.
+         *
+         * @return bool Whether the custom meta is allowed to be empty.
+         */
+        public function is_empty_allowed() : bool
+        {
+        }
+        /**
+         * Renders the custom meta's field in the user form.
+         *
+         * @param int $user_id The user ID.
+         *
+         * @return void
+         */
+        public function render_field($user_id) : void
+        {
+        }
+    }
+    /**
+     * The Author_Title custom meta.
+     */
+    class Author_Title implements \Yoast\WP\SEO\User_Meta\Domain\Custom_Meta_Interface
+    {
+        /**
+         * The options helper.
+         *
+         * @var Options_Helper
+         */
+        private $options_helper;
+        /**
+         * The constructor.
+         *
+         * @param Options_Helper $options_helper The options helper.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\Options_Helper $options_helper)
+        {
+        }
+        /**
+         * Returns the priority which the custom meta's form field should be rendered with.
+         *
+         * @return int The priority which the custom meta's form field should be rendered with.
+         */
+        public function get_render_priority() : int
+        {
+        }
+        /**
+         * Returns the db key of the Author_Title custom meta.
+         *
+         * @return string The db key of the Author_Title custom meta.
+         */
+        public function get_key() : string
+        {
+        }
+        /**
+         * Returns the id of the custom meta's form field.
+         *
+         * @return string The id of the custom meta's form field.
+         */
+        public function get_field_id() : string
+        {
+        }
+        /**
+         * Returns the meta value.
+         *
+         * @param int $user_id The user ID.
+         *
+         * @return string The meta value.
+         */
+        public function get_value($user_id) : string
+        {
+        }
+        /**
+         * Returns whether the respective global setting is enabled.
+         *
+         * @return bool Whether the respective global setting is enabled.
+         */
+        public function is_setting_enabled() : bool
+        {
+        }
+        /**
+         * Returns whether the custom meta is allowed to be empty.
+         *
+         * @return bool Whether the custom meta is allowed to be empty.
+         */
+        public function is_empty_allowed() : bool
+        {
+        }
+        /**
+         * Renders the custom meta's field in the user form.
+         *
+         * @param int $user_id The user ID.
+         *
+         * @return void
+         */
+        public function render_field($user_id) : void
+        {
+        }
+    }
+    /**
+     * The Content_Analysis_Disable custom meta.
+     */
+    class Content_Analysis_Disable implements \Yoast\WP\SEO\User_Meta\Domain\Custom_Meta_Interface
+    {
+        /**
+         * The options helper.
+         *
+         * @var Options_Helper
+         */
+        private $options_helper;
+        /**
+         * The constructor.
+         *
+         * @param Options_Helper $options_helper The options helper.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\Options_Helper $options_helper)
+        {
+        }
+        /**
+         * Returns the priority which the custom meta's form field should be rendered with.
+         *
+         * @return int The priority which the custom meta's form field should be rendered with.
+         */
+        public function get_render_priority() : int
+        {
+        }
+        /**
+         * Returns the db key of the Content_Analysis_Disable custom meta.
+         *
+         * @return string The db key of the Content_Analysis_Disable custom meta.
+         */
+        public function get_key() : string
+        {
+        }
+        /**
+         * Returns the id of the custom meta's form field.
+         *
+         * @return string The id of the custom meta's form field.
+         */
+        public function get_field_id() : string
+        {
+        }
+        /**
+         * Returns the meta value.
+         *
+         * @param int $user_id The user ID.
+         *
+         * @return string The meta value.
+         */
+        public function get_value($user_id) : string
+        {
+        }
+        /**
+         * Returns whether the respective global setting is enabled.
+         *
+         * @return bool Whether the respective global setting is enabled.
+         */
+        public function is_setting_enabled() : bool
+        {
+        }
+        /**
+         * Returns whether the custom meta is allowed to be empty.
+         *
+         * @return bool Whether the custom meta is allowed to be empty.
+         */
+        public function is_empty_allowed() : bool
+        {
+        }
+        /**
+         * Renders the custom meta's field in the user form.
+         *
+         * @param int $user_id The user ID.
+         *
+         * @return void
+         */
+        public function render_field($user_id) : void
+        {
+        }
+    }
+    /**
+     * The Inclusive_Language_Analysis_Disable custom meta.
+     */
+    class Inclusive_Language_Analysis_Disable implements \Yoast\WP\SEO\User_Meta\Domain\Custom_Meta_Interface
+    {
+        /**
+         * The options helper.
+         *
+         * @var Options_Helper
+         */
+        private $options_helper;
+        /**
+         * The constructor.
+         *
+         * @param Options_Helper $options_helper The options helper.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\Options_Helper $options_helper)
+        {
+        }
+        /**
+         * Returns the priority which the custom meta's form field should be rendered with.
+         *
+         * @return int The priority which the custom meta's form field should be rendered with.
+         */
+        public function get_render_priority() : int
+        {
+        }
+        /**
+         * Returns the db key of the Inclusive_Language_Analysis_Disable custom meta.
+         *
+         * @return string The db key of the Inclusive_Language_Analysis_Disable custom meta.
+         */
+        public function get_key() : string
+        {
+        }
+        /**
+         * Returns the id of the custom meta's form field.
+         *
+         * @return string The id of the custom meta's form field.
+         */
+        public function get_field_id() : string
+        {
+        }
+        /**
+         * Returns the meta value.
+         *
+         * @param int $user_id The user ID.
+         *
+         * @return string The meta value.
+         */
+        public function get_value($user_id) : string
+        {
+        }
+        /**
+         * Returns whether the respective global setting is enabled.
+         *
+         * @return bool Whether the respective global setting is enabled.
+         */
+        public function is_setting_enabled() : bool
+        {
+        }
+        /**
+         * Returns whether the custom meta is allowed to be empty.
+         *
+         * @return bool Whether the custom meta is allowed to be empty.
+         */
+        public function is_empty_allowed() : bool
+        {
+        }
+        /**
+         * Renders the custom meta's field in the user form.
+         *
+         * @param int $user_id The user ID.
+         *
+         * @return void
+         */
+        public function render_field($user_id) : void
+        {
+        }
+    }
+    /**
+     * The Keyword_Analysis_Disable custom meta.
+     */
+    class Keyword_Analysis_Disable implements \Yoast\WP\SEO\User_Meta\Domain\Custom_Meta_Interface
+    {
+        /**
+         * The options helper.
+         *
+         * @var Options_Helper
+         */
+        private $options_helper;
+        /**
+         * The constructor.
+         *
+         * @param Options_Helper $options_helper The options helper.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\Options_Helper $options_helper)
+        {
+        }
+        /**
+         * Returns the priority which the custom meta's form field should be rendered with.
+         *
+         * @return int The priority which the custom meta's form field should be rendered with.
+         */
+        public function get_render_priority() : int
+        {
+        }
+        /**
+         * Returns the db key of the Keyword_Analysis_Disable custom meta.
+         *
+         * @return string The db key of the Keyword_Analysis_Disable custom meta.
+         */
+        public function get_key() : string
+        {
+        }
+        /**
+         * Returns the id of the custom meta's form field.
+         *
+         * @return string The id of the custom meta's form field.
+         */
+        public function get_field_id() : string
+        {
+        }
+        /**
+         * Returns the meta value.
+         *
+         * @param int $user_id The user ID.
+         *
+         * @return string The meta value.
+         */
+        public function get_value($user_id) : string
+        {
+        }
+        /**
+         * Returns whether the respective global setting is enabled.
+         *
+         * @return bool Whether the respective global setting is enabled.
+         */
+        public function is_setting_enabled() : bool
+        {
+        }
+        /**
+         * Returns whether the custom meta is allowed to be empty.
+         *
+         * @return bool Whether the custom meta is allowed to be empty.
+         */
+        public function is_empty_allowed() : bool
+        {
+        }
+        /**
+         * Renders the custom meta's field in the user form.
+         *
+         * @param int $user_id The user ID.
+         *
+         * @return void
+         */
+        public function render_field($user_id) : void
+        {
+        }
+    }
+    /**
+     * The Noindex_Author custom meta.
+     */
+    class Noindex_Author implements \Yoast\WP\SEO\User_Meta\Domain\Custom_Meta_Interface
+    {
+        /**
+         * The options helper.
+         *
+         * @var Options_Helper
+         */
+        private $options_helper;
+        /**
+         * The constructor.
+         *
+         * @param Options_Helper $options_helper The options helper.
+         */
+        public function __construct(\Yoast\WP\SEO\Helpers\Options_Helper $options_helper)
+        {
+        }
+        /**
+         * Returns the priority which the custom meta's form field should be rendered with.
+         *
+         * @return int The priority which the custom meta's form field should be rendered with.
+         */
+        public function get_render_priority() : int
+        {
+        }
+        /**
+         * Returns the db key of the Noindex_Author custom meta.
+         *
+         * @return string The db key of the Noindex_Author custom meta.
+         */
+        public function get_key() : string
+        {
+        }
+        /**
+         * Returns the id of the custom meta's form field.
+         *
+         * @return string The id of the custom meta's form field.
+         */
+        public function get_field_id() : string
+        {
+        }
+        /**
+         * Returns the meta value.
+         *
+         * @param int $user_id The user ID.
+         *
+         * @return string The meta value.
+         */
+        public function get_value($user_id) : string
+        {
+        }
+        /**
+         * Returns whether the respective global setting is enabled.
+         *
+         * @return bool Whether the respective global setting is enabled.
+         */
+        public function is_setting_enabled() : bool
+        {
+        }
+        /**
+         * Returns whether the custom meta is allowed to be empty.
+         *
+         * @return bool Whether the custom meta is allowed to be empty.
+         */
+        public function is_empty_allowed() : bool
+        {
+        }
+        /**
+         * Renders the custom meta's field in the user form.
+         *
+         * @param int $user_id The user ID.
+         *
+         * @return void
+         */
+        public function render_field($user_id) : void
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\User_Meta\Infrastructure {
+    /**
+     * Repository going into the database to clean up.
+     */
+    class Cleanup_Repository
+    {
+        /**
+         * Deletes empty usermeta based on their meta_keys and returns the number of the deleted meta.
+         *
+         * @param array<string> $meta_keys The meta to be potentially deleted.
+         * @param int           $limit     The number of maximum deletions.
+         *
+         * @return int|false The number of rows that was deleted or false if the query failed.
+         */
+        public function delete_empty_usermeta_query($meta_keys, $limit)
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\User_Meta\User_Interface {
+    /**
+     * Handles registering and saving additional contactmethods for users.
+     */
+    class Additional_Contactmethods_Integration implements \Yoast\WP\SEO\Integrations\Integration_Interface
+    {
+        use \Yoast\WP\SEO\Conditionals\No_Conditionals;
+        /**
+         * The additional contactmethods collector.
+         *
+         * @var Additional_Contactmethods_Collector $additional_contactmethods_collector The additional contactmethods collector.
+         */
+        private $additional_contactmethods_collector;
+        /**
+         * The constructor.
+         *
+         * @param Additional_Contactmethods_Collector $additional_contactmethods_collector The additional contactmethods collector.
+         */
+        public function __construct(\Yoast\WP\SEO\User_Meta\Application\Additional_Contactmethods_Collector $additional_contactmethods_collector)
+        {
+        }
+        /**
+         * Registers action hook.
+         *
+         * @return void
+         */
+        public function register_hooks() : void
+        {
+        }
+        /**
+         * Updates the contactmethods with an additional set of social profiles.
+         *
+         * These are used with the Facebook author, rel="author", Twitter cards implementation, but also in the `sameAs` schema attributes.
+         *
+         * @param array<string, string> $contactmethods Currently set contactmethods.
+         *
+         * @return array<string, string> Contactmethods with added contactmethods.
+         */
+        public function update_contactmethods($contactmethods)
+        {
+        }
+        /**
+         * Returns a check value, which will stop empty contactmethods from going into the database.
+         *
+         * @param bool|null $check      Whether to allow updating metadata for the given type.
+         * @param int       $object_id  ID of the object metadata is for.
+         * @param string    $meta_key   Metadata key.
+         * @param mixed     $meta_value Metadata value. Must be serializable if non-scalar.
+         *
+         * @return false|null False for when we are to filter out empty metadata, null for no filtering.
+         */
+        public function stop_storing_empty_metadata($check, $object_id, $meta_key, $meta_value)
+        {
+        }
+    }
+    /**
+     * Handles the cleanup for user meta.
+     */
+    class Cleanup_Integration implements \Yoast\WP\SEO\Integrations\Integration_Interface
+    {
+        use \Yoast\WP\SEO\Conditionals\No_Conditionals;
+        /**
+         * The cleanup service.
+         *
+         * @var Cleanup_Service $cleanup_service The cleanup service.
+         */
+        private $cleanup_service;
+        /**
+         * The constructor.
+         *
+         * @param Cleanup_Service $cleanup_service The cleanup service.
+         */
+        public function __construct(\Yoast\WP\SEO\User_Meta\Application\Cleanup_Service $cleanup_service)
+        {
+        }
+        /**
+         * Registers action hook.
+         *
+         * @return void
+         */
+        public function register_hooks() : void
+        {
+        }
+        /**
+         * Adds cleanup tasks for the cleanup integration.
+         *
+         * @param Closure[] $tasks Array of tasks to be added.
+         *
+         * @return Closure[] An associative array of tasks to be added to the cleanup integration.
+         */
+        public function add_user_meta_cleanup_tasks($tasks)
+        {
+        }
+    }
+    /**
+     * Handles custom meta for users.
+     */
+    class Custom_Meta_Integration implements \Yoast\WP\SEO\Integrations\Integration_Interface
+    {
+        /**
+         * The custom meta collector.
+         *
+         * @var Custom_Meta_Collector $custom_meta_collector The custom meta collector.
+         */
+        private $custom_meta_collector;
+        /**
+         * The constructor.
+         *
+         * @param Custom_Meta_Collector $custom_meta_collector The custom meta collector.
+         */
+        public function __construct(\Yoast\WP\SEO\User_Meta\Application\Custom_Meta_Collector $custom_meta_collector)
+        {
+        }
+        /**
+         * Retrieves the conditionals for the integration.
+         *
+         * @return array<Yoast\WP\SEO\Conditionals> The conditionals.
+         */
+        public static function get_conditionals()
+        {
+        }
+        /**
+         * Registers action hook.
+         *
+         * @return void
+         */
+        public function register_hooks() : void
+        {
+        }
+        /**
+         * Updates the user metas that (might) have been set on the user profile page.
+         *
+         * @param int $user_id User ID of the updated user.
+         *
+         * @return void
+         */
+        public function process_user_option_update($user_id)
+        {
+        }
+        /**
+         * Adds the inputs needed for SEO values to the User Profile page.
+         *
+         * @param WP_User $user User instance to output for.
+         *
+         * @return void
+         */
+        public function user_profile($user)
+        {
+        }
+    }
+}
+namespace Yoast\WP\SEO\User_Profiles_Additions\User_Interface {
+    /**
+     * Adds a new hook in the user profiles edit screen to add content.
+     */
+    class User_Profiles_Additions_Ui implements \Yoast\WP\SEO\Integrations\Integration_Interface
+    {
+        /**
+         * Holds the Product_Helper.
+         *
+         * @var Product_Helper
+         */
+        private $product_helper;
+        /**
+         * Holds the WPSEO_Admin_Asset_Manager.
+         *
+         * @var WPSEO_Admin_Asset_Manager
+         */
+        private $asset_manager;
+        /**
+         * Constructs Academy_Integration.
+         *
+         * @param WPSEO_Admin_Asset_Manager $asset_manager  The WPSEO_Admin_Asset_Manager.
+         * @param Product_Helper            $product_helper The Product_Helper.
+         */
+        public function __construct(\WPSEO_Admin_Asset_Manager $asset_manager, \Yoast\WP\SEO\Helpers\Product_Helper $product_helper)
+        {
+        }
+        /**
+         * Returns the conditionals based in which this loadable should be active.
+         *
+         * @return array
+         */
+        public static function get_conditionals()
+        {
+        }
+        /**
+         * Initializes the integration.
+         *
+         * This is the place to register hooks and filters.
+         *
+         * @return void
+         */
+        public function register_hooks()
+        {
+        }
+        /**
+         * Enqueues the assets needed for this integration.
+         *
+         * @return void
+         */
+        public function enqueue_assets()
+        {
+        }
+        /**
+         * Add the inputs needed for SEO values to the User Profile page.
+         *
+         * @param WP_User $user User instance to output for.
+         *
+         * @return void
+         */
+        public function add_hook_to_user_profile($user)
+        {
+        }
+    }
+}
 namespace Yoast\WP\SEO\Values\Indexables {
     /**
      * Class Indexable_Builder_Versions
      */
     class Indexable_Builder_Versions
     {
-        const DEFAULT_INDEXABLE_BUILDER_VERSION = 1;
+        public const DEFAULT_INDEXABLE_BUILDER_VERSION = 1;
         /**
          * The list of indexable builder versions defined by Yoast SEO Free.
          * If the key is not in this list, the indexable type will not be managed.
@@ -57325,12 +67493,16 @@ namespace Yoast\WP\SEO\Wrappers {
          * Sets the global WP_Query object.
          *
          * @param WP_Query $wp_query The WP Query.
+         *
+         * @return void
          */
         public function set_query(\WP_Query $wp_query)
         {
         }
         /**
          * Resets the global WP_Query object.
+         *
+         * @return void
          */
         public function reset_query()
         {
@@ -57385,7 +67557,7 @@ namespace YoastSEO_Vendor\League\OAuth2\Client\Provider\Exception {
         /**
          * @param string $message
          * @param int $code
-         * @param array|string $response The response body
+         * @param mixed $response The response body
          */
         public function __construct($message, $code, $response)
         {
@@ -57393,7 +67565,7 @@ namespace YoastSEO_Vendor\League\OAuth2\Client\Provider\Exception {
         /**
          * Returns the exception's response body.
          *
-         * @return array|string
+         * @return mixed
          */
         public function getResponseBody()
         {
@@ -57658,6 +67830,189 @@ namespace YoastSEO_Vendor\Psr\Container {
     {
     }
 }
+namespace YoastSEO_Vendor\Psr\Http\Client {
+    /**
+     * Every HTTP client related exception MUST implement this interface.
+     */
+    interface ClientExceptionInterface extends \Throwable
+    {
+    }
+    interface ClientInterface
+    {
+        /**
+         * Sends a PSR-7 request and returns a PSR-7 response.
+         *
+         * @param RequestInterface $request
+         *
+         * @return ResponseInterface
+         *
+         * @throws \Psr\Http\Client\ClientExceptionInterface If an error happens while processing the request.
+         */
+        public function sendRequest(\YoastSEO_Vendor\Psr\Http\Message\RequestInterface $request) : \YoastSEO_Vendor\Psr\Http\Message\ResponseInterface;
+    }
+    /**
+     * Thrown when the request cannot be completed because of network issues.
+     *
+     * There is no response object as this exception is thrown when no response has been received.
+     *
+     * Example: the target host name can not be resolved or the connection failed.
+     */
+    interface NetworkExceptionInterface extends \YoastSEO_Vendor\Psr\Http\Client\ClientExceptionInterface
+    {
+        /**
+         * Returns the request.
+         *
+         * The request object MAY be a different object from the one passed to ClientInterface::sendRequest()
+         *
+         * @return RequestInterface
+         */
+        public function getRequest() : \YoastSEO_Vendor\Psr\Http\Message\RequestInterface;
+    }
+    /**
+     * Exception for when a request failed.
+     *
+     * Examples:
+     *      - Request is invalid (e.g. method is missing)
+     *      - Runtime request errors (e.g. the body stream is not seekable)
+     */
+    interface RequestExceptionInterface extends \YoastSEO_Vendor\Psr\Http\Client\ClientExceptionInterface
+    {
+        /**
+         * Returns the request.
+         *
+         * The request object MAY be a different object from the one passed to ClientInterface::sendRequest()
+         *
+         * @return RequestInterface
+         */
+        public function getRequest() : \YoastSEO_Vendor\Psr\Http\Message\RequestInterface;
+    }
+}
+namespace YoastSEO_Vendor\Psr\Http\Message {
+    interface RequestFactoryInterface
+    {
+        /**
+         * Create a new request.
+         *
+         * @param string $method The HTTP method associated with the request.
+         * @param UriInterface|string $uri The URI associated with the request. If
+         *     the value is a string, the factory MUST create a UriInterface
+         *     instance based on it.
+         *
+         * @return RequestInterface
+         */
+        public function createRequest(string $method, $uri) : \YoastSEO_Vendor\Psr\Http\Message\RequestInterface;
+    }
+    interface ResponseFactoryInterface
+    {
+        /**
+         * Create a new response.
+         *
+         * @param int $code HTTP status code; defaults to 200
+         * @param string $reasonPhrase Reason phrase to associate with status code
+         *     in generated response; if none is provided implementations MAY use
+         *     the defaults as suggested in the HTTP specification.
+         *
+         * @return ResponseInterface
+         */
+        public function createResponse(int $code = 200, string $reasonPhrase = '') : \YoastSEO_Vendor\Psr\Http\Message\ResponseInterface;
+    }
+    interface ServerRequestFactoryInterface
+    {
+        /**
+         * Create a new server request.
+         *
+         * Note that server-params are taken precisely as given - no parsing/processing
+         * of the given values is performed, and, in particular, no attempt is made to
+         * determine the HTTP method or URI, which must be provided explicitly.
+         *
+         * @param string $method The HTTP method associated with the request.
+         * @param UriInterface|string $uri The URI associated with the request. If
+         *     the value is a string, the factory MUST create a UriInterface
+         *     instance based on it.
+         * @param array $serverParams Array of SAPI parameters with which to seed
+         *     the generated request instance.
+         *
+         * @return ServerRequestInterface
+         */
+        public function createServerRequest(string $method, $uri, array $serverParams = []) : \YoastSEO_Vendor\Psr\Http\Message\ServerRequestInterface;
+    }
+    interface StreamFactoryInterface
+    {
+        /**
+         * Create a new stream from a string.
+         *
+         * The stream SHOULD be created with a temporary resource.
+         *
+         * @param string $content String content with which to populate the stream.
+         *
+         * @return StreamInterface
+         */
+        public function createStream(string $content = '') : \YoastSEO_Vendor\Psr\Http\Message\StreamInterface;
+        /**
+         * Create a stream from an existing file.
+         *
+         * The file MUST be opened using the given mode, which may be any mode
+         * supported by the `fopen` function.
+         *
+         * The `$filename` MAY be any string supported by `fopen()`.
+         *
+         * @param string $filename Filename or stream URI to use as basis of stream.
+         * @param string $mode Mode with which to open the underlying filename/stream.
+         *
+         * @return StreamInterface
+         * @throws \RuntimeException If the file cannot be opened.
+         * @throws \InvalidArgumentException If the mode is invalid.
+         */
+        public function createStreamFromFile(string $filename, string $mode = 'r') : \YoastSEO_Vendor\Psr\Http\Message\StreamInterface;
+        /**
+         * Create a new stream from an existing resource.
+         *
+         * The stream MUST be readable and may be writable.
+         *
+         * @param resource $resource PHP resource to use as basis of stream.
+         *
+         * @return StreamInterface
+         */
+        public function createStreamFromResource($resource) : \YoastSEO_Vendor\Psr\Http\Message\StreamInterface;
+    }
+    interface UploadedFileFactoryInterface
+    {
+        /**
+         * Create a new uploaded file.
+         *
+         * If a size is not provided it will be determined by checking the size of
+         * the file.
+         *
+         * @see http://php.net/manual/features.file-upload.post-method.php
+         * @see http://php.net/manual/features.file-upload.errors.php
+         *
+         * @param StreamInterface $stream Underlying stream representing the
+         *     uploaded file content.
+         * @param int $size in bytes
+         * @param int $error PHP file upload error
+         * @param string $clientFilename Filename as provided by the client, if any.
+         * @param string $clientMediaType Media type as provided by the client, if any.
+         *
+         * @return UploadedFileInterface
+         *
+         * @throws \InvalidArgumentException If the file resource is not readable.
+         */
+        public function createUploadedFile(\YoastSEO_Vendor\Psr\Http\Message\StreamInterface $stream, int $size = null, int $error = \UPLOAD_ERR_OK, string $clientFilename = null, string $clientMediaType = null) : \YoastSEO_Vendor\Psr\Http\Message\UploadedFileInterface;
+    }
+    interface UriFactoryInterface
+    {
+        /**
+         * Create a new URI.
+         *
+         * @param string $uri
+         *
+         * @return UriInterface
+         *
+         * @throws \InvalidArgumentException If the given URI cannot be parsed.
+         */
+        public function createUri(string $uri = '') : \YoastSEO_Vendor\Psr\Http\Message\UriInterface;
+    }
+}
 namespace YoastSEO_Vendor\Psr\Log {
     /**
      * This is a simple Logger implementation that other Loggers can inherit from.
@@ -57671,8 +68026,8 @@ namespace YoastSEO_Vendor\Psr\Log {
         /**
          * System is unusable.
          *
-         * @param string $message
-         * @param array  $context
+         * @param string  $message
+         * @param mixed[] $context
          *
          * @return void
          */
@@ -57685,8 +68040,8 @@ namespace YoastSEO_Vendor\Psr\Log {
          * Example: Entire website down, database unavailable, etc. This should
          * trigger the SMS alerts and wake you up.
          *
-         * @param string $message
-         * @param array  $context
+         * @param string  $message
+         * @param mixed[] $context
          *
          * @return void
          */
@@ -57698,8 +68053,8 @@ namespace YoastSEO_Vendor\Psr\Log {
          *
          * Example: Application component unavailable, unexpected exception.
          *
-         * @param string $message
-         * @param array  $context
+         * @param string  $message
+         * @param mixed[] $context
          *
          * @return void
          */
@@ -57710,8 +68065,8 @@ namespace YoastSEO_Vendor\Psr\Log {
          * Runtime errors that do not require immediate action but should typically
          * be logged and monitored.
          *
-         * @param string $message
-         * @param array  $context
+         * @param string  $message
+         * @param mixed[] $context
          *
          * @return void
          */
@@ -57724,8 +68079,8 @@ namespace YoastSEO_Vendor\Psr\Log {
          * Example: Use of deprecated APIs, poor use of an API, undesirable things
          * that are not necessarily wrong.
          *
-         * @param string $message
-         * @param array  $context
+         * @param string  $message
+         * @param mixed[] $context
          *
          * @return void
          */
@@ -57735,8 +68090,8 @@ namespace YoastSEO_Vendor\Psr\Log {
         /**
          * Normal but significant events.
          *
-         * @param string $message
-         * @param array  $context
+         * @param string  $message
+         * @param mixed[] $context
          *
          * @return void
          */
@@ -57748,8 +68103,8 @@ namespace YoastSEO_Vendor\Psr\Log {
          *
          * Example: User logs in, SQL logs.
          *
-         * @param string $message
-         * @param array  $context
+         * @param string  $message
+         * @param mixed[] $context
          *
          * @return void
          */
@@ -57759,8 +68114,8 @@ namespace YoastSEO_Vendor\Psr\Log {
         /**
          * Detailed debug information.
          *
-         * @param string $message
-         * @param array  $context
+         * @param string  $message
+         * @param mixed[] $context
          *
          * @return void
          */
@@ -57807,7 +68162,7 @@ namespace YoastSEO_Vendor\Psr\Log {
         /**
          * The logger instance.
          *
-         * @var LoggerInterface
+         * @var LoggerInterface|null
          */
         protected $logger;
         /**
@@ -57837,6 +68192,8 @@ namespace YoastSEO_Vendor\Psr\Log {
          * @param array  $context
          *
          * @return void
+         *
+         * @throws \Psr\Log\InvalidArgumentException
          */
         public function log($level, $message, array $context = array())
         {
@@ -58268,1438 +68625,55 @@ namespace YoastSEO_Vendor\Symfony\Component\DependencyInjection\ParameterBag {
         }
     }
 }
-namespace YoastSEO_Vendor\WordProof\SDK\Config {
-    abstract class Config
-    {
-        /**
-         * Try to return config values using the dot syntax.
-         *
-         * @param string|null $key The key of the config using the dot syntax.
-         * @return array|mixed Returns the entire config array if not found, otherwise the value itself.
-         */
-        public static function get($key = null)
-        {
-        }
-        /**
-         * Should return an array with the config.
-         *
-         * @return array An array containing the config values.
-         */
-        protected static function values()
-        {
-        }
-    }
-    class EnvironmentConfig extends \YoastSEO_Vendor\WordProof\SDK\Config\Config
-    {
-        /**
-         * Returns an array with the environment config.
-         *
-         * @return array
-         */
-        protected static function values()
-        {
-        }
-    }
-    class OptionsConfig extends \YoastSEO_Vendor\WordProof\SDK\Config\Config
-    {
-        /**
-         * Returns an array with the settings config.
-         *
-         * @return array
-         */
-        protected static function values()
-        {
-        }
-    }
-    class RoutesConfig extends \YoastSEO_Vendor\WordProof\SDK\Config\Config
-    {
-        /**
-         * Returns an array with the environment config.
-         *
-         * @return array
-         */
-        protected static function values()
-        {
-        }
-    }
-    class ScriptsConfig extends \YoastSEO_Vendor\WordProof\SDK\Config\Config
-    {
-        /**
-         * Returns an array with the environment config.
-         *
-         * @return array
-         */
-        protected static function values()
-        {
-        }
-    }
-}
-namespace YoastSEO_Vendor\WordProof\SDK\Controllers {
-    class AuthenticationController
-    {
-        /**
-         * Triggers the authentication flow.
-         *
-         * @param null $redirectUrl
-         */
-        public function authenticate($redirectUrl = null)
-        {
-        }
-        /**
-         * Adds admin page that redirects to the authentication flow.
-         */
-        public function addRedirectPage()
-        {
-        }
-        /**
-         * The content for the redirect page.
-         */
-        public function redirectPageContent()
-        {
-        }
-        /**
-         * Gets triggered by the 'load-admin_page_' hook of the redirect page
-         */
-        public function redirectOnLoad()
-        {
-        }
-        /**
-         * Adds self destruct admin page.
-         */
-        public function addSelfDestructPage()
-        {
-        }
-        /**
-         * Adds a script to the loaded page to close on load.
-         */
-        public function closeOnLoadContent()
-        {
-        }
-    }
-    class CertificateController
-    {
-        /**
-         * Add scripts and schema to the head of the current page.
-         *
-         * @action wp_head
-         */
-        public function head()
-        {
-        }
-        /**
-         * Adds the certificate tag to the content before rendering it.
-         *
-         * @param $content
-         * @return mixed|string Content string from 'the_content' filter
-         * @filter the_content
-         */
-        public function certificateTag($content)
-        {
-        }
-    }
-    class NoticeController
-    {
-        /**
-         * @var string[] The screens on which notices should be rendered.
-         */
-        private $screens = ['post'];
-        /**
-         * @var TranslationsInterface The translations objects,
-         */
-        private $translations;
-        public function __construct(\YoastSEO_Vendor\WordProof\SDK\Translations\TranslationsInterface $translations)
-        {
-        }
-        /**
-         * Showing notices for the classic editor and delete them so they are only shown once.
-         *
-         * @action admin_notices
-         */
-        public function show()
-        {
-        }
-    }
-    class PostEditorDataController
-    {
-        /**
-         * @var TranslationsInterface The translations objects,
-         */
-        private $translations;
-        /**
-         * PostEditorDataController constructor.
-         *
-         * @param TranslationsInterface $translations The implemented translations interface.
-         */
-        public function __construct(\YoastSEO_Vendor\WordProof\SDK\Translations\TranslationsInterface $translations)
-        {
-        }
-        /**
-         * Add script for post edit pages.
-         *
-         * @param string $hook The current page.
-         */
-        public function addScript($hook)
-        {
-        }
-        /**
-         * Localizes the elementor script.
-         */
-        public function addScriptForElementor()
-        {
-        }
-        /**
-         * Enqueues and localizes data script.
-         */
-        private function enqueueAndLocalizeScript()
-        {
-        }
-    }
-    class PostEditorTimestampController
-    {
-        private $metaKey = '_wordproof_timestamp';
-        private $classicEditorNonceKey = 'wordproof_timestamp_classic_nonce';
-        /**
-         * Registers post meta for all public post types.
-         *
-         * @action init
-         */
-        public function registerPostMeta()
-        {
-        }
-        /**
-         * Returns if the current user can edit posts.
-         *
-         * @return boolean
-         */
-        public function userCanEditPosts()
-        {
-        }
-        /**
-         * Enqueues the wordproof-block-editor script.
-         *
-         * @action enqueue_block_editor_assets
-         * @script wordproof-block-editor
-         */
-        public function enqueueBlockEditorScript()
-        {
-        }
-        /**
-         * Enqueues the wordproof-elementor-editor script.
-         *
-         * @action elementor/editor/after_enqueue_scripts
-         * @script wordproof-elementor-editor
-         */
-        public function enqueueElementorEditorScript()
-        {
-        }
-        /**
-         * Enqueues the wordproof-classic-editor script.
-         *
-         * @action admin_enqueue_scripts
-         * @script wordproof-classic-editor
-         */
-        public function enqueueClassicEditorScript($hook)
-        {
-        }
-        /**
-         * Add Metabox to classic editor.
-         *
-         * @action add_meta_boxes
-         */
-        public function addMetaboxToClassicEditor()
-        {
-        }
-        /**
-         * Save the meta box meta value for the classic editor.
-         *
-         * @param integer $postId The post ID.
-         * @action save_post
-         */
-        public function saveClassicMetaboxPostMeta($postId)
-        {
-        }
-        /**
-         * Display the meta box HTML to Classic Editor users.
-         *
-         * @param \WP_Post $post Post object.
-         */
-        public function classicMetaboxHtml($post)
-        {
-        }
-        /**
-         * Registers control for the Elementor editor.
-         *
-         * @param \Elementor\Core\DocumentTypes\PageBase $document The PageBase document instance.
-         *
-         * @action elementor/documents/register_controls
-         */
-        public function registerControl($document)
-        {
-        }
-        /**
-         * @param integer $postId
-         * @action elementor/document/save/data
-         */
-        public function elementorSave($postId)
-        {
-        }
-    }
-    class RestApiController
-    {
-        /**
-         * Registers the rest api endpoints.
-         *
-         * @action rest_api_init
-         * @throws \Exception
-         */
-        public function init()
-        {
-        }
-        /**
-         * Returns an object containing the settings.
-         *
-         * @return \WP_REST_Response Returns the settings.
-         */
-        public function settings()
-        {
-        }
-        /**
-         * Save the settings.
-         *
-         * @return \WP_REST_Response Returns the settings.
-         */
-        public function saveSettings(\WP_REST_Request $request)
-        {
-        }
-        /**
-         * Returns if the user is authenticated.
-         *
-         * @return \WP_REST_Response Returns if the user is authenticated.
-         */
-        public function authentication()
-        {
-        }
-        /**
-         * Logout the user and return if the user is authenticated.
-         *
-         * @return \WP_REST_Response Returns if the user is authenticated.
-         */
-        public function destroyAuthentication()
-        {
-        }
-        /**
-         * Send a post request to WordProof to timestamp a post.
-         *
-         * @param \WP_REST_Request $request The Rest Request.
-         * @return \WP_REST_Response
-         */
-        public function timestamp(\WP_REST_Request $request)
-        {
-        }
-        /**
-         * The latest timestamp transaction is returned.
-         *
-         * @param \WP_REST_Request $request
-         * @return \WP_REST_Response
-         */
-        public function showLatestTimestampTransaction(\WP_REST_Request $request)
-        {
-        }
-        /**
-         * Returns the hash input of a post.
-         *
-         * @param \WP_REST_Request $request The Rest Request.
-         * @return \WP_REST_Response The hash input of a post.
-         */
-        public function hashInput(\WP_REST_Request $request)
-        {
-        }
-        /**
-         * Retrieves the access token when the code and state are retrieved in the frontend.
-         *
-         * @throws \Exception
-         */
-        public function authenticate(\WP_REST_Request $request)
-        {
-        }
-        /**
-         * Handles webhooks sent by WordProof.
-         *
-         * @param \WP_REST_Request $request The Rest Request.
-         * @return bool|null|\WP_REST_Response|void The value returned by the action undertaken.
-         *
-         * TODO: Improve
-         */
-        public function webhook(\WP_REST_Request $request)
-        {
-        }
-        /**
-         * @param $response
-         *
-         * TODO: Improve
-         */
-        private function setBlockchainTransaction($response)
-        {
-        }
-        /**
-         * Checks if the user has permission to publish a post.
-         *
-         * @return bool Returns if a user has permission to publish.
-         */
-        public function canPublishPermission()
-        {
-        }
-        /**
-         * Validates if the webhook is valid and signed with the correct secret.
-         *
-         * @param \WP_REST_Request $request The Rest Request.
-         * @return bool If the webhook can be accepted.
-         */
-        public static function isValidWebhookRequest(\WP_REST_Request $request)
-        {
-        }
-    }
-    class SettingsController
-    {
-        /**
-         * Redirects user to the settings page. Returns false if not authenticated.
-         *
-         * @param null|string $redirectUrl
-         * @return false
-         */
-        public function redirect($redirectUrl = null)
-        {
-        }
-        /**
-         * Adds admin page that will redirect the user to a predefined url.
-         *
-         * @action admin_menu
-         */
-        public function addRedirectPage()
-        {
-        }
-        /**
-         * The content for the redirect page. Triggered by addRedirectPage().
-         */
-        public function redirectPageContent()
-        {
-        }
-        /**
-         * Redirects user on admin page load to the settings page on the WordProof My.
-         *
-         * @action load-admin_page_settings
-         */
-        public function redirectOnLoad()
-        {
-        }
-    }
-    class TimestampController
-    {
-        /**
-         * Timestamp an post triggered by custom action.
-         *
-         * @param integer $postId The post id to be timestamped.
-         * @action wordproof_timestamp
-         */
-        public static function timestamp($postId)
-        {
-        }
-        /**
-         * Timestamp new posts except those inserted by the API.
-         *
-         * @param integer $postId The post id to be timestamped.
-         * @param \WP_Post $post The post to be timestamped.
-         * @action wp_insert_post
-         */
-        public function timestampAfterPostRequest($postId, $post)
-        {
-        }
-        /**
-         * Timestamp new attachments.
-         *
-         * @param integer $postId The post id to be timestamped.
-         *
-         * @action add_attachment|edit_attachment
-         */
-        public function timestampAfterAttachmentRequest($postId)
-        {
-        }
-        /**
-         * Timestamp posts inserted by the API.
-         *
-         * @param \WP_Post $post The post to be timestamped.
-         * @action rest_after_insert_post
-         */
-        public function timestampAfterRestApiRequest($post)
-        {
-        }
-        /**
-         * Removes action to timestamp post on insert if Elementor is used.
-         */
-        public function beforeElementorSave()
-        {
-        }
-        /**
-         * Syncs timestamp override post meta keys.
-         *
-         * @param $metaId
-         * @param $postId
-         * @param $metaKey
-         * @param $metaValue
-         */
-        public function syncPostMetaTimestampOverrides($metaId, $postId, $metaKey, $metaValue)
-        {
-        }
-    }
-}
-namespace YoastSEO_Vendor\WordProof\SDK\DataTransferObjects {
-    class TimestampData
-    {
-        /**
-         * Get timestamp data from post object.
-         *
-         * @param \WP_Post $post
-         * @return array
-         */
-        public static function fromPost($post)
-        {
-        }
-    }
-}
-namespace YoastSEO_Vendor\WordProof\SDK\Exceptions {
-    class ValidationException extends \Exception
-    {
-    }
-}
-namespace YoastSEO_Vendor\WordProof\SDK\Helpers {
-    class AdminHelper
-    {
-        /**
-         * Returns the current admin url of the user.
-         *
-         * @return null|string The current admin url of the logged in user.
-         */
-        public static function currentUrl()
-        {
-        }
-    }
-    class AppConfigHelper
-    {
-        /**
-         * Returns the partner set during initialization.
-         *
-         * @return string|null
-         */
-        public static function getPartner()
-        {
-        }
-        /**
-         * Returns the environment set during initialization.
-         * @return string|null
-         */
-        public static function getEnvironment()
-        {
-        }
-        /**
-         * Returns the environment set during initialization.
-         * @return boolean
-         */
-        public static function getLoadUikitFromCdn()
-        {
-        }
-        public static function getAppConfig()
-        {
-        }
-    }
-    class AssetHelper
-    {
-        private static $prefix = 'wordproof-';
-        private static $filePath = 'app/';
-        private static $buildPath = 'build/';
-        /**
-         * Localizes script by name.
-         *
-         * @param string $name Name of the script
-         * @param string $objectName The name of the object in Javascript.
-         * @param array $data The data to be included.
-         * @return bool|void
-         */
-        public static function localize($name, $objectName, $data)
-        {
-        }
-        /**
-         * Enqueues a script defined in the scripts config.
-         *
-         * @param string $name The name of the script to enqueue.
-         * @return false|mixed|void
-         */
-        public static function enqueue($name)
-        {
-        }
-        /**
-         * Returns the prefixed script handle.
-         *
-         * @param string $name The name of the script.
-         * @return string Handle of the script.
-         */
-        private static function getHandle($name)
-        {
-        }
-        /**
-         * Get path url of the script.
-         *
-         * @param string $name The name of the script.
-         * @return string The url of the script.
-         */
-        private static function getPathUrl($name, $extension)
-        {
-        }
-        /**
-         * Returns version for file.
-         *
-         * @return false|string
-         */
-        private static function getVersion()
-        {
-        }
-    }
-    class AuthenticationHelper
-    {
-        /**
-         * Removes all the options set by WordProof.
-         *
-         * @return void
-         */
-        public static function logout()
-        {
-        }
-        /**
-         * Returns if the user is authenticated.
-         *
-         * @return bool If the user is authenticated.
-         */
-        public static function isAuthenticated()
-        {
-        }
-    }
-    class CertificateHelper
-    {
-        /**
-         * Returns if the certificate should be displayed for this page.
-         *
-         * @return false If the certificate should be shown.
-         */
-        public static function show()
-        {
-        }
-    }
-    class ClassicNoticeHelper
-    {
-        /**
-         * @var string The key used for the transient to save the single notice.
-         */
-        public static $transientKey = 'wordproof_notice';
-        /**
-         * Add a new transient with a notice key.
-         *
-         * @param string $noticeKey The noticeKey that should be displayed to the user.
-         */
-        public static function add($noticeKey)
-        {
-        }
-        /**
-         * Add new notice depending on the timestamp response.
-         *
-         * @param \WP_REST_Response $response The timestamp response.
-         */
-        public static function addTimestampNotice($response)
-        {
-        }
-        /**
-         * Retrieve notice key for the timestamp response data.
-         *
-         * @param object $data The timestamp response data.
-         * @return string The notice key for this response data.
-         */
-        private static function getNoticeKeyForTimestampResponse($data)
-        {
-        }
-    }
-    class EnvironmentHelper
-    {
-        public static function url()
-        {
-        }
-        public static function client()
-        {
-        }
-        public static function sslVerify()
-        {
-        }
-        public static function development()
-        {
-        }
-        public static function get($key)
-        {
-        }
-        private static function environmentConfig()
-        {
-        }
-    }
-    class EscapeHelper
-    {
-        /**
-         * Returns the value escaped according to the escape function set in the class.
-         *
-         * @param mixed $value The value to be sanitized.
-         * @param string $escapeKey The escape function to be used.
-         *
-         * @return array|bool|int|string
-         */
-        public static function escape($value, $escapeKey)
-        {
-        }
-        /**
-         * Loops through the array to escape the values inside.
-         *
-         * @param array $array The array with values to be escaped.
-         * @param string $escapeKey The escape function to be used.
-         * @return array Array with escapes values.
-         */
-        private static function escapeArray($array, $escapeKey)
-        {
-        }
-        /**
-         * Escapes a single value using an escape function set in the class.
-         *
-         * @param string $value The value to be escaped.
-         * @param string $escapeKey The escape function to be used.
-         * @return bool|int|string The escaped value.
-         */
-        private static function escapeSingleValue($value, $escapeKey)
-        {
-        }
-    }
-    class OptionsHelper
-    {
-        private static $prefix = 'wordproof_';
-        /**
-         * Sets site option while properly sanitizing the data.
-         *
-         * @param string $key The key to set.
-         * @param mixed $value The value to save.
-         * @return bool If update_option succeeded.
-         */
-        public static function set($key, $value)
-        {
-        }
-        /**
-         * Deletes the site options.
-         *
-         * @param string $key The key to be deleted.
-         * @return mixed
-         */
-        public static function delete($key)
-        {
-        }
-        /**
-         * Retrieves the site option while properly escaping the data.
-         *
-         * @param string $key The site option.
-         * @return array|bool|int|object|string
-         */
-        public static function get($key)
-        {
-        }
-        /**
-         * Returns all site options as object.
-         *
-         * @return object
-         */
-        public static function all()
-        {
-        }
-        /**
-         * Deletes all site options.
-         */
-        public static function reset()
-        {
-        }
-        /**
-         * Deletes authentication options.
-         */
-        public static function resetAuthentication()
-        {
-        }
-        /**
-         * Retrieves the access token.
-         *
-         * @return string|null
-         */
-        public static function accessToken()
-        {
-        }
-        /**
-         * Retrieves the source id.
-         *
-         * @return integer|null
-         */
-        public static function sourceId()
-        {
-        }
-        /**
-         * Sets the access token.
-         *
-         * @param string|null $value The access token to be set.
-         * @return bool
-         */
-        public static function setAccessToken($value)
-        {
-        }
-        /**
-         * Sets the source id.
-         *
-         * @param integer|null $value The source id to be set.
-         * @return bool
-         */
-        public static function setSourceId($value)
-        {
-        }
-        /**
-         * Retrieves the option settings from the config.
-         *
-         * @param string $key The option key.
-         * @return array|false|mixed
-         */
-        private static function getOptionFromConfig($key)
-        {
-        }
-        /**
-         * Returns if the given option key contains options itself.
-         *
-         * @param string $key The option key to be checked.
-         * @return bool
-         */
-        private static function optionContainsOptions($key)
-        {
-        }
-        /**
-         * Loops through an option that contains options to either sanitize or escape the result.
-         *
-         * @param $key
-         * @param $value
-         * @param string $method
-         * @return array|object
-         */
-        private static function secureOptionWithOptions($key, $value, $method = 'sanitize')
-        {
-        }
-    }
-    class PostEditorHelper
-    {
-        /**
-         * Returns the post editor that is in use.
-         *
-         * @return bool The post editor the user is using..
-         */
-        public static function getPostEditor()
-        {
-        }
-        /**
-         * Returns if the page is a post edit page.
-         *
-         * @param string $page The page to check.
-         * @return bool If the current page is a post edit page.
-         */
-        public static function isPostEdit($page)
-        {
-        }
-        /**
-         * Returns an array of edit page hooks.
-         *
-         * @return array Post edit page hooks.
-         */
-        public static function getPostEditPages()
-        {
-        }
-        /**
-         * Returns the data that should be added to the post editor.
-         *
-         * @param TranslationsInterface $translations The implemented translations interface.
-         *
-         * @return array[] The post editor data.
-         */
-        public static function getPostEditorData(\YoastSEO_Vendor\WordProof\SDK\Translations\TranslationsInterface $translations)
-        {
-        }
-        /**
-         * Returns the current post type.
-         *
-         * @return null|string The current post type.
-         */
-        public static function getCurrentPostType()
-        {
-        }
-    }
-    class PostMetaHelper
-    {
-        /**
-         * @param integer $postId The post id for which the meta should be set.
-         * @param string $key The key for the post meta.
-         * @param mixed $value The value for the post meta.
-         * @return integer|boolean Returns the post meta id or false on failure.
-         */
-        public static function add($postId, $key, $value, $single = \false)
-        {
-        }
-        /**
-         * @param integer $postId The post id for which the meta should be set.
-         * @param string $key The key for the post meta.
-         * @param mixed $value The value for the post meta.
-         * @return integer|boolean Returns the post meta id or false on failure.
-         */
-        public static function update($postId, $key, $value)
-        {
-        }
-        /**
-         * @param integer $postId The post id for which the meta should be set.
-         * @param string $key The key for the post meta.
-         * @param bool $single If a single result should be returned.
-         * @return mixed Returns the post meta data or false on failure.
-         */
-        public static function get($postId, $key, $single = \true)
-        {
-        }
-        /**
-         * @param integer $postId The post id for which the meta should be set.
-         * @param string $key The key for the post meta.
-         * @return boolean Returns if the post meta key exists for the post id.
-         */
-        public static function has($postId, $key)
-        {
-        }
-    }
-    class PostTypeHelper
-    {
-        /**
-         * Returns public post types.
-         *
-         * @return array The public post types.
-         */
-        public static function getPublicPostTypes()
-        {
-        }
-        public static function getUnprotectedPosts($postType)
-        {
-        }
-    }
-    class RedirectHelper
-    {
-        /**
-         * Does a safe redirect to an admin page.
-         *
-         * @param string $url The url to be redirected to.
-         */
-        public static function safe($url)
-        {
-        }
-    }
-    class ReflectionHelper
-    {
-        /**
-         * @param class $instance The class from which to get the name.
-         * @return false|string
-         */
-        public static function name($instance)
-        {
-        }
-    }
-    class RestApiHelper
-    {
-        private static function buildPath($endpoint)
-        {
-        }
-        public static function getNamespace()
-        {
-        }
-        public static function route($slug)
-        {
-        }
-        public static function endpoint($slug)
-        {
-        }
-        public static function getRestRoute($slug, $params = [])
-        {
-        }
-    }
-    class SanitizeHelper
-    {
-        /**
-         * Returns the value sanitized according to the escape function set in the class.
-         *
-         * @param mixed $value The value to be sanitized.
-         * @param string $sanitizeKey The sanitize function to be used.
-         *
-         * @return array|bool|int|string
-         */
-        public static function sanitize($value, $sanitizeKey)
-        {
-        }
-        /**
-         * Loops through the array to sanitize the values inside.
-         *
-         * @param array $array The array with values to be escaped.
-         * @param string $sanitizeKey The sanitize function to be used.
-         * @return array Array with escapes values.
-         */
-        private static function sanitizeArray($array, $sanitizeKey)
-        {
-        }
-        /**
-         * Sanitize a single value using an escape function set in the class.
-         *
-         * @param string $value The value to be sanitized.
-         * @param string $sanitizeKey The sanitize function to be used.
-         * @return bool|int|string The sanitized value.
-         */
-        private static function sanitizeSingleValue($value, $sanitizeKey)
-        {
-        }
-    }
-    class SchemaHelper
-    {
-        /**
-         * Builds an blockchain transaction schema object as array.
-         *
-         * @param object $response The response by WordProof.
-         * @return array The blockchain transaction in the correct schema format.
-         */
-        public static function getBlockchainTransaction($response)
-        {
-        }
-        /**
-         * Retrieves the schema as array for a post.
-         *
-         * @param integer $postId The post id for which the schema should be returned.
-         * @return array The schema as array.
-         */
-        public static function getSchema($postId)
-        {
-        }
-    }
-    class SettingsHelper
-    {
-        private static $key = 'settings';
-        /**
-         * Retrieving settings from the option.
-         *
-         * @param null $setting The key for the setting
-         * @return array|bool|int|mixed|object|string|null
-         */
-        public static function get($setting = null)
-        {
-        }
-        public static function showRevisions()
-        {
-        }
-        public static function certificateLinkText()
-        {
-        }
-        public static function hideCertificateLink()
-        {
-        }
-        public static function selectedPostTypes()
-        {
-        }
-        public static function postTypeIsInSelectedPostTypes($postType)
-        {
-        }
-    }
-    class StringHelper
-    {
-        /**
-         * Replace the last occurrence.
-         *
-         * @param string $search
-         * @param string $replace
-         * @param string $subject
-         * @return string
-         */
-        public static function lastReplace($search, $replace, $subject)
-        {
-        }
-        /**
-         * PascalCase to snake_case
-         *
-         * @param $string
-         * @return string
-         */
-        public static function toUnderscore($string)
-        {
-        }
-    }
-    class TimestampHelper
-    {
-        public static function debounce(\WP_Post $post)
-        {
-        }
-        public static function shouldBeTimestamped(\WP_Post $post, $data)
-        {
-        }
-        private static function hasPostMetaOverrideSetToTrue(\WP_Post $post)
-        {
-        }
-    }
-    class TransientHelper
-    {
-        /**
-         * Set transient.
-         *
-         * @param $key
-         * @param $value
-         * @param int $expiration
-         * @return bool
-         */
-        public static function set($key, $value, $expiration = 0)
-        {
-        }
-        /**
-         * Returns and deletes site transient by key.
-         *
-         * @param $key
-         * @return mixed
-         */
-        public static function getOnce($key)
-        {
-        }
-        /**
-         * Returns the transient by key.
-         *
-         * @param $key
-         * @return mixed
-         */
-        public static function get($key)
-        {
-        }
-        /**
-         * Debounce callback for post id.
-         *
-         * @param $postId
-         * @param $action
-         * @param $callback
-         * @return mixed
-         */
-        public static function debounce($postId, $action, $callback)
-        {
-        }
-    }
-}
-namespace YoastSEO_Vendor\WordProof\SDK\Support {
-    class Api
-    {
-        /**
-         * @param string $endpoint
-         * @param array $body
-         * @return mixed
-         */
-        public static function post($endpoint, $body = [])
-        {
-        }
-    }
-    class Authentication
-    {
-        private static $callbackEndpoint = 'wordproof/v1/oauth/callback';
-        public static function authorize($redirectUrl = null)
-        {
-        }
-        /**
-         * Retrieve the access token with the state and code.
-         *
-         * @param string $state The state from remote
-         * @param string $code The code from remote
-         * @return \WP_REST_Response
-         * @throws \Exception
-         */
-        public static function token($state, $code)
-        {
-        }
-        private static function getCallbackUrl()
-        {
-        }
-        public static function redirect($endpoint, $parameters)
-        {
-        }
-    }
-    class Loader
-    {
-        protected $actions;
-        protected $filters;
-        public function __construct()
-        {
-        }
-        /**
-         * @param string $hook The name of the WordPress action that is being registered.
-         * @param object $component A reference to the instance of the object on which the action is defined.
-         * @param string $callback The name of the function definition on the $component.
-         * @param int $priority Optional. The priority at which the function should be fired. Default is 10.
-         * @param int $accepted_args Optional. The number of arguments that should be passed to the $callback. Default is 1.
-         */
-        public function addAction($hook, $component, $callback, $priority = 10, $accepted_args = 1)
-        {
-        }
-        /**
-         * @param string $hook The name of the WordPress filter that is being registered.
-         * @param object $component A reference to the instance of the object on which the filter is defined.
-         * @param string $callback The name of the function definition on the $component.
-         * @param int $priority Optional. The priority at which the function should be fired. Default is 10.
-         * @param int $accepted_args Optional. The number of arguments that should be passed to the $callback. Default is 1
-         */
-        public function addFilter($hook, $component, $callback, $priority = 10, $accepted_args = 1)
-        {
-        }
-        public function run()
-        {
-        }
-        private function add($hooks, $hook, $component, $callback, $priority, $accepted_args)
-        {
-        }
-    }
-    class Settings
-    {
-        public static function redirect($redirectUrl = null)
-        {
-        }
-    }
-    class Template
-    {
-        private static $blocks = [];
-        private static $cache_path = 'cache/';
-        private static $template_path = 'templates/';
-        private static $cache_enabled = \true;
-        private static $store_cache = \false;
-        public static function setOptions(array $options)
-        {
-        }
-        public static function setCachePath($path)
-        {
-        }
-        public static function setTemplatePath($path)
-        {
-        }
-        public static function render($file, $data = [])
-        {
-        }
-        public static function view($file, $data = [])
-        {
-        }
-        private static function cache($file)
-        {
-        }
-        public static function clearCache()
-        {
-        }
-        private static function compileCode($code)
-        {
-        }
-        private static function includeFiles($file)
-        {
-        }
-        private static function compilePHP($code)
-        {
-        }
-        private static function compileEchos($code)
-        {
-        }
-        private static function compileEscapedEchos($code)
-        {
-        }
-        private static function compileBlock($code)
-        {
-        }
-        private static function compileYield($code)
-        {
-        }
-    }
-    class Timestamp
-    {
-        /**
-         * @param array $data
-         *
-         * @return mixed
-         */
-        public static function sendPostRequest($data)
-        {
-        }
-    }
-}
-namespace YoastSEO_Vendor\WordProof\SDK\Translations {
-    class DefaultTranslations implements \YoastSEO_Vendor\WordProof\SDK\Translations\TranslationsInterface
-    {
-        public function getNoBalanceNotice()
-        {
-        }
-        public function getTimestampFailedNotice()
-        {
-        }
-        public function getTimestampSuccessNotice()
-        {
-        }
-        public function getWebhookFailedNotice()
-        {
-        }
-        public function getNotAuthenticatedNotice()
-        {
-        }
-        public function getOpenAuthenticationButtonText()
-        {
-        }
-        public function getOpenSettingsButtonText()
-        {
-        }
-        public function getContactWordProofSupportButtonText()
-        {
-        }
-    }
-}
-namespace YoastSEO_Vendor\WordProof\SDK {
-    class WordPressSDK
-    {
-        /**
-         * The version of this SDK
-         * @var string
-         */
-        public $version = '1.3.2';
-        /**
-         * @var null|WordPressSDK
-         */
-        private static $instance = null;
-        /**
-         * Loader responsible for the WordPress hooks
-         * @var Loader
-         */
-        private $loader;
-        /**
-         * Appconfig object
-         * @var AppConfigInterface
-         */
-        public $appConfig;
-        /**
-         * Translations object
-         * @var TranslationsInterface
-         */
-        private $translations;
-        /**
-         * WordPressSDK constructor.
-         *
-         * @return WordPressSDK|void
-         *
-         * @throws \Exception
-         */
-        public function __construct(\YoastSEO_Vendor\WordProof\SDK\Config\AppConfigInterface $appConfig = null, \YoastSEO_Vendor\WordProof\SDK\Translations\TranslationsInterface $translations = null)
-        {
-        }
-        /**
-         * Singleton implementation of WordPress SDK.
-         *
-         * @param AppConfigInterface|null $appConfig
-         * @param TranslationsInterface|null $translations
-         * @return WordPressSDK|null Returns the WordPress SDK instance.
-         * @throws \Exception
-         */
-        public static function getInstance(\YoastSEO_Vendor\WordProof\SDK\Config\AppConfigInterface $appConfig = null, \YoastSEO_Vendor\WordProof\SDK\Translations\TranslationsInterface $translations = null)
-        {
-        }
-        /**
-         * Runs the loader and initializes the class.
-         *
-         * @return $this
-         */
-        public function initialize()
-        {
-        }
-        /**
-         * Initializes the authentication feature.
-         */
-        private function authentication()
-        {
-        }
-        /**
-         * Initializes the api feature.
-         */
-        private function api()
-        {
-        }
-        /**
-         * Adds hooks to timestamp posts on new inserts or on a custom action.
-         */
-        private function timestamp()
-        {
-        }
-        /**
-         * Adds admin pages that redirect to the WordProof My settings page.
-         */
-        private function settings()
-        {
-        }
-        /**
-         * Registers and localizes post editor scripts.
-         */
-        private function postEditorData()
-        {
-        }
-        /**
-         * Initializes the notices feature.
-         */
-        private function notices()
-        {
-        }
-        /**
-         * Optional feature to include the schema and certificate to the page.
-         *
-         * @return $this
-         */
-        public function certificate()
-        {
-        }
-        /**
-         * Optional feature to timestamp with JS in the post editor.
-         *
-         * @return $this
-         */
-        public function timestampInPostEditor()
-        {
-        }
-    }
-}
 namespace {
+    /**
+     * Facade to quickly check if version requirements are met.
+     *
+     * @param array<string> $requirements The requirements to check.
+     *
+     * @return void
+     */
+    function whip_wp_check_versions($requirements)
+    {
+    }
     /**
      * Convenience function to JSON encode and echo results and then die.
      *
      * @param array $results Results array for encoding.
+     *
+     * @return void
      */
     function wpseo_ajax_json_echo_die($results)
     {
     }
     /**
      * Function used from AJAX calls, takes it variables from $_POST, dies on exit.
+     *
+     * @return void
      */
     function wpseo_set_option()
     {
     }
     /**
      * Function used to remove the admin notices for several purposes, dies on exit.
+     *
+     * @return void
      */
     function wpseo_set_ignore()
     {
     }
     /**
      * Save an individual SEO title from the Bulk Editor.
+     *
+     * @return void
      */
     function wpseo_save_title()
     {
     }
     /**
      * Save an individual meta description from the Bulk Editor.
+     *
+     * @return void
      */
     function wpseo_save_description()
     {
@@ -59708,6 +68682,8 @@ namespace {
      * Save titles & descriptions.
      *
      * @param string $what Type of item to save (title, description).
+     *
+     * @return void
      */
     function wpseo_save_what($what)
     {
@@ -59729,12 +68705,16 @@ namespace {
     }
     /**
      * Save all titles sent from the Bulk Editor.
+     *
+     * @return void
      */
     function wpseo_save_all_titles()
     {
     }
     /**
      * Save all description sent from the Bulk Editor.
+     *
+     * @return void
      */
     function wpseo_save_all_descriptions()
     {
@@ -59743,6 +68723,8 @@ namespace {
      * Utility function to save values.
      *
      * @param string $what Type of item so save.
+     *
+     * @return void
      */
     function wpseo_save_all($what)
     {
@@ -59762,12 +68744,16 @@ namespace {
     }
     /**
      * Retrieves the post ids where the keyword is used before as well as the types of those posts.
+     *
+     * @return void
      */
     function ajax_get_keyword_usage_and_post_types()
     {
     }
     /**
      * Retrieves the keyword for the keyword doubles of the termpages.
+     *
+     * @return void
      */
     function ajax_get_term_keyword_usage()
     {
@@ -59783,6 +68769,8 @@ namespace {
     /* ********************* DEPRECATED FUNCTIONS ********************* */
     /**
      * Retrieves the keyword for the keyword doubles.
+     *
+     * @return void
      */
     function ajax_get_keyword_usage()
     {
@@ -59822,6 +68810,8 @@ namespace {
      *
      * @param WPSEO_Bulk_List_Table $table The table to render.
      * @param string                $id    The id for the tab.
+     *
+     * @return void
      */
     function wpseo_get_rendered_tab($table, $id)
     {
@@ -59891,7 +68881,7 @@ namespace {
      *
      * Example code:
      * <code>
-     *
+     * <?php
      * function retrieve_var1_replacement( $var1 ) {
      *        return 'your replacement value';
      * }
@@ -59901,7 +68891,7 @@ namespace {
      *        wpseo_register_var_replacement( 'myvar2', array( 'class', 'method_name' ), 'basic', 'this is a help text for myvar2' );
      * }
      * add_action( 'wpseo_register_extra_replacements', 'register_my_plugin_extra_replacements' );
-     *
+     * ?>
      * </code>
      *
      * @since 1.5.4
@@ -59944,6 +68934,8 @@ namespace {
      * @param string $new_term_id      New term id of the taxonomy term that was splitted.
      * @param string $term_taxonomy_id Term taxonomy id for the taxonomy that was affected.
      * @param string $taxonomy         The taxonomy that the taxonomy term was splitted for.
+     *
+     * @return void
      */
     function wpseo_split_shared_term($old_term_id, $new_term_id, $term_taxonomy_id, $taxonomy)
     {
@@ -60003,6 +68995,8 @@ namespace {
      * Run single site / network-wide activation of the plugin.
      *
      * @param bool $networkwide Whether the plugin is being activated network-wide.
+     *
+     * @return void
      */
     function wpseo_activate($networkwide = \false)
     {
@@ -60011,6 +69005,8 @@ namespace {
      * Run single site / network-wide de-activation of the plugin.
      *
      * @param bool $networkwide Whether the plugin is being de-activated network-wide.
+     *
+     * @return void
      */
     function wpseo_deactivate($networkwide = \false)
     {
@@ -60019,18 +69015,24 @@ namespace {
      * Run network-wide (de-)activation of the plugin.
      *
      * @param bool $activate True for plugin activation, false for de-activation.
+     *
+     * @return void
      */
     function wpseo_network_activate_deactivate($activate = \true)
     {
     }
     /**
      * Runs on activation of the plugin.
+     *
+     * @return void
      */
     function _wpseo_activate()
     {
     }
     /**
      * On deactivation, flush the rewrite rules so XML sitemaps stop working.
+     *
+     * @return void
      */
     function _wpseo_deactivate()
     {
@@ -60045,6 +69047,8 @@ namespace {
      *            {@link https://core.trac.wordpress.org/ticket/24205} }}
      *
      * @param int|WP_Site $blog_id Blog ID.
+     *
+     * @return void
      */
     function wpseo_on_activate_blog($blog_id)
     {
@@ -60052,30 +69056,40 @@ namespace {
     /* ***************************** PLUGIN LOADING *************************** */
     /**
      * Load translations.
+     *
+     * @return void
      */
     function wpseo_load_textdomain()
     {
     }
     /**
      * On plugins_loaded: load the minimum amount of essential files for this plugin.
+     *
+     * @return void
      */
     function wpseo_init()
     {
     }
     /**
      * Loads the rest api endpoints.
+     *
+     * @return void
      */
     function wpseo_init_rest_api()
     {
     }
     /**
      * Used to load the required files on the plugins_loaded hook, instead of immediately.
+     *
+     * @return void
      */
     function wpseo_admin_init()
     {
     }
     /**
      * Wraps for notifications center class.
+     *
+     * @return void
      */
     function load_yoast_notifications()
     {
@@ -60092,6 +69106,8 @@ namespace {
     }
     /**
      * Returns the notice in case of missing spl extension.
+     *
+     * @return void
      */
     function yoast_wpseo_missing_spl_notice()
     {
@@ -60106,6 +69122,8 @@ namespace {
     }
     /**
      * Returns the notice in case of missing Composer autoload.
+     *
+     * @return void
      */
     function yoast_wpseo_missing_autoload_notice()
     {
@@ -60114,6 +69132,8 @@ namespace {
      * Throw an error if the filter extension is disabled (prevent white screens) and self-deactivate plugin.
      *
      * @since 2.0
+     * @deprecated 23.3
+     * @codeCoverageIgnore
      *
      * @return void
      */
@@ -60122,6 +69142,11 @@ namespace {
     }
     /**
      * Returns the notice in case of missing filter extension.
+     *
+     * @deprecated 23.3
+     * @codeCoverageIgnore
+     *
+     * @return void
      */
     function yoast_wpseo_missing_filter_notice()
     {
@@ -60130,12 +69155,16 @@ namespace {
      * Echo's the Activation failed notice with any given message.
      *
      * @param string $message Message string.
+     *
+     * @return void
      */
     function yoast_wpseo_activation_failed_notice($message)
     {
     }
     /**
      * The method will deactivate the plugin, but only once, done by the static $is_deactivated.
+     *
+     * @return void
      */
     function yoast_wpseo_self_deactivate()
     {
