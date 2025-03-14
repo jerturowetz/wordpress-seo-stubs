@@ -23,8 +23,8 @@ test -d "source/wordpress-seo"
 
 # Tame wild beasts
 # https://github.com/Yoast/wordpress-seo/pull/20190
-sed -i -e 's#^\(\s*\*\)\s\+<?php\b.*$#\1#' "$FILE"
-sed -i -e 's#^\(\s*\*\)\s\+?>.*$#\1#' "$FILE"
+sed -i '' -e 's#^\(\s*\*\)\s\+<?php\b.*$#\1#' "$FILE"
+sed -i '' -e 's#^\(\s*\*\)\s\+?>.*$#\1#' "$FILE"
 
 printf '\nnamespace Yoast\\WP\\Free\\Loggers { class Migration_Logger {} }\n' >>"$FILE"
 
