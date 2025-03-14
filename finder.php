@@ -28,11 +28,6 @@ return \StubsGenerator\Finder::create()
     )
     ->append(
         \StubsGenerator\Finder::create()
-            ->in(['source/wordpress-seo/vendor_prefixed/wordproof/wordpress-sdk/app/'])
-            ->files()
-    )
-    ->append(
-        \StubsGenerator\Finder::create()
             ->in(['source/wordpress-seo/vendor_prefixed/symfony/dependency-injection/'])
             ->files()
     )
@@ -44,6 +39,29 @@ return \StubsGenerator\Finder::create()
     ->append(
         \StubsGenerator\Finder::create()
             ->in(['source/wordpress-seo/vendor_prefixed/psr/log/Psr/Log/'])
+            ->files()
+    )
+    // New in Yoast SEO 24.6 - PSR HTTP interfaces
+    ->append(
+        \StubsGenerator\Finder::create()
+            ->in(['source/wordpress-seo/vendor_prefixed/psr/http-client/src/'])
+            ->files()
+    )
+    ->append(
+        \StubsGenerator\Finder::create()
+            ->in(['source/wordpress-seo/vendor_prefixed/psr/http-factory/src/'])
+            ->files()
+    )
+    // New in Yoast SEO 24.6 - Symfony deprecation contracts
+    ->append(
+        \StubsGenerator\Finder::create()
+            ->in(['source/wordpress-seo/vendor_prefixed/symfony/deprecation-contracts/'])
+            ->files()
+    )
+    // Required dependency - Yoast WHIP for PHP version checking
+    ->append(
+        \StubsGenerator\Finder::create()
+            ->in(['source/vendor/yoast/whip/src/'])
             ->files()
     )
     ->sortByName()
